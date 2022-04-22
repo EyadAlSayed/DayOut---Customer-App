@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.DayOut">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.activities.SplashActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
