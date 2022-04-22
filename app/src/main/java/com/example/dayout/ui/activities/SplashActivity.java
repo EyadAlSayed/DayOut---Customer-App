@@ -26,7 +26,6 @@ public class SplashActivity extends AppCompatActivity {
     TextView splashMotto;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
