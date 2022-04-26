@@ -3,19 +3,23 @@ package com.example.dayout.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dayout.R;
-import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.regex.Matcher;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SplashActivity extends AppCompatActivity {
+
 
 
     @BindView(R.id.splash_motto)
@@ -27,8 +31,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
         ButterKnife.bind(this);
-
-
         applyAnimation();
         openMainActivity();
     }
@@ -43,7 +45,6 @@ public class SplashActivity extends AppCompatActivity {
     }
     private void openMainActivity(){
       new Handler(getMainLooper()).postDelayed(() -> {
-          startActivity(new Intent(SplashActivity.this,SignUpActivity.class));
 
           startActivity(new Intent(SplashActivity.this,AuthActivity.class));
 
