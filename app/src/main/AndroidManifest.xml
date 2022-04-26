@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.MainActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
-        <activity android:name=".ui.activities.SignUpActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity android:name=".ui.activities.AuthActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
 
         <meta-data
             android:name="preloaded_fonts"
