@@ -26,11 +26,14 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
+import com.example.dayout.config.AppConstants;
 import com.example.dayout.helpers.system.PermissionsHelper;
 import com.example.dayout.helpers.view.ConverterImage;
 import com.example.dayout.helpers.view.FN;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.regex.Matcher;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -110,30 +113,6 @@ public class SignUpFragment extends Fragment {
 
     View view;
 
-
-    private void pickImageFromGallery() {
-        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            //permission not granted
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
-        } else {
-            //permission granted
-            selectImage();
-        }
-    }
-
-    private void selectImage() {
-        if(PermissionsHelper.getREAD_EXTERNAL_STORAGE(requireActivity()))
-            launcher.launch("image/*");
-    }
-
-    private final ActivityResultLauncher<String> launcher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
-        @Override
-        public void onActivityResult(Uri result) {
-            //profile_image.setImageURI(result);
-            String image = ConverterImage.convertUriToBase64(requireContext(), result);
-        }
-    });
-
     public SignUpFragment() {
     }
 
@@ -173,14 +152,32 @@ public class SignUpFragment extends Fragment {
             ok = false;
         }
 
-//        if (/*first name regex*/) {
-//        }
-//
-//        if (/*last name regex*/) {
-//        }
-//
-//        if (/*phone number regex*/) {
-//        }
+        //FIXME: All Regex Not Working - Caesar.
+
+        Matcher firstNameMatcher = AppConstants.NAME_REGEX.matcher(firstName.getText().toString());
+        Matcher lastNameMatcher = AppConstants.NAME_REGEX.matcher(lastName.getText().toString());
+        Matcher phoneNumberMatcher = AppConstants.PHONE_NUMBER_REGEX.matcher(phoneNumber.getText().toString());
+
+        if (!firstNameMatcher.matches()) {
+            firstNameTextlayout.setErrorEnabled(true);
+            firstNameTextlayout.setError(getResources().getString(R.string.name_does_not_match));
+
+            ok = false;
+        }
+
+        if (!lastNameMatcher.matches()) {
+            lastNameTextlayout.setErrorEnabled(true);
+            lastNameTextlayout.setError(getResources().getString(R.string.name_does_not_match));
+
+            ok = false;
+        }
+
+        if (!phoneNumberMatcher.matches()) {
+            phoneNumberTextlayout.setErrorEnabled(true);
+            phoneNumberTextlayout.setError(getResources().getString(R.string.not_a_phone_number));
+
+            ok = false;
+        }
 
         return ok;
 
@@ -199,13 +196,26 @@ public class SignUpFragment extends Fragment {
         public void afterTextChanged(Editable editable) {}
     };
 
-    private final TextWatcher nameWatcher = new TextWatcher() {
+    private final TextWatcher firstNameWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            confirmPasswordTextlayout.setErrorEnabled(false);
+            firstNameTextlayout.setErrorEnabled(false);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {}
+    };
+
+    private final TextWatcher lastNameWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            lastNameTextlayout.setErrorEnabled(false);
         }
 
         @Override
@@ -218,7 +228,7 @@ public class SignUpFragment extends Fragment {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            confirmPasswordTextlayout.setErrorEnabled(false);
+            phoneNumberTextlayout.setErrorEnabled(false);
         }
 
         @Override
@@ -227,6 +237,9 @@ public class SignUpFragment extends Fragment {
 
     private void initView(){
         confirmPassword.addTextChangedListener(passwordConfirmationWatcher);
+        firstName.addTextChangedListener(firstNameWatcher);
+        lastName.addTextChangedListener(lastNameWatcher);
+        phoneNumber.addTextChangedListener(phoneNumberWatcher);
         signUpToLogin.setOnClickListener(onToLoginClicked);
         signUpButton.setOnClickListener(onSignUpBtnClicked);
     }
