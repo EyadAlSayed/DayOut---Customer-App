@@ -26,12 +26,16 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
+import com.example.dayout.helpers.system.PermissionsHelper;
 import com.example.dayout.helpers.view.ConverterImage;
+import com.example.dayout.helpers.view.FN;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.dayout.config.AppConstants.AUTH_FRC;
 
 
 public class SignUpFragment extends Fragment {
@@ -118,27 +122,8 @@ public class SignUpFragment extends Fragment {
     }
 
     private void selectImage() {
-
-        //clear previous data
-        //profile_image.setImageBitmap(null);
-
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.setType("image/*");
-//        startActivityForResult(Intent.createChooser(intent, "Select Image"), 100);
-        launcher.launch("image/*");
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 100 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            //permission granted
-            selectImage();
-        } else {
-            //permission denied
-            Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
-        }
+        if(PermissionsHelper.getREAD_EXTERNAL_STORAGE(requireActivity()))
+            launcher.launch("image/*");
     }
 
     private final ActivityResultLauncher<String> launcher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
@@ -164,22 +149,28 @@ public class SignUpFragment extends Fragment {
     private final View.OnClickListener onSignUpBtnClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            if(checkInfo()){
+                //TODO: Send Object to Back - Caesar.
+            }
         }
     };
 
     private final View.OnClickListener onToLoginClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new LoginFragment());
         }
     };
 
-    private void checkInfo() {
+    private boolean checkInfo() {
 
-        if (password.getText().toString().equals(confirmPassword.getText().toString())) {
+        boolean ok = true;
+
+        if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
             confirmPasswordTextlayout.setErrorEnabled(true);
             confirmPasswordTextlayout.setError(getResources().getString(R.string.does_not_match_password));
+
+            ok = false;
         }
 
 //        if (/*first name regex*/) {
@@ -190,6 +181,8 @@ public class SignUpFragment extends Fragment {
 //
 //        if (/*phone number regex*/) {
 //        }
+
+        return ok;
 
     }
 
@@ -206,7 +199,35 @@ public class SignUpFragment extends Fragment {
         public void afterTextChanged(Editable editable) {}
     };
 
+    private final TextWatcher nameWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            confirmPasswordTextlayout.setErrorEnabled(false);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {}
+    };
+
+    private final TextWatcher phoneNumberWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            confirmPasswordTextlayout.setErrorEnabled(false);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {}
+    };
+
     private void initView(){
         confirmPassword.addTextChangedListener(passwordConfirmationWatcher);
+        signUpToLogin.setOnClickListener(onToLoginClicked);
+        signUpButton.setOnClickListener(onSignUpBtnClicked);
     }
 }
