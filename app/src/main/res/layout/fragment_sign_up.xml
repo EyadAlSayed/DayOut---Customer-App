@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/acme"
         android:gravity="center"
-        android:text=""
+        android:text="@string/welcome"
         android:textColor="@color/orange_700"
         android:textSize="@dimen/_30ssp" />
 
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:focusableInTouchMode="true"
-                    android:hint=""
+                    android:hint="@string/first_name"
                     app:layout_constraintEnd_toEndOf="@+id/textView145"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView145">
@@ -68,7 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="true"
-                    android:hint=""
+                    android:hint="@string/last_name"
                     app:layout_constraintEnd_toEndOf="@+id/textView145"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView145">
@@ -107,7 +107,7 @@
                     android:id="@+id/sign_up_confirm_password_textlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=""
+                    android:hint="@string/confirm_password"
                     app:layout_constraintEnd_toEndOf="@+id/user_name_textlayout"
                     app:layout_constraintStart_toStartOf="@+id/user_name_textlayout"
                     app:layout_constraintTop_toBottomOf="@+id/user_name_textlayout"
@@ -146,7 +146,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
                         android:fontFamily="@font/acme"
-                        android:text=""
+                        android:text="@string/male"
                         android:textColor="@color/orange_700"
                         android:textSize="@dimen/_13ssp" />
 
@@ -156,7 +156,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
                         android:fontFamily="@font/acme"
-                        android:text=""
+                        android:text="@string/female"
                         android:textColor="@color/orange_700"
                         android:textSize="@dimen/_13ssp" />
                 </RadioGroup>
@@ -177,7 +177,7 @@
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:fontFamily="@font/acme"
-                    android:text=""
+                    android:text="@string/phone_number"
                     android:textSize="@dimen/_14sdp" />
 
                 <LinearLayout
@@ -195,7 +195,7 @@
                         android:layout_width="55dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text=""
+                        android:text="@string/syrian_code"
                         android:textSize="@dimen/_13ssp" />
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -230,7 +230,7 @@
                     android:backgroundTint="@color/orange_700"
                     android:fontFamily="@font/acme"
                     android:gravity="center"
-                    android:text=""
+                    android:text="@string/sign_up"
                     android:textColor="@color/off_white"
                     android:textSize="@dimen/_17sdp"
                     android:textStyle="bold" />
@@ -246,8 +246,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_5sdp"
         android:gravity="center"
-        android:text=""
-        android:textColor="@color/off_white"
+        android:text="@string/already_have_an_account"
+        android:textColor="@color/orange_700"
         android:textSize="@dimen/_12ssp" />
 
 </LinearLayout>

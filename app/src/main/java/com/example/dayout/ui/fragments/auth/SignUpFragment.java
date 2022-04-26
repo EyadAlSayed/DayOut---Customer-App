@@ -179,7 +179,7 @@ public class SignUpFragment extends Fragment {
 
         if (password.getText().toString().equals(confirmPassword.getText().toString())) {
             confirmPasswordTextlayout.setErrorEnabled(true);
-           // confirmPasswordTextlayout.setError(getResources().getString(R.string.does_not_match_password));
+            confirmPasswordTextlayout.setError(getResources().getString(R.string.does_not_match_password));
         }
 
 //        if (/*first name regex*/) {
