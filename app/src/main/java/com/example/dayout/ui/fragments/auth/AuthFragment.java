@@ -47,24 +47,11 @@ public class AuthFragment extends Fragment {
         privacyPolicyTxt.setOnClickListener(onPrivacyPolicyClicked);
     }
 
-    private final View.OnClickListener onLoginClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new LoginFragment());
-        }
-    };
+    private final View.OnClickListener onLoginClicked = v -> FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new LoginFragment());
 
-    private final View.OnClickListener onSignUpClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-        }
-    };
-    private final View.OnClickListener onPrivacyPolicyClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            NoteMessage.showSnackBar(requireActivity(),"There is not privacy policy");
-        }
-    };
+    private final View.OnClickListener onSignUpClicked = v -> FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new SignUpFragment());
+
+    private final View.OnClickListener onPrivacyPolicyClicked = v -> NoteMessage.showSnackBar(requireActivity(),"There is no privacy policy");
 
 
 

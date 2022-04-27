@@ -1,6 +1,7 @@
 package com.example.dayout.ui.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -10,11 +11,16 @@ import androidx.cardview.widget.CardView;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.ui.fragments.auth.AuthFragment;
 import com.example.dayout.ui.fragments.drawer.DrawerFragment;
+import com.example.dayout.ui.fragments.home.ExploreFragment;
+import com.example.dayout.ui.fragments.home.FavoritePlaceFragment;
+import com.example.dayout.ui.fragments.home.HomeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.dayout.config.AppConstants.AUTH_FRC;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
+        FN.addFixedNameFadeFragment(MAIN_FRC, this, new HomeFragment());
     }
 
     private void initView() {
@@ -50,22 +57,22 @@ public class MainActivity extends AppCompatActivity {
     private final View.OnClickListener onExploreClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            FN.addFixedNameFadeFragment(MAIN_FRC, MainActivity.this, new ExploreFragment());
         }
     };
 
     private final View.OnClickListener onFavoriteClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            FN.addFixedNameFadeFragment(MAIN_FRC, MainActivity.this, new FavoritePlaceFragment());
         }
     };
     private final View.OnClickListener onDrawerClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            FN.addToStackSlideLRFragment(MAIN_FRC, MainActivity.this, new DrawerFragment(), "drawer");
-            isDrawerOpen = !isDrawerOpen;
             hideBottomBar();
+            FN.addSlideLRFragmentUpFragment(MAIN_FRC, MainActivity.this, new DrawerFragment(), "drawer");
+            isDrawerOpen = !isDrawerOpen;
         }
     };
     private final View.OnClickListener onProfileClicked = new View.OnClickListener() {
@@ -78,11 +85,18 @@ public class MainActivity extends AppCompatActivity {
     public void showBottomBar() {
         drawerButton.setVisibility(View.VISIBLE);
         bottomBar.setVisibility(View.VISIBLE);
+        drawerButton.animate().setDuration(400).alpha(1);
+        bottomBar.animate().setDuration(400).alpha(1);
     }
 
     private void hideBottomBar() {
-        drawerButton.setVisibility(View.GONE);
-        bottomBar.setVisibility(View.GONE);
+        drawerButton.animate().setDuration(400).alpha(0);
+        bottomBar.animate().setDuration(400).alpha(0);
+        new Handler(getMainLooper()).postDelayed(() -> {
+            drawerButton.setVisibility(View.GONE);
+            bottomBar.setVisibility(View.GONE);
+        },450);
+
     }
 
 

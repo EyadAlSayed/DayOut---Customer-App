@@ -55,7 +55,16 @@ public class FN {
 
 
 
-    public static void addFragmentUpFragment(int container, FragmentActivity fragmentActivity, Fragment fragment, String name) {
+    public static void addSlideLRFragmentUpFragment(int container, FragmentActivity fragmentActivity, Fragment fragment, String name) {
+        fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right, R.anim.slide_left, R.anim.slide_right, R.anim.slide_left);
+        fragmentTransaction.add(container, fragment);
+        fragmentTransaction.attach(fragment);
+        fragmentTransaction.addToBackStack(name);
+        fragmentTransaction.commit();
+    }
+
+
+    public static void addFadeFragmentUpFragment(int container, FragmentActivity fragmentActivity, Fragment fragment, String name) {
         fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
         fragmentTransaction.add(container, fragment);
         fragmentTransaction.attach(fragment);
@@ -85,7 +94,6 @@ public class FN {
             fm.popBackStack();
         }
     }
-
 
 
     public static Fragment getCurrentFragment(FragmentActivity fragmentActivity) {

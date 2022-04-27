@@ -26,12 +26,19 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
+import com.example.dayout.config.AppConstants;
+import com.example.dayout.helpers.system.PermissionsHelper;
 import com.example.dayout.helpers.view.ConverterImage;
+import com.example.dayout.helpers.view.FN;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.regex.Matcher;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.dayout.config.AppConstants.AUTH_FRC;
 
 
 public class SignUpFragment extends Fragment {
@@ -106,49 +113,6 @@ public class SignUpFragment extends Fragment {
 
     View view;
 
-
-    private void pickImageFromGallery() {
-        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            //permission not granted
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
-        } else {
-            //permission granted
-            selectImage();
-        }
-    }
-
-    private void selectImage() {
-
-        //clear previous data
-        //profile_image.setImageBitmap(null);
-
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.setType("image/*");
-//        startActivityForResult(Intent.createChooser(intent, "Select Image"), 100);
-        launcher.launch("image/*");
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 100 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            //permission granted
-            selectImage();
-        } else {
-            //permission denied
-            Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private final ActivityResultLauncher<String> launcher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
-        @Override
-        public void onActivityResult(Uri result) {
-            //profile_image.setImageURI(result);
-            String image = ConverterImage.convertUriToBase64(requireContext(), result);
-        }
-    });
-
     public SignUpFragment() {
     }
 
@@ -164,32 +128,58 @@ public class SignUpFragment extends Fragment {
     private final View.OnClickListener onSignUpBtnClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            if(checkInfo()){
+                //TODO: Send Object to Back - Caesar.
+            }
         }
     };
 
     private final View.OnClickListener onToLoginClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new LoginFragment());
         }
     };
 
-    private void checkInfo() {
+    private boolean checkInfo() {
 
-        if (password.getText().toString().equals(confirmPassword.getText().toString())) {
+        boolean ok = true;
+
+        if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
             confirmPasswordTextlayout.setErrorEnabled(true);
-           // confirmPasswordTextlayout.setError(getResources().getString(R.string.does_not_match_password));
+            confirmPasswordTextlayout.setError(getResources().getString(R.string.does_not_match_password));
+
+            ok = false;
         }
 
-//        if (/*first name regex*/) {
-//        }
-//
-//        if (/*last name regex*/) {
-//        }
-//
-//        if (/*phone number regex*/) {
-//        }
+        //FIXME: All Regex Not Working - Caesar.
+
+        Matcher firstNameMatcher = AppConstants.NAME_REGEX.matcher(firstName.getText().toString());
+        Matcher lastNameMatcher = AppConstants.NAME_REGEX.matcher(lastName.getText().toString());
+        Matcher phoneNumberMatcher = AppConstants.PHONE_NUMBER_REGEX.matcher(phoneNumber.getText().toString());
+
+        if (!firstNameMatcher.matches()) {
+            firstNameTextlayout.setErrorEnabled(true);
+            firstNameTextlayout.setError(getResources().getString(R.string.name_does_not_match));
+
+            ok = false;
+        }
+
+        if (!lastNameMatcher.matches()) {
+            lastNameTextlayout.setErrorEnabled(true);
+            lastNameTextlayout.setError(getResources().getString(R.string.name_does_not_match));
+
+            ok = false;
+        }
+
+        if (!phoneNumberMatcher.matches()) {
+            phoneNumberTextlayout.setErrorEnabled(true);
+            phoneNumberTextlayout.setError(getResources().getString(R.string.not_a_phone_number));
+
+            ok = false;
+        }
+
+        return ok;
 
     }
 
@@ -206,7 +196,51 @@ public class SignUpFragment extends Fragment {
         public void afterTextChanged(Editable editable) {}
     };
 
+    private final TextWatcher firstNameWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            firstNameTextlayout.setErrorEnabled(false);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {}
+    };
+
+    private final TextWatcher lastNameWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            lastNameTextlayout.setErrorEnabled(false);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {}
+    };
+
+    private final TextWatcher phoneNumberWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            phoneNumberTextlayout.setErrorEnabled(false);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {}
+    };
+
     private void initView(){
         confirmPassword.addTextChangedListener(passwordConfirmationWatcher);
+        firstName.addTextChangedListener(firstNameWatcher);
+        lastName.addTextChangedListener(lastNameWatcher);
+        phoneNumber.addTextChangedListener(phoneNumberWatcher);
+        signUpToLogin.setOnClickListener(onToLoginClicked);
+        signUpButton.setOnClickListener(onSignUpBtnClicked);
     }
 }
