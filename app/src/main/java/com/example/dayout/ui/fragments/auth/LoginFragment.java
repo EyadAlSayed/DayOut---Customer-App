@@ -120,8 +120,9 @@ public class LoginFragment extends Fragment {
 
     private boolean checkSyrianNumber() {
         String _userName = userName.getText().toString();
+        if (_userName.length() < 10) return false;
         if (_userName.contains("+")) return false;
-        else if (_userName.charAt(0) != '0' && _userName.charAt(1) != '9') return false;
+        if (_userName.charAt(0) != '0' && _userName.charAt(1) != '9') return false;
         return true;
     }
 
