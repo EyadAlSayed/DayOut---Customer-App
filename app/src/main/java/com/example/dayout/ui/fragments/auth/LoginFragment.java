@@ -75,13 +75,7 @@ public class LoginFragment extends Fragment {
         }
     };
 
-    private final View.OnClickListener onCreateClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            // TODO EYAD go to SignUp Fragment
-
-        }
-    };
+    private final View.OnClickListener onCreateClicked = v -> FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new SignUpFragment());
 
     private final TextWatcher  onTextChanged = new TextWatcher() {
         @Override
