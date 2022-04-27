@@ -57,12 +57,13 @@ public class AuthFragment extends Fragment {
     private final View.OnClickListener onSignUpClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new SignUpFragment());
         }
     };
     private final View.OnClickListener onPrivacyPolicyClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            NoteMessage.showSnackBar(requireActivity(),"There is not privacy policy");
+            NoteMessage.showSnackBar(requireActivity(),"There is no privacy policy");
         }
     };
 

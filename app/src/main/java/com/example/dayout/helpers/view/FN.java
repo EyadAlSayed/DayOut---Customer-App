@@ -87,7 +87,6 @@ public class FN {
     }
 
 
-
     public static Fragment getCurrentFragment(FragmentActivity fragmentActivity) {
         FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
         String fragmentTag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
