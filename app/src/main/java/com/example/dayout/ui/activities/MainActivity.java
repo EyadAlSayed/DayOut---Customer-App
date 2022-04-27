@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void hideBottomBar() {
         drawerButton.animate().setDuration(400).alpha(0);
+        bottomBar.animate().setDuration(400).alpha(0);
         new Handler(getMainLooper()).postDelayed(() -> {
             drawerButton.setVisibility(View.GONE);
             bottomBar.setVisibility(View.GONE);
