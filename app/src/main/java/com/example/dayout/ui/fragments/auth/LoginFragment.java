@@ -66,10 +66,11 @@ public class LoginFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            requireActivity().startActivity(new Intent(requireActivity(), MainActivity.class));
-            requireActivity().finish();
+
             if (checkInfo()){
                 //TODO EYAD send login request;
+                requireActivity().startActivity(new Intent(requireActivity(), MainActivity.class));
+                requireActivity().finish();
             }
         }
     };
