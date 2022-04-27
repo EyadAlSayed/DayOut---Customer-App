@@ -47,9 +47,10 @@
                     android:id="@+id/signup_first_name_textlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusableInTouchMode="true"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:hint="@string/first_name">
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/first_name"
+                    app:boxBackgroundMode="filled">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/sign_up_first_name"
@@ -70,10 +71,12 @@
                     android:id="@+id/signup_last_name_textlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusableInTouchMode="true"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:hint="@string/last_name">
+                    android:focusableInTouchMode="true"
+
+                    android:hint="@string/last_name"
+                    app:boxBackgroundMode="filled">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/sign_up_last_name"
@@ -96,6 +99,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
+                    app:boxBackgroundMode="filled"
+
                     app:passwordToggleEnabled="true">
 
 
@@ -119,6 +124,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_password"
+                    app:boxBackgroundMode="filled"
+
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -216,7 +223,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_5sdp"
-                        android:layout_weight=".7"
+                        android:layout_weight="0.7"
+                        app:boxBackgroundMode="filled"
                         app:layout_constraintEnd_toEndOf="@+id/user_name_textlayout"
                         app:layout_constraintStart_toStartOf="@+id/user_name_textlayout"
                         app:layout_constraintTop_toBottomOf="@+id/user_name_textlayout">
