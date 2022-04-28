@@ -16,6 +16,7 @@ import com.example.dayout.ui.fragments.drawer.DrawerFragment;
 import com.example.dayout.ui.fragments.home.ExploreFragment;
 import com.example.dayout.ui.fragments.home.FavoritePlaceFragment;
 import com.example.dayout.ui.fragments.home.HomeFragment;
+import com.example.dayout.ui.fragments.profile.ProfileFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private final View.OnClickListener onProfileClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            FN.addFixedNameFadeFragment(MAIN_FRC, MainActivity.this, new ProfileFragment());
         }
     };
 
