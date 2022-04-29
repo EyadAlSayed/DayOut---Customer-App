@@ -116,7 +116,7 @@ public class EditProfileFragment extends Fragment {
     private final View.OnClickListener onBackClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            FN.popStack(requireActivity());
+            FN.popTopStack(requireActivity());
         }
     };
 

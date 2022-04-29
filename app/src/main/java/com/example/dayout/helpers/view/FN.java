@@ -93,7 +93,7 @@ public class FN {
         fragmentManager.popBackStackImmediate(fragmentName, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
-    public static void popStack(FragmentActivity fragmentActivity) {
+    public static void popTopStack(FragmentActivity fragmentActivity) {
         fragmentActivity.getSupportFragmentManager().popBackStack();
     }
 

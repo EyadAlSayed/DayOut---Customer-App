@@ -2,6 +2,8 @@ package com.example.dayout.ui.fragments.drawer;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +50,21 @@ public class DrawerFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_drawer, container, false);
         ButterKnife.bind(this, view);
         initView();
-        initBlur();
         return view;
+    }
+    @Override
+    public void onStart() {
+        ((MainActivity) requireActivity()).hideDrawerButton();
+        ((MainActivity) requireActivity()).hideBottomBar();
+        new Handler(Looper.getMainLooper()).postDelayed(this::initBlur, 1000);
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        ((MainActivity) requireActivity()).showDrawerButton();
+        ((MainActivity) requireActivity()).showBottomBar();
+        super.onStop();
     }
 
     private void initView() {
@@ -74,7 +89,12 @@ public class DrawerFragment extends Fragment {
 
 
     private final View.OnClickListener onCloseClicked = v -> {
-        FN.popStack(requireActivity());
-        ((MainActivity) requireActivity()).showBottomBar();
+        blurView.setupWith(new ViewGroup(requireContext()) {
+            @Override
+            protected void onLayout(boolean changed, int l, int t, int r, int b) {
+                // this for removing blur view group before deAttach the fragment
+            }
+        });
+        new Handler(Looper.getMainLooper()).postDelayed(() -> FN.popTopStack(requireActivity()), 200);
     };
 }
