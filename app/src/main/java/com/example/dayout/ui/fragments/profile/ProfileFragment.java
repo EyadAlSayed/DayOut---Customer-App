@@ -2,7 +2,6 @@ package com.example.dayout.ui.fragments.profile;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +12,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.ui.fragments.drawer.DrawerFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.os.Looper.getMainLooper;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
 public class ProfileFragment extends Fragment {
@@ -72,19 +69,9 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private final View.OnClickListener onBackArrowClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            FN.popStack(requireActivity());
-        }
-    };
+    private final View.OnClickListener onBackArrowClicked = view -> FN.popTopStack(requireActivity());
 
-    private final View.OnClickListener onEditProfileClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new EditProfileFragment());
-        }
-    };
+    private final View.OnClickListener onEditProfileClicked = view -> FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new EditProfileFragment());
 
     private void initViews(){
         backArrowButton.setOnClickListener(onBackArrowClicked);
