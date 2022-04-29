@@ -24,4 +24,5 @@
     <string name="email">Email Address</string>
     <string name="following">Following</string>
     <string name="passenger">Passenger</string>
+    <string name="done">Done</string>
 </resources>
