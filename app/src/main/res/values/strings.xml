@@ -19,4 +19,9 @@
     <string name="already_have_an_account"><u>Already have an account? Login</u></string>
     <string name="name_does_not_match">Do Not Add Symbols or Numbers.</string>
     <string name="not_a_phone_number">Not a Phone Number</string>
+    <string name="trips">Trips</string>
+    <string name="followers">Followers</string>
+    <string name="email">Email Address</string>
+    <string name="following">Following</string>
+    <string name="passenger">Passenger</string>
 </resources>
