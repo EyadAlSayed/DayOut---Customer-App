@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.ui.activities.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +68,18 @@ public class ProfileFragment extends Fragment {
         ButterKnife.bind(this, view);
         initViews();
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        ((MainActivity)requireActivity()).hideBottomBar();
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        ((MainActivity)requireActivity()).showBottomBar();
+        super.onStop();
     }
 
     private final View.OnClickListener onBackArrowClicked = view -> FN.popTopStack(requireActivity());
