@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
@@ -46,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initView();
         FN.addFixedNameFadeFragment(MAIN_FRC, this, new HomeFragment());
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_fr_c);
+        if (currentFragment instanceof  HomeFragment) finish();
+        else super.onBackPressed();
     }
 
     private void initView() {
