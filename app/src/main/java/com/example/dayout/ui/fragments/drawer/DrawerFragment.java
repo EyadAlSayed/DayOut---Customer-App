@@ -1,5 +1,6 @@
 package com.example.dayout.ui.fragments.drawer;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.example.dayout.ui.activities.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import eightbitlab.com.blurview.BlurView;
+import eightbitlab.com.blurview.RenderScriptBlur;
 
 
 public class DrawerFragment extends Fragment {
@@ -35,6 +38,8 @@ public class DrawerFragment extends Fragment {
     TextView connectUsTxt;
     @BindView(R.id.setting_txt)
     TextView settingTxt;
+    @BindView(R.id.blur_view)
+    BlurView blurView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +48,7 @@ public class DrawerFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_drawer, container, false);
         ButterKnife.bind(this, view);
         initView();
+        initBlur();
         return view;
     }
 
@@ -50,6 +56,22 @@ public class DrawerFragment extends Fragment {
         drawerCloseButton.setOnClickListener(onCloseClicked);
 
     }
+
+    private void initBlur() {
+        float radius = 20f;
+
+        View decorView = requireActivity().getWindow().getDecorView();
+        ViewGroup rootView = (ViewGroup) decorView.findViewById(android.R.id.content);
+        Drawable windowBackground = decorView.getBackground();
+
+        blurView.setupWith(rootView)
+                .setFrameClearDrawable(windowBackground)
+                .setBlurAlgorithm(new RenderScriptBlur(requireContext()))
+                .setBlurRadius(radius)
+                .setBlurAutoUpdate(true);
+
+    }
+
 
     private final View.OnClickListener onCloseClicked = v -> {
         FN.popStack(requireActivity());
