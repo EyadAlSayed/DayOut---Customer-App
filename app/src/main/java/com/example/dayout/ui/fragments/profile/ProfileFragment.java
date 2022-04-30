@@ -20,43 +20,34 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
+@SuppressLint("NonConstantResourceId")
 public class ProfileFragment extends Fragment {
 
     View view;
 
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.back_arrow_btn)
     ImageButton backArrowButton;
 
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.profile_edit_button)
     ImageButton profileEditButton;
 
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.profile_image)
     CircleImageView profileImage;
 
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.profile_followers_count)
     TextView profileFollowersCount;
 
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.profile_trips_count)
     TextView profileTripsCount;
 
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.profile_gender)
     TextView profileGender;
 
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.profile_phone_number)
     TextView profilePhoneNumber;
 
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.profile_email)
     TextView profileEmail;
-
-    private boolean isDrawerOpen = false;
 
     public ProfileFragment() {
     }
