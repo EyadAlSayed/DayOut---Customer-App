@@ -17,9 +17,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
+import com.example.dayout.config.AppConstants;
 import com.example.dayout.helpers.system.PermissionsHelper;
 import com.example.dayout.helpers.view.ConverterImage;
 import com.example.dayout.helpers.view.FN;
+
+import java.util.regex.Matcher;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,12 +40,6 @@ public class EditProfileFragment extends Fragment {
 
     @BindView(R.id.edit_profile_done)
     TextView editProfileDone;
-
-    @BindView(R.id.edit_profile_upload_image_button)
-    ImageButton editProfileUploadImageButton;
-
-    @BindView(R.id.edit_profile_upload_image_layout)
-    LinearLayout editProfileUploadImageLayout;
 
     @BindView(R.id.edit_profile_image)
     CircleImageView editProfileImage;
@@ -78,10 +75,102 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void initViews(){
-        editProfileUploadImageButton.setOnClickListener(onUploadImageClicked);
         editProfileEditButton.setOnClickListener(onUploadImageClicked);
         editProfileBackButton.setOnClickListener(onBackClicked);
         editProfileDone.setOnClickListener(onDoneClicked);
+    }
+
+    private boolean checkInfo(){
+
+        boolean firstNameValidation = isFirstNameValid();
+        boolean lastNameValidation = isLastNameValid();
+        boolean emailValidation = isEmailValid();
+        boolean phoneNumberValidation = isPhoneNumberValid();
+
+        return firstNameValidation && lastNameValidation && emailValidation && phoneNumberValidation;
+    }
+
+    private boolean isFirstNameValid() {
+
+        Matcher firstNameMatcher = AppConstants.NAME_REGEX.matcher(editProfileFirstName.getText().toString());
+
+        boolean ok = true;
+
+
+        if (editProfileFirstName.getText().toString().isEmpty()) {
+            editProfileFirstName.setError(getResources().getString(R.string.empty_field));
+
+            ok = false;
+
+        } else if (editProfileFirstName.getText().toString().charAt(0) == ' ') {
+            editProfileFirstName.setError(getResources().getString(R.string.no_space));
+
+            ok = false;
+
+        } else if (!firstNameMatcher.matches()) {
+            editProfileFirstName.setError(getResources().getString(R.string.name_does_not_match));
+
+            ok = false;
+        }
+
+        return ok;
+    }
+
+    private boolean isLastNameValid() {
+
+        Matcher lastNameMatcher = AppConstants.NAME_REGEX.matcher(editProfileLastName.getText().toString());
+
+        boolean ok = true;
+
+        if (editProfileLastName.getText().toString().isEmpty()) {
+            editProfileLastName.setError(getResources().getString(R.string.empty_field));
+
+            ok = false;
+
+        } else if (editProfileLastName.getText().toString().charAt(0) == ' ') {
+            editProfileLastName.setError(getResources().getString(R.string.no_space));
+
+            ok = false;
+
+        } else if (!lastNameMatcher.matches()) {
+            editProfileLastName.setError(getResources().getString(R.string.name_does_not_match));
+
+            ok = false;
+        }
+
+        return ok;
+    }
+
+    private boolean isEmailValid() {
+
+        Matcher emailMatcher = AppConstants.EMAIL_REGEX.matcher(editProfileEmail.getText().toString());
+
+        boolean ok = true;
+
+        if (!editProfileEmail.getText().toString().isEmpty()) {
+            if (!emailMatcher.matches()) {
+                editProfileEmail.setError(getResources().getString(R.string.not_an_email_address));
+
+                ok = false;
+            }
+        }
+
+        return ok;
+    }
+
+    private boolean isPhoneNumberValid() {
+
+        Matcher phoneNumberMatcher = AppConstants.PHONE_NUMBER_REGEX.matcher(editProfilePhoneNumber.getText().toString());
+
+        boolean ok = true;
+
+        if (!phoneNumberMatcher.matches()) {
+            editProfilePhoneNumber.setError(getResources().getString(R.string.not_a_phone_number));
+
+            ok = false;
+        }
+
+        return ok;
     }
 
     private void selectImage() {
@@ -95,15 +184,8 @@ public class EditProfileFragment extends Fragment {
             editProfileImage.setImageURI(result);
             //TODO Send this string to Backend - Caesar.
             imageAsString = ConverterImage.convertUriToBase64(requireContext(), result);
-            if (imageAsString != null)
-                adjustVisibilities();
         }
     });
-
-    private void adjustVisibilities(){
-        editProfileUploadImageLayout.setVisibility(View.GONE);
-        editProfileImageLayout.setVisibility(View.VISIBLE);
-    }
 
 
     private final View.OnClickListener onUploadImageClicked = new View.OnClickListener() {
@@ -123,7 +205,10 @@ public class EditProfileFragment extends Fragment {
     private final View.OnClickListener onDoneClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            if(checkInfo()){
+                System.out.println("VALID");
+                FN.popStack(requireActivity());
+            }
         }
     };
 

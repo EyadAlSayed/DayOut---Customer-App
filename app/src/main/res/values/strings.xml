@@ -25,4 +25,9 @@
     <string name="following">Following</string>
     <string name="passenger">Passenger</string>
     <string name="done">Done</string>
+    <string name="no_space">Do Not Start With Space</string>
+    <string name="empty_field">Field is Empty</string>
+    <string name="password_limit">At Least 6 Characters Allowed</string>
+    <string name="email_optional">Email Address (Optional)</string>
+    <string name="not_an_email_address">Not An Email Address</string>
 </resources>
