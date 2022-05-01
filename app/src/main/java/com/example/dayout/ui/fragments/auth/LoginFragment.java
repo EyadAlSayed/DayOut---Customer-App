@@ -21,6 +21,7 @@ import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.LoginModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.viewModels.AuthViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -51,6 +52,8 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.login_btn)
     Button loginButton;
 
+    LoadingDialog loadingDialog;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,6 +65,8 @@ public class LoginFragment extends Fragment {
     }
 
     private void initView() {
+
+        loadingDialog = new LoadingDialog(requireContext());
         loginButton.setOnClickListener(onLoginClicked);
         createAccountTxt.setOnClickListener(onCreateClicked);
         password.addTextChangedListener(onTextChanged);
@@ -72,6 +77,7 @@ public class LoginFragment extends Fragment {
         @Override
         public void onClick(View v) {
             if (checkInfo()) {
+                loadingDialog.show();
                 AuthViewModel.getINSTANCE().login(getLoginInfo());
 
                 AuthViewModel.getINSTANCE().loginMutableLiveData.observe(requireActivity(),loginObserver);
@@ -85,6 +91,7 @@ public class LoginFragment extends Fragment {
     private final Observer<Pair<LoginModel,String>> loginObserver = new Observer<Pair<LoginModel, String>>() {
         @Override
         public void onChanged(Pair<LoginModel, String> loginModelStringPair) {
+            loadingDialog.dismiss();
             if (loginModelStringPair != null){
                 if (loginModelStringPair.first != null){
                     AppSharedPreferences.CACHE_AUTH_DATA(loginModelStringPair.first.data.id,loginModelStringPair.first.data.token);
