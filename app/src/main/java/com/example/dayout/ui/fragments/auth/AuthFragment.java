@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
+import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.dialogs.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +40,7 @@ public class AuthFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_auth, container, false);
         ButterKnife.bind(this, view);
         initView();
+
         return view;
     }
 
