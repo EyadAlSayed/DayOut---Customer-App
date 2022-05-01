@@ -22,7 +22,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "http://";
+
+    // TODO change localhost according to your server ip
+    public static final String BASE_URL = "http://localhost:8000/";
+
+
     public static Retrofit retrofit;
 
     public static TokenInterceptor interceptor = new TokenInterceptor();
@@ -34,8 +38,8 @@ public class ApiClient {
         if (retrofit == null) {
             Gson gson = new GsonBuilder().setLenient().create();
             retrofit = new Retrofit.Builder()
-                    //.client(client)
-                    .client(getUnsafeOkHttpClient())
+                    //.client(client) // safe http client
+                    .client(getUnsafeOkHttpClient()) // un safe http client
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();

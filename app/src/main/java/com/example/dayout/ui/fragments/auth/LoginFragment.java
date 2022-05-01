@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +13,18 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
+import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.ui.activities.AuthActivity;
+import com.example.dayout.models.LoginModel;
 import com.example.dayout.ui.activities.MainActivity;
+import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.viewModels.AuthViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.JsonObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,13 +71,28 @@ public class LoginFragment extends Fragment {
     private final View.OnClickListener onLoginClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
-
             if (checkInfo()) {
-                //TODO EYAD send login request;
+                AuthViewModel.getINSTANCE().login(getLoginInfo());
+
+                AuthViewModel.getINSTANCE().loginMutableLiveData.observe(requireActivity(),loginObserver);
+
                 requireActivity().startActivity(new Intent(requireActivity(), MainActivity.class));
                 requireActivity().finish();
             }
+        }
+    };
+
+    private final Observer<Pair<LoginModel,String>> loginObserver = new Observer<Pair<LoginModel, String>>() {
+        @Override
+        public void onChanged(Pair<LoginModel, String> loginModelStringPair) {
+            if (loginModelStringPair != null){
+                if (loginModelStringPair.first != null){
+                    AppSharedPreferences.CACHE_AUTH_DATA(loginModelStringPair.first.data.id,loginModelStringPair.first.data.token);
+                    openMainActivity();
+                }
+                else new ErrorDialog(requireContext(),loginModelStringPair.second).show();
+            }
+            else new ErrorDialog(requireContext(),"Error connection").show();
         }
     };
 
@@ -94,6 +114,18 @@ public class LoginFragment extends Fragment {
 
         }
     };
+
+    private JsonObject getLoginInfo(){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("phone_number",userName.getText().toString());
+        jsonObject.addProperty("password",password.getText().toString());
+        return jsonObject;
+    }
+
+    private void openMainActivity(){
+        requireActivity().startActivity(new Intent(requireActivity(),MainActivity.class));
+        requireActivity().finish();
+    }
 
     private boolean checkInfo() {
 
