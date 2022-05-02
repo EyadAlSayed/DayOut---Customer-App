@@ -79,11 +79,7 @@ public class LoginFragment extends Fragment {
             if (checkInfo()) {
                 loadingDialog.show();
                 AuthViewModel.getINSTANCE().login(getLoginInfo());
-
                 AuthViewModel.getINSTANCE().loginMutableLiveData.observe(requireActivity(),loginObserver);
-
-                requireActivity().startActivity(new Intent(requireActivity(), MainActivity.class));
-                requireActivity().finish();
             }
         }
     };

@@ -1,0 +1,26 @@
+package com.example.dayout.models;
+
+import java.io.Serializable;
+import java.util.List;
+
+public class PopularPlace implements Serializable {
+    public class Data{
+        public int id;
+        public String name;
+        public String address;
+        public String summary;
+        public String description;
+        public Object deleted_at;
+        public String created_at;
+        public String updated_at;
+        public int type_id;
+        public int place_trips_count;
+    }
+
+    public boolean success;
+    public String message;
+    public List<Data> data;
+
+    // missing popular place photos
+
+}

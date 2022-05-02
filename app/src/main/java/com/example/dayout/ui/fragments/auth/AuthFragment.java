@@ -40,7 +40,6 @@ public class AuthFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_auth, container, false);
         ButterKnife.bind(this, view);
         initView();
-
         return view;
     }
 
