@@ -12,6 +12,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
+import com.example.dayout.models.PopularPlace;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,13 @@ public class PlaceInfoFragment extends Fragment {
     @BindView(R.id.place_full_info_txt)
     TextView placeFullInfoTxt;
 
+
+    PopularPlace.Data popularPlaceData;
+
+    public PlaceInfoFragment(PopularPlace.Data popularPlaceData) {
+        this.popularPlaceData = popularPlaceData;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,9 +48,12 @@ public class PlaceInfoFragment extends Fragment {
 
     private void initView(){
         initImageSlider();
+        placeFullInfoTxt.setText(popularPlaceData.description);
     }
 
     private void initImageSlider() {
+
+        //TODO EYAD - add images url to slider
         List<SlideModel> slideModels = new ArrayList<>();
         slideModels.add(new SlideModel(R.drawable.a, ScaleTypes.FIT)); // for one image
         slideModels.add(new SlideModel(R.drawable.aa, ScaleTypes.FIT)); // you can with title

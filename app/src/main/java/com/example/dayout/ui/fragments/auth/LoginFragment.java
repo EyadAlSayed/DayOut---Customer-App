@@ -66,7 +66,7 @@ public class LoginFragment extends Fragment {
 
     private void initView() {
 
-        loadingDialog = new LoadingDialog(requireContext());
+            loadingDialog = new LoadingDialog(requireContext());
         loginButton.setOnClickListener(onLoginClicked);
         createAccountTxt.setOnClickListener(onCreateClicked);
         password.addTextChangedListener(onTextChanged);
