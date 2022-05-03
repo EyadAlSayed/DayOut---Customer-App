@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.fragments.auth.AuthFragment;
 import com.example.dayout.ui.fragments.drawer.DrawerFragment;
 import com.example.dayout.ui.fragments.home.ExploreFragment;
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
 
 import static com.example.dayout.config.AppConstants.AUTH_FRC;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
+import static com.example.dayout.config.AppSharedPreferences.InitSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        InitSharedPreferences(this);
         initView();
+
         FN.addFixedNameFadeFragment(MAIN_FRC, this, new HomeFragment());
     }
 
@@ -53,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_fr_c);
-        if (currentFragment instanceof  HomeFragment) finish();
+        if (currentFragment instanceof HomeFragment) finish();
         else super.onBackPressed();
     }
 
@@ -78,28 +82,27 @@ public class MainActivity extends AppCompatActivity {
         bottomBar.animate().setDuration(400).alpha(1);
     }
 
-    public  void hideBottomBar() {
+    public void hideBottomBar() {
 
         bottomBar.animate().setDuration(400).alpha(0);
         new Handler(getMainLooper()).postDelayed(() -> {
 
             bottomBar.setVisibility(View.GONE);
-        },450);
+        }, 450);
 
     }
 
-    public void showDrawerButton(){
+    public void showDrawerButton() {
         drawerButton.setVisibility(View.VISIBLE);
         drawerButton.animate().setDuration(400).alpha(1);
     }
 
-    public void hideDrawerButton(){
+    public void hideDrawerButton() {
         drawerButton.animate().setDuration(400).alpha(0);
         new Handler(getMainLooper()).postDelayed(() -> {
             drawerButton.setVisibility(View.GONE);
         }, 450);
     }
-
 
 
 }
