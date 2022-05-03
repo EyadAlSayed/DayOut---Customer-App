@@ -19,7 +19,7 @@ import androidx.lifecycle.Observer;
 import com.example.dayout.R;
 import com.example.dayout.config.AppConstants;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.ProfileModel;
+import com.example.dayout.models.UserRegisterModel;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.dialogs.SuccessDialog;
@@ -238,7 +238,7 @@ public class SignUpFragment extends Fragment {
         return ok;
     }
 
-    private ProfileModel getInfo() {
+    private UserRegisterModel getInfo() {
 //        JsonObject jsonObject = new JsonObject();
 //        jsonObject.addProperty("first_name", firstName.getText().toString());
 //        jsonObject.addProperty("last_name", lastName.getText().toString());
@@ -256,7 +256,7 @@ public class SignUpFragment extends Fragment {
 //
 //        return jsonObject;
 
-        ProfileModel model = new ProfileModel();
+        UserRegisterModel model = new UserRegisterModel();
         model.first_name = firstName.getText().toString();
         model.last_name = lastName.getText().toString();
         model.password = password.getText().toString();
@@ -280,14 +280,14 @@ public class SignUpFragment extends Fragment {
             if (checkInfo()) {
                 loadingDialog.show();
                 UserViewModel.getINSTANCE().addPassenger(getInfo());
-                UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), signUpObserver);
+                UserViewModel.getINSTANCE().registerMutableLiveData.observe(requireActivity(), signUpObserver);
             }
         }
     };
 
-    private final Observer<Pair<ProfileModel, String>> signUpObserver = new Observer<Pair<ProfileModel, String>>() {
+    private final Observer<Pair<UserRegisterModel, String>> signUpObserver = new Observer<Pair<UserRegisterModel, String>>() {
         @Override
-        public void onChanged(Pair<ProfileModel, String> profileModelStringPair) {
+        public void onChanged(Pair<UserRegisterModel, String> profileModelStringPair) {
             loadingDialog.dismiss();
             if (profileModelStringPair != null) {
                 if (profileModelStringPair.first != null) {

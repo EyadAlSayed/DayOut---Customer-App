@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.dayout.api.ApiClient;
 import com.example.dayout.models.ProfileModel;
-import com.google.gson.JsonObject;
+import com.example.dayout.models.UserRegisterModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,6 +15,7 @@ import retrofit2.Response;
 public class UserViewModel {
     private final ApiClient apiClient = new ApiClient();
     private static UserViewModel instance;
+    public MutableLiveData<Pair<UserRegisterModel, String>> registerMutableLiveData;
     public MutableLiveData<Pair<ProfileModel, String>> profileMutableLiveData;
 
     public static UserViewModel getINSTANCE(){
@@ -24,15 +25,34 @@ public class UserViewModel {
         return instance;
     }
 
-    public void addPassenger(ProfileModel profileModel){
+    public void addPassenger(UserRegisterModel profileModel){
+        registerMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().addPassenger(profileModel).enqueue(new Callback<UserRegisterModel>() {
+            @Override
+            public void onResponse(Call<UserRegisterModel> call, Response<UserRegisterModel> response) {
+                if(response.isSuccessful()){
+                    registerMutableLiveData.setValue(new Pair<>(response.body(), null));
+                } else{
+                    registerMutableLiveData.setValue(new Pair<>(null,response.body().message));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserRegisterModel> call, Throwable t) {
+                registerMutableLiveData.setValue(null);
+            }
+        });
+    }
+
+    public void getPassengerProfile(){
         profileMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().addPassenger(profileModel).enqueue(new Callback<ProfileModel>() {
+        apiClient.getAPI().getPassengerProfile().enqueue(new Callback<ProfileModel>() {
             @Override
             public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
                 if(response.isSuccessful()){
                     profileMutableLiveData.setValue(new Pair<>(response.body(), null));
-                } else{
-                    profileMutableLiveData.setValue(new Pair<>(null,response.body().message));
+                } else {
+                    profileMutableLiveData.setValue(new Pair<>(null, response.body().message));
                 }
             }
 

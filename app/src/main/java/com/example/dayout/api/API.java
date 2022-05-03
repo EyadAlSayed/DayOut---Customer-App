@@ -1,10 +1,9 @@
 package com.example.dayout.api;
 
-import androidx.cardview.widget.CardView;
-
 import com.example.dayout.models.LoginModel;
 
 import com.example.dayout.models.ProfileModel;
+import com.example.dayout.models.UserRegisterModel;
 import com.example.dayout.models.PopularPlace;
 
 import com.google.gson.JsonObject;
@@ -25,6 +24,9 @@ public interface API {
     @GET("api/place/popular")
     Call<PopularPlace> getPopularPlace();
 
+    @GET("api/customer/profile")
+    Call<ProfileModel> getPassengerProfile();
+
 
 
     /**
@@ -36,7 +38,7 @@ public interface API {
 
 
     @POST("api/user/profile/customer")
-    Call<ProfileModel> addPassenger(@Body ProfileModel profile);
+    Call<UserRegisterModel> addPassenger(@Body UserRegisterModel profile);
 
     @POST("api/place/favorite")
     Call<ResponseBody> addToFavorite(@Body JsonObject favoritePlace);
