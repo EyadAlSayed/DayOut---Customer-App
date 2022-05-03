@@ -12,22 +12,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfileViewModel {
-
+public class UserViewModel {
     private final ApiClient apiClient = new ApiClient();
-    private static ProfileViewModel instance;
+    private static UserViewModel instance;
     public MutableLiveData<Pair<ProfileModel, String>> profileMutableLiveData;
 
-    public static ProfileViewModel getINSTANCE(){
+    public static UserViewModel getINSTANCE(){
         if(instance == null){
-            instance = new ProfileViewModel();
+            instance = new UserViewModel();
         }
         return instance;
     }
 
-    public void addPassenger(JsonObject jsonObject){
+    public void addPassenger(ProfileModel profileModel){
         profileMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().addPassenger(jsonObject).enqueue(new Callback<ProfileModel>() {
+        apiClient.getAPI().addPassenger(profileModel).enqueue(new Callback<ProfileModel>() {
             @Override
             public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
                 if(response.isSuccessful()){

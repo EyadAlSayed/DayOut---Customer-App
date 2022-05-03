@@ -1,9 +1,6 @@
 package com.example.dayout.ui.fragments.auth;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,33 +9,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.config.AppConstants;
-import com.example.dayout.helpers.system.PermissionsHelper;
-import com.example.dayout.helpers.view.ConverterImage;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.ProfileModel;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
-import com.example.dayout.viewModels.ProfileViewModel;
+import com.example.dayout.ui.dialogs.SuccessDialog;
+import com.example.dayout.viewModels.UserViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.gson.JsonObject;
 
 import java.util.regex.Matcher;
 
@@ -113,11 +100,11 @@ public class SignUpFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         ButterKnife.bind(this, view);
-        initView();
+        initViews();
         return view;
     }
 
-    private void initView() {
+    private void initViews() {
 
         loadingDialog = new LoadingDialog(requireContext());
 
@@ -251,23 +238,40 @@ public class SignUpFragment extends Fragment {
         return ok;
     }
 
-    private JsonObject getInfo() {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("first_name", firstName.getText().toString());
-        jsonObject.addProperty("last_name", lastName.getText().toString());
-        jsonObject.addProperty("password", password.getText().toString());
-        jsonObject.addProperty("email", signUpEmail.getText().toString());
-        jsonObject.addProperty("photo", (String) null);
-        if (radioGroup.getCheckedRadioButtonId() == maleRadioButton.getId()) {
-            jsonObject.addProperty("gender", "MALE");
-        } else if (radioGroup.getCheckedRadioButtonId() == femaleRadioButton.getId()) {
-            jsonObject.addProperty("gender", "FEMALE");
-        }
-        jsonObject.addProperty("phone_number", phoneNumber.getText().toString());
-        jsonObject.addProperty("customer_trip_count", 0);
-        jsonObject.addProperty("organizer_follow_count", 0);
+    private ProfileModel getInfo() {
+//        JsonObject jsonObject = new JsonObject();
+//        jsonObject.addProperty("first_name", firstName.getText().toString());
+//        jsonObject.addProperty("last_name", lastName.getText().toString());
+//        jsonObject.addProperty("password", password.getText().toString());
+//        jsonObject.addProperty("email", signUpEmail.getText().toString());
+//        jsonObject.addProperty("photo", (String) null);
+//        if (radioGroup.getCheckedRadioButtonId() == maleRadioButton.getId()) {
+//            jsonObject.addProperty("gender", "MALE");
+//        } else if (radioGroup.getCheckedRadioButtonId() == femaleRadioButton.getId()) {
+//            jsonObject.addProperty("gender", "FEMALE");
+//        }
+//        jsonObject.addProperty("phone_number", phoneNumber.getText().toString());
+//        jsonObject.addProperty("customer_trip_count", 0);
+//        jsonObject.addProperty("organizer_follow_count", 0);
+//
+//        return jsonObject;
 
-        return jsonObject;
+        ProfileModel model = new ProfileModel();
+        model.first_name = firstName.getText().toString();
+        model.last_name = lastName.getText().toString();
+        model.password = password.getText().toString();
+        model.email = signUpEmail.getText().toString();
+        model.photo = null;
+        if (radioGroup.getCheckedRadioButtonId() == maleRadioButton.getId()) {
+            model.gender = "Male";
+        } else if (radioGroup.getCheckedRadioButtonId() == femaleRadioButton.getId()) {
+            model.gender = "Female";
+        }
+        model.phone_number = phoneNumber.getText().toString();
+        model.customer_trip_count = 0;
+        model.organizer_follow_count = 0;
+
+        return model;
     }
 
     private final View.OnClickListener onSignUpBtnClicked = new View.OnClickListener() {
@@ -275,8 +279,8 @@ public class SignUpFragment extends Fragment {
         public void onClick(View view) {
             if (checkInfo()) {
                 loadingDialog.show();
-                ProfileViewModel.getINSTANCE().addPassenger(getInfo());
-                ProfileViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), signUpObserver);
+                UserViewModel.getINSTANCE().addPassenger(getInfo());
+                UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), signUpObserver);
             }
         }
     };
@@ -287,7 +291,8 @@ public class SignUpFragment extends Fragment {
             loadingDialog.dismiss();
             if (profileModelStringPair != null) {
                 if (profileModelStringPair.first != null) {
-                    //???
+                    FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new LoginFragment());
+                    new SuccessDialog(requireContext(), getResources().getString(R.string.signup_success_message)).show();
                 } else
                     new ErrorDialog(requireContext(), profileModelStringPair.second).show();
             } else
