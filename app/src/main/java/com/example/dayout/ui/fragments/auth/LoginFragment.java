@@ -66,7 +66,7 @@ public class LoginFragment extends Fragment {
 
     private void initView() {
 
-        loadingDialog = new LoadingDialog(requireContext());
+            loadingDialog = new LoadingDialog(requireContext());
         loginButton.setOnClickListener(onLoginClicked);
         createAccountTxt.setOnClickListener(onCreateClicked);
         password.addTextChangedListener(onTextChanged);
@@ -79,11 +79,7 @@ public class LoginFragment extends Fragment {
             if (checkInfo()) {
                 loadingDialog.show();
                 AuthViewModel.getINSTANCE().login(getLoginInfo());
-
                 AuthViewModel.getINSTANCE().loginMutableLiveData.observe(requireActivity(),loginObserver);
-
-                requireActivity().startActivity(new Intent(requireActivity(), MainActivity.class));
-                requireActivity().finish();
             }
         }
     };
