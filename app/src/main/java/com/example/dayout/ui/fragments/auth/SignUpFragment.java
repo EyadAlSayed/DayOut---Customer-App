@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +25,20 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.config.AppConstants;
 import com.example.dayout.helpers.system.PermissionsHelper;
 import com.example.dayout.helpers.view.ConverterImage;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.ProfileModel;
+import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.dialogs.LoadingDialog;
+import com.example.dayout.viewModels.ProfileViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.JsonObject;
 
 import java.util.regex.Matcher;
 
@@ -96,6 +103,8 @@ public class SignUpFragment extends Fragment {
 
     View view;
 
+    LoadingDialog loadingDialog;
+
     public SignUpFragment() {
     }
 
@@ -108,7 +117,10 @@ public class SignUpFragment extends Fragment {
         return view;
     }
 
-    private void initView(){
+    private void initView() {
+
+        loadingDialog = new LoadingDialog(requireContext());
+
         firstName.addTextChangedListener(firstNameWatcher);
         lastName.addTextChangedListener(lastNameWatcher);
         password.addTextChangedListener(passwordWatcher);
@@ -239,13 +251,47 @@ public class SignUpFragment extends Fragment {
         return ok;
     }
 
+    private JsonObject getInfo() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("first_name", firstName.getText().toString());
+        jsonObject.addProperty("last_name", lastName.getText().toString());
+        jsonObject.addProperty("password", password.getText().toString());
+        jsonObject.addProperty("email", signUpEmail.getText().toString());
+        jsonObject.addProperty("photo", (String) null);
+        if (radioGroup.getCheckedRadioButtonId() == maleRadioButton.getId()) {
+            jsonObject.addProperty("gender", "MALE");
+        } else if (radioGroup.getCheckedRadioButtonId() == femaleRadioButton.getId()) {
+            jsonObject.addProperty("gender", "FEMALE");
+        }
+        jsonObject.addProperty("phone_number", phoneNumber.getText().toString());
+        jsonObject.addProperty("customer_trip_count", 0);
+        jsonObject.addProperty("organizer_follow_count", 0);
+
+        return jsonObject;
+    }
+
     private final View.OnClickListener onSignUpBtnClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(checkInfo()){
-                System.out.println("VALID");
-                //TODO: Send Object to Back - Caesar.
+            if (checkInfo()) {
+                loadingDialog.show();
+                ProfileViewModel.getINSTANCE().addPassenger(getInfo());
+                ProfileViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), signUpObserver);
             }
+        }
+    };
+
+    private final Observer<Pair<ProfileModel, String>> signUpObserver = new Observer<Pair<ProfileModel, String>>() {
+        @Override
+        public void onChanged(Pair<ProfileModel, String> profileModelStringPair) {
+            loadingDialog.dismiss();
+            if (profileModelStringPair != null) {
+                if (profileModelStringPair.first != null) {
+                    //???
+                } else
+                    new ErrorDialog(requireContext(), profileModelStringPair.second).show();
+            } else
+                new ErrorDialog(requireContext(), "Error Connection").show();
         }
     };
 
@@ -258,7 +304,8 @@ public class SignUpFragment extends Fragment {
 
     private final TextWatcher passwordConfirmationWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -266,12 +313,14 @@ public class SignUpFragment extends Fragment {
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {}
+        public void afterTextChanged(Editable editable) {
+        }
     };
 
     private final TextWatcher firstNameWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -279,12 +328,14 @@ public class SignUpFragment extends Fragment {
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {}
+        public void afterTextChanged(Editable editable) {
+        }
     };
 
     private final TextWatcher lastNameWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -292,7 +343,8 @@ public class SignUpFragment extends Fragment {
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {}
+        public void afterTextChanged(Editable editable) {
+        }
     };
 
     private final TextWatcher passwordWatcher = new TextWatcher() {
@@ -314,7 +366,8 @@ public class SignUpFragment extends Fragment {
 
     private final TextWatcher phoneNumberWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -322,6 +375,7 @@ public class SignUpFragment extends Fragment {
         }
 
         @Override
-        public void afterTextChanged(Editable editable) {}
+        public void afterTextChanged(Editable editable) {
+        }
     };
 }
