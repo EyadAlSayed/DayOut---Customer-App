@@ -1,5 +1,6 @@
 package com.example.dayout.ui.fragments.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
-import com.example.dayout.ui.dialogs.ErrorDialog;
-import com.example.dayout.ui.dialogs.LoadingDialog;
+import com.example.dayout.ui.activities.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +32,8 @@ public class AuthFragment extends Fragment {
     Button signUpButton;
     @BindView(R.id.privacy_policy_txt)
     TextView privacyPolicyTxt;
+    @BindView(R.id.guest_btn)
+    Button guestButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,22 +42,27 @@ public class AuthFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_auth, container, false);
         ButterKnife.bind(this, view);
         initView();
-
         return view;
     }
 
-    private void initView(){
+    private void initView() {
         loginButton.setOnClickListener(onLoginClicked);
         signUpButton.setOnClickListener(onSignUpClicked);
         privacyPolicyTxt.setOnClickListener(onPrivacyPolicyClicked);
+        guestButton.setOnClickListener(onGuestClicked);
     }
+
+    private final View.OnClickListener onGuestClicked = v -> openMainActivity();
 
     private final View.OnClickListener onLoginClicked = v -> FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new LoginFragment());
 
     private final View.OnClickListener onSignUpClicked = v -> FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new SignUpFragment());
 
-    private final View.OnClickListener onPrivacyPolicyClicked = v -> NoteMessage.showSnackBar(requireActivity(),"There is no privacy policy");
+    private final View.OnClickListener onPrivacyPolicyClicked = v -> NoteMessage.showSnackBar(requireActivity(), "There is no privacy policy");
 
-
+    private void openMainActivity() {
+        requireActivity().startActivity(new Intent(requireActivity(), MainActivity.class));
+        requireActivity().finish();
+    }
 
 }
