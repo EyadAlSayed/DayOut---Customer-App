@@ -92,7 +92,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:focusableInTouchMode="true"
                     android:hint="Phone number"
-
+                    app:hintTextColor="@color/orange_500"
                     app:boxBackgroundMode="filled"
                     app:layout_constraintEnd_toEndOf="@+id/textView145"
                     app:layout_constraintStart_toStartOf="parent"
@@ -129,6 +129,7 @@
                     android:focusableInTouchMode="true"
                     android:hint="Password"
                     app:boxBackgroundMode="filled"
+                    app:hintTextColor="@color/orange_500"
                     app:layout_constraintEnd_toEndOf="@+id/user_name_textlayout"
                     app:layout_constraintStart_toStartOf="@+id/user_name_textlayout"
                     app:layout_constraintTop_toBottomOf="@+id/user_name_textlayout"

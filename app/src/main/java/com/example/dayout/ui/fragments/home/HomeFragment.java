@@ -43,6 +43,7 @@ public class HomeFragment extends Fragment {
         ButterKnife.bind(this, view);
         initView();
         getDataFromApi();
+
         return view;
     }
 
