@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.dayout.api.ApiClient;
 import com.example.dayout.models.LoginModel;
+import com.example.dayout.models.UserRegisterModel;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
@@ -30,6 +31,7 @@ public class AuthViewModel extends ViewModel {
 
 
     public MutableLiveData<Pair<LoginModel,String>> loginMutableLiveData;
+    public MutableLiveData<Pair<UserRegisterModel, String>> registerMutableLiveData;
 
 
     public void login(JsonObject jsonObject){
@@ -52,5 +54,23 @@ public class AuthViewModel extends ViewModel {
         });
     }
 
+    public void registerPassenger(UserRegisterModel model){
+        registerMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().registerPassenger(model).enqueue(new Callback<UserRegisterModel>() {
+            @Override
+            public void onResponse(Call<UserRegisterModel> call, Response<UserRegisterModel> response) {
+                if(response.isSuccessful()){
+                    registerMutableLiveData.setValue(new Pair<>(response.body(), null));
+                } else{
+                    registerMutableLiveData.setValue(new Pair<>(null,response.body().message));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserRegisterModel> call, Throwable t) {
+                registerMutableLiveData.setValue(null);
+            }
+        });
+    }
 
 }

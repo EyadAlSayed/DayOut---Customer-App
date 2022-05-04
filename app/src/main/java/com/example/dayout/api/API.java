@@ -38,7 +38,7 @@ public interface API {
 
 
     @POST("api/user/profile/customer")
-    Call<UserRegisterModel> addPassenger(@Body UserRegisterModel profile);
+    Call<UserRegisterModel> registerPassenger(@Body UserRegisterModel profile);
 
     @POST("api/place/favorite")
     Call<ResponseBody> addToFavorite(@Body JsonObject favoritePlace);
