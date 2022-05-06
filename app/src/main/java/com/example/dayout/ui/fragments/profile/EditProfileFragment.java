@@ -3,6 +3,7 @@ package com.example.dayout.ui.fragments.profile;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,17 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.config.AppConstants;
 import com.example.dayout.helpers.system.PermissionsHelper;
 import com.example.dayout.helpers.view.ConverterImage;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.EditProfileModel;
 import com.example.dayout.ui.activities.MainActivity;
+import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.viewModels.UserViewModel;
 
 import java.util.regex.Matcher;
 
@@ -191,11 +196,23 @@ public class EditProfileFragment extends Fragment {
             launcher.launch("image/*");
     }
 
+    private EditProfileModel getEditedData(){
+        EditProfileModel model = new EditProfileModel();
+
+        model.photo = imageAsString;
+        model.first_name = editProfileFirstName.getText().toString();
+        model.last_name = editProfileLastName.getText().toString();
+        model.email = editProfileEmail.getText().toString();
+        model.phone_number = editProfilePhoneNumber.getText().toString();
+
+        return model;
+    }
+
     private final ActivityResultLauncher<String> launcher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
         @Override
         public void onActivityResult(Uri result) {
             editProfileImage.setImageURI(result);
-            //TODO Send this string to Backend - Caesar.
+            //Send this string to Backend.
             imageAsString = ConverterImage.convertUriToBase64(requireContext(), result);
         }
     });
@@ -219,10 +236,22 @@ public class EditProfileFragment extends Fragment {
         @Override
         public void onClick(View view) {
             if(checkInfo()){
-                System.out.println("VALID");
-                FN.popStack(requireActivity());
+                UserViewModel.getINSTANCE().editProfile(getEditedData());
+                UserViewModel.getINSTANCE().editProfileMutableLiveData.observe(requireActivity(), editProfileObserver);
             }
         }
     };
 
+    private final Observer<Pair<EditProfileModel, String>> editProfileObserver = new Observer<Pair<EditProfileModel, String>>() {
+        @Override
+        public void onChanged(Pair<EditProfileModel, String> editProfileModelStringPair) {
+            if(editProfileModelStringPair != null){
+                if(editProfileModelStringPair.first != null){
+                    FN.popStack(requireActivity());
+                } else
+                    new ErrorDialog(requireContext(), editProfileModelStringPair.second);
+            } else
+                new ErrorDialog(requireContext(), "Error Connection");
+        }
+    };
 }
