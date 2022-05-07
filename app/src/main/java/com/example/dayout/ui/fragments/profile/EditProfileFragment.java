@@ -24,6 +24,7 @@ import com.example.dayout.helpers.system.PermissionsHelper;
 import com.example.dayout.helpers.view.ConverterImage;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.EditProfileModel;
+import com.example.dayout.models.ProfileModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.viewModels.UserViewModel;
@@ -77,6 +78,7 @@ public class EditProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         ButterKnife.bind(this, view);
         initViews();
+        setDefaultData();
         return view;
     }
 
@@ -97,6 +99,32 @@ public class EditProfileFragment extends Fragment {
         editProfileBackButton.setOnClickListener(onBackClicked);
         editProfileDone.setOnClickListener(onDoneClicked);
     }
+
+    private void setData(ProfileModel model){
+        editProfileImage.setImageURI(Uri.parse(model.photo));
+        editProfileFirstName.setText(model.first_name);
+        editProfileLastName.setText(model.last_name);
+        editProfileEmail.setText(model.email);
+        editProfilePhoneNumber.setText(model.phone_number);
+    }
+
+    private void setDefaultData(){
+        UserViewModel.getINSTANCE().getPassengerProfile();
+        UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), profileObserver);
+    }
+
+    private final Observer<Pair<ProfileModel, String>> profileObserver = new Observer<Pair<ProfileModel, String>>() {
+        @Override
+        public void onChanged(Pair<ProfileModel, String> profileModelStringPair) {
+            if(profileModelStringPair != null){
+                if(profileModelStringPair.first != null){
+                    setData(profileModelStringPair.first);
+                } else
+                    new ErrorDialog(requireContext(), profileModelStringPair.second);
+            } else
+                new ErrorDialog(requireContext(), "Error Connection");
+        }
+    };
 
     private boolean checkInfo(){
 
