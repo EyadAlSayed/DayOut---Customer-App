@@ -264,13 +264,13 @@ public class SignUpFragment extends Fragment {
         model.email = signUpEmail.getText().toString();
         model.photo = null;
         if (radioGroup.getCheckedRadioButtonId() == maleRadioButton.getId()) {
-            model.gender = "Male";
+            model.gender = "male";
         } else if (radioGroup.getCheckedRadioButtonId() == femaleRadioButton.getId()) {
-            model.gender = "Female";
+            model.gender = "female";
         }
         model.phone_number = phoneNumber.getText().toString();
-        model.customer_trip_count = 0;
-        model.organizer_follow_count = 0;
+//        model.customer_trip_count = 0;
+//        model.organizer_follow_count = 0;
 
         return model;
     }

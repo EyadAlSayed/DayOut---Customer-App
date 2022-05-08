@@ -40,7 +40,7 @@ public interface API {
     Call<LoginModel> login(@Body JsonObject loginReqBody);
 
 
-    @POST("api/user/profile/customer")
+    @POST("api/user/register")
     Call<UserRegisterModel> registerPassenger(@Body UserRegisterModel profile);
 
     @POST("api/place/favorite")

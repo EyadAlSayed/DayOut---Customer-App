@@ -43,7 +43,7 @@ public class AuthViewModel extends ViewModel {
                     loginMutableLiveData.setValue(new Pair<>(response.body(),null));
                 }
                 else {
-                    loginMutableLiveData.setValue(new Pair<>(null,response.body().message));
+                    loginMutableLiveData.setValue(new Pair<>(null,response.message()));
                 }
             }
 
@@ -62,7 +62,8 @@ public class AuthViewModel extends ViewModel {
                 if(response.isSuccessful()){
                     registerMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else{
-                    registerMutableLiveData.setValue(new Pair<>(null,response.body().message));
+                    System.out.println(response.message());
+                    registerMutableLiveData.setValue(new Pair<>(null,response.message()));
                 }
             }
 
