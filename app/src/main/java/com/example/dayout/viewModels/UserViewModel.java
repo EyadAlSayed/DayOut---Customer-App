@@ -8,9 +8,13 @@ import com.example.dayout.api.ApiClient;
 import com.example.dayout.models.EditProfileModel;
 import com.example.dayout.models.ProfileModel;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.dayout.config.AppConstants.getErrorMessage;
 
 public class UserViewModel {
     private final ApiClient apiClient = new ApiClient();
@@ -34,7 +38,11 @@ public class UserViewModel {
                 if(response.isSuccessful()){
                     profileMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
-                    profileMutableLiveData.setValue(new Pair<>(null, response.body().message));
+                    try {
+                        profileMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

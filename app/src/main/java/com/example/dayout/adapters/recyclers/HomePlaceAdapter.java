@@ -60,16 +60,14 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.placeName.setText(list.get(position).name);
-//        holder.shortDescrption.setText(list.get(position).summary);
-
-
-
+        holder.placeName.setText(list.get(position).name);
+        holder.shortDescrption.setText(list.get(position).summary);
+        holder.bindImageSlider(list.get(position).photos);
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -87,7 +85,6 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
             super(itemView);
             itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
-            initImageSlider();
             addFavoriteButton.setOnClickListener(onAddFavoriteClicked);
         }
 
@@ -95,42 +92,43 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
             @Override
             public void onClick(View v) {
                 PlaceViewModel.getINSTANCE().addToFavorite(getJsonObject());
-                PlaceViewModel.getINSTANCE().successfulMutableLiveData.observe((MainActivity)context,successfulObserver);
+                PlaceViewModel.getINSTANCE().successfulMutableLiveData.observe((MainActivity) context, successfulObserver);
             }
         };
 
-        private Observer<Pair<Boolean,String>> successfulObserver = new Observer<Pair<Boolean, String>>() {
+        private Observer<Pair<Boolean, String>> successfulObserver = new Observer<Pair<Boolean, String>>() {
             @Override
             public void onChanged(Pair<Boolean, String> booleanStringPair) {
-                if (booleanStringPair != null){
-                    if (booleanStringPair.first != null && booleanStringPair.first){
+                if (booleanStringPair != null) {
+                    if (booleanStringPair.first != null && booleanStringPair.first) {
                         addFavoriteButton.setVisibility(View.GONE);
-                        NoteMessage.message(context,"successful added");
-                    }
-                    else new ErrorDialog(context,booleanStringPair.second).show();
-                }
-                else new ErrorDialog(context,"connection error").show();
+                        NoteMessage.message(context, "successful added");
+                    } else new ErrorDialog(context, booleanStringPair.second).show();
+                } else new ErrorDialog(context, "connection error").show();
             }
         };
 
-        private JsonObject getJsonObject(){
+        private JsonObject getJsonObject() {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("userId",GET_USER_ID());
-            jsonObject.addProperty("placeId ",list.get(getAdapterPosition()).id);
+            jsonObject.addProperty("userId", GET_USER_ID());
+            jsonObject.addProperty("placeId ", list.get(getAdapterPosition()).id);
             return jsonObject;
-
         }
 
         @Override
         public void onClick(View v) {
-            FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity)context, new PlaceInfoFragment(list.get(getAdapterPosition())));
+            FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new PlaceInfoFragment(list.get(getAdapterPosition())));
         }
 
-        private void initImageSlider() {
+        private void bindImageSlider(List<PopularPlace.Photo> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
-            slideModels.add(new SlideModel(R.drawable.a, ScaleTypes.FIT)); // for one image
-            slideModels.add(new SlideModel(R.drawable.aa, ScaleTypes.FIT)); // you can with title
+
+            for (PopularPlace.Photo ph : photos) {
+                slideModels.add(new SlideModel(ph.path, ScaleTypes.FIT));
+            }
+
             imageSlider.setImageList(slideModels);
+
             imageSlider.setScrollBarFadeDuration(10000);
         }
     }

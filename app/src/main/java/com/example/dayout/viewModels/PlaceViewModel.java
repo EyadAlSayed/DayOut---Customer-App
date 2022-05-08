@@ -9,10 +9,14 @@ import com.example.dayout.api.ApiClient;
 import com.example.dayout.models.PopularPlace;
 import com.google.gson.JsonObject;
 
+import java.io.IOException;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.dayout.config.AppConstants.getErrorMessage;
 
 public class PlaceViewModel extends ViewModel {
 
@@ -42,7 +46,11 @@ public class PlaceViewModel extends ViewModel {
                     popularMutableLiveData.setValue(new Pair<>(response.body(),null));
                 }
                 else {
-                    popularMutableLiveData.setValue(new Pair<>(null,response.message()));
+                    try {
+                        popularMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -62,7 +70,11 @@ public class PlaceViewModel extends ViewModel {
                     successfulMutableLiveData.setValue(new Pair<>(true,null));
                 }
                 else {
-                    successfulMutableLiveData.setValue(new Pair<>(null,response.message()));
+                    try {
+                        successfulMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
