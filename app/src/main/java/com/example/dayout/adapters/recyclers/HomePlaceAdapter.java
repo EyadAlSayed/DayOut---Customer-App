@@ -60,16 +60,13 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.placeName.setText(list.get(position).name);
-//        holder.shortDescrption.setText(list.get(position).summary);
-
-
-
+        holder.placeName.setText(list.get(position).name);
+        holder.shortDescrption.setText(list.get(position).summary);
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

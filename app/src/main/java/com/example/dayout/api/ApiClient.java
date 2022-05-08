@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     // TODO change localhost according to your server ip
-    public static final String BASE_URL = "http://localhost:8000/";
+    public static final String BASE_URL = "http://10.0.2.2:8000/";
 
     public static Retrofit retrofit;
 
