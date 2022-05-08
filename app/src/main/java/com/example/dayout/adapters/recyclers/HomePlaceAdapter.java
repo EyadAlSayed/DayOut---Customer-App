@@ -91,6 +91,7 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
         private final View.OnClickListener onAddFavoriteClicked = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addFavoriteButton.setEnabled(false);
                 PlaceViewModel.getINSTANCE().addToFavorite(getJsonObject());
                 PlaceViewModel.getINSTANCE().successfulMutableLiveData.observe((MainActivity) context, successfulObserver);
             }
@@ -99,6 +100,7 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
         private Observer<Pair<Boolean, String>> successfulObserver = new Observer<Pair<Boolean, String>>() {
             @Override
             public void onChanged(Pair<Boolean, String> booleanStringPair) {
+                addFavoriteButton.setEnabled(true);
                 if (booleanStringPair != null) {
                     if (booleanStringPair.first != null && booleanStringPair.first) {
                         addFavoriteButton.setVisibility(View.GONE);
@@ -111,7 +113,7 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
         private JsonObject getJsonObject() {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("userId", GET_USER_ID());
-            jsonObject.addProperty("placeId ", list.get(getAdapterPosition()).id);
+            jsonObject.addProperty("placeId", list.get(getAdapterPosition()).id);
             return jsonObject;
         }
 
