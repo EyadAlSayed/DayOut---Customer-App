@@ -13,6 +13,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
 import com.example.dayout.models.PopularPlace;
+import com.example.dayout.ui.activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +29,11 @@ public class PlaceInfoFragment extends Fragment {
     ImageSlider imageSlider;
     @BindView(R.id.place_full_info_txt)
     TextView placeFullInfoTxt;
-
+    @BindView(R.id.short_descrption)
+    TextView shortDescrption;
 
     PopularPlace.Data popularPlaceData;
+
 
     public PlaceInfoFragment(PopularPlace.Data popularPlaceData) {
         this.popularPlaceData = popularPlaceData;
@@ -46,17 +49,23 @@ public class PlaceInfoFragment extends Fragment {
         return view;
     }
 
-    private void initView(){
+    @Override
+    public void onStart() {
+        ((MainActivity) requireActivity()).hideBottomBar();
+        super.onStart();
+    }
+
+    private void initView() {
         initImageSlider();
         placeFullInfoTxt.setText(popularPlaceData.description);
+        shortDescrption.setText(popularPlaceData.summary);
     }
 
     private void initImageSlider() {
-
-        //TODO EYAD - add images url to slider
         List<SlideModel> slideModels = new ArrayList<>();
-        slideModels.add(new SlideModel(R.drawable.a, ScaleTypes.FIT)); // for one image
-        slideModels.add(new SlideModel(R.drawable.aa, ScaleTypes.FIT)); // you can with title
+        for (PopularPlace.Photo ph : popularPlaceData.photos) {
+            slideModels.add(new SlideModel(ph.path, ScaleTypes.FIT));
+        }
         imageSlider.setImageList(slideModels);
         imageSlider.setScrollBarFadeDuration(10000);
     }

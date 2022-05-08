@@ -1,10 +1,15 @@
 package com.example.dayout.models.Error;
 
+import android.util.Pair;
+
+import com.example.dayout.models.LoginModel;
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 
-public class ErrorBody implements Serializable {
+public class ErrorModel implements Serializable {
 
-    public static class Data{
+    public class Data {
         public String error;
 
         @Override
@@ -15,9 +20,13 @@ public class ErrorBody implements Serializable {
         }
     }
 
-    public boolean success;
-    public String message;
-    public Data data;
+    private boolean success;
+    private String message;
+    private Data data;
+
+    public String getMessage() {
+        return message;
+    }
 
 
     @Override

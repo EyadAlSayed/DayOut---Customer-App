@@ -12,14 +12,17 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dayout.R;
+import com.example.dayout.config.AppSharedPreferences;
 
 import java.util.regex.Matcher;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SplashActivity extends AppCompatActivity {
+import static com.example.dayout.config.AppSharedPreferences.GET_ACC_TOKEN;
+import static com.example.dayout.config.AppSharedPreferences.IS_REMEMBER_ME;
 
+public class SplashActivity extends AppCompatActivity {
 
 
     @BindView(R.id.splash_motto)
@@ -31,8 +34,14 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
         ButterKnife.bind(this);
+        AppSharedPreferences.InitSharedPreferences(this);
+        initView();
+    }
+
+    private void initView() {
         applyAnimation();
-        openMainActivity();
+        if (GET_ACC_TOKEN().isEmpty() && !IS_REMEMBER_ME()) openAuthActivity();
+        else openMainActivity();
     }
 
     private void applyAnimation() {
@@ -43,12 +52,18 @@ public class SplashActivity extends AppCompatActivity {
         splashMotto.startAnimation(fade_in);
         splashMotto.startAnimation(bottom_up);
     }
-    private void openMainActivity(){
-      new Handler(getMainLooper()).postDelayed(() -> {
 
-          startActivity(new Intent(SplashActivity.this,AuthActivity.class));
+    private void openMainActivity() {
+        new Handler(getMainLooper()).postDelayed(() -> {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            finish();
+        }, 3000);
+    }
 
-          finish();
-      },3000);
+    private void openAuthActivity() {
+        new Handler(getMainLooper()).postDelayed(() -> {
+            startActivity(new Intent(SplashActivity.this, AuthActivity.class));
+            finish();
+        }, 3000);
     }
 }
