@@ -1,6 +1,8 @@
 package com.example.dayout.models;
 
-public class ProfileModel {
+import java.io.Serializable;
+
+public class UserRegisterModel implements Serializable {
 
     public String message;
 
@@ -10,7 +12,9 @@ public class ProfileModel {
     public String photo;
     public String gender;
     public String phone_number;
-    public int trips_count;
-    public String email;
+    public int customer_trip_count;
     public int organizer_follow_count;
+
+    public String password;
+    public String email;
 }

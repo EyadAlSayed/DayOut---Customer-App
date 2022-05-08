@@ -1,5 +1,6 @@
 package com.example.dayout.ui.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -7,28 +8,43 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.example.dayout.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class LoadingDialog extends Dialog {
+@SuppressLint("NonConstantResourceId")
+public class SuccessDialog extends Dialog {
 
     String successMessage;
 
+    @BindView(R.id.success_message)
+    TextView successMessageTV;
 
+    @BindView(R.id.success_ok_button)
+    Button okButton;
 
-    public LoadingDialog(@NonNull Context context) {
+    public SuccessDialog(@NonNull Context context, String successMessage) {
         super(context);
-        setContentView(R.layout.loading_dialog);
+        setContentView(R.layout.success_dialog_layout);
         setCancelable(false);
+        ButterKnife.bind(this);
+        initViews(successMessage);
+    }
+
+    private void initViews(String successMessage){
+        this.successMessage = successMessage;
+        okButton.setOnClickListener(v -> cancel());
     }
 
     @Override
-    public void show() {
-
+    public void show(){
+        successMessageTV.setText(successMessage);
 
         WindowManager.LayoutParams wlp = getWindow().getAttributes();
         wlp.gravity = Gravity.CENTER;

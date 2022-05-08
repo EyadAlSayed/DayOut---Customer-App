@@ -1,8 +1,6 @@
 package com.example.dayout.models;
 
-public class ProfileModel {
-
-    public String message;
+public class EditProfileModel {
 
     public int id;
     public String first_name;
@@ -10,7 +8,8 @@ public class ProfileModel {
     public String photo;
     public String gender;
     public String phone_number;
-    public int trips_count;
+    public String confirm_at;
+    public String created_at;
+    public String updated_at;
     public String email;
-    public int organizer_follow_count;
 }
