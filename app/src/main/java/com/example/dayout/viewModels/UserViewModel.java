@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.dayout.api.ApiClient;
 import com.example.dayout.models.EditProfileModel;
 import com.example.dayout.models.ProfileModel;
-import com.example.dayout.models.UserRegisterModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
