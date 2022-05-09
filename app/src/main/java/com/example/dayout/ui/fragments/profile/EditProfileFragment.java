@@ -27,6 +27,7 @@ import com.example.dayout.models.EditProfileModel;
 import com.example.dayout.models.ProfileModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.viewModels.UserViewModel;
 
 import java.util.regex.Matcher;
@@ -71,7 +72,12 @@ public class EditProfileFragment extends Fragment {
     @BindView(R.id.edit_profile_email)
     EditText editProfileEmail;
 
-    public EditProfileFragment() {
+    LoadingDialog loadingDialog;
+
+    ProfileModel.Data data;
+
+    public EditProfileFragment(ProfileModel.Data data) {
+        this.data = data;
     }
 
     @Override
@@ -80,7 +86,7 @@ public class EditProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         ButterKnife.bind(this, view);
         initViews();
-        setDefaultData();
+        setData();
         return view;
     }
 
@@ -100,34 +106,17 @@ public class EditProfileFragment extends Fragment {
         editProfileEditButton.setOnClickListener(onUploadImageClicked);
         editProfileBackButton.setOnClickListener(onBackClicked);
         editProfileDone.setOnClickListener(onDoneClicked);
+        loadingDialog = new LoadingDialog(requireContext());
     }
 
-    private void setData(ProfileModel model){
-        if(model.photo != null)
-            editProfileImage.setImageURI(Uri.parse(model.photo));
-        editProfileFirstName.setText(model.first_name);
-        editProfileLastName.setText(model.last_name);
-        editProfileEmail.setText(model.email);
-        editProfilePhoneNumber.setText(model.phone_number);
+    private void setData(){
+        if(data.photo != null)
+            editProfileImage.setImageURI(Uri.parse(data.photo));
+        editProfileFirstName.setText(data.first_name);
+        editProfileLastName.setText(data.last_name);
+        editProfileEmail.setText(data.email);
+        editProfilePhoneNumber.setText(data.phone_number);
     }
-
-    private void setDefaultData(){
-        UserViewModel.getINSTANCE().getPassengerProfile(GET_USER_ID());
-        UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), profileObserver);
-    }
-
-    private final Observer<Pair<ProfileModel, String>> profileObserver = new Observer<Pair<ProfileModel, String>>() {
-        @Override
-        public void onChanged(Pair<ProfileModel, String> profileModelStringPair) {
-            if(profileModelStringPair != null){
-                if(profileModelStringPair.first != null){
-                    setData(profileModelStringPair.first);
-                } else
-                    new ErrorDialog(requireContext(), profileModelStringPair.second);
-            } else
-                new ErrorDialog(requireContext(), "Error Connection");
-        }
-    };
 
     private boolean checkInfo(){
 
@@ -267,6 +256,7 @@ public class EditProfileFragment extends Fragment {
         @Override
         public void onClick(View view) {
             if(checkInfo()){
+                loadingDialog.show();
                 UserViewModel.getINSTANCE().editProfile(getEditedData());
                 UserViewModel.getINSTANCE().editProfileMutableLiveData.observe(requireActivity(), editProfileObserver);
             }
@@ -276,13 +266,14 @@ public class EditProfileFragment extends Fragment {
     private final Observer<Pair<EditProfileModel, String>> editProfileObserver = new Observer<Pair<EditProfileModel, String>>() {
         @Override
         public void onChanged(Pair<EditProfileModel, String> editProfileModelStringPair) {
+            loadingDialog.dismiss();
             if(editProfileModelStringPair != null){
                 if(editProfileModelStringPair.first != null){
                     FN.popStack(requireActivity());
                 } else
-                    new ErrorDialog(requireContext(), editProfileModelStringPair.second);
+                    new ErrorDialog(requireContext(), editProfileModelStringPair.second).show();
             } else
-                new ErrorDialog(requireContext(), "Error Connection");
+                new ErrorDialog(requireContext(), "Error Connection").show();
         }
     };
 }

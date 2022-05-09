@@ -53,7 +53,7 @@ public interface API {
      * Put Request
      */
 
-    @PUT("api/user/profile/customer/edit")
+    @POST("api/user/profile/customer/edit")
     Call<EditProfileModel> editProfile(@Body EditProfileModel model);
 
 

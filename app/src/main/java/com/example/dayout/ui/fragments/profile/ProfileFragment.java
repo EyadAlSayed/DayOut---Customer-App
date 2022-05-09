@@ -25,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.dayout.config.AppConstants.ACC_TOKEN;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 import static com.example.dayout.config.AppSharedPreferences.GET_ACC_TOKEN;
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
@@ -67,6 +68,8 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.profile_full_name)
     TextView profileFullName;
 
+    ProfileModel.Data profileModel;
+
     public ProfileFragment() {
     }
 
@@ -98,30 +101,29 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getDataFromAPI(){
-        //GET_USER_ID()
-        System.out.println(GET_ACC_TOKEN());
-        UserViewModel.getINSTANCE().getPassengerProfile(20);
+        UserViewModel.getINSTANCE().getPassengerProfile(GET_USER_ID());
         UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), profileObserver);
     }
 
-    private Observer<Pair<ProfileModel, String>> profileObserver = new Observer<Pair<ProfileModel, String>>() {
+    private final Observer<Pair<ProfileModel, String>> profileObserver = new Observer<Pair<ProfileModel, String>>() {
         @Override
         public void onChanged(Pair<ProfileModel, String> profileModelStringPair) {
             if(profileModelStringPair != null){
                 if(profileModelStringPair.first != null){
-                    setData(profileModelStringPair.first);
+                    setData(profileModelStringPair.first.data.get(0));
+                    profileModel = profileModelStringPair.first.data.get(0);
                 } else
                     new ErrorDialog(requireContext(), profileModelStringPair.second).show();
             } else
-                new ErrorDialog(requireContext(), "Error Connection");
+                new ErrorDialog(requireContext(), "Error Connection").show();
         }
     };
 
-    private void setData(ProfileModel model){
+    private void setData(ProfileModel.Data model){
         setName(model.first_name, model.last_name);
         if(model.photo != null)
             profileImage.setImageURI(Uri.parse(model.photo));
-        profileTripsCount.setText(String.valueOf(model.trips_count));
+        profileTripsCount.setText(String.valueOf(model.customer_trip_count));
         profileFollowingCount.setText(String.valueOf(model.organizer_follow_count));
         profileGender.setText(model.gender);
         profilePhoneNumber.setText(model.phone_number);
@@ -143,6 +145,6 @@ public class ProfileFragment extends Fragment {
 
     private final View.OnClickListener onBackArrowClicked = view -> FN.popTopStack(requireActivity());
 
-    private final View.OnClickListener onEditProfileClicked = view -> FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new EditProfileFragment());
+    private final View.OnClickListener onEditProfileClicked = view -> FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new EditProfileFragment(profileModel));
 
 }
