@@ -34,7 +34,7 @@ public class UserViewModel {
                 if(response.isSuccessful()){
                     profileMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
-                    profileMutableLiveData.setValue(new Pair<>(null, response.body().message));
+                    profileMutableLiveData.setValue(new Pair<>(null, response.message()));
                 }
             }
 

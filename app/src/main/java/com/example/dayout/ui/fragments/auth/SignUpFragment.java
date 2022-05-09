@@ -264,9 +264,9 @@ public class SignUpFragment extends Fragment {
         model.email = signUpEmail.getText().toString();
         model.photo = null;
         if (radioGroup.getCheckedRadioButtonId() == maleRadioButton.getId()) {
-            model.gender = "male";
+            model.gender = "Male";
         } else if (radioGroup.getCheckedRadioButtonId() == femaleRadioButton.getId()) {
-            model.gender = "female";
+            model.gender = "Female";
         }
         model.phone_number = phoneNumber.getText().toString();
 //        model.customer_trip_count = 0;

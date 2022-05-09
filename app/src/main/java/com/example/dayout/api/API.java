@@ -27,7 +27,7 @@ public interface API {
     @GET("api/place/popular")
     Call<PopularPlace> getPopularPlace();
 
-    @GET("api/customer/profile")
+    @GET("api/user/profile/customer")
     Call<ProfileModel> getPassengerProfile();
 
 
