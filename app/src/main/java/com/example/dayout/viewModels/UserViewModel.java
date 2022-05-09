@@ -26,9 +26,9 @@ public class UserViewModel {
         return instance;
     }
 
-    public void getPassengerProfile(){
+    public void getPassengerProfile(int passengerId){
         profileMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getPassengerProfile().enqueue(new Callback<ProfileModel>() {
+        apiClient.getAPI().getPassengerProfile(passengerId).enqueue(new Callback<ProfileModel>() {
             @Override
             public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
                 if(response.isSuccessful()){

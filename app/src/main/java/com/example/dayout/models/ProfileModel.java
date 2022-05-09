@@ -13,4 +13,6 @@ public class ProfileModel {
     public int trips_count;
     public String email;
     public int organizer_follow_count;
+
+
 }

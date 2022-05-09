@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.PopularPlace;
 import com.example.dayout.models.ProfileModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
@@ -25,6 +26,8 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
+import static com.example.dayout.config.AppSharedPreferences.GET_ACC_TOKEN;
+import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 
 @SuppressLint("NonConstantResourceId")
 public class ProfileFragment extends Fragment {
@@ -64,8 +67,6 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.profile_full_name)
     TextView profileFullName;
 
-
-
     public ProfileFragment() {
     }
 
@@ -97,7 +98,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getDataFromAPI(){
-        UserViewModel.getINSTANCE().getPassengerProfile();
+        //GET_USER_ID()
+        System.out.println(GET_ACC_TOKEN());
+        UserViewModel.getINSTANCE().getPassengerProfile(20);
         UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), profileObserver);
     }
 
@@ -116,7 +119,8 @@ public class ProfileFragment extends Fragment {
 
     private void setData(ProfileModel model){
         setName(model.first_name, model.last_name);
-        profileImage.setImageURI(Uri.parse(model.photo));
+        if(model.photo != null)
+            profileImage.setImageURI(Uri.parse(model.photo));
         profileTripsCount.setText(String.valueOf(model.trips_count));
         profileFollowingCount.setText(String.valueOf(model.organizer_follow_count));
         profileGender.setText(model.gender);

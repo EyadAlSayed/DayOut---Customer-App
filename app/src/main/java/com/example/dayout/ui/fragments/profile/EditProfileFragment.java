@@ -35,6 +35,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
+
 @SuppressLint("NonConstantResourceId")
 public class EditProfileFragment extends Fragment {
 
@@ -101,7 +103,8 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void setData(ProfileModel model){
-        editProfileImage.setImageURI(Uri.parse(model.photo));
+        if(model.photo != null)
+            editProfileImage.setImageURI(Uri.parse(model.photo));
         editProfileFirstName.setText(model.first_name);
         editProfileLastName.setText(model.last_name);
         editProfileEmail.setText(model.email);
@@ -109,7 +112,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void setDefaultData(){
-        UserViewModel.getINSTANCE().getPassengerProfile();
+        UserViewModel.getINSTANCE().getPassengerProfile(GET_USER_ID());
         UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), profileObserver);
     }
 
