@@ -1,24 +1,28 @@
 package com.example.dayout.viewModels;
 
 import android.util.Pair;
-import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dayout.api.ApiClient;
+import com.example.dayout.models.Error.ErrorModel;
 import com.example.dayout.models.LoginModel;
 import com.example.dayout.models.UserRegisterModel;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.dayout.config.AppConstants.getErrorMessage;
+
 public class AuthViewModel extends ViewModel {
 
     private static final String TAG = "AuthViewModel";
     private final ApiClient apiClient = new ApiClient();
+    private final Gson gson = new Gson();
 
     private static AuthViewModel instance;
 
@@ -30,20 +34,23 @@ public class AuthViewModel extends ViewModel {
     }
 
 
-    public MutableLiveData<Pair<LoginModel,String>> loginMutableLiveData;
+    public MutableLiveData<Pair<LoginModel, String>> loginMutableLiveData;
     public MutableLiveData<Pair<UserRegisterModel, String>> registerMutableLiveData;
 
 
-    public void login(JsonObject jsonObject){
+    public void login(JsonObject jsonObject) {
         loginMutableLiveData = new MutableLiveData<>();
         apiClient.getAPI().login(jsonObject).enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
-                if (response.isSuccessful()){
-                    loginMutableLiveData.setValue(new Pair<>(response.body(),null));
-                }
-                else {
-                    loginMutableLiveData.setValue(new Pair<>(null,response.message()));
+                if (response.isSuccessful()) {
+                    loginMutableLiveData.setValue(new Pair<>(response.body(), null));
+                } else {
+                    try {
+                        loginMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -54,16 +61,15 @@ public class AuthViewModel extends ViewModel {
         });
     }
 
-    public void registerPassenger(UserRegisterModel model){
+    public void registerPassenger(UserRegisterModel model) {
         registerMutableLiveData = new MutableLiveData<>();
         apiClient.getAPI().registerPassenger(model).enqueue(new Callback<UserRegisterModel>() {
             @Override
             public void onResponse(Call<UserRegisterModel> call, Response<UserRegisterModel> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     registerMutableLiveData.setValue(new Pair<>(response.body(), null));
-                } else{
-                    System.out.println(response.message());
-                    registerMutableLiveData.setValue(new Pair<>(null,response.message()));
+                } else {
+                    registerMutableLiveData.setValue(new Pair<>(null, response.message()));
                 }
             }
 

@@ -65,8 +65,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void initView() {
-
-            loadingDialog = new LoadingDialog(requireContext());
+        loadingDialog = new LoadingDialog(requireContext());
         loginButton.setOnClickListener(onLoginClicked);
         createAccountTxt.setOnClickListener(onCreateClicked);
         password.addTextChangedListener(onTextChanged);
@@ -79,23 +78,21 @@ public class LoginFragment extends Fragment {
             if (checkInfo()) {
                 loadingDialog.show();
                 AuthViewModel.getINSTANCE().login(getLoginInfo());
-                AuthViewModel.getINSTANCE().loginMutableLiveData.observe(requireActivity(),loginObserver);
+                AuthViewModel.getINSTANCE().loginMutableLiveData.observe(requireActivity(), loginObserver);
             }
         }
     };
 
-    private final Observer<Pair<LoginModel,String>> loginObserver = new Observer<Pair<LoginModel, String>>() {
+    private final Observer<Pair<LoginModel, String>> loginObserver = new Observer<Pair<LoginModel, String>>() {
         @Override
         public void onChanged(Pair<LoginModel, String> loginModelStringPair) {
             loadingDialog.dismiss();
-            if (loginModelStringPair != null){
-                if (loginModelStringPair.first != null){
-                    AppSharedPreferences.CACHE_AUTH_DATA(loginModelStringPair.first.data.id,loginModelStringPair.first.data.token);
+            if (loginModelStringPair != null) {
+                if (loginModelStringPair.first != null) {
+                    cacheData(loginModelStringPair.first.data.id,loginModelStringPair.first.data.token);
                     openMainActivity();
-                }
-                else new ErrorDialog(requireContext(),loginModelStringPair.second).show();
-            }
-            else new ErrorDialog(requireContext(),"Error connection").show();
+                } else new ErrorDialog(requireContext(), loginModelStringPair.second).show();
+            } else new ErrorDialog(requireContext(), "Error connection").show();
         }
     };
 
@@ -118,15 +115,20 @@ public class LoginFragment extends Fragment {
         }
     };
 
-    private JsonObject getLoginInfo(){
+    private void cacheData(int id,String token){
+        AppSharedPreferences.CACHE_REMEMBER_ME(rememberMeSwitch.isChecked());
+        AppSharedPreferences.CACHE_AUTH_DATA(id, token);
+    }
+
+    private JsonObject getLoginInfo() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("phone_number",userName.getText().toString());
-        jsonObject.addProperty("password",password.getText().toString());
+        jsonObject.addProperty("phone_number", userName.getText().toString());
+        jsonObject.addProperty("password", password.getText().toString());
         return jsonObject;
     }
 
-    private void openMainActivity(){
-        requireActivity().startActivity(new Intent(requireActivity(),MainActivity.class));
+    private void openMainActivity() {
+        requireActivity().startActivity(new Intent(requireActivity(), MainActivity.class));
         requireActivity().finish();
     }
 
