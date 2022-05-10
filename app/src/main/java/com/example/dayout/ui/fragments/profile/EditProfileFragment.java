@@ -219,11 +219,11 @@ public class EditProfileFragment extends Fragment {
     private EditProfileModel getEditedData(){
         EditProfileModel model = new EditProfileModel();
 
-        model.photo = imageAsString;
-        model.first_name = editProfileFirstName.getText().toString();
-        model.last_name = editProfileLastName.getText().toString();
-        model.email = editProfileEmail.getText().toString();
-        model.phone_number = editProfilePhoneNumber.getText().toString();
+        model.data.photo = imageAsString;
+        model.data.first_name = editProfileFirstName.getText().toString();
+        model.data.last_name = editProfileLastName.getText().toString();
+        model.data.email = editProfileEmail.getText().toString();
+        model.data.phone_number = editProfilePhoneNumber.getText().toString();
 
         return model;
     }
@@ -257,7 +257,7 @@ public class EditProfileFragment extends Fragment {
         public void onClick(View view) {
             if(checkInfo()){
                 loadingDialog.show();
-                UserViewModel.getINSTANCE().editProfile(getEditedData());
+                UserViewModel.getINSTANCE().editProfile(GET_USER_ID(), getEditedData());
                 UserViewModel.getINSTANCE().editProfileMutableLiveData.observe(requireActivity(), editProfileObserver);
             }
         }

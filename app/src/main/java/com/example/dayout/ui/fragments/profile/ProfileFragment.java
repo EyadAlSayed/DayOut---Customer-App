@@ -110,8 +110,8 @@ public class ProfileFragment extends Fragment {
         public void onChanged(Pair<ProfileModel, String> profileModelStringPair) {
             if(profileModelStringPair != null){
                 if(profileModelStringPair.first != null){
-                    setData(profileModelStringPair.first.data.get(0));
-                    profileModel = profileModelStringPair.first.data.get(0);
+                    setData(profileModelStringPair.first.data);
+                    profileModel = profileModelStringPair.first.data;
                 } else
                     new ErrorDialog(requireContext(), profileModelStringPair.second).show();
             } else
@@ -119,15 +119,15 @@ public class ProfileFragment extends Fragment {
         }
     };
 
-    private void setData(ProfileModel.Data model){
-        setName(model.first_name, model.last_name);
-        if(model.photo != null)
-            profileImage.setImageURI(Uri.parse(model.photo));
-        profileTripsCount.setText(String.valueOf(model.customer_trip_count));
-        profileFollowingCount.setText(String.valueOf(model.organizer_follow_count));
-        profileGender.setText(model.gender);
-        profilePhoneNumber.setText(model.phone_number);
-        setEmail(model.email);
+    private void setData(ProfileModel.Data data){
+        setName(data.first_name, data.last_name);
+        if(data.photo != null)
+            profileImage.setImageURI(Uri.parse(data.photo));
+        profileTripsCount.setText(String.valueOf(data.customer_trip_count));
+        profileFollowingCount.setText(String.valueOf(data.organizer_follow_count));
+        profileGender.setText(data.gender);
+        profilePhoneNumber.setText(data.phone_number);
+        setEmail(data.email);
     }
 
     private void setEmail(String email){

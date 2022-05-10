@@ -6,7 +6,7 @@ public class ProfileModel {
 
     public boolean success;
     public String message;
-    public ArrayList<Data> data;
+    public Data data;
 
     public class Data{
         public int id;
