@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.PopularPlace;
 import com.example.dayout.models.ProfileModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
@@ -24,7 +25,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.dayout.config.AppConstants.ACC_TOKEN;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
+import static com.example.dayout.config.AppSharedPreferences.GET_ACC_TOKEN;
+import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 
 @SuppressLint("NonConstantResourceId")
 public class ProfileFragment extends Fragment {
@@ -64,7 +68,7 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.profile_full_name)
     TextView profileFullName;
 
-
+    ProfileModel.Data profileModel;
 
     public ProfileFragment() {
     }
@@ -97,31 +101,33 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getDataFromAPI(){
-        UserViewModel.getINSTANCE().getPassengerProfile();
+        UserViewModel.getINSTANCE().getPassengerProfile(GET_USER_ID());
         UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), profileObserver);
     }
 
-    private Observer<Pair<ProfileModel, String>> profileObserver = new Observer<Pair<ProfileModel, String>>() {
+    private final Observer<Pair<ProfileModel, String>> profileObserver = new Observer<Pair<ProfileModel, String>>() {
         @Override
         public void onChanged(Pair<ProfileModel, String> profileModelStringPair) {
             if(profileModelStringPair != null){
                 if(profileModelStringPair.first != null){
-                    setData(profileModelStringPair.first);
+                    setData(profileModelStringPair.first.data);
+                    profileModel = profileModelStringPair.first.data;
                 } else
                     new ErrorDialog(requireContext(), profileModelStringPair.second).show();
             } else
-                new ErrorDialog(requireContext(), "Error Connection");
+                new ErrorDialog(requireContext(), "Error Connection").show();
         }
     };
 
-    private void setData(ProfileModel model){
-        setName(model.first_name, model.last_name);
-        profileImage.setImageURI(Uri.parse(model.photo));
-        profileTripsCount.setText(String.valueOf(model.trips_count));
-        profileFollowingCount.setText(String.valueOf(model.organizer_follow_count));
-        profileGender.setText(model.gender);
-        profilePhoneNumber.setText(model.phone_number);
-        setEmail(model.email);
+    private void setData(ProfileModel.Data data){
+        setName(data.first_name, data.last_name);
+        if(data.photo != null)
+            profileImage.setImageURI(Uri.parse(data.photo));
+        profileTripsCount.setText(String.valueOf(data.customer_trip_count));
+        profileFollowingCount.setText(String.valueOf(data.organizer_follow_count));
+        profileGender.setText(data.gender);
+        profilePhoneNumber.setText(data.phone_number);
+        setEmail(data.email);
     }
 
     private void setEmail(String email){
@@ -139,6 +145,6 @@ public class ProfileFragment extends Fragment {
 
     private final View.OnClickListener onBackArrowClicked = view -> FN.popTopStack(requireActivity());
 
-    private final View.OnClickListener onEditProfileClicked = view -> FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new EditProfileFragment());
+    private final View.OnClickListener onEditProfileClicked = view -> FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new EditProfileFragment(profileModel));
 
 }

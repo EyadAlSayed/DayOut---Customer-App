@@ -12,6 +12,8 @@ import com.example.dayout.models.UserRegisterModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,7 +71,11 @@ public class AuthViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     registerMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
-                    registerMutableLiveData.setValue(new Pair<>(null, response.message()));
+                    try {
+                        registerMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

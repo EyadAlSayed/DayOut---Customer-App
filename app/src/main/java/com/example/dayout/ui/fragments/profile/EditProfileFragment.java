@@ -27,6 +27,7 @@ import com.example.dayout.models.EditProfileModel;
 import com.example.dayout.models.ProfileModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.viewModels.UserViewModel;
 
 import java.util.regex.Matcher;
@@ -34,6 +35,8 @@ import java.util.regex.Matcher;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 
 @SuppressLint("NonConstantResourceId")
 public class EditProfileFragment extends Fragment {
@@ -69,7 +72,12 @@ public class EditProfileFragment extends Fragment {
     @BindView(R.id.edit_profile_email)
     EditText editProfileEmail;
 
-    public EditProfileFragment() {
+    LoadingDialog loadingDialog;
+
+    ProfileModel.Data data;
+
+    public EditProfileFragment(ProfileModel.Data data) {
+        this.data = data;
     }
 
     @Override
@@ -78,7 +86,7 @@ public class EditProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         ButterKnife.bind(this, view);
         initViews();
-        setDefaultData();
+        setData();
         return view;
     }
 
@@ -98,33 +106,17 @@ public class EditProfileFragment extends Fragment {
         editProfileEditButton.setOnClickListener(onUploadImageClicked);
         editProfileBackButton.setOnClickListener(onBackClicked);
         editProfileDone.setOnClickListener(onDoneClicked);
+        loadingDialog = new LoadingDialog(requireContext());
     }
 
-    private void setData(ProfileModel model){
-        editProfileImage.setImageURI(Uri.parse(model.photo));
-        editProfileFirstName.setText(model.first_name);
-        editProfileLastName.setText(model.last_name);
-        editProfileEmail.setText(model.email);
-        editProfilePhoneNumber.setText(model.phone_number);
+    private void setData(){
+        if(data.photo != null)
+            editProfileImage.setImageURI(Uri.parse(data.photo));
+        editProfileFirstName.setText(data.first_name);
+        editProfileLastName.setText(data.last_name);
+        editProfileEmail.setText(data.email);
+        editProfilePhoneNumber.setText(data.phone_number);
     }
-
-    private void setDefaultData(){
-        UserViewModel.getINSTANCE().getPassengerProfile();
-        UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), profileObserver);
-    }
-
-    private final Observer<Pair<ProfileModel, String>> profileObserver = new Observer<Pair<ProfileModel, String>>() {
-        @Override
-        public void onChanged(Pair<ProfileModel, String> profileModelStringPair) {
-            if(profileModelStringPair != null){
-                if(profileModelStringPair.first != null){
-                    setData(profileModelStringPair.first);
-                } else
-                    new ErrorDialog(requireContext(), profileModelStringPair.second);
-            } else
-                new ErrorDialog(requireContext(), "Error Connection");
-        }
-    };
 
     private boolean checkInfo(){
 
@@ -227,11 +219,11 @@ public class EditProfileFragment extends Fragment {
     private EditProfileModel getEditedData(){
         EditProfileModel model = new EditProfileModel();
 
-        model.photo = imageAsString;
-        model.first_name = editProfileFirstName.getText().toString();
-        model.last_name = editProfileLastName.getText().toString();
-        model.email = editProfileEmail.getText().toString();
-        model.phone_number = editProfilePhoneNumber.getText().toString();
+        model.data.photo = imageAsString;
+        model.data.first_name = editProfileFirstName.getText().toString();
+        model.data.last_name = editProfileLastName.getText().toString();
+        model.data.email = editProfileEmail.getText().toString();
+        model.data.phone_number = editProfilePhoneNumber.getText().toString();
 
         return model;
     }
@@ -264,7 +256,8 @@ public class EditProfileFragment extends Fragment {
         @Override
         public void onClick(View view) {
             if(checkInfo()){
-                UserViewModel.getINSTANCE().editProfile(getEditedData());
+                loadingDialog.show();
+                UserViewModel.getINSTANCE().editProfile(GET_USER_ID(), getEditedData());
                 UserViewModel.getINSTANCE().editProfileMutableLiveData.observe(requireActivity(), editProfileObserver);
             }
         }
@@ -273,13 +266,14 @@ public class EditProfileFragment extends Fragment {
     private final Observer<Pair<EditProfileModel, String>> editProfileObserver = new Observer<Pair<EditProfileModel, String>>() {
         @Override
         public void onChanged(Pair<EditProfileModel, String> editProfileModelStringPair) {
+            loadingDialog.dismiss();
             if(editProfileModelStringPair != null){
                 if(editProfileModelStringPair.first != null){
                     FN.popStack(requireActivity());
                 } else
-                    new ErrorDialog(requireContext(), editProfileModelStringPair.second);
+                    new ErrorDialog(requireContext(), editProfileModelStringPair.second).show();
             } else
-                new ErrorDialog(requireContext(), "Error Connection");
+                new ErrorDialog(requireContext(), "Error Connection").show();
         }
     };
 }
