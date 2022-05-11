@@ -219,11 +219,11 @@ public class EditProfileFragment extends Fragment {
     private EditProfileModel getEditedData(){
         EditProfileModel model = new EditProfileModel();
 
-        model.data.photo = imageAsString;
-        model.data.first_name = editProfileFirstName.getText().toString();
-        model.data.last_name = editProfileLastName.getText().toString();
-        model.data.email = editProfileEmail.getText().toString();
-        model.data.phone_number = editProfilePhoneNumber.getText().toString();
+        model.photo = imageAsString;
+        model.first_name = editProfileFirstName.getText().toString();
+        model.last_name = editProfileLastName.getText().toString();
+        model.email = editProfileEmail.getText().toString();
+        model.phone_number = editProfilePhoneNumber.getText().toString();
 
         return model;
     }
@@ -232,7 +232,6 @@ public class EditProfileFragment extends Fragment {
         @Override
         public void onActivityResult(Uri result) {
             editProfileImage.setImageURI(result);
-            //Send this string to Backend.
             imageAsString = ConverterImage.convertUriToBase64(requireContext(), result);
         }
     });
@@ -263,9 +262,9 @@ public class EditProfileFragment extends Fragment {
         }
     };
 
-    private final Observer<Pair<EditProfileModel, String>> editProfileObserver = new Observer<Pair<EditProfileModel, String>>() {
+    private final Observer<Pair<ProfileModel, String>> editProfileObserver = new Observer<Pair<ProfileModel, String>>() {
         @Override
-        public void onChanged(Pair<EditProfileModel, String> editProfileModelStringPair) {
+        public void onChanged(Pair<ProfileModel, String> editProfileModelStringPair) {
             loadingDialog.dismiss();
             if(editProfileModelStringPair != null){
                 if(editProfileModelStringPair.first != null){

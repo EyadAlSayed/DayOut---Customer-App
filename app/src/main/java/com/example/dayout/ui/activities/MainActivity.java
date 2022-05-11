@@ -1,7 +1,9 @@
 package com.example.dayout.ui.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -12,8 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.ui.dialogs.LoadingDialog;
-import com.example.dayout.ui.fragments.auth.AuthFragment;
+
 import com.example.dayout.ui.fragments.drawer.DrawerFragment;
 import com.example.dayout.ui.fragments.home.ExploreFragment;
 import com.example.dayout.ui.fragments.home.FavoritePlaceFragment;
@@ -25,6 +26,7 @@ import butterknife.ButterKnife;
 
 import static com.example.dayout.config.AppConstants.AUTH_FRC;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
+import static com.example.dayout.config.AppSharedPreferences.GET_ACC_TOKEN;
 import static com.example.dayout.config.AppSharedPreferences.InitSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isDrawerOpen = false;
 
+   // public IPopularPlaces roomPopularPlaces;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +53,10 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         InitSharedPreferences(this);
         initView();
-
+        initRoomDB();
         FN.addFixedNameFadeFragment(MAIN_FRC, this, new HomeFragment());
+
+        Log.d("ACC_TOKEN", "onCreate: "+GET_ACC_TOKEN() );
     }
 
 
@@ -59,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_fr_c);
         if (currentFragment instanceof HomeFragment) finish();
         else super.onBackPressed();
+    }
+
+    private void initRoomDB() {
+    //    roomPopularPlaces = PopularPlaceDataBase.getINSTANCE(this).iPopularPlaces();
     }
 
     private void initView() {

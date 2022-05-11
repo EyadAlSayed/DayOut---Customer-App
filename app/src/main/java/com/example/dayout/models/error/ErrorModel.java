@@ -1,9 +1,4 @@
-package com.example.dayout.models.Error;
-
-import android.util.Pair;
-
-import com.example.dayout.models.LoginModel;
-import com.google.gson.Gson;
+package com.example.dayout.models.error;
 
 import java.io.Serializable;
 

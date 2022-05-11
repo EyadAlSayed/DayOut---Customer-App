@@ -8,14 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
+import com.bumptech.glide.Glide;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.PopularPlace;
+import com.example.dayout.helpers.view.ImageViewer;
 import com.example.dayout.models.ProfileModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
@@ -25,10 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.dayout.config.AppConstants.ACC_TOKEN;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
-import static com.example.dayout.config.AppSharedPreferences.GET_ACC_TOKEN;
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
+import static com.example.dayout.viewModels.UserViewModel.USER_PHOTO_URL;
 
 @SuppressLint("NonConstantResourceId")
 public class ProfileFragment extends Fragment {
@@ -128,6 +129,11 @@ public class ProfileFragment extends Fragment {
         profileGender.setText(data.gender);
         profilePhoneNumber.setText(data.phone_number);
         setEmail(data.email);
+        downloadUserImage(data.id);
+    }
+
+    private void downloadUserImage(int id){
+        ImageViewer.downloadImage(requireActivity(),profileImage,R.drawable.ic_user_profile,USER_PHOTO_URL+id);
     }
 
     private void setEmail(String email){

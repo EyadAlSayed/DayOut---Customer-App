@@ -16,10 +16,7 @@ public class ProfileModel {
         public String phone_number;
         public String photo;
         public String gender;
-        public Object mobile_token;
-        public String verified_at;
-        public String created_at;
-        public String updated_at;
+        public String mobile_token;
         public int customer_trip_count;
         public int organizer_follow_count;
     }
