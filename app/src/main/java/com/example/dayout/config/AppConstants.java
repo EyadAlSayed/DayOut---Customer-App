@@ -1,9 +1,10 @@
 package com.example.dayout.config;
 
+import android.util.Log;
 import android.util.Patterns;
 
 import com.example.dayout.R;
-import com.example.dayout.models.Error.ErrorModel;
+import com.example.dayout.models.error.ErrorModel;
 import com.google.gson.Gson;
 
 import java.util.regex.Pattern;
@@ -28,6 +29,7 @@ public class AppConstants {
     // const function
 
     public static String getErrorMessage(String errorAsString) {
+        Log.e("error", "getErrorMessage: "+errorAsString );
         try {
             Gson gson = new Gson();
             ErrorModel errorModel = gson.fromJson(errorAsString, ErrorModel.class);

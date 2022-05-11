@@ -1,13 +1,12 @@
 package com.example.dayout.ui.fragments.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,15 +14,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.HomePlaceAdapter;
-import com.example.dayout.models.PopularPlace;
+import com.example.dayout.models.PopualrPlace.PopularPlace;
+
+
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.viewModels.PlaceViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class HomeFragment extends Fragment {
@@ -51,29 +58,57 @@ public class HomeFragment extends Fragment {
         initRc();
     }
 
-    private void initRc(){
+    private void initRc() {
 
         homePlaceRc.setHasFixedSize(true);
         homePlaceRc.setLayoutManager(new LinearLayoutManager(requireContext()));
-        homePlaceAdapter = new HomePlaceAdapter(new ArrayList<>(),requireContext());
+        homePlaceAdapter = new HomePlaceAdapter(new ArrayList<>(), requireContext());
         homePlaceRc.setAdapter(homePlaceAdapter);
     }
 
-    private void getDataFromApi(){
+    private void getDataFromApi() {
         PlaceViewModel.getINSTANCE().getPopularPlace();
-        PlaceViewModel.getINSTANCE().popularMutableLiveData.observe(requireActivity(),popularPlaceObserver);
+        PlaceViewModel.getINSTANCE().popularMutableLiveData.observe(requireActivity(), popularPlaceObserver);
     }
 
-    private final Observer<Pair<PopularPlace,String>> popularPlaceObserver =  new Observer<Pair<PopularPlace, String>>() {
+    private final Observer<Pair<PopularPlace, String>> popularPlaceObserver = new Observer<Pair<PopularPlace, String>>() {
         @Override
         public void onChanged(Pair<PopularPlace, String> popularPlaceStringPair) {
-            if (popularPlaceStringPair != null){
-                if (popularPlaceStringPair.first != null){
+            if (popularPlaceStringPair != null) {
+                if (popularPlaceStringPair.first != null) {
                     homePlaceAdapter.refreshList(popularPlaceStringPair.first.data);
+                } else {
+                 //   getDataFromRoom();
+                    new ErrorDialog(requireContext(), popularPlaceStringPair.second).show();
                 }
-                else new ErrorDialog(requireContext(),popularPlaceStringPair.second).show();
+            } else {
+             //   getDataFromRoom();
+                new ErrorDialog(requireContext(), "connection error").show();
             }
-            else new ErrorDialog(requireContext(),"connection error").show();
         }
     };
+
+//    private void getDataFromRoom() {
+//        PopularPlaceDataBase.getINSTANCE(requireContext())
+//                .iPopularPlaces()
+//                .getPopularPlace()
+//                .subscribeOn(Schedulers.computation())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new SingleObserver<List<PopularPlace.Data>>() {
+//                    @Override
+//                    public void onSubscribe(@NonNull Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(@NonNull List<PopularPlace.Data> data) {
+//                        homePlaceAdapter.refreshList(data);
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull Throwable e) {
+//                        Log.e("getter popular place roomDB", "onError: " + e.toString());
+//                    }
+//                });
+//    }
 }

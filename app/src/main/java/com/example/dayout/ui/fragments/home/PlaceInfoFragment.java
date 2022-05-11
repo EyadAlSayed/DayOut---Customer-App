@@ -12,7 +12,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
-import com.example.dayout.models.PopularPlace;
+import com.example.dayout.models.PopualrPlace.PopularPlace;
 import com.example.dayout.ui.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -20,6 +20,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.dayout.viewModels.PlaceViewModel.PLACE_PHOTO_URL;
 
 public class PlaceInfoFragment extends Fragment {
 
@@ -64,7 +66,8 @@ public class PlaceInfoFragment extends Fragment {
     private void initImageSlider() {
         List<SlideModel> slideModels = new ArrayList<>();
         for (PopularPlace.Photo ph : popularPlaceData.photos) {
-            slideModels.add(new SlideModel(ph.path, ScaleTypes.FIT));
+            slideModels.add(new SlideModel(PLACE_PHOTO_URL + ph.id
+                    , ScaleTypes.FIT));
         }
         imageSlider.setImageList(slideModels);
         imageSlider.setScrollBarFadeDuration(10000);

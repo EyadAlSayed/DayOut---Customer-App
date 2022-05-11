@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dayout.api.ApiClient;
-import com.example.dayout.models.Error.ErrorModel;
 import com.example.dayout.models.LoginModel;
 import com.example.dayout.models.UserRegisterModel;
 import com.google.gson.Gson;

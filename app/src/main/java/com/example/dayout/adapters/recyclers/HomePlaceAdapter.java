@@ -1,6 +1,7 @@
 package com.example.dayout.adapters.recyclers;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +19,9 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
-import com.example.dayout.models.PopularPlace;
+import com.example.dayout.models.PopualrPlace.PopularPlace;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
-import com.example.dayout.ui.fragments.home.HomeFragment;
 import com.example.dayout.ui.fragments.home.PlaceInfoFragment;
 import com.example.dayout.viewModels.PlaceViewModel;
 import com.google.gson.JsonObject;
@@ -31,12 +31,18 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.CompletableObserver;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
+import static com.example.dayout.viewModels.PlaceViewModel.PLACE_PHOTO_URL;
 
 public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.ViewHolder> {
 
+    private static final String TAG = "Home place Adapter";
     List<PopularPlace.Data> list;
     Context context;
 
@@ -45,6 +51,28 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
         this.context = context;
     }
 
+//    public void insertRoomObject(PopularPlace.Data popularPlace) {
+//
+//        // insert object in room database
+//        ((MainActivity) context).roomPopularPlaces
+//                .insertPopularPlace(popularPlace)
+//                .subscribeOn(Schedulers.computation()).subscribe(new CompletableObserver() {
+//            @Override
+//            public void onSubscribe(@NonNull Disposable d) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//
+//            @Override
+//            public void onError(@NonNull Throwable e) {
+//                Log.e(TAG, "onError: " + e.toString());
+//            }
+//        });
+//    }
 
     public void refreshList(List<PopularPlace.Data> list) {
         this.list = list;
@@ -60,6 +88,10 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+     //   insertRoomObject(list.get(position));
+
+
         holder.placeName.setText(list.get(position).name);
         holder.shortDescrption.setText(list.get(position).summary);
         holder.bindImageSlider(list.get(position).photos);
@@ -126,7 +158,8 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
             List<SlideModel> slideModels = new ArrayList<>();
 
             for (PopularPlace.Photo ph : photos) {
-                slideModels.add(new SlideModel(ph.path, ScaleTypes.FIT));
+                slideModels.add(new SlideModel(PLACE_PHOTO_URL + ph.id
+                        , ScaleTypes.FIT));
             }
 
             imageSlider.setImageList(slideModels);
