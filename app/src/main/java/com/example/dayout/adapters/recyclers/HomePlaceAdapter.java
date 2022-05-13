@@ -95,6 +95,11 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
         holder.placeName.setText(list.get(position).name);
         holder.shortDescrption.setText(list.get(position).summary);
         holder.bindImageSlider(list.get(position).photos);
+
+        if(list.get(position).favorites_count == 1){
+            holder.addFavoriteButton.setVisibility(View.GONE);
+        }
+        else holder.addFavoriteButton.setVisibility(View.VISIBLE);
     }
 
     @Override

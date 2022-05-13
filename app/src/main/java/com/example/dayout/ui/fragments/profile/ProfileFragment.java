@@ -129,7 +129,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void downloadUserImage(int id){
-        ImageViewer.downloadImage(requireActivity(),profileImage,R.drawable.ic_user_profile,USER_PHOTO_URL+id);
+        ImageViewer.downloadImage(requireActivity(),profileImage,R.drawable.ic_user_profile,USER_PHOTO_URL.replace("id",String.valueOf(id)));
     }
 
     private void setEmail(String email){
