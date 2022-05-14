@@ -1,4 +1,4 @@
-package com.example.dayout.models;
+package com.example.dayout.models.authModels;
 
 import java.io.Serializable;
 import java.util.List;

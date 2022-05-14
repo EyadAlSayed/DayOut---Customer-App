@@ -12,7 +12,8 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
-import com.example.dayout.models.PopualrPlace.PopularPlace;
+import com.example.dayout.models.popualrPlace.PopularPlaceData;
+import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
 import com.example.dayout.ui.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -34,10 +35,10 @@ public class PlaceInfoFragment extends Fragment {
     @BindView(R.id.short_descrption)
     TextView shortDescrption;
 
-    PopularPlace.Data popularPlaceData;
+    PopularPlaceData popularPlaceData;
 
 
-    public PlaceInfoFragment(PopularPlace.Data popularPlaceData) {
+    public PlaceInfoFragment(PopularPlaceData popularPlaceData) {
         this.popularPlaceData = popularPlaceData;
     }
 
@@ -65,7 +66,7 @@ public class PlaceInfoFragment extends Fragment {
 
     private void initImageSlider() {
         List<SlideModel> slideModels = new ArrayList<>();
-        for (PopularPlace.Photo ph : popularPlaceData.photos) {
+        for (PopularPlacePhoto ph : popularPlaceData.photos) {
             slideModels.add(new SlideModel(PLACE_PHOTO_URL + ph.id
                     , ScaleTypes.FIT));
         }

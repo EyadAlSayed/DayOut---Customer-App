@@ -19,12 +19,11 @@ import androidx.lifecycle.Observer;
 import com.example.dayout.R;
 import com.example.dayout.config.AppConstants;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.UserRegisterModel;
+import com.example.dayout.models.authModels.UserRegisterModel;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.dialogs.SuccessDialog;
 import com.example.dayout.viewModels.AuthViewModel;
-import com.example.dayout.viewModels.UserViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
