@@ -1,6 +1,4 @@
-package com.example.dayout.models;
-
-import java.util.ArrayList;
+package com.example.dayout.models.profile;
 
 public class ProfileModel {
 

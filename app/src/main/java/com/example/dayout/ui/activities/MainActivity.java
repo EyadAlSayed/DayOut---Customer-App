@@ -1,6 +1,5 @@
 package com.example.dayout.ui.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 
+import com.example.dayout.models.room.popularPlaceRoom.Interfaces.IPopularPlaces;
+import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
 import com.example.dayout.ui.fragments.drawer.DrawerFragment;
 import com.example.dayout.ui.fragments.home.ExploreFragment;
 import com.example.dayout.ui.fragments.home.FavoritePlaceFragment;
@@ -24,7 +25,6 @@ import com.example.dayout.ui.fragments.profile.ProfileFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.example.dayout.config.AppConstants.AUTH_FRC;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 import static com.example.dayout.config.AppSharedPreferences.GET_ACC_TOKEN;
 import static com.example.dayout.config.AppSharedPreferences.InitSharedPreferences;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isDrawerOpen = false;
 
-   // public IPopularPlaces roomPopularPlaces;
+    public IPopularPlaces roomPopularPlaces;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRoomDB() {
-    //    roomPopularPlaces = PopularPlaceDataBase.getINSTANCE(this).iPopularPlaces();
+        roomPopularPlaces = PopularPlaceDataBase.getINSTANCE(this).iPopularPlaces();
     }
 
     private void initView() {

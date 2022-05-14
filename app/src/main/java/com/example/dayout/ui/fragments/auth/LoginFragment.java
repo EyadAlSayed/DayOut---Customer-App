@@ -18,7 +18,7 @@ import androidx.lifecycle.Observer;
 import com.example.dayout.R;
 import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.LoginModel;
+import com.example.dayout.models.authModels.LoginModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;

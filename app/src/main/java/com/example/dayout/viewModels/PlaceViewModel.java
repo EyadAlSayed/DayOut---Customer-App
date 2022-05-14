@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dayout.api.ApiClient;
-import com.example.dayout.models.PopualrPlace.PopularPlace;
+import com.example.dayout.models.popualrPlace.PopularPlace;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;

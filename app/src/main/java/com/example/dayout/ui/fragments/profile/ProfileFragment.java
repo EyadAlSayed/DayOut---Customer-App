@@ -14,7 +14,7 @@ import androidx.lifecycle.Observer;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
-import com.example.dayout.models.ProfileModel;
+import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.viewModels.UserViewModel;
@@ -129,7 +129,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void downloadUserImage(int id){
-        ImageViewer.downloadImage(requireActivity(),profileImage,R.drawable.ic_user_profile,USER_PHOTO_URL+id);
+        ImageViewer.downloadImage(requireActivity(),profileImage,R.drawable.ic_user_profile,USER_PHOTO_URL.replace("id",String.valueOf(id)));
     }
 
     private void setEmail(String email){

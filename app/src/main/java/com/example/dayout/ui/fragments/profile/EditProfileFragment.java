@@ -23,8 +23,9 @@ import com.example.dayout.config.AppConstants;
 import com.example.dayout.helpers.system.PermissionsHelper;
 import com.example.dayout.helpers.view.ConverterImage;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.EditProfileModel;
-import com.example.dayout.models.ProfileModel;
+import com.example.dayout.helpers.view.ImageViewer;
+import com.example.dayout.models.profile.EditProfileModel;
+import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
@@ -37,6 +38,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
+import static com.example.dayout.viewModels.UserViewModel.USER_PHOTO_URL;
 
 @SuppressLint("NonConstantResourceId")
 public class EditProfileFragment extends Fragment {
@@ -116,6 +118,12 @@ public class EditProfileFragment extends Fragment {
         editProfileLastName.setText(data.last_name);
         editProfileEmail.setText(data.email);
         editProfilePhoneNumber.setText(data.phone_number);
+
+        downloadUserImage(data.id);
+    }
+
+    private void downloadUserImage(int id){
+        ImageViewer.downloadImage(requireContext(),editProfileImage,R.drawable.ic_user_profile,USER_PHOTO_URL.replace("id",String.valueOf(id)));
     }
 
     private boolean checkInfo(){

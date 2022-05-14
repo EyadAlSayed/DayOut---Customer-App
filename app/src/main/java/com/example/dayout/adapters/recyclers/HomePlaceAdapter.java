@@ -19,7 +19,8 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
-import com.example.dayout.models.PopualrPlace.PopularPlace;
+import com.example.dayout.models.popualrPlace.PopularPlaceData;
+import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.fragments.home.PlaceInfoFragment;
@@ -43,38 +44,38 @@ import static com.example.dayout.viewModels.PlaceViewModel.PLACE_PHOTO_URL;
 public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.ViewHolder> {
 
     private static final String TAG = "Home place Adapter";
-    List<PopularPlace.Data> list;
+    List<PopularPlaceData> list;
     Context context;
 
-    public HomePlaceAdapter(List<PopularPlace.Data> list, Context context) {
+    public HomePlaceAdapter(List<PopularPlaceData> list, Context context) {
         this.list = list;
         this.context = context;
     }
 
-//    public void insertRoomObject(PopularPlace.Data popularPlace) {
-//
-//        // insert object in room database
-//        ((MainActivity) context).roomPopularPlaces
-//                .insertPopularPlace(popularPlace)
-//                .subscribeOn(Schedulers.computation()).subscribe(new CompletableObserver() {
-//            @Override
-//            public void onSubscribe(@NonNull Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//
-//            @Override
-//            public void onError(@NonNull Throwable e) {
-//                Log.e(TAG, "onError: " + e.toString());
-//            }
-//        });
-//    }
+    public void insertRoomObject(PopularPlaceData popularPlace) {
 
-    public void refreshList(List<PopularPlace.Data> list) {
+        // insert object in room database
+        ((MainActivity) context).roomPopularPlaces
+                .insertPopularPlace(popularPlace)
+                .subscribeOn(Schedulers.computation()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.e(TAG, "onError: " + e.toString());
+            }
+        });
+    }
+
+    public void refreshList(List<PopularPlaceData> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -89,12 +90,17 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-     //   insertRoomObject(list.get(position));
+        insertRoomObject(list.get(position));
 
 
         holder.placeName.setText(list.get(position).name);
         holder.shortDescrption.setText(list.get(position).summary);
         holder.bindImageSlider(list.get(position).photos);
+
+        if(list.get(position).favorites_count == 1){
+            holder.addFavoriteButton.setVisibility(View.GONE);
+        }
+        else holder.addFavoriteButton.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -154,10 +160,10 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
             FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new PlaceInfoFragment(list.get(getAdapterPosition())));
         }
 
-        private void bindImageSlider(List<PopularPlace.Photo> photos) {
+        private void bindImageSlider(List<PopularPlacePhoto> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
 
-            for (PopularPlace.Photo ph : photos) {
+            for (PopularPlacePhoto ph : photos) {
                 slideModels.add(new SlideModel(PLACE_PHOTO_URL + ph.id
                         , ScaleTypes.FIT));
             }

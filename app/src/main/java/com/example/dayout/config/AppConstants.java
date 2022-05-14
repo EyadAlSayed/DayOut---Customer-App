@@ -37,7 +37,15 @@ public class AppConstants {
         } catch (Exception e) {
             return "Failed while reading the error message";
         }
-
     }
+
+
+    // room keys
+
+    // popular place keys
+    public static final String POPULAR_PLACE_DB = "popularplace_database";
+    public static final String POPULAR_PLACE_TABLE = "popularplace_table";
+    public static final String POPULAR_PLACE_DATA = "popularplace_data";
+    public static final String POPULAR_PLACE_PHOTO = "popularplace_photo";
 
 }

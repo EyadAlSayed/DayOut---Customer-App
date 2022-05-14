@@ -6,9 +6,8 @@ import android.util.Pair;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.dayout.api.ApiClient;
-import com.example.dayout.models.EditProfileModel;
-import com.example.dayout.models.ProfileModel;
-import com.google.gson.JsonObject;
+import com.example.dayout.models.profile.EditProfileModel;
+import com.example.dayout.models.profile.ProfileModel;
 
 import java.io.IOException;
 
@@ -25,7 +24,9 @@ public class UserViewModel {
     private final ApiClient apiClient = new ApiClient();
     private static UserViewModel instance;
 
-    public static final String  USER_PHOTO_URL = BASE_URL + "api/user/profile/photo";
+
+
+    public static final String  USER_PHOTO_URL = BASE_URL + "api/user/profile/id/photo";
 
     public MutableLiveData<Pair<ProfileModel, String>> profileMutableLiveData;
     public MutableLiveData<Pair<ProfileModel, String>> editProfileMutableLiveData;

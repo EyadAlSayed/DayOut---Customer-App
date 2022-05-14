@@ -1,41 +1,39 @@
-package com.example.dayout.models.room.databases;
+package com.example.dayout.models.room.popularPlaceRoom.converters;
 
 import androidx.room.TypeConverter;
 
-import com.example.dayout.models.PopualrPlace.PopularPlace;
-
+import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
-import java.util.List;
 import java.lang.reflect.Type;
+import java.util.List;
 
-public class DataConverter implements Serializable {
+public class PhotoConverter implements Serializable {
 
     @TypeConverter
-    public String fromSpecList(List<PopularPlace.Data> specializationList) {
+    public String fromSpecList(List<PopularPlacePhoto> specializationList) {
 
         if (specializationList == null)
             return null;
 
-        Type type = new TypeToken<List<PopularPlace.Data>>() {
+        Type type = new TypeToken<List<PopularPlacePhoto>>() {
         }.getType();
         Gson gson = new Gson();
 
-        String json = gson.toJson(specializationList, type);
-        return json;
+        return gson.toJson(specializationList, type);
     }
 
 
     @TypeConverter
-    public List<PopularPlace.Data> toSpecList(String sspecList) {
+    public List<PopularPlacePhoto> toSpecList(String sspecList) {
 
 
         if (sspecList == null)
             return null;
 
-        Type type = new TypeToken<List<PopularPlace.Data>>() {
+        Type type = new TypeToken<List<PopularPlacePhoto>>() {
         }.getType();
         Gson gson = new Gson();
 
@@ -75,7 +73,7 @@ public class DataConverter implements Serializable {
 
 
     @TypeConverter
-    public String fromDate(PopularPlace.Data date) {
+    public String fromDate(PopularPlacePhoto date) {
         return date.toString();
     }
 

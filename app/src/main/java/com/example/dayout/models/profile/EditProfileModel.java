@@ -1,4 +1,4 @@
-package com.example.dayout.models;
+package com.example.dayout.models.profile;
 
 import java.io.Serializable;
 
