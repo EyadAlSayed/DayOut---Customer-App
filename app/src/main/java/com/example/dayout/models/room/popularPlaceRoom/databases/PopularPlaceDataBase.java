@@ -12,6 +12,8 @@ import com.example.dayout.models.popualrPlace.PopularPlaceData;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
 import com.example.dayout.models.room.popularPlaceRoom.Interfaces.IPopularPlaces;
 
+import static com.example.dayout.config.AppConstants.POPULAR_PLACE_DB;
+
 
 @Database(
         entities = {PopularPlace.class, PopularPlaceData.class, PopularPlacePhoto.class}
@@ -28,7 +30,7 @@ abstract public class PopularPlaceDataBase extends RoomDatabase {
         if (instance == null){
             instance = Room.
                     databaseBuilder(context.getApplicationContext()
-                            ,PopularPlaceDataBase.class, AppConstants.POPULAR_PLACE_DB)
+                            ,PopularPlaceDataBase.class, POPULAR_PLACE_DB)
                     .fallbackToDestructiveMigration()
                     .build();
         }

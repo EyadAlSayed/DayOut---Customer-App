@@ -3,6 +3,7 @@ package com.example.dayout.ui.fragments.profile;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.lifecycle.Observer;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
+import com.example.dayout.models.popualrPlace.PopularPlaceData;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.room.profileRoom.databases.ProfileDatabase;
@@ -24,6 +26,7 @@ import com.example.dayout.viewModels.UserViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.CompletableObserver;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -38,6 +41,9 @@ import static com.example.dayout.viewModels.UserViewModel.USER_PHOTO_URL;
 public class ProfileFragment extends Fragment {
 
     View view;
+
+
+    private static  final String TAG = "Profile Fragment";
 
     @BindView(R.id.back_arrow_btn)
     ImageButton backArrowButton;
@@ -116,6 +122,7 @@ public class ProfileFragment extends Fragment {
                 if (profileModelStringPair.first != null) {
                     setData(profileModelStringPair.first.data);
                     profileData = profileModelStringPair.first.data;
+                    insertRoomObject(profileData);
                 } else {
                     getDataFromRoom();
                     new ErrorDialog(requireContext(), profileModelStringPair.second).show();
@@ -127,10 +134,33 @@ public class ProfileFragment extends Fragment {
         }
     };
 
+    public void insertRoomObject(ProfileData profileData) {
+
+
+        ProfileDatabase.getINSTANCE(requireContext())
+                .iProfileModel().insertProfile(profileData)
+                .subscribeOn(Schedulers.computation()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@androidx.annotation.NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onError(@androidx.annotation.NonNull Throwable e) {
+                Log.e(TAG, "onError: " + e.toString());
+            }
+        });
+    }
+
     private void getDataFromRoom(){
         ProfileDatabase.getINSTANCE(requireContext())
                 .iProfileModel()
-                .getProfile()
+                .getProfile(GET_USER_ID())
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<ProfileData>() {
