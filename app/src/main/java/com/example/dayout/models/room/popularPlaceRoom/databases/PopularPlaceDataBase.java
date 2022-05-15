@@ -6,10 +6,13 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.dayout.config.AppConstants;
 import com.example.dayout.models.popualrPlace.PopularPlace;
 import com.example.dayout.models.popualrPlace.PopularPlaceData;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
 import com.example.dayout.models.room.popularPlaceRoom.Interfaces.IPopularPlaces;
+
+import static com.example.dayout.config.AppConstants.POPULAR_PLACE_DB;
 
 
 @Database(
@@ -27,7 +30,7 @@ abstract public class PopularPlaceDataBase extends RoomDatabase {
         if (instance == null){
             instance = Room.
                     databaseBuilder(context.getApplicationContext()
-                            ,PopularPlaceDataBase.class,"popularplace_database")
+                            ,PopularPlaceDataBase.class, POPULAR_PLACE_DB)
                     .fallbackToDestructiveMigration()
                     .build();
         }

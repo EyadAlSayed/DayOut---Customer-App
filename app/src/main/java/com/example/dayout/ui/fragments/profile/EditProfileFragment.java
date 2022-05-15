@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
@@ -27,6 +28,7 @@ import com.example.dayout.helpers.view.ImageViewer;
 import com.example.dayout.models.profile.EditProfileModel;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
+import com.example.dayout.models.room.profileRoom.databases.ProfileDatabase;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
@@ -37,6 +39,11 @@ import java.util.regex.Matcher;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 import static com.example.dayout.viewModels.UserViewModel.USER_PHOTO_URL;
@@ -89,9 +96,10 @@ public class EditProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         ButterKnife.bind(this, view);
         initViews();
-        setData();
+
         return view;
     }
+
 
     @Override
     public void onStart() {
@@ -105,7 +113,36 @@ public class EditProfileFragment extends Fragment {
         super.onStop();
     }
 
+    private void getDataFromRoom(){
+        ProfileDatabase.getINSTANCE(requireActivity())
+                .iProfileModel()
+                .getProfile(GET_USER_ID())
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<ProfileData>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull ProfileData profileData) {
+                        data = profileData;
+                        setData();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
+
     private void initViews(){
+
+        if (data == null) getDataFromRoom();
+        else setData();
+
         editProfileEditButton.setOnClickListener(onUploadImageClicked);
         editProfileBackButton.setOnClickListener(onBackClicked);
         editProfileDone.setOnClickListener(onDoneClicked);
@@ -113,8 +150,6 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void setData(){
-        if(data.photo != null)
-            editProfileImage.setImageURI(Uri.parse(data.photo));
         editProfileFirstName.setText(data.first_name);
         editProfileLastName.setText(data.last_name);
         editProfileEmail.setText(data.email);

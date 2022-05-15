@@ -13,68 +13,31 @@ import java.util.List;
 public class PhotoConverter implements Serializable {
 
     @TypeConverter
-    public String fromSpecList(List<PopularPlacePhoto> specializationList) {
+    public String fromPopularPlacePhotoListToJson(List<PopularPlacePhoto> popularPlacePhotos) {
 
-        if (specializationList == null)
+        if (popularPlacePhotos == null)
+            return null;
+
+        Type type = new TypeToken<List<PopularPlacePhoto>>() {}.getType();
+        Gson gson = new Gson();
+
+        return gson.toJson(popularPlacePhotos, type);
+    }
+
+
+    @TypeConverter
+    public List<PopularPlacePhoto> fromJsonToPhotoList(String photoObject) {
+
+
+        if (photoObject == null)
             return null;
 
         Type type = new TypeToken<List<PopularPlacePhoto>>() {
         }.getType();
         Gson gson = new Gson();
 
-        return gson.toJson(specializationList, type);
-    }
+        return gson.fromJson(photoObject, type);
 
-
-    @TypeConverter
-    public List<PopularPlacePhoto> toSpecList(String sspecList) {
-
-
-        if (sspecList == null)
-            return null;
-
-        Type type = new TypeToken<List<PopularPlacePhoto>>() {
-        }.getType();
-        Gson gson = new Gson();
-
-        return gson.fromJson(sspecList, type);
-
-    }
-
-
-    @TypeConverter
-    public String fromSickList(List<String> sickList) {
-
-        if (sickList == null)
-            return null;
-
-        Type type = new TypeToken<List<String>>() {
-        }.getType();
-        Gson gson = new Gson();
-
-        return gson.toJson(sickList, type);
-    }
-
-
-    @TypeConverter
-    public List<String> toSickList(String ssickList) {
-
-
-        if (ssickList == null)
-            return null;
-
-        Type type = new TypeToken<List<String>>() {
-        }.getType();
-        Gson gson = new Gson();
-
-        return gson.fromJson(ssickList, type);
-
-    }
-
-
-    @TypeConverter
-    public String fromDate(PopularPlacePhoto date) {
-        return date.toString();
     }
 
 
