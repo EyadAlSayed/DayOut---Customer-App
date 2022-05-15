@@ -25,6 +25,7 @@ import com.example.dayout.helpers.view.ConverterImage;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
 import com.example.dayout.models.profile.EditProfileModel;
+import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
@@ -76,9 +77,9 @@ public class EditProfileFragment extends Fragment {
 
     LoadingDialog loadingDialog;
 
-    ProfileModel.Data data;
+    ProfileData data;
 
-    public EditProfileFragment(ProfileModel.Data data) {
+    public EditProfileFragment(ProfileData data) {
         this.data = data;
     }
 
