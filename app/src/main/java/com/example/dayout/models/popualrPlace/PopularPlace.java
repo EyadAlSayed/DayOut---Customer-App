@@ -25,6 +25,7 @@ public class PopularPlace implements Serializable {
     @TypeConverters(PopularDataConverter.class)
     public List<PopularPlaceData> data;
 
+
     @PrimaryKey(autoGenerate = true)
     int modelId;
 
