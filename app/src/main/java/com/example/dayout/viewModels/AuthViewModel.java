@@ -1,5 +1,6 @@
 package com.example.dayout.viewModels;
 
+import android.util.Log;
 import android.util.Pair;
 
 import androidx.lifecycle.MutableLiveData;
@@ -48,6 +49,7 @@ public class AuthViewModel extends ViewModel {
                     loginMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
                     try {
+                        Log.d(TAG, "onResponse: " + response.errorBody().string());
                         loginMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
                     } catch (Exception e) {
                         e.printStackTrace();
