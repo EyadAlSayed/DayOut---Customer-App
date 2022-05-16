@@ -1,5 +1,6 @@
 package com.example.dayout.ui.fragments.drawer;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,31 +16,43 @@ import androidx.fragment.app.Fragment;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.ui.activities.MainActivity;
+import com.example.dayout.ui.fragments.trips.OldTripDetailsFragment;
+import com.example.dayout.ui.fragments.trips.UpcomingTripDetailsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eightbitlab.com.blurview.BlurView;
 import eightbitlab.com.blurview.RenderScriptBlur;
 
+import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
+@SuppressLint("NonConstantResourceId")
 public class DrawerFragment extends Fragment {
 
 
     View view;
+
     @BindView(R.id.drawer_close_btn)
     ImageButton drawerCloseButton;
+
     @BindView(R.id.my_trip_txt)
     TextView myTripTxt;
+
     @BindView(R.id.org_txt)
     TextView orgTxt;
+
     @BindView(R.id.post_txt)
     TextView postTxt;
+
     @BindView(R.id.notification_txt)
     TextView notificationTxt;
+
     @BindView(R.id.connect_us_txt)
     TextView connectUsTxt;
+
     @BindView(R.id.setting_txt)
     TextView settingTxt;
+
     @BindView(R.id.blur_view)
     BlurView blurView;
 
@@ -69,7 +82,7 @@ public class DrawerFragment extends Fragment {
 
     private void initView() {
         drawerCloseButton.setOnClickListener(onCloseClicked);
-
+        notificationTxt.setOnClickListener(onNotificationClicked);
     }
 
     private void initBlur() {
@@ -96,5 +109,12 @@ public class DrawerFragment extends Fragment {
             }
         });
         new Handler(Looper.getMainLooper()).postDelayed(() -> FN.popTopStack(requireActivity()), 200);
+    };
+
+    private final View.OnClickListener onNotificationClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
     };
 }
