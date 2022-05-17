@@ -60,7 +60,7 @@ public class UpcomingTripDetailsFragment extends Fragment {
     @BindView(R.id.upcoming_trip_details_passengers_count)
     TextView upcomingTripDetailsPassengersCount;
 
-    TripModel model;
+    TripModel.Data data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,22 +70,31 @@ public class UpcomingTripDetailsFragment extends Fragment {
         return view;
     }
 
-    public UpcomingTripDetailsFragment(TripModel model){
-        this.model = model;
-    }
-
-    public UpcomingTripDetailsFragment(){
+    public UpcomingTripDetailsFragment(TripModel.Data data){
+        this.data = data;
     }
 
 
     private void initViews(){
+        setData();
         upcomingTripDetailsBackArrow.setOnClickListener(onBackClicked);
         upcomingTripDetailsDeleteIcon.setOnClickListener(onDeleteClicked);
         upcomingTripDetailsRoadMap.setOnClickListener(onRoadMapClicked);
         upcomingTripDetailsRoadMapFrontArrow.setOnClickListener(onRoadMapClicked);
 
-//        if(model.isActive)
-//            upcomingTripDetailsDeleteIcon.setVisibility(View.GONE);
+        //trip is active
+        //FIXME: Always returning 1 - Backend team has to fix it.
+        if(data.trip_status_id == 3)
+            upcomingTripDetailsDeleteIcon.setVisibility(View.GONE);
+    }
+
+    private void setData(){
+        upcomingTripDetailsTitle.setText(data.title);
+        upcomingTripDetailsDate.setText(data.begin_date);
+        upcomingTripDetailsEndBookingDate.setText(data.end_booking);
+        upcomingTripDetailsPrice.setText(String.valueOf(data.price));
+        upcomingTripsEndConfirmationDate.setText(data.expire_date);
+        //upcomingTripDetailsPassengersCount.setText(String.valueOf(data.customer_trips.size()));
     }
 
     private final View.OnClickListener onBackClicked = new View.OnClickListener() {
