@@ -29,9 +29,6 @@ public class FN {
         fragmentTransaction.commit();
     }
 
-    public static void popStack(FragmentActivity fragmentActivity) {
-        fragmentActivity.getSupportFragmentManager().popBackStack();
-    }
 
     // add to stack methods
 

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
+import com.example.dayout.models.trip.TripPost;
 
 import java.util.List;
 
@@ -16,16 +17,16 @@ import butterknife.ButterKnife;
 
 public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHolder> {
 
-    List<String> list;
+    List<TripPost.Data> list;
     Context context;
 
-    public TripPostAdapter(List<String> list, Context context) {
+    public TripPostAdapter(List<TripPost.Data> list, Context context) {
         this.list = list;
         this.context = context;
     }
 
 
-    public void refresh(List<String> list) {
+    public void refresh(List<TripPost.Data> list) {
         this.list = list;
         notifyDataSetChanged();
     }

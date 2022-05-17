@@ -59,7 +59,7 @@ public class FilterFragment extends Fragment {
         @Override
         public void onClick(View v) {
             //TODO: Filter - Caesar.
-            FN.popStack(requireActivity());
+            FN.popTopStack(requireActivity());
             isFilterOpen = false;
         }
     };
