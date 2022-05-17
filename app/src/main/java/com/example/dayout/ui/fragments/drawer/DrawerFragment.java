@@ -134,4 +134,5 @@ public class DrawerFragment extends Fragment {
             FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new MyTripsFragment());
         }
     };
+
 }

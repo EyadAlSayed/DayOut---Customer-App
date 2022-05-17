@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.dayout.R;
-import com.example.dayout.adapters.pager.MyTripPagerAdapter;
+import com.example.dayout.adapters.recyclers.pager.MyTripPagerAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.fragments.trips.FilterFragment;
@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
 @SuppressLint("NonConstantResourceId")
-public class  MyTripsFragment extends Fragment {
+public class MyTripsFragment extends Fragment {
 
     View view;
 
@@ -49,6 +49,7 @@ public class  MyTripsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my_trips, container, false);
         ButterKnife.bind(this, view);
+        myTripsTabLayout = view.findViewById(R.id.my_trips_tab_layout);
         initViews();
         return view;
     }
@@ -91,7 +92,7 @@ public class  MyTripsFragment extends Fragment {
     private final View.OnClickListener onBackClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            FN.popTopStack(requireActivity());
+            FN.popStack(requireActivity());
         }
     };
 
