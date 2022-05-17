@@ -21,16 +21,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/check_circle_icon" />
+        app:srcCompat="@drawable/ic_app_logo" />
 
     <TextView
-        android:id="@+id/success_message"
-        android:layout_width="@dimen/_170sdp"
+        android:id="@+id/message_dialog_message"
+        android:layout_width="@dimen/_150sdp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/acme"
         android:gravity="center"
-        android:text="@string/signup_success_message"
-        android:textColor="@color/orange_700"
+        android:text="TextView"
         android:textSize="@dimen/_16ssp"
         android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
@@ -38,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <Button
-        android:id="@+id/success_ok_button"
+        android:id="@+id/message_dialog_ok_button"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_33sdp"
         android:layout_marginTop="@dimen/_20sdp"
@@ -48,10 +47,10 @@
         android:text="@android:string/ok"
         android:textColor="@color/off_white"
         android:textSize="@dimen/_15ssp"
-        app:backgroundTint="#28CF16"
+        app:backgroundTint="@color/orange_700"
+        app:layout_constraintTop_toBottomOf="@id/message_dialog_message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/success_message" />
+        app:layout_constraintStart_toStartOf="@+id/imageView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

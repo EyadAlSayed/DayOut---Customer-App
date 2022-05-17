@@ -42,4 +42,5 @@
         <item>Type 2</item>
         <item>Type 3</item>
     </string-array>
+    <string name="trip_rated">Trip Rated!</string>
 </resources>

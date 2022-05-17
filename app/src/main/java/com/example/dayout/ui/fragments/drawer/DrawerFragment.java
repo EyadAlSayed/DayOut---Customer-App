@@ -18,6 +18,7 @@ import com.example.dayout.helpers.view.FN;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.fragments.trips.OldTripDetailsFragment;
 import com.example.dayout.ui.fragments.trips.UpcomingTripDetailsFragment;
+import com.example.dayout.ui.fragments.trips.myTrip.MyTripsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
