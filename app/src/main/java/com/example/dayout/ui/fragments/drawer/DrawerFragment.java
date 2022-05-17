@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.ui.activities.MainActivity;
+import com.example.dayout.ui.fragments.drawer.Posts.PostsFragment;
 import com.example.dayout.ui.fragments.trips.OldTripDetailsFragment;
 import com.example.dayout.ui.fragments.trips.UpcomingTripDetailsFragment;
 import com.example.dayout.ui.fragments.trips.myTrip.MyTripsFragment;
@@ -85,6 +86,7 @@ public class DrawerFragment extends Fragment {
         drawerCloseButton.setOnClickListener(onCloseClicked);
         notificationTxt.setOnClickListener(onNotificationClicked);
         myTripTxt.setOnClickListener(onMyTripsClicked);
+        postTxt.setOnClickListener(onPostClicked);
     }
 
     private void initBlur() {
@@ -120,6 +122,12 @@ public class DrawerFragment extends Fragment {
         }
     };
 
+    private final View.OnClickListener onPostClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new PostsFragment());
+        }
+    };
     private final View.OnClickListener onMyTripsClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {

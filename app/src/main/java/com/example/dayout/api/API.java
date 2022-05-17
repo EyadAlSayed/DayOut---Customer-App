@@ -8,6 +8,8 @@ import com.example.dayout.models.authModels.UserRegisterModel;
 import com.example.dayout.models.popualrPlace.PopularPlace;
 
 import com.example.dayout.models.trip.TripModel;
+import com.example.dayout.models.trip.TripPost;
+import com.example.dayout.models.trip.Type;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -41,6 +43,12 @@ public interface API {
     @GET("api/trip/history")
     Call<TripModel> getHistoryTrips();
 
+    @GET("api/trip")
+    Call<TripPost> getTripPost();
+
+    @GET("api/trip/types")
+    Call<Type> getTripType();
+
     /**
      * Post Request
      */
@@ -55,6 +63,8 @@ public interface API {
     @POST("api/place/favorite")
     Call<ResponseBody> addToFavorite(@Body JsonObject favoritePlace);
 
+    @POST("api/search/trip")
+    Call<ResponseBody> searchForTrip(@Body JsonObject searchObject);
 
 
     /**

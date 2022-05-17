@@ -1,23 +1,32 @@
-package com.example.dayout.ui.fragments.drawer;
+package com.example.dayout.ui.fragments.drawer.Posts;
 
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPostAdapter;
+import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.trip.TripPost;
+import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.fragments.trips.FilterFragment;
+import com.example.dayout.viewModels.TripViewModel;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
 
 public class TripPostFragment extends Fragment {
@@ -41,6 +50,7 @@ public class TripPostFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_trip_post, container, false);
         ButterKnife.bind(this, view);
         initView();
+        getDataFromApi();
         return view;
     }
 
@@ -50,6 +60,28 @@ public class TripPostFragment extends Fragment {
 
         initRc();
     }
+
+    private void getDataFromApi(){
+        TripViewModel.getINSTANCE().getTripPost();
+        TripViewModel.getINSTANCE().tripPostMutableLiveData.observe(requireActivity(),tripPostObserver);
+    }
+
+    private final Observer<Pair<TripPost,String>> tripPostObserver  = new Observer<Pair<TripPost, String>>() {
+        @Override
+        public void onChanged(Pair<TripPost, String> tripPostStringPair) {
+            if (tripPostStringPair != null){
+                if (tripPostStringPair.first != null){
+                    tripPostAdapter.refresh(tripPostStringPair.first.data.data);
+                }
+                else {
+                    new ErrorDialog(requireContext(),tripPostStringPair.second).show();
+                }
+            }
+            else {
+                new ErrorDialog(requireContext(),"Connection Error").show();
+            }
+        }
+    };
 
     private void initRc(){
         tripPostRc.setHasFixedSize(true);
@@ -61,7 +93,7 @@ public class TripPostFragment extends Fragment {
     private final View.OnClickListener onFilterClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            FN.addToStackSlideUDFragment(MAIN_FRC, requireActivity(), new FilterPostFragment(tripPostAdapter), "filter_post");
         }
     };
 

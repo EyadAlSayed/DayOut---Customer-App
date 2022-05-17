@@ -312,7 +312,7 @@ public class EditProfileFragment extends Fragment {
             loadingDialog.dismiss();
             if(editProfileModelStringPair != null){
                 if(editProfileModelStringPair.first != null){
-                    FN.popStack(requireActivity());
+                    FN.popTopStack(requireActivity());
                 } else
                     new ErrorDialog(requireContext(), editProfileModelStringPair.second).show();
             } else

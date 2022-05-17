@@ -1,4 +1,4 @@
-package com.example.dayout.adapters.recyclers.pager;
+package com.example.dayout.adapters.pager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,13 +9,13 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyTripPagerAdapter extends FragmentStatePagerAdapter {
+public class PostPagerAdapter extends FragmentStatePagerAdapter {
 
     List<Fragment> fragments = new ArrayList<>();
     List<String> titles = new ArrayList<>();
 
 
-    public MyTripPagerAdapter(@NonNull FragmentManager fm) {
+    public PostPagerAdapter(@NonNull FragmentManager fm) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 

@@ -82,7 +82,7 @@ public class OldTripDetailsFragment extends Fragment {
     private final View.OnClickListener onBackClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            FN.popStack(requireActivity());
+            FN.popTopStack(requireActivity());
         }
     };
 
