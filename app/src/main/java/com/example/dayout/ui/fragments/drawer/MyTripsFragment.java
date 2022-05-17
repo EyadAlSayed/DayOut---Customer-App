@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -13,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.MyTripsAdapter;
+import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripModel;
+import com.example.dayout.ui.fragments.trips.FilterFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -24,13 +27,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.dayout.config.AppConstants.MAIN_FRC;
+
 @SuppressLint("NonConstantResourceId")
 public class MyTripsFragment extends Fragment {
 
     View view;
 
-    @BindView(R.id.my_trips_search_field)
-    SearchView myTripsSearchField;
+    @BindView(R.id.my_trips_filter)
+    ImageButton filterButton;
 
     @Nullable
     @BindView(R.id.tabItem_active)
@@ -52,6 +57,9 @@ public class MyTripsFragment extends Fragment {
 
     @BindView(R.id.my_trips_recycler_view)
     RecyclerView recyclerView;
+
+    @BindView(R.id.my_trips_back_arrow)
+    ImageButton backArrow;
 
     MyTripsAdapter adapter;
 
@@ -107,7 +115,8 @@ public class MyTripsFragment extends Fragment {
 
         myTripsTabLayout.addOnTabSelectedListener(tabListener);
         myTripsActionButton.setOnClickListener(onCreateTripClicked);
-
+        backArrow.setOnClickListener(onBackClicked);
+        filterButton.setOnClickListener(onFilterClicked);
 
     }
 
@@ -178,6 +187,21 @@ public class MyTripsFragment extends Fragment {
         @Override
         public void onClick(View v) {
             // TODO: Go to create trip fragment. - Caesar.
+        }
+    };
+
+    private final View.OnClickListener onBackClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            FN.popStack(requireActivity());
+        }
+    };
+
+    private final View.OnClickListener onFilterClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            FilterFragment.isFilterOpen = true;
+            FN.addToStackSlideUDFragment(MAIN_FRC, requireActivity(), new FilterFragment(), "filter");
         }
     };
 }
