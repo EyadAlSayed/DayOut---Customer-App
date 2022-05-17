@@ -83,6 +83,7 @@ public class DrawerFragment extends Fragment {
     private void initView() {
         drawerCloseButton.setOnClickListener(onCloseClicked);
         notificationTxt.setOnClickListener(onNotificationClicked);
+        myTripTxt.setOnClickListener(onMyTripsClicked);
     }
 
     private void initBlur() {
@@ -115,6 +116,13 @@ public class DrawerFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
+        }
+    };
+
+    private final View.OnClickListener onMyTripsClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new MyTripsFragment());
         }
     };
 }

@@ -29,9 +29,12 @@
     <string name="empty_field">Field is Empty</string>
     <string name="password_limit">At Least 6 Characters Allowed</string>
     <string name="email_optional">Email Address (Optional)</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="history">History</string>
     <string name="not_an_email_address">Not An Email Address</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signup_success_message">Successfully SignedUp! Welcome to DayOut</string>
     <string name="canceling_reservation">Are you sure you want to cancel your reservation in this trip?</string>
+    <string name="active">Active</string>
 </resources>
