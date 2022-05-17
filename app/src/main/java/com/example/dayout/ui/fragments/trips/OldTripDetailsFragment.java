@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.ui.dialogs.MessageDialog;
 
 import butterknife.BindView;
@@ -61,7 +62,10 @@ public class OldTripDetailsFragment extends Fragment {
 
     float tripRating = 0;
 
-    public OldTripDetailsFragment() {
+    TripModel.Data data;
+
+    public OldTripDetailsFragment(TripModel.Data data) {
+        this.data = data;
     }
 
     @Override
@@ -73,10 +77,20 @@ public class OldTripDetailsFragment extends Fragment {
     }
 
     private void initViews() {
+        setData();
         oldTripDetailsBackArrow.setOnClickListener(onBackClicked);
         oldTripDetailsRoadMap.setOnClickListener(onRoadMapClicked);
         oldTripDetailsRoadMapFrontArrow.setOnClickListener(onRoadMapClicked);
         oldTripDetailsRatingBar.setOnRatingBarChangeListener(onRatingBarChanged);
+    }
+
+    private void setData(){
+        oldTripDetailsTitle.setText(data.title);
+        oldTripDetailsDate.setText(data.begin_date);
+        oldTripDetailsEndBookingDate.setText(data.end_booking);
+        oldTripDetailsPrice.setText(String.valueOf(data.price));
+        oldTripsEndConfirmationDate.setText(data.expire_date);
+        //oldTripDetailsPassengersCount.setText(String.valueOf(data.customer_trips.size()));
     }
 
     private final View.OnClickListener onBackClicked = new View.OnClickListener() {
