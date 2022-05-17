@@ -43,11 +43,14 @@ public class FN {
     }
 
     public static void addToStackSlideUDFragment(int container, FragmentActivity fragmentActivity, Fragment fragment, String name) {
-        fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_up, R.anim.slide_down, R.anim.slide_up, R.anim.slide_down);
-        fragmentTransaction.replace(container, fragment);
+        fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_down, R.anim.slide_up, R.anim.slide_down, R.anim.slide_up);
+        fragmentTransaction.add(container, fragment);
+        fragmentTransaction.attach(fragment);
+        //fragmentTransaction.replace(container, fragment);
         fragmentTransaction.addToBackStack(name);
         fragmentTransaction.commit();
     }
+
     public static void addToStackSlideLRFragment(int container, FragmentActivity fragmentActivity, Fragment fragment, String name) {
         fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_right, R.anim.slide_left, R.anim.slide_right, R.anim.slide_left);
         fragmentTransaction.replace(container, fragment);
