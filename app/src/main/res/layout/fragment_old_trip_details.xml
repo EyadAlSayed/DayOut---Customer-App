@@ -245,6 +245,35 @@
                     android:background="@color/transparent"
                     app:srcCompat="@drawable/forward_icon_orange" />
             </LinearLayout>
+
+            <View
+                android:id="@+id/divider8"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:fontFamily="@font/acme"
+                android:text="Rate Trip"
+                android:textColor="@color/orange_700"
+                android:textSize="@dimen/_16ssp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+            <RatingBar
+                android:id="@+id/old_trip_details_ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:numStars="5"
+                android:rating="0"
+                android:stepSize="0.5"
+                android:isIndicator="false"
+                android:progressTint="#FFEE54"/>
         </LinearLayout>
     </ScrollView>
 

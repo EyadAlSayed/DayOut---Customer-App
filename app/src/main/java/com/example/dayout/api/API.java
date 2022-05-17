@@ -7,7 +7,10 @@ import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.authModels.UserRegisterModel;
 import com.example.dayout.models.popualrPlace.PopularPlace;
 
+import com.example.dayout.models.trip.TripModel;
 import com.google.gson.JsonObject;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -29,7 +32,14 @@ public interface API {
     @GET("api/user/profile/customer/{id}")
     Call<ProfileModel> getPassengerProfile(@Path("id") int id);
 
+    @GET("api/trip/upcoming")
+    Call<TripModel> getUpcomingTrips();
 
+    @GET("api/trip/active")
+    Call<TripModel> getActiveTrips();
+
+    @GET("api/trip/history")
+    Call<TripModel> getHistoryTrips();
 
     /**
      * Post Request

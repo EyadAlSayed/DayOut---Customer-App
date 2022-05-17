@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.ui.dialogs.MessageDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +56,11 @@ public class OldTripDetailsFragment extends Fragment {
     @BindView(R.id.old_trip_details_passengers_count)
     TextView oldTripDetailsPassengersCount;
 
+    @BindView(R.id.old_trip_details_ratingBar)
+    RatingBar oldTripDetailsRatingBar;
+
+    float tripRating = 0;
+
     public OldTripDetailsFragment() {
     }
 
@@ -65,10 +72,11 @@ public class OldTripDetailsFragment extends Fragment {
         return view;
     }
 
-    private void initViews(){
+    private void initViews() {
         oldTripDetailsBackArrow.setOnClickListener(onBackClicked);
         oldTripDetailsRoadMap.setOnClickListener(onRoadMapClicked);
         oldTripDetailsRoadMapFrontArrow.setOnClickListener(onRoadMapClicked);
+        oldTripDetailsRatingBar.setOnRatingBarChangeListener(onRatingBarChanged);
     }
 
     private final View.OnClickListener onBackClicked = new View.OnClickListener() {
@@ -82,6 +90,14 @@ public class OldTripDetailsFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
+        }
+    };
+
+    private final RatingBar.OnRatingBarChangeListener onRatingBarChanged = new RatingBar.OnRatingBarChangeListener() {
+        @Override
+        public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+            tripRating = rating;
+            new MessageDialog(requireContext(), getResources().getString(R.string.trip_rated)).show();
         }
     };
 }
