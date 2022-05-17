@@ -111,6 +111,7 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 viewHolder.bindImageSlider(list.get(position).trip_photos);
                 viewHolder.deleteIcon.setVisibility(View.GONE);
                 viewHolder.activeTV.setVisibility(View.VISIBLE);
+                break;
             }
         }
     }
