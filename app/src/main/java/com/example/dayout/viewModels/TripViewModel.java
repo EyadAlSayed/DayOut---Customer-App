@@ -33,6 +33,7 @@ public class TripViewModel {
     public MutableLiveData<Pair<TripModel, String>> historyTripsMutableLiveData;
     public MutableLiveData<Pair<TripPost, String>> tripPostMutableLiveData;
     public MutableLiveData<Pair<Type, String>> tripTypeTripMutableLiveData;
+    public MutableLiveData<Pair<TripModel, String>> rateTripMutableLiveData;
 
     public static TripViewModel getINSTANCE(){
         if(instance == null){
@@ -176,6 +177,28 @@ public class TripViewModel {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+            }
+        });
+    }
+
+    public void rateTrip(JsonObject rateObject){
+        apiClient.getAPI().rateTrip(rateObject).enqueue(new Callback<TripModel>() {
+            @Override
+            public void onResponse(Call<TripModel> call, Response<TripModel> response) {
+                if(response.isSuccessful()){
+                    rateTripMutableLiveData.setValue(new Pair<>(response.body(), null));
+                } else {
+                    try {
+                        rateTripMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TripModel> call, Throwable t) {
+                rateTripMutableLiveData.setValue(null);
             }
         });
     }
