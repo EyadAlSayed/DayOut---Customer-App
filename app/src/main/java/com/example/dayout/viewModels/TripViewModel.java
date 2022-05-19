@@ -5,6 +5,7 @@ import android.util.Pair;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.dayout.api.ApiClient;
+import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.models.trip.TripPost;
 import com.example.dayout.models.trip.Type;
@@ -34,6 +35,7 @@ public class TripViewModel {
     public MutableLiveData<Pair<TripPost, String>> tripPostMutableLiveData;
     public MutableLiveData<Pair<Type, String>> tripTypeTripMutableLiveData;
     public MutableLiveData<Pair<TripModel, String>> rateTripMutableLiveData;
+    public MutableLiveData<Pair<TripDetailsModel, String>> tripDetailsMutableLiveData;
 
     public static TripViewModel getINSTANCE(){
         if(instance == null){
@@ -200,6 +202,29 @@ public class TripViewModel {
             @Override
             public void onFailure(Call<TripModel> call, Throwable t) {
                 rateTripMutableLiveData.setValue(null);
+            }
+        });
+    }
+
+    public void getTripDetails(int id){
+        tripDetailsMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().getTripDetails(id).enqueue(new Callback<TripDetailsModel>() {
+            @Override
+            public void onResponse(Call<TripDetailsModel> call, Response<TripDetailsModel> response) {
+                if(response.isSuccessful()){
+                    tripDetailsMutableLiveData.setValue(new Pair<>(response.body(), null));
+                } else {
+                    try {
+                        tripDetailsMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TripDetailsModel> call, Throwable t) {
+                tripDetailsMutableLiveData.setValue(null);
             }
         });
     }

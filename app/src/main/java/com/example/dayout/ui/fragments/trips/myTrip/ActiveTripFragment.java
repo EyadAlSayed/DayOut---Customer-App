@@ -46,6 +46,7 @@ public class ActiveTripFragment extends Fragment {
     }
 
     private void initView() {
+        loadingDialog = new LoadingDialog(requireContext());
         initRc();
         getDataFromApi();
     }
@@ -63,12 +64,19 @@ public class ActiveTripFragment extends Fragment {
         TripViewModel.getINSTANCE().activeTripsMutableLiveData.observe(requireActivity(), activeTripsObserver);
     }
 
+    private void setAsActive(ArrayList<TripModel.Data> list){
+        for(TripModel.Data trip : list){
+            trip.isActive = true;
+        }
+    }
+
     private final Observer<Pair<TripModel, String>> activeTripsObserver = new Observer<Pair<TripModel, String>>() {
         @Override
         public void onChanged(Pair<TripModel, String> tripModelStringPair) {
             loadingDialog.dismiss();
             if(tripModelStringPair != null){
                 if(tripModelStringPair.first != null){
+                    setAsActive(tripModelStringPair.first.data);
                     adapter.refreshList(tripModelStringPair.first.data, 3);
                 } else
                     new ErrorDialog(requireContext(), tripModelStringPair.second).show();
