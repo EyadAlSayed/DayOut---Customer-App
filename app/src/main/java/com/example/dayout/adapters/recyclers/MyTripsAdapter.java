@@ -86,7 +86,7 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 viewHolder.title.setText(list.get(position).title);
                 viewHolder.description.setText(list.get(position).description);
                 viewHolder.date.setText(list.get(position).begin_date);
-//                viewHolder.passengersCount.setText(String.valueOf(list.get(position).customer_trips.size()));
+                viewHolder.passengersCount.setText(String.valueOf(list.get(position).customer_trips_count));
                 viewHolder.bindImageSlider(list.get(position).trip_photos);
 
                 for(int i = 0; i < list.get(position).place_trips.size(); i++){
@@ -107,7 +107,7 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 viewHolder.title.setText(list.get(position).title);
                 viewHolder.description.setText(list.get(position).description);
                 viewHolder.date.setText(list.get(position).begin_date);
-//                viewHolder.passengersCount.setText(String.valueOf(list.get(position).customer_trips.size()));
+                viewHolder.passengersCount.setText(String.valueOf(list.get(position).customer_trips_count));
                 viewHolder.bindImageSlider(list.get(position).trip_photos);
 
                 for(int i = 0; i < list.get(position).place_trips.size(); i++){
@@ -127,7 +127,7 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 viewHolder.title.setText(list.get(position).title);
                 viewHolder.description.setText(list.get(position).description);
                 viewHolder.date.setText(list.get(position).begin_date);
-//                viewHolder.passengersCount.setText(String.valueOf(list.get(position).customer_trips.size()));
+                viewHolder.passengersCount.setText(String.valueOf(list.get(position).customer_trips_count));
                 viewHolder.bindImageSlider(list.get(position).trip_photos);
                 viewHolder.deleteIcon.setVisibility(View.GONE);
                 viewHolder.activeTV.setVisibility(View.VISIBLE);
