@@ -1,6 +1,7 @@
 package com.example.dayout.ui.fragments.drawer;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,11 +15,12 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
+import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.ui.activities.AuthActivity;
 import com.example.dayout.ui.activities.MainActivity;
+import com.example.dayout.ui.dialogs.LogOutDialog;
 import com.example.dayout.ui.fragments.drawer.Posts.PostsFragment;
-import com.example.dayout.ui.fragments.trips.OldTripDetailsFragment;
-import com.example.dayout.ui.fragments.trips.UpcomingTripDetailsFragment;
 import com.example.dayout.ui.fragments.trips.myTrip.MyTripsFragment;
 
 import butterknife.BindView;
@@ -52,11 +54,16 @@ public class DrawerFragment extends Fragment {
     @BindView(R.id.connect_us_txt)
     TextView connectUsTxt;
 
+    @BindView(R.id.logout_txt)
+    TextView logoutTxt;
+
     @BindView(R.id.setting_txt)
     TextView settingTxt;
 
     @BindView(R.id.blur_view)
     BlurView blurView;
+
+    LogOutDialog logOutDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +74,7 @@ public class DrawerFragment extends Fragment {
         initView();
         return view;
     }
+
     @Override
     public void onStart() {
         ((MainActivity) requireActivity()).hideDrawerButton();
@@ -83,17 +91,21 @@ public class DrawerFragment extends Fragment {
     }
 
     private void initView() {
+
+        logOutDialog = new LogOutDialog(requireContext());
         drawerCloseButton.setOnClickListener(onCloseClicked);
         notificationTxt.setOnClickListener(onNotificationClicked);
         myTripTxt.setOnClickListener(onMyTripsClicked);
         postTxt.setOnClickListener(onPostClicked);
+        logoutTxt.setOnClickListener(onLogOutClicked);
+        settingTxt.setOnClickListener(onSettingClicked);
     }
 
     private void initBlur() {
         float radius = 20f;
 
         View decorView = requireActivity().getWindow().getDecorView();
-        ViewGroup rootView = (ViewGroup) decorView.findViewById(android.R.id.content);
+        ViewGroup rootView = decorView.findViewById(android.R.id.content);
         Drawable windowBackground = decorView.getBackground();
 
         blurView.setupWith(rootView)
@@ -115,24 +127,27 @@ public class DrawerFragment extends Fragment {
         new Handler(Looper.getMainLooper()).postDelayed(() -> FN.popTopStack(requireActivity()), 200);
     };
 
-    private final View.OnClickListener onNotificationClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+    private final View.OnClickListener onNotificationClicked = v -> {
 
-        }
     };
 
-    private final View.OnClickListener onPostClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new PostsFragment());
-        }
+    private final View.OnClickListener onPostClicked = v -> {
+        FN.popTopStack(requireActivity());
+        FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new PostsFragment());
     };
-    private final View.OnClickListener onMyTripsClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new MyTripsFragment());
-        }
+    private final View.OnClickListener onMyTripsClicked = view -> {
+        FN.popTopStack(requireActivity());
+        FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new MyTripsFragment());
     };
+
+    private final View.OnClickListener onSettingClicked = v ->{
+        FN.popTopStack(requireActivity());
+        FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new SettingsFragment());
+    };
+
+    private final View.OnClickListener onLogOutClicked  = v -> {
+       logOutDialog.show();
+    };
+
 
 }

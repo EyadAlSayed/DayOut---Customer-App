@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="ltr"
     android:background="@color/rose_200">
 
     <androidx.cardview.widget.CardView
@@ -63,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_30sdp"
+        android:layoutDirection="ltr"
         android:background="@drawable/ic_drawer_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -74,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_25sdp"
         android:layout_marginEnd="@dimen/_20sdp"
+        android:layoutDirection="ltr"
         android:background="@drawable/ic_user_profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

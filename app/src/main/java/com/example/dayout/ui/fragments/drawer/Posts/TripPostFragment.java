@@ -17,6 +17,7 @@ import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPostAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripPost;
+import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.fragments.trips.FilterFragment;
 import com.example.dayout.viewModels.TripViewModel;
@@ -54,10 +55,15 @@ public class TripPostFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((MainActivity)requireActivity()).hideBottomBar();
+    }
+
     private void initView(){
         filterBtn.setOnClickListener(onFilterClicked);
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
-
         initRc();
     }
 
@@ -69,6 +75,9 @@ public class TripPostFragment extends Fragment {
     private final Observer<Pair<TripPost,String>> tripPostObserver  = new Observer<Pair<TripPost, String>>() {
         @Override
         public void onChanged(Pair<TripPost, String> tripPostStringPair) {
+            swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.setEnabled(true);
+
             if (tripPostStringPair != null){
                 if (tripPostStringPair.first != null){
                     tripPostAdapter.refresh(tripPostStringPair.first.data.data);
@@ -100,7 +109,8 @@ public class TripPostFragment extends Fragment {
     private final SwipeRefreshLayout.OnRefreshListener onRefreshListener =new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.setEnabled(false);
+            getDataFromApi();
         }
     };
 }

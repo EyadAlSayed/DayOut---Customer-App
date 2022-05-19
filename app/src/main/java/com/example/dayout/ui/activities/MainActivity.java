@@ -1,7 +1,11 @@
 package com.example.dayout.ui.activities;
 
+import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
+import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
 
 import com.example.dayout.models.room.popularPlaceRoom.Interfaces.IPopularPlaces;
@@ -22,11 +27,15 @@ import com.example.dayout.ui.fragments.home.FavoritePlaceFragment;
 import com.example.dayout.ui.fragments.home.HomeFragment;
 import com.example.dayout.ui.fragments.profile.ProfileFragment;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
+import static com.example.dayout.config.AppSharedPreferences.CACHE_LAN;
 import static com.example.dayout.config.AppSharedPreferences.GET_ACC_TOKEN;
+import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 import static com.example.dayout.config.AppSharedPreferences.InitSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,9 +51,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bottom_bar)
     CardView bottomBar;
 
-    private boolean isDrawerOpen = false;
+    public boolean isDrawerOpen = false;
 
     public IPopularPlaces roomPopularPlaces;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,8 +66,12 @@ public class MainActivity extends AppCompatActivity {
         initRoomDB();
         FN.addFixedNameFadeFragment(MAIN_FRC, this, new HomeFragment());
 
-        Log.d("ACC_TOKEN", "onCreate: "+GET_ACC_TOKEN() );
+        if (AppSharedPreferences.GET_CACHE_LAN().equals("ar")) changeLanguage("ar",false);
+        else if (AppSharedPreferences.GET_CACHE_LAN().equals("en")) changeLanguage("en",false);
+
+        Log.d("ACC_TOKEN", "onCreate: " + GET_ACC_TOKEN());
     }
+
 
 
     @Override
@@ -83,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     private final View.OnClickListener onFavoriteClicked = v -> FN.addFixedNameFadeFragment(MAIN_FRC, MainActivity.this, new FavoritePlaceFragment());
     private final View.OnClickListener onDrawerClicked = v -> {
         FN.addSlideLRFragmentUpFragment(MAIN_FRC, MainActivity.this, new DrawerFragment(), "drawer");
-        isDrawerOpen = !isDrawerOpen;
+        isDrawerOpen = true;
     };
     private final View.OnClickListener onProfileClicked = v -> FN.addFixedNameFadeFragment(MAIN_FRC, MainActivity.this, new ProfileFragment());
 
@@ -114,5 +128,23 @@ public class MainActivity extends AppCompatActivity {
         }, 450);
     }
 
+    private void refreshActivity() {
+        finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        startActivity(getIntent());
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    public void changeLanguage(String lang,boolean refresh) {
+        Resources resources = this.getResources();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        Locale locale = new Locale(lang.toLowerCase());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        resources.updateConfiguration(config, displayMetrics);
+       if (refresh)refreshActivity();
+        CACHE_LAN(lang);
+    }
 
 }
