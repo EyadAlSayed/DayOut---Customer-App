@@ -6,37 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.drawer.Posts.TripPostFragment">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:background="@drawable/rounded_shape"
-        android:backgroundTint="@color/rose_200"
-        android:elevation="@dimen/_3sdp"
-        android:fontFamily="@font/acme"
-        android:gravity="center"
-        android:padding="@dimen/_10sdp"
-        android:text="Posts"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/filter_btn"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/filter_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:background="@drawable/rounded_shape"
         android:backgroundTint="@color/rose_200"
         android:elevation="@dimen/_3sdp"
         android:padding="@dimen/_5sdp"
         android:src="@drawable/ic_filter"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,11 +25,10 @@
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5">
+        app:layout_constraintTop_toBottomOf="@+id/filter_btn">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/trip_post_rc"

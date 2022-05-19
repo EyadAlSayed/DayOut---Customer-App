@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPostAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.trip.TripPost;
 import com.example.dayout.models.trip.Type;
 import com.example.dayout.viewModels.TripViewModel;
 import com.google.gson.JsonObject;
@@ -84,26 +85,33 @@ public class FilterPostFragment extends Fragment {
     private final Observer<Pair<Type, String>> tripTypeObserver = typeStringPair -> {
         if (typeStringPair != null) {
             if (typeStringPair.first != null) {
-                initSpinner((String[]) typeStringPair.first.getDataName().toArray());
+                initSpinner(typeStringPair.first.getDataName().toArray(new String[0]));
             }
         }
     };
 
     private final View.OnClickListener onFilterClicked = v -> {
         sendSearchRequest();
-
         isFilterOpen = false;
+        FN.popTopStack(requireActivity());
     };
 
     private void sendSearchRequest() {
         TripViewModel.getINSTANCE().searchForTrip(getSearchObject());
-
-        // observe on something
-        //   TripViewModel.getINSTANCE().
-
-        // when search response received pop from stack
-//        FN.popTopStack(requireActivity());
+        TripViewModel.getINSTANCE().tripPostMutableLiveData.observe(requireActivity(),tripFilterObserver);
     }
+
+    private final Observer<Pair<TripPost,String>> tripFilterObserver = new Observer<Pair<TripPost, String>>() {
+        @Override
+        public void onChanged(Pair<TripPost, String> tripPostStringPair) {
+            if (tripPostStringPair != null){
+                if (tripPostStringPair.first != null){
+                    tripPostAdapter.refresh(tripPostStringPair.first.data.data);
+                    FN.popTopStack(requireActivity());
+                }
+            }
+        }
+    };
 
     private JsonObject getSearchObject() {
         JsonObject jsonObject = new JsonObject();

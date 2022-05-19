@@ -1,5 +1,7 @@
 package com.example.dayout.models.trip;
 
+import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class TripPost implements Serializable {
         public int price;
         public String status;
         public List<TripModel.PlaceTrip> place_trips;
-        public List<TripModel.TripPhoto> trip_photos;
+        public List<PopularPlacePhoto> trip_photos;
     }
 
     public class Link{

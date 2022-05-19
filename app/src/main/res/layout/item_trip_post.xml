@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/old_trip_card_view"
+        android:id="@+id/trip_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/_10sdp"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/old_trip_title"
+                android:id="@+id/trip_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/acme"
@@ -40,30 +40,33 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.denzcoskun.imageslider.ImageSlider
-                android:id="@+id/old_trip_image_slider"
+                android:id="@+id/trip_image_slider"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_200sdp"
                 android:animateLayoutChanges="true"
+                android:background="@drawable/rounded_shape"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 app:iss_error_image="@drawable/ic_app_logo"
                 app:iss_placeholder="@drawable/ic_app_logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/old_trip_title">
+                app:layout_constraintTop_toBottomOf="@+id/trip_title">
 
             </com.denzcoskun.imageslider.ImageSlider>
 
             <TextView
-                android:id="@+id/old_trip_description"
+                android:id="@+id/trip_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/acme"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/_5sdp"
-                android:text="A description for the 'Happy Holidays' trip : faskldfjkakdkshdufk fk uifhk fh dkjsj fhkdjs hfkdjsfh kdsjdf ksjfh dskj fjkdshjfkhdskjfhkds  sdflsdjfh dfldskfjdsfkj dsfldskfjds"
+                android:text="trip Description"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/old_trip_image_slider" />
+                app:layout_constraintTop_toBottomOf="@+id/trip_image_slider" />
 
             <TextView
                 android:id="@+id/textView18"
@@ -74,15 +77,15 @@
                 android:text="Stops:"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/old_trip_description" />
+                app:layout_constraintTop_toBottomOf="@+id/trip_description" />
 
             <TextView
-                android:id="@+id/old_trip_stops"
+                android:id="@+id/trip_stops"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/acme"
                 android:padding="@dimen/_5sdp"
-                android:text="Darya, Mashrou', Muhajreen, Jaramana, Rkn Al Din."
+                android:text="Places"
                 android:textColor="@color/off_white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView18"
@@ -98,19 +101,46 @@
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/textView18"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/old_trip_stops" />
+                app:layout_constraintTop_toBottomOf="@+id/trip_stops" />
+
 
             <TextView
-                android:id="@+id/old_trip_date"
+                android:id="@+id/trip_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/acme"
                 android:padding="@dimen/_5sdp"
-                android:text="23/04/1885"
+                android:text="xx/xx/xxxx"
                 android:textColor="@color/off_white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView20"
                 app:layout_constraintTop_toTopOf="@+id/textView20" />
+
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/acme"
+                android:padding="@dimen/_5sdp"
+                android:text="End Booking Date :"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+
+            <TextView
+                android:id="@+id/end_trip_bookin_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/acme"
+                android:padding="@dimen/_5sdp"
+                android:text="xx/xx/xxxx"
+                android:textColor="@color/off_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/trip_date" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -121,15 +151,15 @@
                 android:text="Passengers:"
                 android:textColor="@color/off_white"
                 app:layout_constraintStart_toStartOf="@+id/textView20"
-                app:layout_constraintTop_toBottomOf="@+id/old_trip_date" />
+                app:layout_constraintTop_toBottomOf="@+id/end_trip_bookin_date" />
 
             <TextView
-                android:id="@+id/old_trip_passengers_count"
+                android:id="@+id/trip_passengers_count"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/acme"
                 android:padding="@dimen/_5sdp"
-                android:text="62"
+                android:text="x"
                 android:textColor="@color/off_white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView5"

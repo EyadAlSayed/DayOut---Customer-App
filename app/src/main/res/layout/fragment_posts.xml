@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_20sdp"
+        android:background="@drawable/rounded_shape"
         android:elevation="@dimen/_5sdp"
         app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
 
@@ -63,7 +64,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/post_tab_layout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

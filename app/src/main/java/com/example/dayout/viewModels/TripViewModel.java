@@ -161,24 +161,25 @@ public class TripViewModel {
     }
 
     public void searchForTrip(JsonObject searchTrip){
-        apiClient.getAPI().searchForTrip(searchTrip).enqueue(new Callback<ResponseBody>() {
+        tripPostMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().searchForTrip(searchTrip).enqueue(new Callback<TripPost>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<TripPost> call, Response<TripPost> response) {
                 if (response.isSuccessful()){
-
+                    tripPostMutableLiveData.setValue(new Pair<>(response.body(),null));
                 }
                 else {
-//                    try {
-//                       // tripTypeTripMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
+                    try {
+                        tripPostMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+            public void onFailure(Call<TripPost> call, Throwable t) {
+                tripPostMutableLiveData.setValue(null);
             }
         });
     }

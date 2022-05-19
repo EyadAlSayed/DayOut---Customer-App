@@ -1,5 +1,7 @@
 package com.example.dayout.models.trip;
 
+import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
+
 import java.util.ArrayList;
 
 public class TripModel {
@@ -55,7 +57,6 @@ public class TripModel {
         public Place place;
     }
 
-
     public class TripPhoto {
         public int id;
         public int trip_id;
@@ -69,3 +70,4 @@ public class TripModel {
         public Pivot pivot;
     }
 }
+
