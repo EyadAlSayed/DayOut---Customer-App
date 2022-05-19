@@ -64,6 +64,9 @@ public interface API {
     @POST("api/search/trip")
     Call<TripPost> searchForTrip(@Body JsonObject searchObject);
 
+    @POST("api/trip/rate")
+    Call<TripModel> rateTrip(@Body JsonObject rate);
+
 
     /**
      * Put Request

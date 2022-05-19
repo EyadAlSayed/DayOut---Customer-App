@@ -127,8 +127,13 @@ public class DrawerFragment extends Fragment {
         new Handler(Looper.getMainLooper()).postDelayed(() -> FN.popTopStack(requireActivity()), 200);
     };
 
-    private final View.OnClickListener onNotificationClicked = v -> {
 
+
+    private final View.OnClickListener onNotificationClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new NotificationFragment());
+        }
     };
 
     private final View.OnClickListener onPostClicked = v -> {

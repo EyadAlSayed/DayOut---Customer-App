@@ -16,6 +16,7 @@ import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.MyTripsAdapter;
 import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.viewModels.TripViewModel;
 
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class OldTripFragment extends Fragment {
 
     @BindView(R.id.old_trip_rc)
     RecyclerView oldTripRc;
+
+    LoadingDialog loadingDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class OldTripFragment extends Fragment {
     }
 
     private void getDataFromApi(){
+        loadingDialog.show();
         TripViewModel.getINSTANCE().getHistoryTrips();
         TripViewModel.getINSTANCE().historyTripsMutableLiveData.observe(requireActivity(), historyTripsObserver);
     }
@@ -61,6 +65,7 @@ public class OldTripFragment extends Fragment {
     private final Observer<Pair<TripModel, String>> historyTripsObserver = new Observer<Pair<TripModel, String>>() {
         @Override
         public void onChanged(Pair<TripModel, String> tripModelStringPair) {
+            loadingDialog.dismiss();
             if(tripModelStringPair != null){
                 if(tripModelStringPair.first != null){
                     adapter.refreshList(tripModelStringPair.first.data, 1);
