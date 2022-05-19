@@ -1,5 +1,7 @@
 package com.example.dayout.models.trip;
 
+import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
+
 import java.util.ArrayList;
 
 public class TripModel {
@@ -28,7 +30,7 @@ public class TripModel {
         public String updated_at;
         public ArrayList<CustomerTrip> customer_trips = new ArrayList<>();
         public ArrayList<PlaceTrip> place_trips = new ArrayList<>();
-        public ArrayList<TripPhoto> trip_photos = new ArrayList<>();
+        public ArrayList<PopularPlacePhoto> trip_photos = new ArrayList<>();
     }
 
     public class CustomerTrip{
@@ -53,8 +55,4 @@ public class TripModel {
     }
 
 
-    public class TripPhoto{
-        public int id;
-        public int trip_id;
-    }
 }

@@ -14,11 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.HomePlaceAdapter;
+import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.popualrPlace.PopularPlace;
 
 
 import com.example.dayout.models.popualrPlace.PopularPlaceData;
 import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
+import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.viewModels.PlaceViewModel;
@@ -52,16 +54,16 @@ public class HomeFragment extends Fragment {
         ButterKnife.bind(this, view);
         initView();
         getDataFromApi();
-
         return view;
     }
+
 
     private void initView() {
         initRc();
     }
 
     private void initRc() {
-
+        loadingDialog = new LoadingDialog(requireContext());
         homePlaceRc.setHasFixedSize(true);
         homePlaceRc.setLayoutManager(new LinearLayoutManager(requireContext()));
         homePlaceAdapter = new HomePlaceAdapter(new ArrayList<>(), requireContext());
@@ -69,6 +71,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getDataFromApi() {
+        loadingDialog.show();
         PlaceViewModel.getINSTANCE().getPopularPlace();
         PlaceViewModel.getINSTANCE().popularMutableLiveData.observe(requireActivity(), popularPlaceObserver);
     }
@@ -100,6 +103,7 @@ public class HomeFragment extends Fragment {
     private final Observer<Pair<PopularPlace, String>> popularPlaceObserver = new Observer<Pair<PopularPlace, String>>() {
         @Override
         public void onChanged(Pair<PopularPlace, String> popularPlaceStringPair) {
+            loadingDialog.dismiss();
             if (popularPlaceStringPair != null) {
                 if (popularPlaceStringPair.first != null) {
                     homePlaceAdapter.refreshList(popularPlaceStringPair.first.data);

@@ -62,7 +62,7 @@ public interface API {
     Call<ResponseBody> addToFavorite(@Body JsonObject favoritePlace);
 
     @POST("api/search/trip")
-    Call<ResponseBody> searchForTrip(@Body JsonObject searchObject);
+    Call<TripPost> searchForTrip(@Body JsonObject searchObject);
 
     @POST("api/trip/rate")
     Call<TripModel> rateTrip(@Body JsonObject rate);
