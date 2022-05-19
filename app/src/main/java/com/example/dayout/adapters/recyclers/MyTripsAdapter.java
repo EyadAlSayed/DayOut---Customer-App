@@ -79,14 +79,25 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        String tripStops = "";
         switch (holder.getItemViewType()) {
             case 1: {
                 ViewHolderOld viewHolder = (ViewHolderOld) holder;
                 viewHolder.title.setText(list.get(position).title);
                 viewHolder.description.setText(list.get(position).description);
                 viewHolder.date.setText(list.get(position).begin_date);
-//                viewHolder.passengersCount.setText(String.valueOf(list.get(position).customer_trips.size()));
+                viewHolder.passengersCount.setText(String.valueOf(list.get(position).customer_trips_count));
                 viewHolder.bindImageSlider(list.get(position).trip_photos);
+
+                for(int i = 0; i < list.get(position).place_trips.size(); i++){
+                    if (i != 0) {
+                        tripStops += ", " + list.get(position).place_trips.get(i).place.name;
+                    } else if(i == 0)
+                        tripStops += list.get(position).place_trips.get(i).place.name;;
+                }
+
+                viewHolder.stops = tripStops;
+                viewHolder.tripStops.setText(tripStops);
                 break;
             }
 
@@ -96,8 +107,18 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 viewHolder.title.setText(list.get(position).title);
                 viewHolder.description.setText(list.get(position).description);
                 viewHolder.date.setText(list.get(position).begin_date);
-//                viewHolder.passengersCount.setText(String.valueOf(list.get(position).customer_trips.size()));
+                viewHolder.passengersCount.setText(String.valueOf(list.get(position).customer_trips_count));
                 viewHolder.bindImageSlider(list.get(position).trip_photos);
+
+                for(int i = 0; i < list.get(position).place_trips.size(); i++){
+                    if (i != 0) {
+                        tripStops += ", " + list.get(position).place_trips.get(i).place.name;
+                    } else if(i == 0)
+                        tripStops += list.get(position).place_trips.get(i).place.name;;
+                }
+
+                viewHolder.stops = tripStops;
+                viewHolder.tripStops.setText(tripStops);
                 break;
             }
 
@@ -106,10 +127,20 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 viewHolder.title.setText(list.get(position).title);
                 viewHolder.description.setText(list.get(position).description);
                 viewHolder.date.setText(list.get(position).begin_date);
-//                viewHolder.passengersCount.setText(String.valueOf(list.get(position).customer_trips.size()));
+                viewHolder.passengersCount.setText(String.valueOf(list.get(position).customer_trips_count));
                 viewHolder.bindImageSlider(list.get(position).trip_photos);
                 viewHolder.deleteIcon.setVisibility(View.GONE);
                 viewHolder.activeTV.setVisibility(View.VISIBLE);
+
+                for(int i = 0; i < list.get(position).place_trips.size(); i++){
+                    if (i != 0) {
+                        tripStops += ", " + list.get(position).place_trips.get(i).place.name;
+                    } else if(i == 0)
+                        tripStops += list.get(position).place_trips.get(i).place.name;;
+                }
+
+                viewHolder.stops = tripStops;
+                viewHolder.tripStops.setText(tripStops);
                 break;
             }
         }
@@ -154,6 +185,11 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @BindView(R.id.old_trip_image_slider)
         ImageSlider imageSlider;
 
+        @BindView(R.id.old_trip_stops)
+        TextView tripStops;
+
+        String stops;
+
         public ViewHolderOld(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
@@ -163,7 +199,8 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @Override
         public void onClick(View v) {
             if (!FilterFragment.isFilterOpen) {
-                TripModel.Data data  = list.get(getAdapterPosition());
+                TripModel.Data data = list.get(getAdapterPosition());
+                data.stopsToDetails = stops;
                 FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new OldTripDetailsFragment(data));
             }
         }
@@ -209,6 +246,8 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @BindView(R.id.upcoming_trip_stops)
         TextView tripStops;
 
+        String stops;
+
         public ViewHolderUpcoming(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
@@ -224,7 +263,8 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @Override
         public void onClick(View v) {
             if (!FilterFragment.isFilterOpen) {
-                TripModel.Data data  = list.get(getAdapterPosition());
+                TripModel.Data data = list.get(getAdapterPosition());
+                data.stopsToDetails = stops;
                 FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new UpcomingTripDetailsFragment(data));
             }
         }

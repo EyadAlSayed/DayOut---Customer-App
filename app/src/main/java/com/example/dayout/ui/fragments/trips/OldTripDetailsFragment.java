@@ -15,12 +15,15 @@ import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.dialogs.MessageDialog;
 import com.example.dayout.viewModels.TripViewModel;
 import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,11 +53,11 @@ public class OldTripDetailsFragment extends Fragment {
     @BindView(R.id.old_trip_details_price)
     TextView oldTripDetailsPrice;
 
-    @BindView(R.id.old_trip_details_end_booking_date)
-    TextView oldTripDetailsEndBookingDate;
+    @BindView(R.id.old_trip_details_expire_date)
+    TextView oldTripDetailsExpireDate;
 
-    @BindView(R.id.old_trips_end_confirmation_date)
-    TextView oldTripsEndConfirmationDate;
+    @BindView(R.id.old_trips_end_booking_date)
+    TextView oldTripsEndBookingDate;
 
     @BindView(R.id.old_trip_details_roadmap)
     TextView oldTripDetailsRoadMap;
@@ -83,25 +86,61 @@ public class OldTripDetailsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_old_trip_details, container, false);
         ButterKnife.bind(this, view);
         initViews();
+        getDataFromApi();
         return view;
     }
 
     private void initViews() {
-        setData();
+        loadingDialog = new LoadingDialog(requireContext());
         oldTripDetailsBackArrow.setOnClickListener(onBackClicked);
         oldTripDetailsRoadMap.setOnClickListener(onRoadMapClicked);
         oldTripDetailsRoadMapFrontArrow.setOnClickListener(onRoadMapClicked);
         oldTripDetailsRatingBar.setOnRatingBarChangeListener(onRatingBarChanged);
     }
 
-    private void setData(){
+    private void setData(TripDetailsModel model){
+        oldTripDetailsType.setText(getTypes(model.data.types));
         oldTripDetailsTitle.setText(data.title);
         oldTripDetailsDate.setText(data.begin_date);
-        oldTripDetailsEndBookingDate.setText(data.end_booking);
+        oldTripDetailsStops.setText(data.stopsToDetails);
+        oldTripDetailsExpireDate.setText(model.data.end_booking);
         oldTripDetailsPrice.setText(String.valueOf(data.price));
-        oldTripsEndConfirmationDate.setText(data.expire_date);
-        //oldTripDetailsPassengersCount.setText(String.valueOf(data.customer_trips.size()));
+        oldTripsEndBookingDate.setText(data.expire_date);
+        oldTripDetailsPassengersCount.setText(String.valueOf(data.customer_trips_count));
     }
+
+    private String getTypes(ArrayList<TripDetailsModel.Type> types){
+        String tripTypes = "";
+
+        for(int i = 0; i < types.size(); i++){
+            if (i != 0) {
+                tripTypes += ", " + types.get(i).name;
+            } else if(i == 0)
+                tripTypes += types.get(i).name;
+        }
+
+        return tripTypes;
+    }
+
+    private void getDataFromApi(){
+        loadingDialog.show();
+        TripViewModel.getINSTANCE().getTripDetails(data.id);
+        TripViewModel.getINSTANCE().tripDetailsMutableLiveData.observe(requireActivity(), tripDetailsObserver);
+    }
+
+    private final Observer<Pair<TripDetailsModel, String>> tripDetailsObserver = new Observer<Pair<TripDetailsModel, String>>() {
+        @Override
+        public void onChanged(Pair<TripDetailsModel, String> tripDetailsModelStringPair) {
+            loadingDialog.dismiss();
+            if(tripDetailsModelStringPair != null){
+                if(tripDetailsModelStringPair.first != null){
+                    setData(tripDetailsModelStringPair.first);
+                } else
+                    new ErrorDialog(requireContext(), tripDetailsModelStringPair.second).show();
+            } else
+                new ErrorDialog(requireContext(), "Error Connection").show();
+        }
+    };
 
     private JsonObject getRateData(){
         JsonObject object = new JsonObject();

@@ -32,6 +32,10 @@ public class FN {
 
     // add to stack methods
 
+    public static void popStack(FragmentActivity fragmentActivity) {
+        fragmentActivity.getSupportFragmentManager().popBackStack();
+    }
+
     public static void addToStackFadeFragment(int container, FragmentActivity fragmentActivity, Fragment fragment, String name) {
         fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
         fragmentTransaction.replace(container, fragment);

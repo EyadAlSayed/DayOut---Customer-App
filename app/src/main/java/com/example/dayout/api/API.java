@@ -7,6 +7,7 @@ import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.authModels.UserRegisterModel;
 import com.example.dayout.models.popualrPlace.PopularPlace;
 
+import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.models.trip.TripPost;
 import com.example.dayout.models.trip.Type;
@@ -46,6 +47,9 @@ public interface API {
 
     @GET("api/trip")
     Call<TripPost> getTripPost();
+
+    @GET("api/trip/{id}/details")
+    Call<TripDetailsModel> getTripDetails(@Path("id") int id);
 
     /**
      * Post Request
