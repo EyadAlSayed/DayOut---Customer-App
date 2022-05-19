@@ -2,6 +2,7 @@ package com.example.dayout.ui.fragments.trips;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripModel;
+import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.dialogs.WarningDialog;
+import com.example.dayout.viewModels.TripViewModel;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,11 +70,14 @@ public class UpcomingTripDetailsFragment extends Fragment {
 
     TripModel.Data data;
 
+    LoadingDialog loadingDialog;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_upcoming_trip_details, container, false);
         ButterKnife.bind(this, view);
         initViews();
+        getDataFromApi();
         return view;
     }
 
@@ -76,26 +87,60 @@ public class UpcomingTripDetailsFragment extends Fragment {
 
 
     private void initViews(){
-        setData();
+        loadingDialog = new LoadingDialog(requireContext());
         upcomingTripDetailsBackArrow.setOnClickListener(onBackClicked);
         upcomingTripDetailsDeleteIcon.setOnClickListener(onDeleteClicked);
         upcomingTripDetailsRoadMap.setOnClickListener(onRoadMapClicked);
         upcomingTripDetailsRoadMapFrontArrow.setOnClickListener(onRoadMapClicked);
 
         //trip is active
-        //FIXME: Always returning 1 - Backend team has to fix it.
-        if(data.trip_status_id == 3)
+        if(data.isActive)
             upcomingTripDetailsDeleteIcon.setVisibility(View.GONE);
     }
 
-    private void setData(){
+    private String getTypes(ArrayList<TripDetailsModel.Type> types){
+        String tripTypes = "";
+
+        for(int i = 0; i < types.size(); i++){
+            if (i != 0) {
+                tripTypes += ", " + types.get(i).name;
+            } else if(i == 0)
+                tripTypes += types.get(i).name;
+        }
+
+        return tripTypes;
+    }
+
+    private void setData(TripDetailsModel model){
+        upcomingTripDetailsType.setText(getTypes(model.data.types));
         upcomingTripDetailsTitle.setText(data.title);
         upcomingTripDetailsDate.setText(data.begin_date);
-        upcomingTripDetailsEndBookingDate.setText(data.end_booking);
+        upcomingTripDetailsStops.setText(data.stopsToDetails);
+        upcomingTripDetailsEndBookingDate.setText(model.data.end_booking);
         upcomingTripDetailsPrice.setText(String.valueOf(data.price));
         upcomingTripsEndConfirmationDate.setText(data.expire_date);
-        //upcomingTripDetailsPassengersCount.setText(String.valueOf(data.customer_trips.size()));
+        upcomingTripDetailsPassengersCount.setText(String.valueOf(data.customer_trips_count));
     }
+
+    private void getDataFromApi(){
+        loadingDialog.show();
+        TripViewModel.getINSTANCE().getTripDetails(data.id);
+        TripViewModel.getINSTANCE().tripDetailsMutableLiveData.observe(requireActivity(), tripDetailsObserver);
+    }
+
+    private final Observer<Pair<TripDetailsModel, String>> tripDetailsObserver = new Observer<Pair<TripDetailsModel, String>>() {
+        @Override
+        public void onChanged(Pair<TripDetailsModel, String> tripDetailsModelStringPair) {
+            loadingDialog.dismiss();
+            if(tripDetailsModelStringPair != null){
+                if(tripDetailsModelStringPair.first != null){
+                    setData(tripDetailsModelStringPair.first);
+                } else
+                    new ErrorDialog(requireContext(), tripDetailsModelStringPair.second).show();
+            } else
+                new ErrorDialog(requireContext(), "Error Connection").show();
+        }
+    };
 
     private final View.OnClickListener onBackClicked = new View.OnClickListener() {
         @Override

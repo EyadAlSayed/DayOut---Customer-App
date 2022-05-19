@@ -47,6 +47,7 @@ public class UpComingTripFragment extends Fragment {
     }
 
     private void initView(){
+        loadingDialog = new LoadingDialog(requireContext());
         initRc();
         getDataFromApi();
     }
