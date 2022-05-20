@@ -205,10 +205,10 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         }
 
-        private void bindImageSlider(List<PopularPlacePhoto> photos) {
+        private void bindImageSlider(List<TripModel.TripPhoto> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
 
-            for (PopularPlacePhoto ph : photos) {
+            for (TripModel.TripPhoto ph : photos) {
                 slideModels.add(new SlideModel(TRIP_PHOTOS_URL + ph.id
                         , ScaleTypes.FIT));
             }
@@ -276,10 +276,10 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         };
 
-        private void bindImageSlider(List<PopularPlacePhoto> photos) {
+        private void bindImageSlider(List<TripModel.TripPhoto> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
 
-            for (PopularPlacePhoto ph : photos) {
+            for (TripModel.TripPhoto ph : photos) {
                 slideModels.add(new SlideModel(TRIP_PHOTOS_URL + ph.id
                         , ScaleTypes.FIT));
             }

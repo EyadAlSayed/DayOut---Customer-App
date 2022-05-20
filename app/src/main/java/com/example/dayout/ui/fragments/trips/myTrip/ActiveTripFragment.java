@@ -91,6 +91,8 @@ public class ActiveTripFragment extends Fragment {
                         activeTripsRefreshLayout.setVisibility(View.GONE);
                         activeTripsNoActiveTrips.setVisibility(View.VISIBLE);
                     } else {
+                        activeTripsRefreshLayout.setVisibility(View.VISIBLE);
+                        activeTripsNoActiveTrips.setVisibility(View.GONE);
                         setAsActive(tripModelStringPair.first.data);
                         adapter.refreshList(tripModelStringPair.first.data, 3);
                     }
