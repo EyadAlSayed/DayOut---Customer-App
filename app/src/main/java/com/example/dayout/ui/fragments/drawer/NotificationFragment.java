@@ -2,19 +2,25 @@ package com.example.dayout.ui.fragments.drawer;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.NotificationsAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.NotificationModel;
 import com.example.dayout.ui.activities.MainActivity;
+import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.dialogs.LoadingDialog;
+import com.example.dayout.viewModels.UserViewModel;
 
 import java.util.ArrayList;
 
@@ -34,6 +40,8 @@ public class NotificationFragment extends Fragment {
 
     NotificationsAdapter adapter;
 
+    LoadingDialog loadingDialog;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_notification, container, false);
@@ -50,6 +58,7 @@ public class NotificationFragment extends Fragment {
     }
 
     private void initViews(){
+        loadingDialog = new LoadingDialog(requireContext());
         initRecycler();
         notificationsBackArrow.setOnClickListener(onBackClicked);
     }
@@ -61,7 +70,24 @@ public class NotificationFragment extends Fragment {
         notificationsRecyclerView.setAdapter(adapter);
     }
 
-    private void getDataFromApi(){}
+    private void getDataFromApi(){
+        loadingDialog.show();
+        UserViewModel.getINSTANCE().getNotifications();
+        UserViewModel.getINSTANCE().notificationMutableLiveData.observe(requireActivity(), notificationsObserver);
+    }
+
+    private final Observer<Pair<NotificationModel, String>> notificationsObserver = new Observer<Pair<NotificationModel, String>>() {
+        @Override
+        public void onChanged(Pair<NotificationModel, String> notificationModelStringPair) {
+            if(notificationModelStringPair != null){
+                if(notificationModelStringPair.first != null){
+                    //adapter.refreshList(notificationModelStringPair.first);
+                } else
+                    new ErrorDialog(requireContext(), notificationModelStringPair.second).show();
+            } else
+                new ErrorDialog(requireContext(), "Error Connection");
+        }
+    };
 
     private final View.OnClickListener onBackClicked = new View.OnClickListener() {
         @Override

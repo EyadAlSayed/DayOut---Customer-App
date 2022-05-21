@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DayOut</string>
+    <string name="app_name" translatable="false">DayOut</string>
     <string name="create_account"><u>create account</u></string>
     <string name="privacy_policy"><u>privacy policy</u></string>
     <string name="male">Male</string>
@@ -9,7 +9,7 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="phone_number">Phone Number</string>
-    <string name="syrian_code">+963</string>
+    <string name="syrian_code" translatable="false">+963</string>
     <string name="sign_up">Sign Up</string>
     <string name="welcome">Welcome!</string>
     <string name="upload_profile_image">Upload Profile Image</string>
@@ -33,7 +33,7 @@
     <string name="history">History</string>
     <string name="not_an_email_address">Not An Email Address</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="signup_success_message">Successfully SignedUp! Welcome to DayOut</string>
     <string name="canceling_reservation">Are you sure you want to cancel your reservation in this trip?</string>
     <string name="active">Active</string>

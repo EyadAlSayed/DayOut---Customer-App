@@ -1,5 +1,6 @@
 package com.example.dayout.api;
 
+import com.example.dayout.models.NotificationModel;
 import com.example.dayout.models.profile.EditProfileModel;
 import com.example.dayout.models.authModels.LoginModel;
 
@@ -50,6 +51,9 @@ public interface API {
 
     @GET("api/trip/{id}/details")
     Call<TripDetailsModel> getTripDetails(@Path("id") int id);
+
+    @GET(/*notifications link*/)
+    Call<NotificationModel> getNotifications();
 
     /**
      * Post Request
