@@ -10,7 +10,7 @@
     android:elevation="@dimen/_10sdp">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageView33"
         android:layout_width="91dp"
         android:layout_height="82dp"
         android:layout_marginTop="15dp"
@@ -33,9 +33,9 @@
         android:textColor="@color/orange_700"
         android:textSize="@dimen/_16ssp"
         android:layout_marginTop="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintEnd_toEndOf="@+id/imageView33"
+        app:layout_constraintStart_toStartOf="@+id/imageView33"
+        app:layout_constraintTop_toBottomOf="@+id/imageView33" />
 
     <Button
         android:id="@+id/success_ok_button"
@@ -50,8 +50,8 @@
         android:textSize="@dimen/_15ssp"
         app:backgroundTint="#28CF16"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="@+id/imageView33"
+        app:layout_constraintStart_toStartOf="@+id/imageView33"
         app:layout_constraintTop_toBottomOf="@+id/success_message" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

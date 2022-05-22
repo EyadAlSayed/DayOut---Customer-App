@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 
@@ -145,9 +146,7 @@ public class OldTripDetailsFragment extends Fragment {
     private JsonObject getRateData(){
         JsonObject object = new JsonObject();
 
-        object.addProperty("customer_id", GET_USER_ID());
         object.addProperty("trip_id", data.id);
-        //object.addProperty("checkout", );
         object.addProperty("rate", tripRating);
 
         return object;
@@ -159,15 +158,15 @@ public class OldTripDetailsFragment extends Fragment {
         TripViewModel.getINSTANCE().rateTripMutableLiveData.observe(requireActivity(), rateTripObserver);
     }
 
-    private final Observer<Pair<TripModel, String>> rateTripObserver = new Observer<Pair<TripModel, String>>() {
+    private final Observer<Pair<ResponseBody, String>> rateTripObserver = new Observer<Pair<ResponseBody, String>>() {
         @Override
-        public void onChanged(Pair<TripModel, String> tripModelStringPair) {
+        public void onChanged(Pair<ResponseBody, String> responseBodyStringPair) {
             loadingDialog.dismiss();
-            if(tripModelStringPair != null){
-                if(tripModelStringPair.first != null){
+            if(responseBodyStringPair != null){
+                if(responseBodyStringPair.first != null){
                     new MessageDialog(requireContext(), getResources().getString(R.string.trip_rated)).show();
                 } else
-                    new ErrorDialog(requireContext(), tripModelStringPair.second).show();
+                    new ErrorDialog(requireContext(), responseBodyStringPair.second).show();
             } else
                 new ErrorDialog(requireContext(), "Error Connection").show();
         }

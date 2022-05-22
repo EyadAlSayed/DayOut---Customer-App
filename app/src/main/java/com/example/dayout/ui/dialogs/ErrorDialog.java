@@ -27,6 +27,7 @@ public class ErrorDialog extends Dialog {
     String errorMessage;
     @BindView(R.id.error_txt)
     TextView errorTxt;
+
     @BindView(R.id.done_btn)
     Button doneButton;
 
