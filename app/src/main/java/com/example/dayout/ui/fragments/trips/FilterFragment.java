@@ -147,7 +147,7 @@ public class FilterFragment extends Fragment {
 
     private ArrayList<TripModel.Data> filterList(ArrayList<TripModel.Data> list) {
 
-        if (!FilterFragment.title.equals(""))
+        if (!filterTitle.getText().toString().isEmpty())
             list = filterListOnTitle(list);
         if (FilterFragment.minPrice != 0)
             list = filterListOnMinPrice(list);
@@ -163,7 +163,7 @@ public class FilterFragment extends Fragment {
         ArrayList<TripModel.Data> filteredTrips = new ArrayList<>();
 
         for (TripModel.Data trip : list) {
-            if (trip.title.contains(FilterFragment.title)) {
+            if (trip.title.contains(filterTitle.getText().toString())) {
                 filteredTrips.add(trip);
             }
         }
