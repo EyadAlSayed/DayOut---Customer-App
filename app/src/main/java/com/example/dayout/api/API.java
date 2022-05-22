@@ -53,7 +53,7 @@ public interface API {
     @GET("api/trip/{id}/details")
     Call<TripDetailsModel> getTripDetails(@Path("id") int id);
 
-    @GET(/*notifications link*/)
+    @GET("api/notifications")
     Call<NotificationModel> getNotifications();
 
     /**
