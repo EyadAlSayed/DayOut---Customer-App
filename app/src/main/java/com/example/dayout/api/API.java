@@ -18,6 +18,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface API {
@@ -51,13 +52,15 @@ public interface API {
     @GET("api/trip/{id}/details")
     Call<TripDetailsModel> getTripDetails(@Path("id") int id);
 
+    @GET("api/user/logout")
+    Call<ResponseBody> logOut();
+
     /**
      * Post Request
      */
 
     @POST("api/user/login")
     Call<LoginModel> login(@Body JsonObject loginReqBody);
-
 
     @POST("api/user/register")
     Call<UserRegisterModel> registerPassenger(@Body UserRegisterModel profile);
@@ -71,6 +74,9 @@ public interface API {
     @POST("api/trip/rate")
     Call<TripModel> rateTrip(@Body JsonObject rate);
 
+    @POST("api/user/mobile-token")
+    Call<ResponseBody> sendFireBaseToken(@Body JsonObject jsonObject);
+
 
     /**
      * Put Request
@@ -78,6 +84,9 @@ public interface API {
 
     @POST("api/user/profile/customer/edit/{id}")
     Call<ProfileModel> editProfile(@Path("id") int id, @Body EditProfileModel model);
+
+
+
 
 
     /**
