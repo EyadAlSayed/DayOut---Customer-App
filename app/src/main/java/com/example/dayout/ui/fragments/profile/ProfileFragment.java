@@ -200,6 +200,7 @@ public class ProfileFragment extends Fragment {
         ImageViewer.downloadCircleImage(requireContext(),profileImage,R.drawable.profile_place_holder,baseUrl+url);
     }
 
+
     private void setEmail(String email){
         if(email == null){
             profileEmail.setVisibility(View.GONE);

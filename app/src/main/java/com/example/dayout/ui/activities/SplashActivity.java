@@ -1,9 +1,12 @@
 package com.example.dayout.ui.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -14,11 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.dayout.R;
 import com.example.dayout.config.AppSharedPreferences;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.dayout.config.AppSharedPreferences.CACHE_LAN;
 import static com.example.dayout.config.AppSharedPreferences.GET_ACC_TOKEN;
 import static com.example.dayout.config.AppSharedPreferences.IS_REMEMBER_ME;
 
@@ -36,6 +41,7 @@ public class SplashActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         AppSharedPreferences.InitSharedPreferences(this);
         initView();
+        initLanguage();
     }
 
     private void initView() {
@@ -44,6 +50,30 @@ public class SplashActivity extends AppCompatActivity {
         else openMainActivity();
     }
 
+
+    private void initLanguage(){
+        if (AppSharedPreferences.GET_CACHE_LAN().isEmpty()){
+            changeLanguage("ar",true);
+        }
+    }
+    public void changeLanguage(String lang,boolean refresh) {
+        Resources resources = this.getResources();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        Locale locale = new Locale(lang.toLowerCase());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        resources.updateConfiguration(config, displayMetrics);
+        if (refresh)refreshActivity();
+        CACHE_LAN(lang);
+    }
+
+    private void refreshActivity() {
+        finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        startActivity(getIntent());
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
     private void applyAnimation() {
         Animation fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         Animation bottom_up = AnimationUtils.loadAnimation(this, R.anim.down_to_up_animation);
