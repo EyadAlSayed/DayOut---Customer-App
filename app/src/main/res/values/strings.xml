@@ -78,4 +78,16 @@
     <string name="passengers">Passengers</string>
     <string name="confirm">Confirm</string>
     <string name="english_language">English Language</string>
+    <string name="trip_item_stops">Stops:</string>
+    <string name="trip_item_date">Date:</string>
+    <string name="trip_item_end_booking_date">End Booking Date:</string>
+    <string name="trip_item_passengers">Passengers:</string>
+    <string name="ask_logout">Logout?</string>
+    <string name="yes">Yes</string>
+    <string name="return_txt">Return</string>
+    <string name="no">No</string>
+    <string name="no_upcoming_trips">No Upcoming Trips</string>
+    <string name="no_history">No History</string>
+    <string name="no_notifications">No Notifications</string>
+
 </resources>
