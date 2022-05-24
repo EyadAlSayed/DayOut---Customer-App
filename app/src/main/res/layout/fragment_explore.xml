@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:focusable="true"
+    android:clickable="false"
+    android:focusable="false"
     android:background="@color/white"
     tools:context=".ui.fragments.home.ExploreFragment">
 
@@ -31,7 +31,7 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/rounded_shape"
         android:fontFamily="@font/acme"
-        android:text="Show Result"
+        android:text="@string/show_result"
         android:backgroundTint="@color/orange_700"
         android:textColor="@color/white"
         android:textSize="@dimen/_12ssp"

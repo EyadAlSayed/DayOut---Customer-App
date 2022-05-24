@@ -1,5 +1,6 @@
 package com.example.dayout.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -42,16 +43,22 @@ import static com.example.dayout.config.AppSharedPreferences.GET_ACC_TOKEN;
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 import static com.example.dayout.config.AppSharedPreferences.InitSharedPreferences;
 
+@SuppressLint("NonConstantResourceId")
 public class MainActivity extends AppCompatActivity {
+
 
     @BindView(R.id.explore_btn)
     ImageButton exploreButton;
+
     @BindView(R.id.favorite_place_btn)
     ImageButton favoritePlaceButton;
+
     @BindView(R.id.drawer_btn)
     ImageButton drawerButton;
+
     @BindView(R.id.profile_btn)
     ImageButton profileButton;
+
     @BindView(R.id.bottom_bar)
     CardView bottomBar;
 
@@ -167,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             String token = task.getResult();
-            Log.d("mobile_token", token);
+            Log.d("firebase", token);
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("mobile_token", token);
             UserViewModel.getINSTANCE().sendFirebaseToken(jsonObject);

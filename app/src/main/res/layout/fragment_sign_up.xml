@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/rose_200"
     android:elevation="9dp"
+    android:clickable="false"
+    android:focusable="false"
     android:orientation="vertical">
 
     <ImageView
@@ -169,7 +171,7 @@
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/acme"
-                    android:text="Gender"
+                    android:text="@string/gender"
                     android:textSize="@dimen/_14ssp" />
 
                 <RadioGroup
