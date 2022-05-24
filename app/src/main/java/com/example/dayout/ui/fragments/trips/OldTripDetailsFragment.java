@@ -15,8 +15,10 @@ import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripModel;
+import com.example.dayout.models.trip.TripType;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.dialogs.MessageDialog;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 
@@ -73,11 +76,11 @@ public class OldTripDetailsFragment extends Fragment {
 
     float tripRating = 0;
 
-    TripModel.Data data;
+    TripData data;
 
     LoadingDialog loadingDialog;
 
-    public OldTripDetailsFragment(TripModel.Data data) {
+    public OldTripDetailsFragment(TripData data) {
         this.data = data;
     }
 
@@ -103,13 +106,13 @@ public class OldTripDetailsFragment extends Fragment {
         oldTripDetailsTitle.setText(data.title);
         oldTripDetailsDate.setText(data.begin_date);
         oldTripDetailsStops.setText(data.stopsToDetails);
-        oldTripDetailsExpireDate.setText(model.data.end_booking);
+        oldTripDetailsExpireDate.setText(data.expire_date);
         oldTripDetailsPrice.setText(String.valueOf(data.price));
-        oldTripsEndBookingDate.setText(data.expire_date);
+        oldTripsEndBookingDate.setText(model.data.end_booking);
         oldTripDetailsPassengersCount.setText(String.valueOf(data.customer_trips_count));
     }
 
-    private String getTypes(ArrayList<TripDetailsModel.Type> types){
+    private String getTypes(ArrayList<TripType> types){
         String tripTypes = "";
 
         for(int i = 0; i < types.size(); i++){
@@ -145,9 +148,7 @@ public class OldTripDetailsFragment extends Fragment {
     private JsonObject getRateData(){
         JsonObject object = new JsonObject();
 
-        object.addProperty("customer_id", GET_USER_ID());
         object.addProperty("trip_id", data.id);
-        //object.addProperty("checkout", );
         object.addProperty("rate", tripRating);
 
         return object;
@@ -159,15 +160,15 @@ public class OldTripDetailsFragment extends Fragment {
         TripViewModel.getINSTANCE().rateTripMutableLiveData.observe(requireActivity(), rateTripObserver);
     }
 
-    private final Observer<Pair<TripModel, String>> rateTripObserver = new Observer<Pair<TripModel, String>>() {
+    private final Observer<Pair<ResponseBody, String>> rateTripObserver = new Observer<Pair<ResponseBody, String>>() {
         @Override
-        public void onChanged(Pair<TripModel, String> tripModelStringPair) {
+        public void onChanged(Pair<ResponseBody, String> responseBodyStringPair) {
             loadingDialog.dismiss();
-            if(tripModelStringPair != null){
-                if(tripModelStringPair.first != null){
+            if(responseBodyStringPair != null){
+                if(responseBodyStringPair.first != null){
                     new MessageDialog(requireContext(), getResources().getString(R.string.trip_rated)).show();
                 } else
-                    new ErrorDialog(requireContext(), tripModelStringPair.second).show();
+                    new ErrorDialog(requireContext(), responseBodyStringPair.second).show();
             } else
                 new ErrorDialog(requireContext(), "Error Connection").show();
         }

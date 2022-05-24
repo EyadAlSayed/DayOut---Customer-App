@@ -3,6 +3,7 @@ package com.example.dayout.models.trip;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TripPost implements Serializable {
@@ -29,8 +30,8 @@ public class TripPost implements Serializable {
         public String end_booking;
         public int price;
         public String status;
-        public List<TripModel.PlaceTrip> place_trips;
-        public List<PopularPlacePhoto> trip_photos;
+        public List<PlaceTripData> place_trips = new ArrayList<>();
+        public List<PopularPlacePhoto> trip_photos = new ArrayList<>();
     }
 
     public class Link{

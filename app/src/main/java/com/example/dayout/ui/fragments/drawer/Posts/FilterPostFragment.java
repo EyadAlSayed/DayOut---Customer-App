@@ -18,10 +18,11 @@ import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPostAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripPost;
-import com.example.dayout.models.trip.Type;
+import com.example.dayout.models.trip.TripType;
 import com.example.dayout.viewModels.TripViewModel;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -82,13 +83,22 @@ public class FilterPostFragment extends Fragment {
         TripViewModel.getINSTANCE().tripTypeTripMutableLiveData.observe(requireActivity(), tripTypeObserver);
     }
 
-    private final Observer<Pair<Type, String>> tripTypeObserver = typeStringPair -> {
+    private final Observer<Pair<List<TripType>, String>> tripTypeObserver = typeStringPair -> {
         if (typeStringPair != null) {
             if (typeStringPair.first != null) {
-                initSpinner(typeStringPair.first.getDataName().toArray(new String[0]));
+             initSpinner(getDataName(typeStringPair.first));
             }
         }
     };
+
+    private String[] getDataName(List<TripType> list){
+        List<String> names = new ArrayList<>();
+        for (TripType t : list){
+            names.add(t.name);
+        }
+
+        return names.toArray(new String[0]);
+    }
 
     private final View.OnClickListener onFilterClicked = v -> {
         sendSearchRequest();

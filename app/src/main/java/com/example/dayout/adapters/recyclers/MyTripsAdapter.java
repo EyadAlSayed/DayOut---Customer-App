@@ -16,10 +16,12 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
+import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripModel;
+import com.example.dayout.models.trip.TripPhotoData;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.WarningDialog;
 import com.example.dayout.ui.fragments.trips.FilterFragment;
@@ -39,16 +41,16 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private final String TAG = "MyTripsAdapter";
 
-    List<TripModel.Data> list;
+    List<TripData> list;
     Context context;
     int type;
 
-    public MyTripsAdapter(List<TripModel.Data> list, Context context) {
+    public MyTripsAdapter(List<TripData> list, Context context) {
         this.context = context;
         this.list = list;
     }
 
-    public void refreshList(ArrayList<TripModel.Data> list, int type) {
+    public void refreshList(ArrayList<TripData> list, int type) {
         this.list = list;
         this.type = type;
         notifyDataSetChanged();
@@ -199,16 +201,16 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @Override
         public void onClick(View v) {
             if (!FilterFragment.isFilterOpen) {
-                TripModel.Data data = list.get(getAdapterPosition());
+                TripData data = list.get(getAdapterPosition());
                 data.stopsToDetails = stops;
                 FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new OldTripDetailsFragment(data));
             }
         }
 
-        private void bindImageSlider(List<PopularPlacePhoto> photos) {
+        private void bindImageSlider(List<TripPhotoData> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
 
-            for (PopularPlacePhoto ph : photos) {
+            for (TripPhotoData ph : photos) {
                 slideModels.add(new SlideModel(TRIP_PHOTOS_URL + ph.id
                         , ScaleTypes.FIT));
             }
@@ -263,7 +265,7 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @Override
         public void onClick(View v) {
             if (!FilterFragment.isFilterOpen) {
-                TripModel.Data data = list.get(getAdapterPosition());
+                TripData data = list.get(getAdapterPosition());
                 data.stopsToDetails = stops;
                 FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new UpcomingTripDetailsFragment(data));
             }
@@ -276,10 +278,10 @@ public class MyTripsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         };
 
-        private void bindImageSlider(List<PopularPlacePhoto> photos) {
+        private void bindImageSlider(List<TripPhotoData> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
 
-            for (PopularPlacePhoto ph : photos) {
+            for (TripPhotoData ph : photos) {
                 slideModels.add(new SlideModel(TRIP_PHOTOS_URL + ph.id
                         , ScaleTypes.FIT));
             }

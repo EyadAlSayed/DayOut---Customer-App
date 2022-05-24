@@ -1,5 +1,6 @@
 package com.example.dayout.ui.fragments.drawer;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -26,24 +27,27 @@ import butterknife.ButterKnife;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
 
-
+@SuppressLint("NonConstantResourceId")
 public class SettingsFragment extends Fragment {
 
 
     View view;
+
     @BindView(R.id.back_arrow)
     ImageButton backArrow;
+
     @BindView(R.id.base_url)
     EditText baseUrl;
+
     @BindView(R.id.confirm_button)
     Button confirmButton;
+
     @BindView(R.id.language_switch)
     Switch languageSwitch;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, view);
@@ -64,11 +68,6 @@ public class SettingsFragment extends Fragment {
 
         });
     }
-
-
-
-
-
 
     private final View.OnClickListener onConfirmClicked = new View.OnClickListener() {
         @Override

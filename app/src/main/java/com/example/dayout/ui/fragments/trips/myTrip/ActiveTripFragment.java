@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.MyTripsAdapter;
+import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
@@ -75,8 +76,8 @@ public class ActiveTripFragment extends Fragment {
         TripViewModel.getINSTANCE().activeTripsMutableLiveData.observe(requireActivity(), activeTripsObserver);
     }
 
-    private void setAsActive(ArrayList<TripModel.Data> list){
-        for(TripModel.Data trip : list){
+    private void setAsActive(ArrayList<TripData> list){
+        for(TripData trip : list){
             trip.isActive = true;
         }
     }
@@ -91,13 +92,15 @@ public class ActiveTripFragment extends Fragment {
                         activeTripsRefreshLayout.setVisibility(View.GONE);
                         activeTripsNoActiveTrips.setVisibility(View.VISIBLE);
                     } else {
+                        activeTripsRefreshLayout.setVisibility(View.VISIBLE);
+                        activeTripsNoActiveTrips.setVisibility(View.GONE);
                         setAsActive(tripModelStringPair.first.data);
                         adapter.refreshList(tripModelStringPair.first.data, 3);
                     }
                 } else
                     new ErrorDialog(requireContext(), tripModelStringPair.second).show();
             } else
-                new ErrorDialog(requireContext(), "Error Connection");
+                new ErrorDialog(requireContext(), "Error Connection").show();
         }
     };
 }

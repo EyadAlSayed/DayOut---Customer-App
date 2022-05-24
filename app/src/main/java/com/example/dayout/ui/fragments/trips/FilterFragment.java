@@ -17,7 +17,9 @@ import androidx.lifecycle.Observer;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.MyTripsAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripModel;
+import com.example.dayout.models.trip.TripType;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.viewModels.TripViewModel;
@@ -49,11 +51,6 @@ public class FilterFragment extends Fragment {
 
     LoadingDialog loadingDialog;
 
-    public static String title = "";
-    public static int minPrice = 0;
-    public static int maxPrice = 0;
-    public static String type = "Any";
-
     public static boolean isFilterOpen = false;
 
     MyTripsAdapter adapter;
@@ -84,14 +81,6 @@ public class FilterFragment extends Fragment {
         @Override
         public void onClick(View v) {
             loadingDialog.show();
-
-            if (filterTitle != null)
-                title = filterTitle.getText().toString();
-            if (!filterMinPrice.getText().toString().equals(""))
-                minPrice = Integer.parseInt(filterMinPrice.getText().toString());
-            if (!filterMaxPrice.getText().toString().equals(""))
-                maxPrice = Integer.parseInt(filterMaxPrice.getText().toString());
-            type = filterSpinner.getSelectedItem().toString();
 
             showFilteredTrips();
             FN.popStack(requireActivity());
@@ -145,24 +134,25 @@ public class FilterFragment extends Fragment {
         }
     }
 
-    private ArrayList<TripModel.Data> filterList(ArrayList<TripModel.Data> list) {
+    private ArrayList<TripData> filterList(ArrayList<TripData> list) {
 
-        if (!filterTitle.getText().toString().isEmpty())
+        if (!filterTitle.getText().toString().equals(""))
             list = filterListOnTitle(list);
-        if (FilterFragment.minPrice != 0)
+        if (!filterMinPrice.getText().toString().equals(""))
             list = filterListOnMinPrice(list);
-        if (FilterFragment.maxPrice != 0)
+        if (!filterMaxPrice.getText().toString().equals(""))
             list = filterListOnMaxPrice(list);
-        if (!FilterFragment.type.equals("Any"))
+        //TODO: Test after getting types from api - Caesar.
+        if (!filterSpinner.getSelectedItem().toString().equals("Any"))
             list = filterListOnType(list);
 
         return list;
     }
 
-    private ArrayList<TripModel.Data> filterListOnTitle(ArrayList<TripModel.Data> list) {
-        ArrayList<TripModel.Data> filteredTrips = new ArrayList<>();
+    private ArrayList<TripData> filterListOnTitle(ArrayList<TripData> list) {
+        ArrayList<TripData> filteredTrips = new ArrayList<>();
 
-        for (TripModel.Data trip : list) {
+        for (TripData trip : list) {
             if (trip.title.contains(filterTitle.getText().toString())) {
                 filteredTrips.add(trip);
             }
@@ -170,36 +160,41 @@ public class FilterFragment extends Fragment {
         return filteredTrips;
     }
 
-    private ArrayList<TripModel.Data> filterListOnMinPrice(ArrayList<TripModel.Data> list) {
-        ArrayList<TripModel.Data> filteredTrips = new ArrayList<>();
+    private ArrayList<TripData> filterListOnMinPrice(ArrayList<TripData> list) {
+        ArrayList<TripData> filteredTrips = new ArrayList<>();
 
-        for (TripModel.Data trip : list) {
-            if (trip.price >= FilterFragment.minPrice) {
-                filteredTrips.add(trip);
+        if (Integer.parseInt(filterMinPrice.getText().toString()) > 0) {
+            for (TripData trip : list) {
+                if (trip.price >= Integer.parseInt(filterMinPrice.getText().toString())) {
+                    filteredTrips.add(trip);
+                }
             }
         }
         return filteredTrips;
     }
 
-    private ArrayList<TripModel.Data> filterListOnMaxPrice(ArrayList<TripModel.Data> list) {
-        ArrayList<TripModel.Data> filteredTrips = new ArrayList<>();
-
-        for (TripModel.Data trip : list) {
-            if (trip.price <= FilterFragment.maxPrice) {
-                filteredTrips.add(trip);
+    private ArrayList<TripData> filterListOnMaxPrice(ArrayList<TripData> list) {
+        ArrayList<TripData> filteredTrips = new ArrayList<>();
+        if (Integer.parseInt(filterMaxPrice.getText().toString()) > 0) {
+            for (TripData trip : list) {
+                if (trip.price <= Integer.parseInt(filterMaxPrice.getText().toString())) {
+                    filteredTrips.add(trip);
+                }
             }
         }
         return filteredTrips;
     }
 
-    private ArrayList<TripModel.Data> filterListOnType(ArrayList<TripModel.Data> list) {
-        ArrayList<TripModel.Data> filteredTrips = new ArrayList<>();
+    private ArrayList<TripData> filterListOnType(ArrayList<TripData> list) {
+        ArrayList<TripData> filteredTrips = new ArrayList<>();
 
-//        for(TripModel.Data trip : list){
-//            if(trip.type == FilterFragment.type){
-//                filteredTrips.add(trip);
-//            }
-//        }
+        for(TripData trip : list){
+            for (TripType tripType : trip.types){
+                if(tripType.name.equals(filterSpinner.getSelectedItem().toString())) {
+                    filteredTrips.add(trip);
+                }
+            }
+        }
         return filteredTrips;
     }
 }
