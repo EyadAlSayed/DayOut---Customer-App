@@ -16,6 +16,9 @@ import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.MyTripsAdapter;
+import com.example.dayout.adapters.recyclers.myTrips.ActiveTripAdapter;
+import com.example.dayout.adapters.recyclers.myTrips.OldTripAdapter;
+import com.example.dayout.adapters.recyclers.myTrips.UpComingTripAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripModel;
@@ -54,13 +57,24 @@ public class FilterFragment extends Fragment {
 
     public static boolean isFilterOpen = false;
 
-    MyTripsAdapter adapter;
+    ActiveTripAdapter activeTripAdapter;
+    UpComingTripAdapter upComingTripAdapter;
+    OldTripAdapter oldTripAdapter;
 
     int filterType;
 
-    public FilterFragment(MyTripsAdapter adapter, int type) {
-        this.adapter = adapter;
-        filterType = type;
+    public FilterFragment(ActiveTripAdapter activeTripAdapter, int type){
+        this.activeTripAdapter = activeTripAdapter;
+        this.filterType = type;
+    }
+
+    public FilterFragment(UpComingTripAdapter upComingTripAdapter, int type){
+        this.upComingTripAdapter = upComingTripAdapter;
+        this.filterType = type;
+    }
+    public FilterFragment(OldTripAdapter oldTripAdapter, int type){
+        this.oldTripAdapter = oldTripAdapter;
+        this.filterType = type;
     }
 
     @Override
@@ -100,6 +114,7 @@ public class FilterFragment extends Fragment {
 
     private String[] getDataName(List<TripType> list){
         List<String> names = new ArrayList<>();
+        names.add("Any");
         for (TripType t : list){
             names.add(t.name);
         }
@@ -154,7 +169,7 @@ public class FilterFragment extends Fragment {
                     loadingDialog.dismiss();
                     if (tripModelStringPair != null) {
                         if (tripModelStringPair.first != null) {
-                            adapter.refreshList(filterList(tripModelStringPair.first.data), 3);
+                            activeTripAdapter.refresh(filterList(tripModelStringPair.first.data));
                         } else
                             new ErrorDialog(requireContext(), tripModelStringPair.second).show();
                     } else

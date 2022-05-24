@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.MyTripsAdapter;
+import com.example.dayout.adapters.recyclers.myTrips.ActiveTripAdapter;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.ui.dialogs.ErrorDialog;
@@ -32,7 +33,7 @@ public class ActiveTripFragment extends Fragment {
 
     View view;
 
-    MyTripsAdapter adapter;
+    ActiveTripAdapter adapter;
 
     @BindView(R.id.active_trip_rc)
     RecyclerView activeTripRc;
@@ -54,7 +55,7 @@ public class ActiveTripFragment extends Fragment {
         return view;
     }
 
-    public ActiveTripFragment(MyTripsAdapter adapter) {
+    public ActiveTripFragment(ActiveTripAdapter adapter) {
         this.adapter = adapter;
     }
 
@@ -95,7 +96,7 @@ public class ActiveTripFragment extends Fragment {
                         activeTripsRefreshLayout.setVisibility(View.VISIBLE);
                         activeTripsNoActiveTrips.setVisibility(View.GONE);
                         setAsActive(tripModelStringPair.first.data);
-                        adapter.refreshList(tripModelStringPair.first.data, 3);
+                        adapter.refresh(tripModelStringPair.first.data);
                     }
                 } else
                     new ErrorDialog(requireContext(), tripModelStringPair.second).show();
