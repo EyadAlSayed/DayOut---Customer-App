@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             String token = task.getResult();
-            Log.d("mobile_token", token);
+            Log.d("Firebase", token);
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("mobile_token", token);
             UserViewModel.getINSTANCE().sendFirebaseToken(jsonObject);
