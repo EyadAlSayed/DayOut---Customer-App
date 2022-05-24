@@ -11,8 +11,10 @@ import com.example.dayout.models.popualrPlace.PopularPlace;
 import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.models.trip.TripPost;
-import com.example.dayout.models.trip.Type;
+import com.example.dayout.models.trip.TripType;
 import com.google.gson.JsonObject;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -35,17 +37,17 @@ public interface API {
     @GET("api/user/profile/customer/{id}")
     Call<ProfileModel> getPassengerProfile(@Path("id") int id);
 
-    @GET("api/trip/upcoming")
+    @GET("api/trip/upcoming/customer")
     Call<TripModel> getUpcomingTrips(@Query("type") String type);
 
-    @GET("api/trip/active")
+    @GET("api/trip/active/customer")
     Call<TripModel> getActiveTrips(@Query("type") String type);
 
-    @GET("api/trip/history")
+    @GET("api/trip/history/customer")
     Call<TripModel> getHistoryTrips(@Query("type") String type);
 
     @GET("api/trip/types")
-    Call<Type> getTripType();
+    Call<List<TripType>> getTripType();
 
     @GET("api/trip")
     Call<TripPost> getTripPost();

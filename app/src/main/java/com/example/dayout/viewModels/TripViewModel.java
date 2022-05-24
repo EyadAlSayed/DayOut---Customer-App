@@ -8,7 +8,7 @@ import com.example.dayout.api.ApiClient;
 import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.models.trip.TripPost;
-import com.example.dayout.models.trip.Type;
+import com.example.dayout.models.trip.TripType;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class TripViewModel {
     public MutableLiveData<Pair<TripModel, String>> activeTripsMutableLiveData;
     public MutableLiveData<Pair<TripModel, String>> historyTripsMutableLiveData;
     public MutableLiveData<Pair<TripPost, String>> tripPostMutableLiveData;
-    public MutableLiveData<Pair<Type, String>> tripTypeTripMutableLiveData;
+    public MutableLiveData<Pair<List<TripType>, String>> tripTypeTripMutableLiveData;
     public MutableLiveData<Pair<ResponseBody, String>> rateTripMutableLiveData;
     public MutableLiveData<Pair<TripDetailsModel, String>> tripDetailsMutableLiveData;
 
@@ -139,9 +139,9 @@ public class TripViewModel {
 
     public void getTripType(){
         tripTypeTripMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getTripType().enqueue(new Callback<Type>() {
+        apiClient.getAPI().getTripType().enqueue(new Callback<List<TripType>>() {
             @Override
-            public void onResponse(Call<Type> call, Response<Type> response) {
+            public void onResponse(Call<List<TripType>> call, Response<List<TripType>> response) {
                 if (response.isSuccessful()) {
                     tripTypeTripMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
@@ -154,7 +154,7 @@ public class TripViewModel {
             }
 
             @Override
-            public void onFailure(Call<Type> call, Throwable t) {
+            public void onFailure(Call<List<TripType>> call, Throwable t) {
                 tripTypeTripMutableLiveData.setValue(null);
             }
         });

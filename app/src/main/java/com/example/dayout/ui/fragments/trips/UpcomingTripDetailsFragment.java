@@ -15,8 +15,10 @@ import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripModel;
+import com.example.dayout.models.trip.TripType;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.dialogs.WarningDialog;
@@ -68,7 +70,7 @@ public class UpcomingTripDetailsFragment extends Fragment {
     @BindView(R.id.upcoming_trip_details_passengers_count)
     TextView upcomingTripDetailsPassengersCount;
 
-    TripModel.Data data;
+    TripData data;
 
     LoadingDialog loadingDialog;
 
@@ -81,7 +83,7 @@ public class UpcomingTripDetailsFragment extends Fragment {
         return view;
     }
 
-    public UpcomingTripDetailsFragment(TripModel.Data data){
+    public UpcomingTripDetailsFragment(TripData data){
         this.data = data;
     }
 
@@ -98,7 +100,7 @@ public class UpcomingTripDetailsFragment extends Fragment {
             upcomingTripDetailsDeleteIcon.setVisibility(View.GONE);
     }
 
-    private String getTypes(ArrayList<TripDetailsModel.Type> types){
+    private String getTypes(ArrayList<TripType> types){
         String tripTypes = "";
 
         for(int i = 0; i < types.size(); i++){
