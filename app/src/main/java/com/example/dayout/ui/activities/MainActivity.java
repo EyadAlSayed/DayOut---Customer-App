@@ -167,9 +167,9 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             String token = task.getResult();
-            Log.d("token", token);
+            Log.d("mobile_token", token);
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("token", token);
+            jsonObject.addProperty("mobile_token", token);
             UserViewModel.getINSTANCE().sendFireBaseToken(jsonObject);
 
             //TODO make fire token observer and check if the process success or not
