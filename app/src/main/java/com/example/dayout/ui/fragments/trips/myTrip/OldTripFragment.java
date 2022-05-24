@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.MyTripsAdapter;
+import com.example.dayout.adapters.recyclers.myTrips.OldTripAdapter;
 import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
 public class OldTripFragment extends Fragment {
 
 
-    MyTripsAdapter adapter;
+    OldTripAdapter adapter;
 
     View view;
 
@@ -52,7 +53,7 @@ public class OldTripFragment extends Fragment {
         initView();
         return view;
     }
-    public OldTripFragment(MyTripsAdapter adapter) {
+    public OldTripFragment(OldTripAdapter adapter) {
         this.adapter = adapter;
     }
 
@@ -87,7 +88,7 @@ public class OldTripFragment extends Fragment {
                     } else {
                         oldTripsRefreshLayout.setVisibility(View.VISIBLE);
                         oldTripsNoHistory.setVisibility(View.GONE);
-                        adapter.refreshList(tripModelStringPair.first.data, 1);
+                        adapter.refresh(tripModelStringPair.first.data);
                     }
                 }else
                     new ErrorDialog(requireContext(), tripModelStringPair.second).show();

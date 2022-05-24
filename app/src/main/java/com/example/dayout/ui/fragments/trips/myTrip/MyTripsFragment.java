@@ -2,23 +2,26 @@ package com.example.dayout.ui.fragments.trips.myTrip;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.dayout.R;
-import com.example.dayout.adapters.recyclers.MyTripsAdapter;
-import com.example.dayout.adapters.recyclers.pager.MyTripPagerAdapter;
+import com.example.dayout.adapters.pager.MyTripPagerAdapter;
+import com.example.dayout.adapters.recyclers.myTrips.ActiveTripAdapter;
+import com.example.dayout.adapters.recyclers.myTrips.OldTripAdapter;
+import com.example.dayout.adapters.recyclers.myTrips.UpComingTripAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.fragments.trips.FilterFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 
@@ -45,9 +48,12 @@ public class MyTripsFragment extends Fragment {
     ImageButton myTripsFilter;
 
     @BindView(R.id.my_trips_view_pager)
-    ViewPager myTripsViewPager;
+    ViewPager2 myTripsViewPager;
 
-    MyTripsAdapter adapter;
+
+    ActiveTripAdapter activeTripAdapter;
+    UpComingTripAdapter upComingTripAdapter;
+    OldTripAdapter oldTripAdapter;
 
     // = 3 because when 'MyTrips' is first opened, it is set to 'Active' tab.
     int type = 3;
@@ -66,20 +72,41 @@ public class MyTripsFragment extends Fragment {
         super.onStart();
     }
 
-    public MyTripsFragment() {}
 
     private void initTabLayout() {
-        MyTripPagerAdapter pagerAdapter = new MyTripPagerAdapter(requireActivity().getSupportFragmentManager());
-        pagerAdapter.addFragment(new ActiveTripFragment(adapter), "ACTIVE");
-        pagerAdapter.addFragment(new UpComingTripFragment(adapter), "UPCOMING");
-        pagerAdapter.addFragment(new OldTripFragment(adapter), "HISTORY");
+
+        ArrayList<Pair<Fragment,String>> list = new ArrayList<>();
+        list.add(new Pair<>(new ActiveTripFragment(activeTripAdapter),"ACTIVE"));
+        list.add(new Pair<>(new UpComingTripFragment(upComingTripAdapter),"UPCOMING"));
+        list.add(new Pair<>(new OldTripFragment(oldTripAdapter),"HISTORY"));
+
+
+        MyTripPagerAdapter pagerAdapter = new MyTripPagerAdapter(requireActivity(),list);
+
         myTripsViewPager.setAdapter(pagerAdapter);
-        myTripsTabLayout.setupWithViewPager(myTripsViewPager);
-        myTripsTabLayout.addOnTabSelectedListener(onTabSelectedListener);
+        new TabLayoutMediator(myTripsTabLayout, myTripsViewPager, (TabLayoutMediator.TabConfigurationStrategy) (tab, position) -> {
+            switch (position) {
+                case 0: {
+                    tab.setText("ACTIVE");
+                    type = 3;
+                    break;
+                }
+                case 1: {
+                    tab.setText("UPCOMING");
+                    type = 2;
+                    break;
+                }
+                case 2: {
+                    tab.setText("HISTORY");
+                    type = 1;
+                    break;
+                }
+            }
+        });
     }
 
     private void initViews() {
-        adapter = new MyTripsAdapter(new ArrayList<>(),requireContext());
+        initAdapter();
         initTabLayout();
 
         myTripsActionButton.setOnClickListener(onCreateTripClicked);
@@ -87,11 +114,17 @@ public class MyTripsFragment extends Fragment {
         myTripsFilter.setOnClickListener(onFilterClicked);
     }
 
+    private void initAdapter(){
+        activeTripAdapter = new ActiveTripAdapter(new ArrayList<>(),requireContext());
+        oldTripAdapter = new OldTripAdapter(new ArrayList<>(),requireContext());
+        upComingTripAdapter = new UpComingTripAdapter(new ArrayList<>(),requireContext());
+    }
+
 
     private final View.OnClickListener onCreateTripClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            // TODO: Go to create trip fragment. - Caesar.
+
         }
     };
 
@@ -106,7 +139,16 @@ public class MyTripsFragment extends Fragment {
         @Override
         public void onClick(View v) {
             FilterFragment.isFilterOpen = true;
-            FN.addToStackSlideUDFragment(MAIN_FRC, requireActivity(), new FilterFragment(adapter,type), "filter");
+            if (type == 1){
+                FN.addToStackSlideUDFragment(MAIN_FRC, requireActivity(), new FilterFragment(oldTripAdapter, type), "filter");
+            }
+            else if (type == 2){
+                FN.addToStackSlideUDFragment(MAIN_FRC, requireActivity(), new FilterFragment(upComingTripAdapter, type), "filter");
+            }
+            else if (type == 3){
+                FN.addToStackSlideUDFragment(MAIN_FRC, requireActivity(), new FilterFragment(activeTripAdapter, type), "filter");
+            }
+
         }
     };
 
@@ -114,8 +156,8 @@ public class MyTripsFragment extends Fragment {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             if (tab.getPosition() == 0) type = 3;
-            else if(tab.getPosition() == 1) type = 2;
-            else if(tab.getPosition() == 2) type = 1;
+            else if (tab.getPosition() == 1) type = 2;
+            else if (tab.getPosition() == 2) type = 1;
         }
 
         @Override
