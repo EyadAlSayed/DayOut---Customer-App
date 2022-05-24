@@ -15,8 +15,10 @@ import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripModel;
+import com.example.dayout.models.trip.TripType;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.dialogs.MessageDialog;
@@ -74,11 +76,11 @@ public class OldTripDetailsFragment extends Fragment {
 
     float tripRating = 0;
 
-    TripModel.Data data;
+    TripData data;
 
     LoadingDialog loadingDialog;
 
-    public OldTripDetailsFragment(TripModel.Data data) {
+    public OldTripDetailsFragment(TripData data) {
         this.data = data;
     }
 
@@ -104,13 +106,13 @@ public class OldTripDetailsFragment extends Fragment {
         oldTripDetailsTitle.setText(data.title);
         oldTripDetailsDate.setText(data.begin_date);
         oldTripDetailsStops.setText(data.stopsToDetails);
-        oldTripDetailsExpireDate.setText(model.data.end_booking);
+        oldTripDetailsExpireDate.setText(data.expire_date);
         oldTripDetailsPrice.setText(String.valueOf(data.price));
-        oldTripsEndBookingDate.setText(data.expire_date);
+        oldTripsEndBookingDate.setText(model.data.end_booking);
         oldTripDetailsPassengersCount.setText(String.valueOf(data.customer_trips_count));
     }
 
-    private String getTypes(ArrayList<TripDetailsModel.Type> types){
+    private String getTypes(ArrayList<TripType> types){
         String tripTypes = "";
 
         for(int i = 0; i < types.size(); i++){
