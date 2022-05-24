@@ -1,34 +1,40 @@
 package com.example.dayout.ui.fragments.drawer;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
-import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.ui.activities.AuthActivity;
+import com.example.dayout.helpers.view.ImageViewer;
+import com.example.dayout.models.profile.ProfileData;
+import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.LogOutDialog;
 import com.example.dayout.ui.fragments.drawer.Posts.PostsFragment;
 import com.example.dayout.ui.fragments.trips.myTrip.MyTripsFragment;
+import com.example.dayout.viewModels.UserViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eightbitlab.com.blurview.BlurView;
 import eightbitlab.com.blurview.RenderScriptBlur;
 
+import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
+import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 
 @SuppressLint("NonConstantResourceId")
 public class DrawerFragment extends Fragment {
@@ -63,7 +69,14 @@ public class DrawerFragment extends Fragment {
     @BindView(R.id.blur_view)
     BlurView blurView;
 
+    @BindView(R.id.drawer_userphoto)
+    ImageView drawerUserphoto;
+
+    @BindView(R.id.drawer_username)
+    TextView drawerUsername;
+
     LogOutDialog logOutDialog;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +85,7 @@ public class DrawerFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_drawer, container, false);
         ButterKnife.bind(this, view);
         initView();
+        getDataFromAPI();
         return view;
     }
 
@@ -101,6 +115,36 @@ public class DrawerFragment extends Fragment {
         settingTxt.setOnClickListener(onSettingClicked);
     }
 
+    private void getDataFromAPI() {
+        UserViewModel.getINSTANCE().getPassengerProfile(GET_USER_ID());
+        UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), profileObserver);
+    }
+
+    private final Observer<Pair<ProfileModel, String>> profileObserver = new Observer<Pair<ProfileModel, String>>() {
+        @Override
+        public void onChanged(Pair<ProfileModel, String> profileModelStringPair) {
+            if (profileModelStringPair != null) {
+                if (profileModelStringPair.first != null) {
+                    setData(profileModelStringPair.first.data);
+                } else {
+                    //getDataFromRoom();
+                }
+            } else {
+                //getDataFromRoom();
+            }
+        }
+    };
+
+    private void setData(ProfileData data) {
+        drawerUsername.setText(data.first_name);
+        downloadUserImage(data.photo);
+    }
+
+    private void downloadUserImage(String url) {
+        String baseUrl = BASE_URL.substring(0, BASE_URL.length() - 1);
+        ImageViewer.downloadCircleImage(requireContext(), drawerUserphoto, R.drawable.profile_place_holder, baseUrl + url);
+    }
+
     private void initBlur() {
         float radius = 20f;
 
@@ -128,7 +172,6 @@ public class DrawerFragment extends Fragment {
     };
 
 
-
     private final View.OnClickListener onNotificationClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -145,13 +188,13 @@ public class DrawerFragment extends Fragment {
         FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new MyTripsFragment());
     };
 
-    private final View.OnClickListener onSettingClicked = v ->{
+    private final View.OnClickListener onSettingClicked = v -> {
         FN.popTopStack(requireActivity());
         FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new SettingsFragment());
     };
 
-    private final View.OnClickListener onLogOutClicked  = v -> {
-       logOutDialog.show();
+    private final View.OnClickListener onLogOutClicked = v -> {
+        logOutDialog.show();
     };
 
 

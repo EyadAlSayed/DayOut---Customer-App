@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -33,6 +34,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 import static com.example.dayout.viewModels.UserViewModel.USER_PHOTO_URL;
@@ -52,7 +54,7 @@ public class ProfileFragment extends Fragment {
     ImageButton profileEditButton;
 
     @BindView(R.id.profile_image)
-    CircleImageView profileImage;
+    ImageView profileImage;
 
     @BindView(R.id.profile_following_count)
     TextView profileFollowingCount;
@@ -190,11 +192,12 @@ public class ProfileFragment extends Fragment {
         profileGender.setText(data.gender);
         profilePhoneNumber.setText(data.phone_number);
         setEmail(data.email);
-        downloadUserImage(data.id);
+        downloadUserImage(data.photo);
     }
 
-    private void downloadUserImage(int id){
-        ImageViewer.downloadImage(requireActivity(),profileImage,R.drawable.ic_user_profile,USER_PHOTO_URL.replace("id",String.valueOf(id)));
+    private void downloadUserImage(String url){
+        String baseUrl = BASE_URL.substring(0,BASE_URL.length()-1);
+        ImageViewer.downloadCircleImage(requireContext(),profileImage,R.drawable.profile_place_holder,baseUrl+url);
     }
 
     private void setEmail(String email){
@@ -206,6 +209,7 @@ public class ProfileFragment extends Fragment {
             profileEmail.setText(email);
     }
 
+    @SuppressLint("SetTextI18n")
     private void setName(String firstName, String lastName){
         profileFullName.setText(firstName + " " + lastName);
     }

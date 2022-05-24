@@ -69,6 +69,29 @@ public class UserViewModel {
         });
     }
 
+    public void editProfile(EditProfileModel model){
+        editProfileMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().editProfile(model).enqueue(new Callback<ProfileModel>() {
+            @Override
+            public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
+                if(response.isSuccessful()){
+                    editProfileMutableLiveData.setValue(new Pair<>(response.body(), null));
+                } else {
+                    try {
+                        editProfileMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProfileModel> call, Throwable t) {
+                editProfileMutableLiveData.setValue(null);
+            }
+        });
+    }
+
     public void getNotifications(){
         notificationMutableLiveData = new MutableLiveData<>();
         apiClient.getAPI().getNotifications().enqueue(new Callback<NotificationModel>() {

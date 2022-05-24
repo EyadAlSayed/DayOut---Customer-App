@@ -9,13 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
@@ -38,15 +38,14 @@ import java.util.regex.Matcher;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
-import static com.example.dayout.viewModels.UserViewModel.USER_PHOTO_URL;
 
 @SuppressLint("NonConstantResourceId")
 public class EditProfileFragment extends Fragment {
@@ -62,13 +61,13 @@ public class EditProfileFragment extends Fragment {
     TextView editProfileDone;
 
     @BindView(R.id.edit_profile_image)
-    CircleImageView editProfileImage;
+    ImageView editProfileImage;
 
     @BindView(R.id.edit_profile_edit_button)
     ImageButton editProfileEditButton;
 
     @BindView(R.id.edit_profile_image_layout)
-    LinearLayout editProfileImageLayout;
+    ConstraintLayout editProfileImageLayout;
 
     @BindView(R.id.edit_profile_first_name)
     EditText editProfileFirstName;
@@ -76,15 +75,16 @@ public class EditProfileFragment extends Fragment {
     @BindView(R.id.edit_profile_last_name)
     EditText editProfileLastName;
 
-    @BindView(R.id.edit_profile_phone_number)
-    EditText editProfilePhoneNumber;
-
     @BindView(R.id.edit_profile_email)
     EditText editProfileEmail;
+
+    @BindView(R.id.edit_profile_delete_photo_button)
+    ImageButton editProfileDeletePhotoButton;
 
     LoadingDialog loadingDialog;
 
     ProfileData data;
+
 
     public EditProfileFragment(ProfileData data) {
         this.data = data;
@@ -103,17 +103,17 @@ public class EditProfileFragment extends Fragment {
 
     @Override
     public void onStart() {
-        ((MainActivity)requireActivity()).hideBottomBar();
+        ((MainActivity) requireActivity()).hideBottomBar();
         super.onStart();
     }
 
     @Override
     public void onStop() {
-        ((MainActivity)requireActivity()).showBottomBar();
+        ((MainActivity) requireActivity()).showBottomBar();
         super.onStop();
     }
 
-    private void getDataFromRoom(){
+    private void getDataFromRoom() {
         ProfileDatabase.getINSTANCE(requireActivity())
                 .iProfileModel()
                 .getProfile(GET_USER_ID())
@@ -138,38 +138,39 @@ public class EditProfileFragment extends Fragment {
                 });
     }
 
-    private void initViews(){
+    private void initViews() {
 
         if (data == null) getDataFromRoom();
         else setData();
-
+        editProfileDeletePhotoButton.setOnClickListener(onDeleteImageClicked);
         editProfileEditButton.setOnClickListener(onUploadImageClicked);
         editProfileBackButton.setOnClickListener(onBackClicked);
         editProfileDone.setOnClickListener(onDoneClicked);
         loadingDialog = new LoadingDialog(requireContext());
+        if(editProfileImage.getDrawable() == getResources().getDrawable(R.drawable.profile_place_holder_orange))
+            editProfileDeletePhotoButton.setVisibility(View.GONE);
     }
 
-    private void setData(){
+    private void setData() {
         editProfileFirstName.setText(data.first_name);
         editProfileLastName.setText(data.last_name);
         editProfileEmail.setText(data.email);
-        editProfilePhoneNumber.setText(data.phone_number);
 
-        downloadUserImage(data.id);
+        downloadUserImage(data.photo);
     }
 
-    private void downloadUserImage(int id){
-        ImageViewer.downloadImage(requireContext(),editProfileImage,R.drawable.ic_user_profile,USER_PHOTO_URL.replace("id",String.valueOf(id)));
+    private void downloadUserImage(String url) {
+        String baseUrl = BASE_URL.substring(0, BASE_URL.length() - 1);
+        ImageViewer.downloadCircleImage(requireContext(), editProfileImage, R.drawable.profile_place_holder_orange, baseUrl + url);
     }
 
-    private boolean checkInfo(){
+    private boolean checkInfo() {
 
         boolean firstNameValidation = isFirstNameValid();
         boolean lastNameValidation = isLastNameValid();
         boolean emailValidation = isEmailValid();
-        boolean phoneNumberValidation = isPhoneNumberValid();
 
-        return firstNameValidation && lastNameValidation && emailValidation && phoneNumberValidation;
+        return firstNameValidation && lastNameValidation && emailValidation;
     }
 
     private boolean isFirstNameValid() {
@@ -240,34 +241,18 @@ public class EditProfileFragment extends Fragment {
         return ok;
     }
 
-    private boolean isPhoneNumberValid() {
-
-        Matcher phoneNumberMatcher = AppConstants.PHONE_NUMBER_REGEX.matcher(editProfilePhoneNumber.getText().toString());
-
-        boolean ok = true;
-
-        if (!phoneNumberMatcher.matches()) {
-            editProfilePhoneNumber.setError(getResources().getString(R.string.not_a_phone_number));
-
-            ok = false;
-        }
-
-        return ok;
-    }
-
     private void selectImage() {
         if (PermissionsHelper.getREAD_EXTERNAL_STORAGE(requireActivity()))
             launcher.launch("image/*");
     }
 
-    private EditProfileModel getEditedData(){
+    private EditProfileModel getEditedData() {
         EditProfileModel model = new EditProfileModel();
 
         model.photo = imageAsString;
         model.first_name = editProfileFirstName.getText().toString();
         model.last_name = editProfileLastName.getText().toString();
         model.email = editProfileEmail.getText().toString();
-        model.phone_number = editProfilePhoneNumber.getText().toString();
 
         return model;
     }
@@ -288,6 +273,14 @@ public class EditProfileFragment extends Fragment {
         }
     };
 
+    private final View.OnClickListener onDeleteImageClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            editProfileImage.setImageURI(Uri.EMPTY);
+            imageAsString = "";
+        }
+    };
+
     private final View.OnClickListener onBackClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -298,9 +291,9 @@ public class EditProfileFragment extends Fragment {
     private final View.OnClickListener onDoneClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(checkInfo()){
+            if (checkInfo()) {
                 loadingDialog.show();
-                UserViewModel.getINSTANCE().editProfile(GET_USER_ID(), getEditedData());
+                UserViewModel.getINSTANCE().editProfile(getEditedData());
                 UserViewModel.getINSTANCE().editProfileMutableLiveData.observe(requireActivity(), editProfileObserver);
             }
         }
@@ -310,8 +303,8 @@ public class EditProfileFragment extends Fragment {
         @Override
         public void onChanged(Pair<ProfileModel, String> editProfileModelStringPair) {
             loadingDialog.dismiss();
-            if(editProfileModelStringPair != null){
-                if(editProfileModelStringPair.first != null){
+            if (editProfileModelStringPair != null) {
+                if (editProfileModelStringPair.first != null) {
                     FN.popTopStack(requireActivity());
                 } else
                     new ErrorDialog(requireContext(), editProfileModelStringPair.second).show();
