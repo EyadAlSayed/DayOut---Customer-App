@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("mobile_token", token);
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("mobile_token", token);
-            UserViewModel.getINSTANCE().sendFireBaseToken(jsonObject);
+            UserViewModel.getINSTANCE().sendFirebaseToken(jsonObject);
 
             //TODO make fire token observer and check if the process success or not
            // UserViewModel.getINSTANCE().successfulMutableLiveData.observe(this, fireTokenObserver);
