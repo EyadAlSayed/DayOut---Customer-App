@@ -141,7 +141,7 @@ public class FilterFragment extends Fragment {
                     loadingDialog.dismiss();
                     if (tripModelStringPair != null) {
                         if (tripModelStringPair.first != null) {
-                            adapter.refreshList(filterList(tripModelStringPair.first.data), 1);
+                            activeTripAdapter.refresh(tripModelStringPair.first.data);
                         } else
                             new ErrorDialog(requireContext(), tripModelStringPair.second).show();
                     } else
@@ -155,7 +155,7 @@ public class FilterFragment extends Fragment {
                     loadingDialog.dismiss();
                     if (tripModelStringPair != null) {
                         if (tripModelStringPair.first != null) {
-                            adapter.refreshList(filterList(tripModelStringPair.first.data), 2);
+                            upComingTripAdapter.refresh(tripModelStringPair.first.data);
                         } else
                             new ErrorDialog(requireContext(), tripModelStringPair.second).show();
                     } else
@@ -169,7 +169,7 @@ public class FilterFragment extends Fragment {
                     loadingDialog.dismiss();
                     if (tripModelStringPair != null) {
                         if (tripModelStringPair.first != null) {
-                            activeTripAdapter.refresh(filterList(tripModelStringPair.first.data));
+                            oldTripAdapter.refresh(filterList(tripModelStringPair.first.data));
                         } else
                             new ErrorDialog(requireContext(), tripModelStringPair.second).show();
                     } else
