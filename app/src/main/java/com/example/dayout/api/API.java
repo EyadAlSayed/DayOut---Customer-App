@@ -83,8 +83,8 @@ public interface API {
      * Put Request
      */
 
-    @POST("api/user/profile/customer/edit/{id}")
-    Call<ProfileModel> editProfile(@Path("id") int id, @Body EditProfileModel model);
+    @POST("api/user/profile/customer/edit")
+    Call<ProfileModel> editProfile(@Body EditProfileModel model);
 
 
     /**

@@ -1,6 +1,5 @@
 package com.example.dayout.models.trip;
 
-import java.util.ArrayList;
 
 public class TripDetailsModel {
 
