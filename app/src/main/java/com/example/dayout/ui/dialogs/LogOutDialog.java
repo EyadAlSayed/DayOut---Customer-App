@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,17 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.ui.activities.AuthActivity;
 import com.example.dayout.ui.activities.MainActivity;
+import com.example.dayout.viewModels.UserViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.http.Path;
 
 public class LogOutDialog extends Dialog {
 
@@ -41,10 +45,28 @@ public class LogOutDialog extends Dialog {
         logOutButton.setOnClickListener(onLogOutClicked);
     }
 
+
     private final View.OnClickListener onLogOutClicked = v -> {
-        cancel();
-        AppSharedPreferences.REMOVE_ALL();
-        openAuthActivity();
+
+        UserViewModel.getINSTANCE().logOut();
+        UserViewModel.getINSTANCE().successfulMutableLiveData.observe((MainActivity) context, new Observer<Pair<Boolean, String>>() {
+            @Override
+            public void onChanged(Pair<Boolean, String> booleanStringPair) {
+                if (booleanStringPair != null){
+                    if (booleanStringPair.first != null && booleanStringPair.first){
+                        LogOutDialog.this.cancel();
+                        AppSharedPreferences.REMOVE_ALL();
+                        openAuthActivity();
+                    }
+                    else {
+                        new ErrorDialog(context,booleanStringPair.second).show();
+                    }
+                }
+                else {
+                    new ErrorDialog(context,"Connection Error").show();
+                }
+            }
+        });
     };
 
 
