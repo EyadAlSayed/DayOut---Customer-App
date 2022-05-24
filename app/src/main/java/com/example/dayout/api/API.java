@@ -58,6 +58,9 @@ public interface API {
     @GET("api/notifications")
     Call<NotificationModel> getNotifications();
 
+    @GET("api/user/logout")
+    Call<ResponseBody> logOut();
+
     /**
      * Post Request
      */
@@ -77,6 +80,9 @@ public interface API {
 
     @POST("api/trip/rate")
     Call<ResponseBody> rateTrip(@Body JsonObject rate);
+
+    @POST("api/user/mobile-token")
+    Call<ResponseBody> sendFirebaseToken(@Body JsonObject firebaseObj);
 
 
     /**

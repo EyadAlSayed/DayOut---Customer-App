@@ -26,6 +26,10 @@ import com.example.dayout.ui.fragments.home.ExploreFragment;
 import com.example.dayout.ui.fragments.home.FavoritePlaceFragment;
 import com.example.dayout.ui.fragments.home.HomeFragment;
 import com.example.dayout.ui.fragments.profile.ProfileFragment;
+import com.example.dayout.viewModels.UserViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.JsonObject;
 
 import java.util.Locale;
 
@@ -64,11 +68,15 @@ public class MainActivity extends AppCompatActivity {
         InitSharedPreferences(this);
         initView();
         initRoomDB();
-        FN.addFixedNameFadeFragment(MAIN_FRC, this, new HomeFragment());
+        sendFireBaseToken();
+
+
 
         if (AppSharedPreferences.GET_CACHE_LAN().equals("ar")) changeLanguage("ar",false);
         else if (AppSharedPreferences.GET_CACHE_LAN().equals("en")) changeLanguage("en",false);
 
+
+        FN.addFixedNameFadeFragment(MAIN_FRC, this, new HomeFragment());
         Log.d("ACC_TOKEN", "onCreate: " + GET_ACC_TOKEN());
     }
 
@@ -146,5 +154,30 @@ public class MainActivity extends AppCompatActivity {
        if (refresh)refreshActivity();
         CACHE_LAN(lang);
     }
+
+    public void sendFireBaseToken(){
+        try {
+            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(onFirebaseCompleteListener);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private final OnCompleteListener<String> onFirebaseCompleteListener = task -> {
+
+        try {
+            String token = task.getResult();
+            Log.d("mobile_token", token);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("mobile_token", token);
+            UserViewModel.getINSTANCE().sendFirebaseToken(jsonObject);
+
+            //TODO make fire token observer and check if the process success or not
+           // UserViewModel.getINSTANCE().successfulMutableLiveData.observe(this, fireTokenObserver);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    };
 
 }
