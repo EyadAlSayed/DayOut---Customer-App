@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="create_account"><u>أنشىء حساب</u></string>
-    <string name="privacy_policy"><u>سياسة الخصوصية</u></string>
+    <string name="privacy_policy_underlined"><u>سياسة الخصوصية</u></string>
     <string name="male">ذكر</string>
     <string name="female">أنثى</string>
     <string name="gender">الجنس</string>
