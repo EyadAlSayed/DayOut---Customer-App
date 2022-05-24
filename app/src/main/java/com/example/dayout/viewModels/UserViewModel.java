@@ -142,9 +142,9 @@ public class UserViewModel {
     }
 
 
-    public void editProfile(int passengerId, EditProfileModel model){
+    public void editProfile(EditProfileModel model){
         editProfileMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().editProfile(passengerId, model).enqueue(new Callback<ProfileModel>() {
+        apiClient.getAPI().editProfile(model).enqueue(new Callback<ProfileModel>() {
             @Override
             public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
                 if(response.isSuccessful()){

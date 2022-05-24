@@ -7,6 +7,8 @@
     android:layout_margin="@dimen/_20sdp"
     android:background="@drawable/rounded_shape"
     android:backgroundTint="@color/rose_200"
+    android:clickable="false"
+    android:focusable="false"
     android:elevation="@dimen/_10sdp"
     android:paddingVertical="@dimen/_15sdp">
 
@@ -26,7 +28,6 @@
         android:fontFamily="@font/acme"
         android:gravity="center"
         android:padding="@dimen/_5sdp"
-        android:text="TextView"
         android:textSize="@dimen/_15ssp"
         app:layout_constraintEnd_toEndOf="@+id/imageView4"
         app:layout_constraintStart_toStartOf="@+id/imageView4"
@@ -38,7 +39,7 @@
         android:layout_height="@dimen/_30sdp"
         android:background="@drawable/rounded_shape"
         android:backgroundTint="@color/orange_700"
-        android:text="YES"
+        android:text="@string/yes"
         android:textColor="@color/off_white"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="@+id/warning_dialog_no" />
@@ -50,7 +51,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:background="@drawable/rounded_shape"
         android:backgroundTint="@color/orange_700"
-        android:text="NO"
+        android:text="@string/no"
         android:textColor="@color/off_white"
         app:layout_constraintEnd_toStartOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/warning_dialog_message" />

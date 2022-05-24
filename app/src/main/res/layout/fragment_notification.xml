@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/rose_200"
+    android:clickable="false"
+    android:focusable="false"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,7 +51,7 @@
         android:layout_height="match_parent"
         android:fontFamily="@font/acme"
         android:gravity="center"
-        android:text="No Notifications"
+        android:text="@string/no_notifications"
         android:textSize="@dimen/_16ssp"
         android:visibility="gone" />
 </LinearLayout>

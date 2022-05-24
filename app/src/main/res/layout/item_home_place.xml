@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="false"
+    android:focusable="false"
     android:padding="@dimen/_5sdp">
 
 
@@ -45,7 +47,6 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/acme"
-                android:text="place name"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_15ssp"
                 app:layout_constraintEnd_toEndOf="@+id/image_slider"
@@ -62,7 +63,6 @@
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:fontFamily="@font/acme"
                 android:maxLines="2"
-                android:text="short descrption"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintBottom_toBottomOf="parent"

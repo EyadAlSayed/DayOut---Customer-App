@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/_250sdp"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:focusable="true"
+    android:clickable="false"
+    android:focusable="false"
     android:layoutDirection="ltr">
 
     <eightbitlab.com.blurview.BlurView
@@ -43,11 +43,10 @@
 
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/drawer_userphoto"
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 android:layout_marginTop="@dimen/_30sdp"
-                android:background="@drawable/ic_user_profile"
                 android:backgroundTint="@color/white"
                 app:layout_constraintEnd_toStartOf="@+id/drawer_close_btn"
                 app:layout_constraintHorizontal_bias="0.72"
@@ -55,17 +54,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/drawer_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/acme"
-                android:text="user_name"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_15ssp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                app:layout_constraintEnd_toEndOf="@+id/drawer_userphoto"
+                app:layout_constraintStart_toStartOf="@+id/drawer_userphoto"
+                app:layout_constraintTop_toBottomOf="@+id/drawer_userphoto" />
 
 
             <LinearLayout
@@ -76,10 +74,10 @@
                 android:gravity="start"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/drawer_username"
                 app:layout_constraintVertical_bias="0.0">
 
-                <TextView
+                    <TextView
                     android:id="@+id/my_trip_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -89,12 +87,12 @@
                     android:drawablePadding="@dimen/_18sdp"
                     android:fontFamily="@font/acme"
                     android:gravity="center"
-                    android:text="My Trip"
+                    android:text="@string/my_trips"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView"
-                    app:layout_constraintStart_toStartOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintEnd_toEndOf="@+id/drawer_userphoto"
+                    app:layout_constraintStart_toStartOf="@+id/drawer_userphoto"
+                    app:layout_constraintTop_toBottomOf="@+id/drawer_userphoto" />
 
 
                 <TextView
@@ -107,12 +105,12 @@
                     android:drawablePadding="@dimen/_18sdp"
                     android:fontFamily="@font/acme"
                     android:gravity="center"
-                    android:text="Organizers"
+                    android:text="@string/organizers"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView"
-                    app:layout_constraintStart_toStartOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintEnd_toEndOf="@+id/drawer_userphoto"
+                    app:layout_constraintStart_toStartOf="@+id/drawer_userphoto"
+                    app:layout_constraintTop_toBottomOf="@+id/drawer_userphoto" />
 
 
                 <TextView
@@ -125,12 +123,12 @@
                     android:drawablePadding="@dimen/_18sdp"
                     android:fontFamily="@font/acme"
                     android:gravity="center"
-                    android:text="Posts"
+                    android:text="@string/posts"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView"
-                    app:layout_constraintStart_toStartOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintEnd_toEndOf="@+id/drawer_userphoto"
+                    app:layout_constraintStart_toStartOf="@+id/drawer_userphoto"
+                    app:layout_constraintTop_toBottomOf="@+id/drawer_userphoto" />
 
 
                 <TextView
@@ -144,12 +142,12 @@
                     android:drawableTint="@color/white"
                     android:fontFamily="@font/acme"
                     android:gravity="center"
-                    android:text="Notification"
+                    android:text="@string/notifications"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView"
-                    app:layout_constraintStart_toStartOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintEnd_toEndOf="@+id/drawer_userphoto"
+                    app:layout_constraintStart_toStartOf="@+id/drawer_userphoto"
+                    app:layout_constraintTop_toBottomOf="@+id/drawer_userphoto" />
 
 
             </LinearLayout>
@@ -172,7 +170,7 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/acme"
                 android:gravity="center"
-                android:text="General"
+                android:text="@string/general"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toStartOf="@+id/view5"
@@ -211,12 +209,12 @@
                     android:fontFamily="@font/acme"
 
                     android:gravity="center"
-                    android:text="Connect Us"
+                    android:text="@string/contact_us"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView"
-                    app:layout_constraintStart_toStartOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintEnd_toEndOf="@+id/drawer_userphoto"
+                    app:layout_constraintStart_toStartOf="@+id/drawer_userphoto"
+                    app:layout_constraintTop_toBottomOf="@+id/drawer_userphoto" />
 
 
                 <TextView
@@ -229,12 +227,12 @@
                     android:drawablePadding="@dimen/_15sdp"
                     android:fontFamily="@font/acme"
                     android:gravity="center"
-                    android:text="Settings"
+                    android:text="@string/settings"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView"
-                    app:layout_constraintStart_toStartOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintEnd_toEndOf="@+id/drawer_userphoto"
+                    app:layout_constraintStart_toStartOf="@+id/drawer_userphoto"
+                    app:layout_constraintTop_toBottomOf="@+id/drawer_userphoto" />
 
                 <TextView
                     android:id="@+id/logout_txt"
@@ -247,12 +245,12 @@
                     android:drawablePadding="@dimen/_15sdp"
                     android:fontFamily="@font/acme"
                     android:gravity="center"
-                    android:text="LogOut"
+                    android:text="@string/logout"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView"
-                    app:layout_constraintStart_toStartOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintEnd_toEndOf="@+id/drawer_userphoto"
+                    app:layout_constraintStart_toStartOf="@+id/drawer_userphoto"
+                    app:layout_constraintTop_toBottomOf="@+id/drawer_userphoto" />
 
             </LinearLayout>
 
@@ -262,7 +260,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:fontFamily="@font/acme"
-                android:text="Privacy policy"
+                android:text="@string/privacy_policy"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_15ssp"
                 app:layout_constraintBottom_toBottomOf="@+id/view2"
