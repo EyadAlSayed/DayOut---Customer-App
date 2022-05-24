@@ -21,6 +21,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -81,8 +82,6 @@ public interface API {
     @POST("api/trip/rate")
     Call<ResponseBody> rateTrip(@Body JsonObject rate);
 
-    @POST("api/user/mobile-token")
-    Call<ResponseBody> sendFirebaseToken(@Body JsonObject firebaseObj);
 
 
     /**
@@ -91,6 +90,9 @@ public interface API {
 
     @POST("api/user/profile/customer/edit")
     Call<ProfileModel> editProfile(@Body EditProfileModel model);
+
+    @PUT("api/user/mobile-token")
+    Call<ResponseBody> sendFirebaseToken(@Body JsonObject firebaseObj);
 
 
     /**
