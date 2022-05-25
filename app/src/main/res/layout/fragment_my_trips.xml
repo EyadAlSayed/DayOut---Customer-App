@@ -60,6 +60,10 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_height="wrap_content"
             app:tabIndicatorAnimationMode="elastic"
+            android:background="@drawable/rounded_shape"
+            app:tabTextAppearance="@style/tab_text"
+            app:tabIndicatorColor="@color/orange_500"
+            app:tabSelectedTextColor="@color/orange_500"
             app:tabMode="fixed"
             app:tabTextColor="@color/black">
         </com.google.android.material.tabs.TabLayout>
