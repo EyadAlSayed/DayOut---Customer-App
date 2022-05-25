@@ -23,6 +23,7 @@ import com.example.dayout.models.popualrPlace.PopularPlaceData;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.fragments.drawer.DrawerFragment;
 import com.example.dayout.ui.fragments.home.PlaceInfoFragment;
 import com.example.dayout.viewModels.PlaceViewModel;
 import com.google.gson.JsonObject;
@@ -97,10 +98,9 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
         holder.shortDescrption.setText(list.get(position).summary);
         holder.bindImageSlider(list.get(position).photos);
 
-        if(list.get(position).favorites_count == 1){
+        if (list.get(position).favorites_count == 1) {
             holder.addFavoriteButton.setVisibility(View.GONE);
-        }
-        else holder.addFavoriteButton.setVisibility(View.VISIBLE);
+        } else holder.addFavoriteButton.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -157,7 +157,8 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
 
         @Override
         public void onClick(View v) {
-            FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new PlaceInfoFragment(list.get(getAdapterPosition())));
+            if (!DrawerFragment.isDrawerOpen)
+                FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new PlaceInfoFragment(list.get(getAdapterPosition())));
         }
 
         private void bindImageSlider(List<PopularPlacePhoto> photos) {

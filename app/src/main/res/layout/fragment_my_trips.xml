@@ -63,7 +63,7 @@
             android:background="@drawable/rounded_shape"
             app:tabTextAppearance="@style/tab_text"
             app:tabIndicatorColor="@color/orange_500"
-            app:tabSelectedTextColor="@color/white"
+            app:tabSelectedTextColor="@color/orange_500"
             app:tabMode="fixed"
             app:tabTextColor="@color/black">
         </com.google.android.material.tabs.TabLayout>
