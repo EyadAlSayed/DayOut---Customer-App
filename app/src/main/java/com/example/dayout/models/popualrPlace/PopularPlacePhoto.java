@@ -13,4 +13,5 @@ public class PopularPlacePhoto implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int id;
     public int place_id;
+    public String path;
 }

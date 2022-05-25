@@ -142,7 +142,7 @@ public class ActiveTripAdapter extends RecyclerView.Adapter<ActiveTripAdapter.Vi
             List<SlideModel> slideModels = new ArrayList<>();
 
             for (TripPhotoData ph : photos) {
-                slideModels.add(new SlideModel(TRIP_PHOTOS_URL + ph.id
+                slideModels.add(new SlideModel(ph.path
                         , ScaleTypes.FIT));
             }
 

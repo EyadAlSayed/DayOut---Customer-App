@@ -16,6 +16,7 @@ import android.widget.Switch;
 import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
+import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
 import com.example.dayout.ui.activities.MainActivity;
@@ -65,6 +66,7 @@ public class SettingsFragment extends Fragment {
         baseUrl.setText(BASE_URL);
         confirmButton.setOnClickListener(onConfirmClicked);
         backArrow.setOnClickListener(v -> FN.popTopStack(requireActivity()));
+        languageSwitch.setChecked(AppSharedPreferences.GET_CACHE_LAN().equals("en"));
         languageSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (type != 1) {
                 if (isChecked) {

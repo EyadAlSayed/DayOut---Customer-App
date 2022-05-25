@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/_250sdp"
     android:layout_height="match_parent"
-    android:clickable="false"
-    android:focusable="false"
+    android:clickable="true"
+    android:focusable="true"
     android:layoutDirection="ltr">
 
     <eightbitlab.com.blurview.BlurView

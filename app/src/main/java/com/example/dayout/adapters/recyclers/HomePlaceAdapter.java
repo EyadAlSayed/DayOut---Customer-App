@@ -157,7 +157,6 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
 
         @Override
         public void onClick(View v) {
-            if (!DrawerFragment.isDrawerOpen)
                 FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new PlaceInfoFragment(list.get(getAdapterPosition())));
         }
 
@@ -165,7 +164,7 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
             List<SlideModel> slideModels = new ArrayList<>();
 
             for (PopularPlacePhoto ph : photos) {
-                slideModels.add(new SlideModel(PLACE_PHOTO_URL + ph.id
+                slideModels.add(new SlideModel(ph.path
                         , ScaleTypes.FIT));
             }
 
