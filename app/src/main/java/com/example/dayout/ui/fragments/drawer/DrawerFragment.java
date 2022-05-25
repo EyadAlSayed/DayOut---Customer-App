@@ -77,6 +77,8 @@ public class DrawerFragment extends Fragment {
 
     LogOutDialog logOutDialog;
 
+    public static boolean isDrawerOpen;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,6 +95,7 @@ public class DrawerFragment extends Fragment {
     public void onStart() {
         ((MainActivity) requireActivity()).hideDrawerButton();
         ((MainActivity) requireActivity()).hideBottomBar();
+        isDrawerOpen = true;
         new Handler(Looper.getMainLooper()).postDelayed(this::initBlur, 1000);
         super.onStart();
     }
@@ -101,6 +104,7 @@ public class DrawerFragment extends Fragment {
     public void onStop() {
         ((MainActivity) requireActivity()).showDrawerButton();
         ((MainActivity) requireActivity()).showBottomBar();
+        isDrawerOpen = false;
         super.onStop();
     }
 
