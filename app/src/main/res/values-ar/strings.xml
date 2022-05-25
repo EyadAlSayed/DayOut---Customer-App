@@ -80,4 +80,5 @@
     <string name="no_upcoming_trips">لا يوجد رحلات قادمة</string>
     <string name="no_history">لا يوجد رحلات قديمة</string>
     <string name="no_notifications">لا يوجد إشعارات</string>
+    <string name="change_settings">تغيير الاعدادات</string>
 </resources>

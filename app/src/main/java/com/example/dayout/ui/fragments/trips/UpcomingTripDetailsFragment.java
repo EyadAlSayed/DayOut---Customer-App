@@ -95,9 +95,7 @@ public class UpcomingTripDetailsFragment extends Fragment {
         upcomingTripDetailsRoadMap.setOnClickListener(onRoadMapClicked);
         upcomingTripDetailsRoadMapFrontArrow.setOnClickListener(onRoadMapClicked);
 
-        //trip is active
-        if(data.isActive)
-            upcomingTripDetailsDeleteIcon.setVisibility(View.GONE);
+
     }
 
     private String getTypes(ArrayList<TripType> types){
@@ -115,13 +113,13 @@ public class UpcomingTripDetailsFragment extends Fragment {
 
     private void setData(TripDetailsModel model){
         upcomingTripDetailsType.setText(getTypes(model.data.types));
-        upcomingTripDetailsTitle.setText(data.title);
-        upcomingTripDetailsDate.setText(data.begin_date);
-        upcomingTripDetailsStops.setText(data.stopsToDetails);
+        upcomingTripDetailsTitle.setText(model.data.title);
+        upcomingTripDetailsDate.setText(model.data.begin_date);
+        upcomingTripDetailsStops.setText(model.data.stopsToDetails);
         upcomingTripDetailsExpireDate.setText(model.data.expire_date);
-        upcomingTripDetailsPrice.setText(String.valueOf(data.price));
+        upcomingTripDetailsPrice.setText(String.valueOf(model.data.price));
         upcomingTripsEndBookingDate.setText(model.data.end_booking);
-        upcomingTripDetailsPassengersCount.setText(String.valueOf(data.customer_trips_count));
+        upcomingTripDetailsPassengersCount.setText(String.valueOf(model.data.customer_trips_count));
     }
 
     private void getDataFromApi(){
@@ -137,6 +135,10 @@ public class UpcomingTripDetailsFragment extends Fragment {
             if(tripDetailsModelStringPair != null){
                 if(tripDetailsModelStringPair.first != null){
                     setData(tripDetailsModelStringPair.first);
+                    data =tripDetailsModelStringPair.first.data;
+                    //trip is active
+                    if(data.isActive)
+                        upcomingTripDetailsDeleteIcon.setVisibility(View.GONE);
                 } else
                     new ErrorDialog(requireContext(), tripDetailsModelStringPair.second).show();
             } else

@@ -77,7 +77,7 @@ public class DrawerFragment extends Fragment {
 
     LogOutDialog logOutDialog;
 
-    public static boolean isDrawerOpen;
+
 
 
     @Override
@@ -95,7 +95,7 @@ public class DrawerFragment extends Fragment {
     public void onStart() {
         ((MainActivity) requireActivity()).hideDrawerButton();
         ((MainActivity) requireActivity()).hideBottomBar();
-        isDrawerOpen = true;
+
         new Handler(Looper.getMainLooper()).postDelayed(this::initBlur, 1000);
         super.onStart();
     }
@@ -104,7 +104,7 @@ public class DrawerFragment extends Fragment {
     public void onStop() {
         ((MainActivity) requireActivity()).showDrawerButton();
         ((MainActivity) requireActivity()).showBottomBar();
-        isDrawerOpen = false;
+
         super.onStop();
     }
 
@@ -194,7 +194,7 @@ public class DrawerFragment extends Fragment {
 
     private final View.OnClickListener onSettingClicked = v -> {
         FN.popTopStack(requireActivity());
-        FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new SettingsFragment());
+        FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new SettingsFragment(0));
     };
 
     private final View.OnClickListener onLogOutClicked = v -> {

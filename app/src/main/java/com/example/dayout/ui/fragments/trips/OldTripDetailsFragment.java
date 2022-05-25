@@ -103,13 +103,13 @@ public class OldTripDetailsFragment extends Fragment {
 
     private void setData(TripDetailsModel model){
         oldTripDetailsType.setText(getTypes(model.data.types));
-        oldTripDetailsTitle.setText(data.title);
-        oldTripDetailsDate.setText(data.begin_date);
-        oldTripDetailsStops.setText(data.stopsToDetails);
-        oldTripDetailsExpireDate.setText(data.expire_date);
-        oldTripDetailsPrice.setText(String.valueOf(data.price));
+        oldTripDetailsTitle.setText(model.data.title);
+        oldTripDetailsDate.setText(model.data.begin_date);
+        oldTripDetailsStops.setText(model.data.stopsToDetails);
+        oldTripDetailsExpireDate.setText(model.data.expire_date);
+        oldTripDetailsPrice.setText(String.valueOf(model.data.price));
         oldTripsEndBookingDate.setText(model.data.end_booking);
-        oldTripDetailsPassengersCount.setText(String.valueOf(data.customer_trips_count));
+        oldTripDetailsPassengersCount.setText(String.valueOf(model.data.customer_trips_count));
     }
 
     private String getTypes(ArrayList<TripType> types){
@@ -138,6 +138,7 @@ public class OldTripDetailsFragment extends Fragment {
             if(tripDetailsModelStringPair != null){
                 if(tripDetailsModelStringPair.first != null){
                     setData(tripDetailsModelStringPair.first);
+                    data = tripDetailsModelStringPair.first.data;
                 } else
                     new ErrorDialog(requireContext(), tripDetailsModelStringPair.second).show();
             } else
@@ -147,7 +148,6 @@ public class OldTripDetailsFragment extends Fragment {
 
     private JsonObject getRateData(){
         JsonObject object = new JsonObject();
-
         object.addProperty("trip_id", data.id);
         object.addProperty("rate", tripRating);
 

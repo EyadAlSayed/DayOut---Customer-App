@@ -16,6 +16,7 @@ import android.widget.Switch;
 import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
+import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
 import com.example.dayout.ui.activities.MainActivity;
@@ -45,6 +46,12 @@ public class SettingsFragment extends Fragment {
     @BindView(R.id.language_switch)
     Switch languageSwitch;
 
+    int type;
+
+    public SettingsFragment(int type) {
+        this.type = type;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,17 +62,19 @@ public class SettingsFragment extends Fragment {
         return view;
     }
 
-    private  void initView(){
+    private void initView() {
         baseUrl.setText(BASE_URL);
         confirmButton.setOnClickListener(onConfirmClicked);
         backArrow.setOnClickListener(v -> FN.popTopStack(requireActivity()));
+        languageSwitch.setChecked(AppSharedPreferences.GET_CACHE_LAN().equals("en"));
         languageSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                ((MainActivity)requireActivity()).changeLanguage("en",true);
-            } else {
-                ((MainActivity)requireActivity()).changeLanguage("ar",true);
+            if (type != 1) {
+                if (isChecked) {
+                    ((MainActivity) requireActivity()).changeLanguage("en", true);
+                } else {
+                    ((MainActivity) requireActivity()).changeLanguage("ar", true);
+                }
             }
-
         });
     }
 
@@ -73,7 +82,7 @@ public class SettingsFragment extends Fragment {
         @Override
         public void onClick(View v) {
             BASE_URL = baseUrl.getText().toString();
-            NoteMessage.showSnackBar(requireActivity(),BASE_URL);
+            NoteMessage.showSnackBar(requireActivity(), BASE_URL);
             FN.popTopStack(requireActivity());
         }
     };
