@@ -28,4 +28,11 @@
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
+    <!-- tab layout -->
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/acme</item>
+
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

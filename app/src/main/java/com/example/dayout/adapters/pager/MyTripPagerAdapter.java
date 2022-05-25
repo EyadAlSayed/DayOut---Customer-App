@@ -15,8 +15,8 @@ import java.util.List;
 
 public class MyTripPagerAdapter extends FragmentStateAdapter {
 
-    private final List<Pair<Fragment,String>> list;
-    public MyTripPagerAdapter(@NonNull FragmentActivity fragmentActivity, List<Pair<Fragment,String>> list) {
+    private final List<Fragment> list;
+    public MyTripPagerAdapter(@NonNull FragmentActivity fragmentActivity, List<Fragment> list) {
         super(fragmentActivity);
         this.list = list;
     }
@@ -26,7 +26,7 @@ public class MyTripPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return list.get(position).first;
+        return list.get(position);
     }
 
     @Override
