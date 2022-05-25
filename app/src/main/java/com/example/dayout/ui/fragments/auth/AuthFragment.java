@@ -15,6 +15,7 @@ import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.LoadingDialog;
+import com.example.dayout.ui.fragments.drawer.SettingsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +36,8 @@ public class AuthFragment extends Fragment {
     TextView privacyPolicyTxt;
     @BindView(R.id.guest_btn)
     Button guestButton;
+    @BindView(R.id.setting_btn)
+    Button settingBtutton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,8 +53,12 @@ public class AuthFragment extends Fragment {
         loginButton.setOnClickListener(onLoginClicked);
         signUpButton.setOnClickListener(onSignUpClicked);
         privacyPolicyTxt.setOnClickListener(onPrivacyPolicyClicked);
+        settingBtutton.setOnClickListener(onSettingClicked);
         guestButton.setOnClickListener(onGuestClicked);
     }
+
+    private final View.OnClickListener onSettingClicked = v -> FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new SettingsFragment(1));
+
 
     private final View.OnClickListener onGuestClicked = v -> openMainActivity();
 

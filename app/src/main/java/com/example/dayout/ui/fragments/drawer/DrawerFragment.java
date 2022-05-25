@@ -190,7 +190,7 @@ public class DrawerFragment extends Fragment {
 
     private final View.OnClickListener onSettingClicked = v -> {
         FN.popTopStack(requireActivity());
-        FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new SettingsFragment());
+        FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new SettingsFragment(0));
     };
 
     private final View.OnClickListener onLogOutClicked = v -> {

@@ -89,5 +89,6 @@
     <string name="no_upcoming_trips">No Upcoming Trips</string>
     <string name="no_history">No History</string>
     <string name="no_notifications">No Notifications</string>
+    <string name="change_settings">Change Setting</string>
 
 </resources>
