@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dayout.R;
-import com.example.dayout.adapters.recyclers.MyTripsAdapter;
 import com.example.dayout.adapters.recyclers.myTrips.ActiveTripAdapter;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripModel;

@@ -185,8 +185,6 @@ public class ProfileFragment extends Fragment {
 
     private void setData(ProfileData data){
         setName(data.first_name, data.last_name);
-        if(data.photo != null)
-            profileImage.setImageURI(Uri.parse(data.photo));
         profileTripsCount.setText(String.valueOf(data.customer_trip_count));
         profileFollowingCount.setText(String.valueOf(data.organizer_follow_count));
         profileGender.setText(data.gender);
