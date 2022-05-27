@@ -57,6 +57,12 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        ((MainActivity) requireActivity()).showBottomBar();
+        super.onStart();
+    }
+
 
     private void initView() {
         initRc();

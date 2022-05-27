@@ -93,6 +93,7 @@ public class FilterPostFragment extends Fragment {
 
     private String[] getDataName(List<TripType> list){
         List<String> names = new ArrayList<>();
+        names.add("Any");
         for (TripType t : list){
             names.add(t.name);
         }

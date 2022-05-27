@@ -38,6 +38,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
+import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 import static com.example.dayout.viewModels.PlaceViewModel.PLACE_PHOTO_URL;
@@ -163,8 +164,10 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
         private void bindImageSlider(List<PopularPlacePhoto> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
 
+            String baseUrl = BASE_URL.substring(0,BASE_URL.length()-1);
+
             for (PopularPlacePhoto ph : photos) {
-                slideModels.add(new SlideModel(ph.path
+                slideModels.add(new SlideModel(baseUrl + ph.path
                         , ScaleTypes.FIT));
             }
 
