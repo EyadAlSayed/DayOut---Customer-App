@@ -147,8 +147,10 @@ public class EditProfileFragment extends Fragment {
         editProfileBackButton.setOnClickListener(onBackClicked);
         editProfileDone.setOnClickListener(onDoneClicked);
         loadingDialog = new LoadingDialog(requireContext());
-        if(editProfileImage.getDrawable() == getResources().getDrawable(R.drawable.profile_place_holder_orange))
+        if (!data.hasPhoto)
             editProfileDeletePhotoButton.setVisibility(View.GONE);
+        else
+            editProfileDeletePhotoButton.setVisibility(View.VISIBLE);
     }
 
     private void setData() {
@@ -249,7 +251,8 @@ public class EditProfileFragment extends Fragment {
     private EditProfileModel getEditedData() {
         EditProfileModel model = new EditProfileModel();
 
-        model.photo = imageAsString;
+        if (data.hasPhoto)
+            model.photo = imageAsString;
         model.first_name = editProfileFirstName.getText().toString();
         model.last_name = editProfileLastName.getText().toString();
         model.email = editProfileEmail.getText().toString();
@@ -262,6 +265,7 @@ public class EditProfileFragment extends Fragment {
         public void onActivityResult(Uri result) {
             editProfileImage.setImageURI(result);
             imageAsString = ConverterImage.convertUriToBase64(requireContext(), result);
+            data.hasPhoto = true;
         }
     });
 
@@ -276,8 +280,9 @@ public class EditProfileFragment extends Fragment {
     private final View.OnClickListener onDeleteImageClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            editProfileImage.setImageURI(Uri.EMPTY);
+            editProfileImage.setImageDrawable(getResources().getDrawable(R.drawable.profile_place_holder_orange));
             imageAsString = "";
+            data.hasPhoto = false;
         }
     };
 

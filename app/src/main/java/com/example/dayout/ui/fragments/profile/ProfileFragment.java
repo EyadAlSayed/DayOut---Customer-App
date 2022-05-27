@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
@@ -45,7 +47,7 @@ public class ProfileFragment extends Fragment {
     View view;
 
 
-    private static  final String TAG = "Profile Fragment";
+    private static final String TAG = "Profile Fragment";
 
     @BindView(R.id.back_arrow_btn)
     ImageButton backArrowButton;
@@ -97,22 +99,22 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onStart() {
-        ((MainActivity)requireActivity()).hideBottomBar();
+        ((MainActivity) requireActivity()).hideBottomBar();
         super.onStart();
     }
 
     @Override
     public void onStop() {
-        ((MainActivity)requireActivity()).showBottomBar();
+        ((MainActivity) requireActivity()).showBottomBar();
         super.onStop();
     }
 
-    private void initViews(){
+    private void initViews() {
         backArrowButton.setOnClickListener(onBackArrowClicked);
         profileEditButton.setOnClickListener(onEditProfileClicked);
     }
 
-    private void getDataFromAPI(){
+    private void getDataFromAPI() {
         UserViewModel.getINSTANCE().getPassengerProfile(GET_USER_ID());
         UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), profileObserver);
     }
@@ -159,7 +161,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void getDataFromRoom(){
+    private void getDataFromRoom() {
         ProfileDatabase.getINSTANCE(requireContext())
                 .iProfileModel()
                 .getProfile(GET_USER_ID())
@@ -183,26 +185,31 @@ public class ProfileFragment extends Fragment {
                 });
     }
 
-    private void setData(ProfileData data){
+    private void setData(ProfileData data) {
         setName(data.first_name, data.last_name);
-        if(data.photo != null)
-            profileImage.setImageURI(Uri.parse(data.photo));
+
         profileTripsCount.setText(String.valueOf(data.customer_trip_count));
         profileFollowingCount.setText(String.valueOf(data.organizer_follow_count));
         profileGender.setText(data.gender);
         profilePhoneNumber.setText(data.phone_number);
         setEmail(data.email);
         downloadUserImage(data.photo);
+        System.out.println(profileImage.getDrawable());
+        System.out.println(getResources().getDrawable(R.drawable.profile_place_holder));
+        if(profileImage.getDrawable() == getResources().getDrawable(R.drawable.profile_place_holder))
+            data.hasPhoto = false;
+        else
+            data.hasPhoto = true;
     }
 
-    private void downloadUserImage(String url){
-        String baseUrl = BASE_URL.substring(0,BASE_URL.length()-1);
-        ImageViewer.downloadCircleImage(requireContext(),profileImage,R.drawable.profile_place_holder,baseUrl+url);
+    private void downloadUserImage(String url) {
+        String baseUrl = BASE_URL.substring(0, BASE_URL.length() - 1);
+        ImageViewer.downloadCircleImage(requireContext(), profileImage, R.drawable.profile_place_holder, baseUrl + url);
     }
 
 
-    private void setEmail(String email){
-        if(email == null){
+    private void setEmail(String email) {
+        if (email == null) {
             profileEmail.setVisibility(View.GONE);
             email_icon.setVisibility(View.GONE);
             email_TV.setVisibility(View.GONE);
@@ -211,7 +218,7 @@ public class ProfileFragment extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    private void setName(String firstName, String lastName){
+    private void setName(String firstName, String lastName) {
         profileFullName.setText(firstName + " " + lastName);
     }
 
