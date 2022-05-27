@@ -19,6 +19,7 @@ import com.example.dayout.R;
 import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.authModels.LoginModel;
+import com.example.dayout.ui.activities.AuthActivity;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
@@ -128,8 +129,11 @@ public class LoginFragment extends Fragment {
     }
 
     private void openMainActivity() {
-        requireActivity().startActivity(new Intent(requireActivity(), MainActivity.class));
-        requireActivity().finish();
+        Intent intent = new Intent(((AuthActivity)requireActivity()), MainActivity.class);
+        ((AuthActivity)requireActivity()).startActivity(intent);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        ((AuthActivity)requireActivity()).finishActivity();
+
     }
 
     private boolean checkInfo() {

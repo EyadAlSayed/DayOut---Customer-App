@@ -75,9 +75,6 @@ public class TripPostFragment extends Fragment {
     private final Observer<Pair<TripPost,String>> tripPostObserver  = new Observer<Pair<TripPost, String>>() {
         @Override
         public void onChanged(Pair<TripPost, String> tripPostStringPair) {
-            swipeRefreshLayout.setRefreshing(false);
-            swipeRefreshLayout.setEnabled(true);
-
             if (tripPostStringPair != null){
                 if (tripPostStringPair.first != null){
                     tripPostAdapter.refresh(tripPostStringPair.first.data.data);
@@ -89,6 +86,9 @@ public class TripPostFragment extends Fragment {
             else {
                 new ErrorDialog(requireContext(),"Connection Error").show();
             }
+
+            swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.setEnabled(true);
         }
     };
 

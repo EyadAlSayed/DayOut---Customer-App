@@ -8,11 +8,16 @@ import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.pager.PostPagerAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +32,7 @@ public class PostsFragment extends Fragment {
     @BindView(R.id.post_tab_layout)
     TabLayout postTabLayout;
     @BindView(R.id.post_view_pager)
-    ViewPager postViewPager;
+    ViewPager2 postViewPager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,11 +50,26 @@ public class PostsFragment extends Fragment {
     }
 
     private void initTabLayout() {
-        PostPagerAdapter adapter = new PostPagerAdapter(requireActivity().getSupportFragmentManager());
-        adapter.addFragment(new TripPostFragment(), "Post");
-        adapter.addFragment(new TripPostFragment(), "Poll");
+        List<Fragment> list = new ArrayList<>();
+        list.add(new TripPostFragment());
+        list.add(new TripPostFragment());
 
-        postViewPager.setAdapter(adapter);
-        postTabLayout.setupWithViewPager(postViewPager);
+        PostPagerAdapter pagerAdapter = new PostPagerAdapter(requireActivity(),list);
+
+        postViewPager.setAdapter(pagerAdapter);
+        new TabLayoutMediator(postTabLayout, postViewPager, (TabLayoutMediator.TabConfigurationStrategy) (tab, position) -> {
+            switch (position) {
+                case 0: {
+                    tab.setText("Post");
+
+                    break;
+                }
+                case 1: {
+                    tab.setText("Poll");
+
+                    break;
+                }
+            }
+        }).attach();
     }
 }

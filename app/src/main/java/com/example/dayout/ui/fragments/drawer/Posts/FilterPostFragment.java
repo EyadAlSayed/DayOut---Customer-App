@@ -19,6 +19,7 @@ import com.example.dayout.adapters.recyclers.TripPostAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripPost;
 import com.example.dayout.models.trip.TripType;
+import com.example.dayout.models.trip.TripTypeModel;
 import com.example.dayout.viewModels.TripViewModel;
 import com.google.gson.JsonObject;
 
@@ -83,10 +84,10 @@ public class FilterPostFragment extends Fragment {
         TripViewModel.getINSTANCE().tripTypeTripMutableLiveData.observe(requireActivity(), tripTypeObserver);
     }
 
-    private final Observer<Pair<List<TripType>, String>> tripTypeObserver = typeStringPair -> {
+    private final Observer<Pair<TripTypeModel, String>> tripTypeObserver = typeStringPair -> {
         if (typeStringPair != null) {
             if (typeStringPair.first != null) {
-             initSpinner(getDataName(typeStringPair.first));
+             initSpinner(getDataName(typeStringPair.first.data));
             }
         }
     };
