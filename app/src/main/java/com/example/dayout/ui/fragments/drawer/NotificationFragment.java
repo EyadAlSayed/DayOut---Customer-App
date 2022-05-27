@@ -83,6 +83,7 @@ public class NotificationFragment extends Fragment {
     private final Observer<Pair<NotificationModel, String>> notificationsObserver = new Observer<Pair<NotificationModel, String>>() {
         @Override
         public void onChanged(Pair<NotificationModel, String> notificationModelStringPair) {
+            loadingDialog.dismiss();
             if(notificationModelStringPair != null){
                 if(notificationModelStringPair.first != null){
                     if(!notificationModelStringPair.first.data.isEmpty()) {

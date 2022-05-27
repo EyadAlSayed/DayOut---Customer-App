@@ -35,7 +35,7 @@ public class PlaceViewModel extends ViewModel {
         return instance;
     }
 
-    public static final String  PLACE_PHOTO_URL = BASE_URL + "api/place/photo/";
+    public static final String  PLACE_PHOTO_URL = BASE_URL + "storage/places/";
 
     public MutableLiveData<Pair<PopularPlace, String>> popularMutableLiveData;
 
