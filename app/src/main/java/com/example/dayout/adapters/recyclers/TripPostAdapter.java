@@ -59,11 +59,6 @@ public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHo
         holder.endTripBookinDate.setText(list.get(position).end_booking);
         holder.tripDescription.setText(list.get(position).description);
         holder.bindImageSlider(list.get(position).trip_photos);
-
-        /**
-         * trip count passenger
-         * places name
-         */
     }
 
     @Override
@@ -95,10 +90,10 @@ public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHo
             itemView.setOnClickListener(this);
         }
 
-        private void bindImageSlider(List<PopularPlacePhoto> photos) {
+        private void bindImageSlider(List<TripPost.TripPhoto> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
             String baseUrl = BASE_URL.substring(0,BASE_URL.length()-1);
-            for (PopularPlacePhoto ph : photos) {
+            for (TripPost.TripPhoto ph : photos) {
                 slideModels.add(new SlideModel(baseUrl+ph.path
                         , ScaleTypes.FIT));
             }
