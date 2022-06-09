@@ -15,10 +15,13 @@ public class PostPagerAdapter extends FragmentStateAdapter {
 
     private final List<Fragment> list;
 
+
     public PostPagerAdapter(@NonNull FragmentActivity fragmentActivity, List<Fragment> list) {
         super(fragmentActivity);
         this.list = list;
     }
+
+
 
 
     @NonNull
@@ -27,6 +30,8 @@ public class PostPagerAdapter extends FragmentStateAdapter {
         return list.get(position);
     }
 
+
+   
     @Override
     public int getItemCount() {
         return list.size();

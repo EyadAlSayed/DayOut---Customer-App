@@ -42,6 +42,7 @@ public class ActiveTripAdapter extends RecyclerView.Adapter<ActiveTripAdapter.Vi
         this.context = context;
     }
 
+
     public void refresh(List<TripData> list) {
         this.list = list;
         notifyDataSetChanged();
