@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dayout.R;
+import com.example.dayout.adapters.recyclers.TripPollAdapter;
 import com.example.dayout.adapters.recyclers.TripPostAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.poll.Polls;
 import com.example.dayout.models.trip.TripPost;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
@@ -29,19 +31,19 @@ import butterknife.ButterKnife;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
 
-public class TripPostFragment extends Fragment {
+public class PollsFragment extends Fragment {
 
 
     View view;
 
     @BindView(R.id.filter_btn)
-    ImageButton filterBtn;
-    @BindView(R.id.trip_post_rc)
-    RecyclerView tripPostRc;
+    ImageButton filterButton;
+    @BindView(R.id.trip_poll_post_rc)
+    RecyclerView tripPollPostRc;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    TripPostAdapter tripPostAdapter;
+    TripPollAdapter tripPollAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,25 +63,26 @@ public class TripPostFragment extends Fragment {
     }
 
     private void initView(){
-        filterBtn.setOnClickListener(onFilterClicked);
+        filterButton.setVisibility(View.GONE);
+        filterButton.setOnClickListener(onFilterClicked);
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         initRc();
     }
 
     private void getDataFromApi(){
-        TripViewModel.getINSTANCE().getTripPost();
-        TripViewModel.getINSTANCE().tripPostMutableLiveData.observe(requireActivity(),tripPostObserver);
+        TripViewModel.getINSTANCE().getPolls();
+        TripViewModel.getINSTANCE().pollMutableLiveData.observe(requireActivity(),pollsObserver);
     }
 
-    private final Observer<Pair<TripPost,String>> tripPostObserver  = new Observer<Pair<TripPost, String>>() {
+    private final Observer<Pair<Polls,String>> pollsObserver  = new Observer<Pair<Polls, String>>() {
         @Override
-        public void onChanged(Pair<TripPost, String> tripPostStringPair) {
-            if (tripPostStringPair != null){
-                if (tripPostStringPair.first != null){
-                    tripPostAdapter.refresh(tripPostStringPair.first.data.data);
+        public void onChanged(Pair<Polls, String> pollStringPair) {
+            if (pollStringPair != null){
+                if (pollStringPair.first != null){
+                    tripPollAdapter.refresh(pollStringPair.first.data);
                 }
                 else {
-                    new ErrorDialog(requireContext(),tripPostStringPair.second).show();
+                    new ErrorDialog(requireContext(),pollStringPair.second).show();
                 }
             }
             else {
@@ -92,16 +95,16 @@ public class TripPostFragment extends Fragment {
     };
 
     private void initRc(){
-        tripPostRc.setHasFixedSize(true);
-        tripPostRc.setLayoutManager(new LinearLayoutManager(requireContext()));
-        tripPostAdapter = new TripPostAdapter(new ArrayList<>(),requireContext());
-        tripPostRc.setAdapter(tripPostAdapter);
+        tripPollPostRc.setHasFixedSize(true);
+        tripPollPostRc.setLayoutManager(new LinearLayoutManager(requireContext()));
+        tripPollAdapter = new TripPollAdapter(new ArrayList<>(),requireContext());
+        tripPollPostRc.setAdapter(tripPollAdapter);
     }
 
     private final View.OnClickListener onFilterClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            FN.addToStackSlideUDFragment(MAIN_FRC, requireActivity(), new FilterPostFragment(tripPostAdapter), "filter_post");
+           // FN.addToStackSlideUDFragment(MAIN_FRC, requireActivity(), new FilterPostFragment(tripPostAdapter), "filter_post");
         }
     };
 

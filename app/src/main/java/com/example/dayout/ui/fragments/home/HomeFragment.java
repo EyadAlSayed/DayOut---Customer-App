@@ -14,11 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.HomePlaceAdapter;
-import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.popualrPlace.PopularPlace;
+import com.example.dayout.models.popualrPlace.PlaceData;
+import com.example.dayout.models.popualrPlace.PopularPlaceModel;
 
 
-import com.example.dayout.models.popualrPlace.PopularPlaceData;
 import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
@@ -78,7 +77,7 @@ public class HomeFragment extends Fragment {
 
     private void getDataFromApi() {
         loadingDialog.show();
-        PlaceViewModel.getINSTANCE().getPopularPlace();
+        PlaceViewModel.getINSTANCE().getPopularPlaces();
         PlaceViewModel.getINSTANCE().popularMutableLiveData.observe(requireActivity(), popularPlaceObserver);
     }
 
@@ -88,14 +87,14 @@ public class HomeFragment extends Fragment {
                 .getPopularPlace()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<List<PopularPlaceData>>() {
+                .subscribe(new SingleObserver<List<PlaceData>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
 
                     }
 
                     @Override
-                    public void onSuccess(@NonNull List<PopularPlaceData> data) {
+                    public void onSuccess(@NonNull List<PlaceData> data) {
                         homePlaceAdapter.refreshList(data);
                     }
 
@@ -106,9 +105,9 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-    private final Observer<Pair<PopularPlace, String>> popularPlaceObserver = new Observer<Pair<PopularPlace, String>>() {
+    private final Observer<Pair<PopularPlaceModel, String>> popularPlaceObserver = new Observer<Pair<PopularPlaceModel, String>>() {
         @Override
-        public void onChanged(Pair<PopularPlace, String> popularPlaceStringPair) {
+        public void onChanged(Pair<PopularPlaceModel, String> popularPlaceStringPair) {
             loadingDialog.dismiss();
             if (popularPlaceStringPair != null) {
                 if (popularPlaceStringPair.first != null) {

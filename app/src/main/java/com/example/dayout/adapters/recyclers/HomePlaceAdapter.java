@@ -19,11 +19,10 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
-import com.example.dayout.models.popualrPlace.PopularPlaceData;
+import com.example.dayout.models.popualrPlace.PlaceData;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
-import com.example.dayout.ui.fragments.drawer.DrawerFragment;
 import com.example.dayout.ui.fragments.home.PlaceInfoFragment;
 import com.example.dayout.viewModels.PlaceViewModel;
 import com.google.gson.JsonObject;
@@ -41,20 +40,19 @@ import io.reactivex.schedulers.Schedulers;
 import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
-import static com.example.dayout.viewModels.PlaceViewModel.PLACE_PHOTO_URL;
 
 public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.ViewHolder> {
 
     private static final String TAG = "Home place Adapter";
-    List<PopularPlaceData> list;
+    List<PlaceData> list;
     Context context;
 
-    public HomePlaceAdapter(List<PopularPlaceData> list, Context context) {
+    public HomePlaceAdapter(List<PlaceData> list, Context context) {
         this.list = list;
         this.context = context;
     }
 
-    public void insertRoomObject(PopularPlaceData popularPlace) {
+    public void insertRoomObject(PlaceData popularPlace) {
 
         // insert object in room database
         ((MainActivity) context).roomPopularPlaces
@@ -77,7 +75,7 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
         });
     }
 
-    public void refreshList(List<PopularPlaceData> list) {
+    public void refreshList(List<PlaceData> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -158,7 +156,7 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
 
         @Override
         public void onClick(View v) {
-                FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new PlaceInfoFragment(list.get(getAdapterPosition())));
+                FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new PlaceInfoFragment(list.get(getAdapterPosition()).id));
         }
 
         private void bindImageSlider(List<PopularPlacePhoto> photos) {
