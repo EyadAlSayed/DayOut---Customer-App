@@ -1,20 +1,20 @@
 package com.example.dayout.api;
 
-import com.example.dayout.models.NotificationModel;
+import com.example.dayout.models.notification.NotificationModel;
 
 import com.example.dayout.models.authModels.LoginModel;
 
 import com.example.dayout.models.poll.Polls;
+import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
-import com.example.dayout.models.authModels.UserRegisterModel;
 import com.example.dayout.models.popualrPlace.PopularPlaceModel;
 
-import com.example.dayout.models.trip.PlaceDetailsModel;
-import com.example.dayout.models.trip.RoadMapModel;
+import com.example.dayout.models.trip.place.PlaceDetailsModel;
+import com.example.dayout.models.trip.roadmap.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
-import com.example.dayout.models.trip.TripModel;
+import com.example.dayout.models.trip.TripListModel;
 import com.example.dayout.models.trip.TripPost;
-import com.example.dayout.models.trip.TripTypeModel;
+import com.example.dayout.models.trip.triptype.TripTypeModel;
 import com.google.gson.JsonObject;
 
 import okhttp3.ResponseBody;
@@ -40,13 +40,13 @@ public interface API {
     Call<ProfileModel> getPassengerProfile(@Path("id") int id);
 
     @GET("api/trip/upcoming/customer")
-    Call<TripModel> getUpcomingTrips(@Query("type") String type);
+    Call<TripListModel> getUpcomingTrips(@Query("type") String type);
 
     @GET("api/trip/active/customer")
-    Call<TripModel> getActiveTrips(@Query("type") String type);
+    Call<TripListModel> getActiveTrips(@Query("type") String type);
 
     @GET("api/trip/history/customer")
-    Call<TripModel> getHistoryTrips(@Query("type") String type);
+    Call<TripListModel> getHistoryTrips(@Query("type") String type);
 
     @GET("api/trip/types")
     Call<TripTypeModel> getTripType();
@@ -82,7 +82,7 @@ public interface API {
 
 
     @POST("api/user/register")
-    Call<UserRegisterModel> registerPassenger(@Body UserRegisterModel profile);
+    Call<ProfileData> registerPassenger(@Body ProfileData profile);
 
     @POST("api/place/favorite")
     Call<ResponseBody> addToFavorite(@Body JsonObject favoritePlace);

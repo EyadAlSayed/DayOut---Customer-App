@@ -20,9 +20,9 @@ import com.example.dayout.adapters.recyclers.myTrips.OldTripAdapter;
 import com.example.dayout.adapters.recyclers.myTrips.UpComingTripAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripData;
-import com.example.dayout.models.trip.TripModel;
-import com.example.dayout.models.trip.TripType;
-import com.example.dayout.models.trip.TripTypeModel;
+import com.example.dayout.models.trip.TripListModel;
+import com.example.dayout.models.trip.triptype.TripType;
+import com.example.dayout.models.trip.triptype.TripTypeModel;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.viewModels.TripViewModel;
@@ -137,9 +137,9 @@ public class FilterFragment extends Fragment {
     private void showFilteredTrips() {
         if (filterType == 1) {
             TripViewModel.getINSTANCE().getHistoryTrips();
-            TripViewModel.getINSTANCE().historyTripsMutableLiveData.observe(requireActivity(), new Observer<Pair<TripModel, String>>() {
+            TripViewModel.getINSTANCE().historyTripsMutableLiveData.observe(requireActivity(), new Observer<Pair<TripListModel, String>>() {
                 @Override
-                public void onChanged(Pair<TripModel, String> tripModelStringPair) {
+                public void onChanged(Pair<TripListModel, String> tripModelStringPair) {
                     loadingDialog.dismiss();
                     if (tripModelStringPair != null) {
                         if (tripModelStringPair.first != null) {
@@ -152,9 +152,9 @@ public class FilterFragment extends Fragment {
             });
         } else if (filterType == 2) {
             TripViewModel.getINSTANCE().getUpcomingTrips();
-            TripViewModel.getINSTANCE().upcomingTripsMutableLiveData.observe(requireActivity(), new Observer<Pair<TripModel, String>>() {
+            TripViewModel.getINSTANCE().upcomingTripsMutableLiveData.observe(requireActivity(), new Observer<Pair<TripListModel, String>>() {
                 @Override
-                public void onChanged(Pair<TripModel, String> tripModelStringPair) {
+                public void onChanged(Pair<TripListModel, String> tripModelStringPair) {
                     loadingDialog.dismiss();
                     if (tripModelStringPair != null) {
                         if (tripModelStringPair.first != null) {
@@ -167,9 +167,9 @@ public class FilterFragment extends Fragment {
             });
         } else if (filterType == 3) {
             TripViewModel.getINSTANCE().getActiveTrips();
-            TripViewModel.getINSTANCE().activeTripsMutableLiveData.observe(requireActivity(), new Observer<Pair<TripModel, String>>() {
+            TripViewModel.getINSTANCE().activeTripsMutableLiveData.observe(requireActivity(), new Observer<Pair<TripListModel, String>>() {
                 @Override
-                public void onChanged(Pair<TripModel, String> tripModelStringPair) {
+                public void onChanged(Pair<TripListModel, String> tripModelStringPair) {
                     loadingDialog.dismiss();
                     if (tripModelStringPair != null) {
                         if (tripModelStringPair.first != null) {

@@ -16,13 +16,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.myTrips.UpComingTripAdapter;
-import com.example.dayout.models.profile.ProfileModel;
-import com.example.dayout.models.trip.TripModel;
+import com.example.dayout.models.trip.TripListModel;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.viewModels.TripViewModel;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,9 +74,9 @@ public class UpComingTripFragment extends Fragment {
         TripViewModel.getINSTANCE().upcomingTripsMutableLiveData.observe(requireActivity(), upcomingTripObserver);
     }
 
-    private final Observer<Pair<TripModel, String>> upcomingTripObserver = new Observer<Pair<TripModel, String>>() {
+    private final Observer<Pair<TripListModel, String>> upcomingTripObserver = new Observer<Pair<TripListModel, String>>() {
         @Override
-        public void onChanged(Pair<TripModel, String> listStringPair) {
+        public void onChanged(Pair<TripListModel, String> listStringPair) {
             loadingDialog.dismiss();
             if(listStringPair != null){
                 if (listStringPair.first != null) {

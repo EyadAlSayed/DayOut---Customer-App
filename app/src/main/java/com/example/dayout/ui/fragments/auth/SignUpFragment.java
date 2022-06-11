@@ -19,7 +19,7 @@ import androidx.lifecycle.Observer;
 import com.example.dayout.R;
 import com.example.dayout.config.AppConstants;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.authModels.UserRegisterModel;
+import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.dialogs.SuccessDialog;
@@ -238,25 +238,9 @@ public class SignUpFragment extends Fragment {
         return ok;
     }
 
-    private UserRegisterModel getInfo() {
-//        JsonObject jsonObject = new JsonObject();
-//        jsonObject.addProperty("first_name", firstName.getText().toString());
-//        jsonObject.addProperty("last_name", lastName.getText().toString());
-//        jsonObject.addProperty("password", password.getText().toString());
-//        jsonObject.addProperty("email", signUpEmail.getText().toString());
-//        jsonObject.addProperty("photo", (String) null);
-//        if (radioGroup.getCheckedRadioButtonId() == maleRadioButton.getId()) {
-//            jsonObject.addProperty("gender", "MALE");
-//        } else if (radioGroup.getCheckedRadioButtonId() == femaleRadioButton.getId()) {
-//            jsonObject.addProperty("gender", "FEMALE");
-//        }
-//        jsonObject.addProperty("phone_number", phoneNumber.getText().toString());
-//        jsonObject.addProperty("customer_trip_count", 0);
-//        jsonObject.addProperty("organizer_follow_count", 0);
-//
-//        return jsonObject;
+    private ProfileData getInfo() {
 
-        UserRegisterModel model = new UserRegisterModel();
+        ProfileData model = new ProfileData();
         model.first_name = firstName.getText().toString();
         model.last_name = lastName.getText().toString();
         model.password = password.getText().toString();
@@ -285,9 +269,9 @@ public class SignUpFragment extends Fragment {
         }
     };
 
-    private final Observer<Pair<UserRegisterModel, String>> signUpObserver = new Observer<Pair<UserRegisterModel, String>>() {
+    private final Observer<Pair<ProfileData, String>> signUpObserver = new Observer<Pair<ProfileData, String>>() {
         @Override
-        public void onChanged(Pair<UserRegisterModel, String> profileModelStringPair) {
+        public void onChanged(Pair<ProfileData, String> profileModelStringPair) {
             loadingDialog.dismiss();
             if (profileModelStringPair != null) {
                 if (profileModelStringPair.first != null) {

@@ -36,7 +36,7 @@ public class TripPostFragment extends Fragment {
 
     @BindView(R.id.filter_btn)
     ImageButton filterBtn;
-    @BindView(R.id.trip_post_rc)
+    @BindView(R.id.trip_poll_post_rc)
     RecyclerView tripPostRc;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;

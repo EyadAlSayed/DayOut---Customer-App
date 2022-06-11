@@ -17,8 +17,7 @@ import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripDetailsModel;
-import com.example.dayout.models.trip.TripModel;
-import com.example.dayout.models.trip.TripType;
+import com.example.dayout.models.trip.triptype.TripType;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.dialogs.MessageDialog;
@@ -30,8 +29,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
-
-import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 
 @SuppressLint("NonConstantResourceId")
 public class OldTripDetailsFragment extends Fragment {

@@ -6,7 +6,7 @@ import android.util.Pair;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.dayout.api.ApiClient;
-import com.example.dayout.models.NotificationModel;
+import com.example.dayout.models.notification.NotificationModel;
 
 import com.example.dayout.models.profile.ProfileModel;
 import com.google.gson.JsonObject;

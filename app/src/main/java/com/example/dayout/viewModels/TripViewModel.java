@@ -6,11 +6,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.dayout.api.ApiClient;
 import com.example.dayout.models.poll.Polls;
-import com.example.dayout.models.trip.RoadMapModel;
+import com.example.dayout.models.trip.roadmap.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
-import com.example.dayout.models.trip.TripModel;
+import com.example.dayout.models.trip.TripListModel;
 import com.example.dayout.models.trip.TripPost;
-import com.example.dayout.models.trip.TripTypeModel;
+import com.example.dayout.models.trip.triptype.TripTypeModel;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -30,9 +30,9 @@ public class TripViewModel {
 
     public static final String  TRIP_PHOTOS_URL = BASE_URL + "api/trip/photo/";
 
-    public MutableLiveData<Pair<TripModel, String>> upcomingTripsMutableLiveData;
-    public MutableLiveData<Pair<TripModel, String>> activeTripsMutableLiveData;
-    public MutableLiveData<Pair<TripModel, String>> historyTripsMutableLiveData;
+    public MutableLiveData<Pair<TripListModel, String>> upcomingTripsMutableLiveData;
+    public MutableLiveData<Pair<TripListModel, String>> activeTripsMutableLiveData;
+    public MutableLiveData<Pair<TripListModel, String>> historyTripsMutableLiveData;
     public MutableLiveData<Pair<TripPost, String>> tripPostMutableLiveData;
     public MutableLiveData<Pair<TripTypeModel, String>> tripTypeTripMutableLiveData;
     public MutableLiveData<Pair<ResponseBody, String>> rateTripMutableLiveData;
@@ -50,9 +50,9 @@ public class TripViewModel {
 
     public void getUpcomingTrips(){
         upcomingTripsMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getUpcomingTrips("customer").enqueue(new Callback<TripModel>() {
+        apiClient.getAPI().getUpcomingTrips("customer").enqueue(new Callback<TripListModel>() {
             @Override
-            public void onResponse(Call<TripModel> call, Response<TripModel> response) {
+            public void onResponse(Call<TripListModel> call, Response<TripListModel> response) {
                 if(response.isSuccessful()){
                     upcomingTripsMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
@@ -65,7 +65,7 @@ public class TripViewModel {
             }
 
             @Override
-            public void onFailure(Call<TripModel> call, Throwable t) {
+            public void onFailure(Call<TripListModel> call, Throwable t) {
                 upcomingTripsMutableLiveData.setValue(null);
             }
         });
@@ -73,9 +73,9 @@ public class TripViewModel {
 
     public void getActiveTrips(){
         activeTripsMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getActiveTrips("customer").enqueue(new Callback<TripModel>() {
+        apiClient.getAPI().getActiveTrips("customer").enqueue(new Callback<TripListModel>() {
             @Override
-            public void onResponse(Call<TripModel> call, Response<TripModel> response) {
+            public void onResponse(Call<TripListModel> call, Response<TripListModel> response) {
                 if(response.isSuccessful()){
                     activeTripsMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
@@ -88,7 +88,7 @@ public class TripViewModel {
             }
 
             @Override
-            public void onFailure(Call<TripModel> call, Throwable t) {
+            public void onFailure(Call<TripListModel> call, Throwable t) {
                 activeTripsMutableLiveData.setValue(null);
             }
         });
@@ -96,9 +96,9 @@ public class TripViewModel {
 
     public void getHistoryTrips(){
         historyTripsMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getHistoryTrips("customer").enqueue(new Callback<TripModel>() {
+        apiClient.getAPI().getHistoryTrips("customer").enqueue(new Callback<TripListModel>() {
             @Override
-            public void onResponse(Call<TripModel> call, Response<TripModel> response) {
+            public void onResponse(Call<TripListModel> call, Response<TripListModel> response) {
                 if(response.isSuccessful()){
                     historyTripsMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else{
@@ -111,7 +111,7 @@ public class TripViewModel {
             }
 
             @Override
-            public void onFailure(Call<TripModel> call, Throwable t) {
+            public void onFailure(Call<TripListModel> call, Throwable t) {
                 historyTripsMutableLiveData.setValue(null);
             }
         });

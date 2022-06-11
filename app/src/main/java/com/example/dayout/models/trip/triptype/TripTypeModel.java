@@ -1,4 +1,4 @@
-package com.example.dayout.models.trip;
+package com.example.dayout.models.trip.triptype;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -17,7 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.myTrips.ActiveTripAdapter;
 import com.example.dayout.models.trip.TripData;
-import com.example.dayout.models.trip.TripModel;
+import com.example.dayout.models.trip.TripListModel;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.viewModels.TripViewModel;
@@ -82,9 +82,9 @@ public class ActiveTripFragment extends Fragment {
         }
     }
 
-    private final Observer<Pair<TripModel, String>> activeTripsObserver = new Observer<Pair<TripModel, String>>() {
+    private final Observer<Pair<TripListModel, String>> activeTripsObserver = new Observer<Pair<TripListModel, String>>() {
         @Override
-        public void onChanged(Pair<TripModel, String> tripModelStringPair) {
+        public void onChanged(Pair<TripListModel, String> tripModelStringPair) {
             loadingDialog.dismiss();
             if(tripModelStringPair != null){
                 if (tripModelStringPair.first != null) {

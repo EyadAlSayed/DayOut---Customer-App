@@ -16,7 +16,7 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
 import com.example.dayout.models.popualrPlace.PlaceData;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
-import com.example.dayout.models.trip.PlaceDetailsModel;
+import com.example.dayout.models.trip.place.PlaceDetailsModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.viewModels.PlaceViewModel;
@@ -28,7 +28,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
-import static com.example.dayout.viewModels.PlaceViewModel.PLACE_PHOTO_URL;
 
 public class PlaceInfoFragment extends Fragment {
 

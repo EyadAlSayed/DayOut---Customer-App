@@ -1,5 +1,8 @@
 package com.example.dayout.models.trip;
 
+import com.example.dayout.models.trip.place.PlaceTripData;
+import com.example.dayout.models.trip.triptype.TripType;
+
 import java.util.ArrayList;
 
 public class TripData {

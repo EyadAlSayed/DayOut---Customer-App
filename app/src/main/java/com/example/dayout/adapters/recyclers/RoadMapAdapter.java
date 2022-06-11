@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.trip.PlaceTripData;
+import com.example.dayout.models.trip.place.PlaceTripData;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.fragments.home.PlaceInfoFragment;
 
