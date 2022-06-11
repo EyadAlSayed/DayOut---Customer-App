@@ -76,7 +76,7 @@ public class TripPostFragment extends Fragment {
         public void onChanged(Pair<TripPost, String> tripPostStringPair) {
             if (tripPostStringPair != null){
                 if (tripPostStringPair.first != null){
-                    tripPostAdapter.refresh(tripPostStringPair.first.data.data);
+                    tripPostAdapter.refresh(tripPostStringPair.first.data);
                 }
                 else {
                     new ErrorDialog(requireContext(),tripPostStringPair.second).show();

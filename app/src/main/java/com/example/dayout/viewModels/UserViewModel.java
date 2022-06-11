@@ -69,6 +69,7 @@ public class UserViewModel {
         });
     }
 
+
     public void getNotifications(){
         notificationMutableLiveData = new MutableLiveData<>();
         apiClient.getAPI().getNotifications().enqueue(new Callback<NotificationModel>() {

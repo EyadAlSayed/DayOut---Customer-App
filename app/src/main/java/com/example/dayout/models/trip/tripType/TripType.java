@@ -1,4 +1,4 @@
-package com.example.dayout.models.trip.triptype;
+package com.example.dayout.models.trip.tripType;
 
 import java.io.Serializable;
 import java.util.ArrayList;

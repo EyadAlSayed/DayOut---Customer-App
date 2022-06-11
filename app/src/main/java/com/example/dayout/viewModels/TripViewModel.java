@@ -5,12 +5,12 @@ import android.util.Pair;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.dayout.api.ApiClient;
-import com.example.dayout.models.poll.Polls;
-import com.example.dayout.models.trip.roadmap.RoadMapModel;
+import com.example.dayout.models.poll.PollsModel;
+import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripListModel;
 import com.example.dayout.models.trip.TripPost;
-import com.example.dayout.models.trip.triptype.TripTypeModel;
+import com.example.dayout.models.trip.tripType.TripTypeModel;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class TripViewModel {
     public MutableLiveData<Pair<ResponseBody, String>> rateTripMutableLiveData;
     public MutableLiveData<Pair<TripDetailsModel, String>> tripDetailsMutableLiveData;
     public MutableLiveData<Pair<RoadMapModel,String>> roadMapMutableLiveData;
-    public MutableLiveData<Pair<Polls,String>> pollMutableLiveData;
+    public MutableLiveData<Pair<PollsModel,String>> pollMutableLiveData;
     public MutableLiveData<Pair<Boolean,String>> successfulMutableLiveData;
 
     public static TripViewModel getINSTANCE(){
@@ -213,9 +213,9 @@ public class TripViewModel {
 
     public void getPolls(){
         pollMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getPolls().enqueue(new Callback<Polls>() {
+        apiClient.getAPI().getPolls().enqueue(new Callback<PollsModel>() {
             @Override
-            public void onResponse(Call<Polls> call, Response<Polls> response) {
+            public void onResponse(Call<PollsModel> call, Response<PollsModel> response) {
                 if (response.isSuccessful()){
                     pollMutableLiveData.setValue(new Pair<>(response.body(),null));
                 }else {
@@ -228,7 +228,7 @@ public class TripViewModel {
             }
 
             @Override
-            public void onFailure(Call<Polls> call, Throwable t) {
+            public void onFailure(Call<PollsModel> call, Throwable t) {
                 pollMutableLiveData.setValue(null);
             }
         });

@@ -1,4 +1,4 @@
-package com.example.dayout.models.trip.roadmap;
+package com.example.dayout.models.trip.roadMap;
 
 import com.example.dayout.models.trip.place.PlaceTripData;
 

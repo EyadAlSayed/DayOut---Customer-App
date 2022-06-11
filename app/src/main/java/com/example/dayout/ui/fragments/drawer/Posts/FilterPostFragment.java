@@ -18,8 +18,8 @@ import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPostAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripPost;
-import com.example.dayout.models.trip.triptype.TripType;
-import com.example.dayout.models.trip.triptype.TripTypeModel;
+import com.example.dayout.models.trip.tripType.TripType;
+import com.example.dayout.models.trip.tripType.TripTypeModel;
 import com.example.dayout.viewModels.TripViewModel;
 import com.google.gson.JsonObject;
 
@@ -118,7 +118,7 @@ public class FilterPostFragment extends Fragment {
         public void onChanged(Pair<TripPost, String> tripPostStringPair) {
             if (tripPostStringPair != null){
                 if (tripPostStringPair.first != null){
-                    tripPostAdapter.refresh(tripPostStringPair.first.data.data);
+                    tripPostAdapter.refresh(tripPostStringPair.first.data);
                     FN.popTopStack(requireActivity());
                 }
             }

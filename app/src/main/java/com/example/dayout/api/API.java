@@ -1,20 +1,19 @@
 package com.example.dayout.api;
 
-import com.example.dayout.models.notification.NotificationModel;
-
 import com.example.dayout.models.authModels.LoginModel;
 
-import com.example.dayout.models.poll.Polls;
+import com.example.dayout.models.notification.NotificationModel;
+import com.example.dayout.models.poll.PollsModel;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.popualrPlace.PopularPlaceModel;
 
 import com.example.dayout.models.trip.place.PlaceDetailsModel;
-import com.example.dayout.models.trip.roadmap.RoadMapModel;
+import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripListModel;
 import com.example.dayout.models.trip.TripPost;
-import com.example.dayout.models.trip.triptype.TripTypeModel;
+import com.example.dayout.models.trip.tripType.TripTypeModel;
 import com.google.gson.JsonObject;
 
 import okhttp3.ResponseBody;
@@ -70,7 +69,7 @@ public interface API {
     Call<PlaceDetailsModel> getPlaceDetails(@Path("id") int id);
 
     @GET("api/polls")
-    Call<Polls> getPolls();
+    Call<PollsModel> getPolls();
 
 
     /**
