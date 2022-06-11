@@ -46,7 +46,7 @@
     <string name="no_active_trips">لا يوجد رحلات حالية</string>
     <string name="login">تسجيل دخول</string>
     <string name="guest">زائر</string>
-    <string name="privacy_policy_agreement">بالمتابعة، أنت موافق على سياية الخصوصية</string>
+    <string name="privacy_policy_agreement">بالمتابعة، أنت موافق على سياسة الخصوصية</string>
     <string name="my_trips">رحلاتي</string>
     <string name="organizers">المنظمون</string>
     <string name="posts">المنشورات</string>
@@ -81,4 +81,5 @@
     <string name="no_history">لا يوجد رحلات قديمة</string>
     <string name="no_notifications">لا يوجد إشعارات</string>
     <string name="change_settings">تغيير الاعدادات</string>
+    <string name="book_trip">حجز في الرّحلة</string>
 </resources>
