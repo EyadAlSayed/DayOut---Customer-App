@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
-import com.example.dayout.models.NotificationModel;
 import com.example.dayout.models.notification.NotificationData;
 
 import java.util.List;

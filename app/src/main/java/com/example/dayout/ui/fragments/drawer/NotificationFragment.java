@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.NotificationsAdapter;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.NotificationModel;
+import com.example.dayout.models.notification.NotificationModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;

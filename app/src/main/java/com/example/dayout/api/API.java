@@ -1,9 +1,8 @@
 package com.example.dayout.api;
 
-import com.example.dayout.models.NotificationModel;
-
 import com.example.dayout.models.authModels.LoginModel;
 
+import com.example.dayout.models.notification.NotificationModel;
 import com.example.dayout.models.poll.PollsModel;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
