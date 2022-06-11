@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.PollChoiceAdapter;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.poll.Polls;
-
-import java.util.ArrayList;
+import com.example.dayout.models.poll.PollsData;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +25,7 @@ public class PollsChoicesFragment extends Fragment {
 
     View view;
 
-    Polls.Data data;
+    PollsData data;
     @BindView(R.id.votes_back_button)
     ImageButton arrowBack;
     @BindView(R.id.poll_title)
@@ -38,7 +36,7 @@ public class PollsChoicesFragment extends Fragment {
 
     PollChoiceAdapter pollChoiceAdapter;
 
-    public PollsChoicesFragment(Polls.Data data) {
+    public PollsChoicesFragment(PollsData data) {
         this.data = data;
     }
 

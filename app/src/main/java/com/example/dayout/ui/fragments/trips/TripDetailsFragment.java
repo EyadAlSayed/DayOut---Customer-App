@@ -16,7 +16,7 @@ import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripDetailsModel;
-import com.example.dayout.models.trip.TripType;
+import com.example.dayout.models.trip.tripType.TripType;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.dialogs.WarningDialog;

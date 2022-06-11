@@ -21,6 +21,7 @@ public class ProfileData implements Serializable {
     public String photo;
     public String gender;
     public String mobile_token;
+    public String password;
     public int customer_trip_count;
     public int organizer_follow_count;
 }

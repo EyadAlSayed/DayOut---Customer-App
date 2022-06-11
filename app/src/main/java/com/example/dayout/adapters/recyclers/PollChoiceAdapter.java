@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
-import com.example.dayout.models.poll.Polls;
+import com.example.dayout.models.poll.PollChoice;
+import com.example.dayout.models.poll.PollsModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
@@ -29,18 +30,18 @@ import butterknife.ButterKnife;
 
 public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.ViewHolder> {
 
-    List<Polls.PollChoice> list;
+    List<PollChoice> list;
     Context context;
     LoadingDialog loadingDialog;
 
 
-    public PollChoiceAdapter(List<Polls.PollChoice> list, Context context) {
+    public PollChoiceAdapter(List<PollChoice> list, Context context) {
         this.list = list;
         this.context = context;
         loadingDialog = new LoadingDialog(context);
     }
 
-    public void refresh(List<Polls.PollChoice> list) {
+    public void refresh(List<PollChoice> list) {
         this.list = list;
         notifyDataSetChanged();
     }
