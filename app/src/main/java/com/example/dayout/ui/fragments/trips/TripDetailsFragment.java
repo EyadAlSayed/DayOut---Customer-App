@@ -6,7 +6,6 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -17,7 +16,6 @@ import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripDetailsModel;
-import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.models.trip.TripType;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
@@ -29,46 +27,48 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.dayout.config.AppConstants.MAIN_FRC;
+
 @SuppressLint("NonConstantResourceId")
-public class UpcomingTripDetailsFragment extends Fragment {
+public class TripDetailsFragment extends Fragment {
 
     View view;
 
-    @BindView(R.id.upcoming_trip_details_back_arrow)
-    ImageButton upcomingTripDetailsBackArrow;
+    @BindView(R.id.trip_details_back_arrow)
+    ImageButton tripDetailsBackArrow;
 
-    @BindView(R.id.upcoming_trip_details_delete_icon)
-    ImageButton upcomingTripDetailsDeleteIcon;
+    @BindView(R.id.trip_details_delete_icon)
+    ImageButton tripDetailsDeleteIcon;
 
-    @BindView(R.id.upcoming_trip_details_title)
-    TextView upcomingTripDetailsTitle;
+    @BindView(R.id.trip_details_title)
+    TextView tripDetailsTitle;
 
-    @BindView(R.id.upcoming_trip_details_type)
-    TextView upcomingTripDetailsType;
+    @BindView(R.id.trip_details_type)
+    TextView tripDetailsType;
 
-    @BindView(R.id.upcoming_trip_details_stops)
-    TextView upcomingTripDetailsStops;
+    @BindView(R.id.trip_details_stops)
+    TextView tripDetailsStops;
 
-    @BindView(R.id.upcoming_trip_details_date)
-    TextView upcomingTripDetailsDate;
+    @BindView(R.id.trip_details_date)
+    TextView tripDetailsDate;
 
-    @BindView(R.id.upcoming_trip_details_price)
-    TextView upcomingTripDetailsPrice;
+    @BindView(R.id.trip_details_price)
+    TextView tripDetailsPrice;
 
-    @BindView(R.id.upcoming_trip_details_expire_date)
-    TextView upcomingTripDetailsExpireDate;
+    @BindView(R.id.trip_details_expire_date)
+    TextView tripDetailsExpireDate;
 
-    @BindView(R.id.upcoming_trips_end_booking_date)
-    TextView upcomingTripsEndBookingDate;
+    @BindView(R.id.trips_end_booking_date)
+    TextView tripsEndBookingDate;
 
-    @BindView(R.id.upcoming_trip_details_roadmap)
-    TextView upcomingTripDetailsRoadMap;
+    @BindView(R.id.trip_details_roadmap)
+    TextView tripDetailsRoadMap;
 
-    @BindView(R.id.upcoming_trip_details_roadmap_front_arrow)
-    ImageButton upcomingTripDetailsRoadMapFrontArrow;
+    @BindView(R.id.trip_details_roadmap_front_arrow)
+    ImageButton tripDetailsRoadMapFrontArrow;
 
-    @BindView(R.id.upcoming_trip_details_passengers_count)
-    TextView upcomingTripDetailsPassengersCount;
+    @BindView(R.id.trip_details_passengers_count)
+    TextView tripDetailsPassengersCount;
 
     TripData data;
 
@@ -76,24 +76,24 @@ public class UpcomingTripDetailsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_upcoming_trip_details, container, false);
+        view = inflater.inflate(R.layout.fragment_trip_details, container, false);
         ButterKnife.bind(this, view);
         initViews();
         getDataFromApi();
         return view;
     }
 
-    public UpcomingTripDetailsFragment(TripData data){
+    public TripDetailsFragment(TripData data){
         this.data = data;
     }
 
 
     private void initViews(){
         loadingDialog = new LoadingDialog(requireContext());
-        upcomingTripDetailsBackArrow.setOnClickListener(onBackClicked);
-        upcomingTripDetailsDeleteIcon.setOnClickListener(onDeleteClicked);
-        upcomingTripDetailsRoadMap.setOnClickListener(onRoadMapClicked);
-        upcomingTripDetailsRoadMapFrontArrow.setOnClickListener(onRoadMapClicked);
+        tripDetailsBackArrow.setOnClickListener(onBackClicked);
+        tripDetailsDeleteIcon.setOnClickListener(onDeleteClicked);
+        tripDetailsRoadMap.setOnClickListener(onRoadMapClicked);
+        tripDetailsRoadMapFrontArrow.setOnClickListener(onRoadMapClicked);
 
 
     }
@@ -112,14 +112,14 @@ public class UpcomingTripDetailsFragment extends Fragment {
     }
 
     private void setData(TripDetailsModel model){
-        upcomingTripDetailsType.setText(getTypes(model.data.types));
-        upcomingTripDetailsTitle.setText(model.data.title);
-        upcomingTripDetailsDate.setText(model.data.begin_date);
-        upcomingTripDetailsStops.setText(model.data.stopsToDetails);
-        upcomingTripDetailsExpireDate.setText(model.data.expire_date);
-        upcomingTripDetailsPrice.setText(String.valueOf(model.data.price));
-        upcomingTripsEndBookingDate.setText(model.data.end_booking);
-        upcomingTripDetailsPassengersCount.setText(String.valueOf(model.data.customer_trips_count));
+        tripDetailsType.setText(getTypes(model.data.types));
+        tripDetailsTitle.setText(model.data.title);
+        tripDetailsDate.setText(model.data.begin_date);
+        tripDetailsStops.setText(model.data.stopsToDetails);
+        tripDetailsExpireDate.setText(model.data.expire_date);
+        tripDetailsPrice.setText(String.valueOf(model.data.price));
+        tripsEndBookingDate.setText(model.data.end_booking);
+        tripDetailsPassengersCount.setText(String.valueOf(model.data.customer_trips_count));
     }
 
     private void getDataFromApi(){
@@ -138,7 +138,7 @@ public class UpcomingTripDetailsFragment extends Fragment {
                     data =tripDetailsModelStringPair.first.data;
                     //trip is active
                     if(data.isActive)
-                        upcomingTripDetailsDeleteIcon.setVisibility(View.GONE);
+                        tripDetailsDeleteIcon.setVisibility(View.GONE);
                 } else
                     new ErrorDialog(requireContext(), tripDetailsModelStringPair.second).show();
             } else
@@ -153,12 +153,6 @@ public class UpcomingTripDetailsFragment extends Fragment {
         }
     };
 
-    private final View.OnClickListener onEditClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
 
     private final View.OnClickListener onDeleteClicked = new View.OnClickListener() {
         @Override
@@ -170,21 +164,7 @@ public class UpcomingTripDetailsFragment extends Fragment {
     private final View.OnClickListener onRoadMapClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
-        }
-    };
-
-    private final View.OnClickListener onCheckClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
-
-    private final View.OnClickListener onBeginTripClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
+            FN.addFixedNameFadeFragment(MAIN_FRC,requireActivity(),new RoadMapFragment(data.id));
         }
     };
 }

@@ -20,7 +20,7 @@ import com.example.dayout.models.trip.TripPhotoData;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.WarningDialog;
 import com.example.dayout.ui.fragments.trips.FilterFragment;
-import com.example.dayout.ui.fragments.trips.UpcomingTripDetailsFragment;
+import com.example.dayout.ui.fragments.trips.TripDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +28,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
-import static com.example.dayout.viewModels.TripViewModel.TRIP_PHOTOS_URL;
 
 public class ActiveTripAdapter extends RecyclerView.Adapter<ActiveTripAdapter.ViewHolder> {
 
@@ -40,6 +40,7 @@ public class ActiveTripAdapter extends RecyclerView.Adapter<ActiveTripAdapter.Vi
         this.list = list;
         this.context = context;
     }
+
 
     public void refresh(List<TripData> list) {
         this.list = list;
@@ -134,15 +135,15 @@ public class ActiveTripAdapter extends RecyclerView.Adapter<ActiveTripAdapter.Vi
             if (!FilterFragment.isFilterOpen) {
                 TripData data = list.get(getAdapterPosition());
                 data.stopsToDetails = stops;
-                FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new UpcomingTripDetailsFragment(data));
+                FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new TripDetailsFragment(data));
             }
         }
 
         private void bindImageSlider(List<TripPhotoData> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
-
+            String baseUrl = BASE_URL.substring(0,BASE_URL.length()-1);
             for (TripPhotoData ph : photos) {
-                slideModels.add(new SlideModel(ph.path
+                slideModels.add(new SlideModel(baseUrl+ph.path
                         , ScaleTypes.FIT));
             }
 

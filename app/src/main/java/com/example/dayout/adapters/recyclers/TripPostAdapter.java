@@ -23,6 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.viewModels.PlaceViewModel.PLACE_PHOTO_URL;
 
 public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHolder> {
@@ -58,11 +59,6 @@ public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHo
         holder.endTripBookinDate.setText(list.get(position).end_booking);
         holder.tripDescription.setText(list.get(position).description);
         holder.bindImageSlider(list.get(position).trip_photos);
-
-        /**
-         * trip count passenger
-         * places name
-         */
     }
 
     @Override
@@ -94,11 +90,11 @@ public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHo
             itemView.setOnClickListener(this);
         }
 
-        private void bindImageSlider(List<PopularPlacePhoto> photos) {
+        private void bindImageSlider(List<TripPost.TripPhoto> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
-
-            for (PopularPlacePhoto ph : photos) {
-                slideModels.add(new SlideModel(PLACE_PHOTO_URL + ph.id
+            String baseUrl = BASE_URL.substring(0,BASE_URL.length()-1);
+            for (TripPost.TripPhoto ph : photos) {
+                slideModels.add(new SlideModel(baseUrl+ph.path
                         , ScaleTypes.FIT));
             }
 

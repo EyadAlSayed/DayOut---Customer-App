@@ -30,7 +30,13 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.auth_fr_c);
-        if (currentFragment instanceof AuthFragment) finish();
+        if (currentFragment instanceof AuthFragment) this.finish();
         else super.onBackPressed();
+    }
+
+
+
+    public void finishActivity(){
+        this.finish();
     }
 }

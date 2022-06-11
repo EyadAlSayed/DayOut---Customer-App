@@ -1,20 +1,21 @@
 package com.example.dayout.api;
 
 import com.example.dayout.models.NotificationModel;
-import com.example.dayout.models.profile.EditProfileModel;
+
 import com.example.dayout.models.authModels.LoginModel;
 
+import com.example.dayout.models.poll.Polls;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.authModels.UserRegisterModel;
-import com.example.dayout.models.popualrPlace.PopularPlace;
+import com.example.dayout.models.popualrPlace.PopularPlaceModel;
 
+import com.example.dayout.models.trip.PlaceDetailsModel;
+import com.example.dayout.models.trip.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripModel;
 import com.example.dayout.models.trip.TripPost;
-import com.example.dayout.models.trip.TripType;
+import com.example.dayout.models.trip.TripTypeModel;
 import com.google.gson.JsonObject;
-
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -33,7 +34,7 @@ public interface API {
      */
 
     @GET("api/place/popular/{id}")
-    Call<PopularPlace> getPopularPlace(@Path("id") int id);
+    Call<PopularPlaceModel> getPopularPlaces(@Path("id") int id);
 
     @GET("api/user/profile/customer/{id}")
     Call<ProfileModel> getPassengerProfile(@Path("id") int id);
@@ -48,7 +49,7 @@ public interface API {
     Call<TripModel> getHistoryTrips(@Query("type") String type);
 
     @GET("api/trip/types")
-    Call<List<TripType>> getTripType();
+    Call<TripTypeModel> getTripType();
 
     @GET("api/trip")
     Call<TripPost> getTripPost();
@@ -61,6 +62,16 @@ public interface API {
 
     @GET("api/user/logout")
     Call<ResponseBody> logOut();
+
+    @GET("api/trip/road-map/{id}")
+    Call<RoadMapModel> getRoadMap(@Path("id") int tripId);
+
+    @GET("api/place/details/{id}")
+    Call<PlaceDetailsModel> getPlaceDetails(@Path("id") int id);
+
+    @GET("api/polls")
+    Call<Polls> getPolls();
+
 
     /**
      * Post Request
@@ -89,10 +100,13 @@ public interface API {
      */
 
     @POST("api/user/profile/customer/edit")
-    Call<ProfileModel> editProfile(@Body EditProfileModel model);
+    Call<ProfileModel> editProfile(@Body JsonObject model);
 
     @PUT("api/user/mobile-token")
     Call<ResponseBody> sendFirebaseToken(@Body JsonObject firebaseObj);
+
+    @PUT("api/polls/vote/{pollId}/{choiceId}")
+    Call<ResponseBody> voteOnPoll(@Path("pollId")int pollId,@Path("choiceId") int choiceId);
 
 
     /**

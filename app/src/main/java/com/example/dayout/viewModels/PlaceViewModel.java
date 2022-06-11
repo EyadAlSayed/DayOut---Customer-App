@@ -6,7 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dayout.api.ApiClient;
-import com.example.dayout.models.popualrPlace.PopularPlace;
+import com.example.dayout.models.popualrPlace.PopularPlaceModel;
+import com.example.dayout.models.trip.PlaceDetailsModel;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -37,15 +38,16 @@ public class PlaceViewModel extends ViewModel {
 
     public static final String  PLACE_PHOTO_URL = BASE_URL + "storage/places/";
 
-    public MutableLiveData<Pair<PopularPlace, String>> popularMutableLiveData;
+    public MutableLiveData<Pair<PopularPlaceModel, String>> popularMutableLiveData;
+    public MutableLiveData<Pair<PlaceDetailsModel, String>> placeDetailsMutableLiveData;
 
     public MutableLiveData<Pair<Boolean, String>> successfulMutableLiveData;
 
-    public void getPopularPlace() {
+    public void getPopularPlaces() {
         popularMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getPopularPlace(GET_USER_ID()).enqueue(new Callback<PopularPlace>() {
+        apiClient.getAPI().getPopularPlaces(GET_USER_ID()).enqueue(new Callback<PopularPlaceModel>() {
             @Override
-            public void onResponse(Call<PopularPlace> call, Response<PopularPlace> response) {
+            public void onResponse(Call<PopularPlaceModel> call, Response<PopularPlaceModel> response) {
                 if (response.isSuccessful()) {
                     popularMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
@@ -58,7 +60,7 @@ public class PlaceViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<PopularPlace> call, Throwable t) {
+            public void onFailure(Call<PopularPlaceModel> call, Throwable t) {
                 popularMutableLiveData.setValue(null);
             }
         });
@@ -83,6 +85,30 @@ public class PlaceViewModel extends ViewModel {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 successfulMutableLiveData.setValue(null);
+            }
+        });
+    }
+
+    public void getPlaceDetails(int placeId){
+        placeDetailsMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().getPlaceDetails(placeId).enqueue(new Callback<PlaceDetailsModel>() {
+            @Override
+            public void onResponse(Call<PlaceDetailsModel> call, Response<PlaceDetailsModel> response) {
+                if (response.isSuccessful()){
+                    placeDetailsMutableLiveData.setValue(new Pair<>(response.body(),null));
+                }
+                else {
+                    try {
+                        placeDetailsMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PlaceDetailsModel> call, Throwable t) {
+                placeDetailsMutableLiveData.setValue(null);
             }
         });
     }

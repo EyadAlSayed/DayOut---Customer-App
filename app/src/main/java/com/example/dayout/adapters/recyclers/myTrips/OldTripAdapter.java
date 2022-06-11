@@ -26,6 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 import static com.example.dayout.viewModels.TripViewModel.TRIP_PHOTOS_URL;
 
@@ -117,9 +118,9 @@ public class OldTripAdapter extends RecyclerView.Adapter<OldTripAdapter.ViewHold
 
         private void bindImageSlider(List<TripPhotoData> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
-
+            String baseUrl = BASE_URL.substring(0,BASE_URL.length()-1);
             for (TripPhotoData ph : photos) {
-                slideModels.add(new SlideModel(ph.path
+                slideModels.add(new SlideModel(baseUrl+ph.path
                         , ScaleTypes.FIT));
             }
 

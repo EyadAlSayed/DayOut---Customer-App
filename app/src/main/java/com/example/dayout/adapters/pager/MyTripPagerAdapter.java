@@ -13,9 +13,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class MyTripPagerAdapter extends FragmentStateAdapter {
 
     private final List<Fragment> list;
+
     public MyTripPagerAdapter(@NonNull FragmentActivity fragmentActivity, List<Fragment> list) {
         super(fragmentActivity);
         this.list = list;
@@ -28,6 +31,7 @@ public class MyTripPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         return list.get(position);
     }
+
 
     @Override
     public int getItemCount() {
