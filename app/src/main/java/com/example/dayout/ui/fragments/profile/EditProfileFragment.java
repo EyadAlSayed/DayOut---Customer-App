@@ -25,7 +25,7 @@ import com.example.dayout.helpers.system.PermissionsHelper;
 import com.example.dayout.helpers.view.ConverterImage;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
-import com.example.dayout.models.profile.EditProfileModel;
+
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.room.profileRoom.databases.ProfileDatabase;
@@ -33,6 +33,7 @@ import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.viewModels.UserViewModel;
+import com.google.gson.JsonObject;
 
 import java.util.regex.Matcher;
 
@@ -246,15 +247,21 @@ public class EditProfileFragment extends Fragment {
             launcher.launch("image/*");
     }
 
-    private EditProfileModel getEditedData() {
-        EditProfileModel model = new EditProfileModel();
+    private JsonObject getEditedData() {
+//        EditProfileModel model = new EditProfileModel();
+//
+//        model.photo = imageAsString;
+//        model.first_name = editProfileFirstName.getText().toString();
+//        model.last_name = editProfileLastName.getText().toString();
+//        model.email = editProfileEmail.getText().toString();
 
-        model.photo = imageAsString;
-        model.first_name = editProfileFirstName.getText().toString();
-        model.last_name = editProfileLastName.getText().toString();
-        model.email = editProfileEmail.getText().toString();
+        JsonObject jsonObject = new JsonObject();
 
-        return model;
+        jsonObject.addProperty("first_name",editProfileFirstName.getText().toString());
+        jsonObject.addProperty("last_name",editProfileLastName.getText().toString());
+        jsonObject.addProperty("email",editProfileEmail.getText().toString());
+        if (imageAsString != null) jsonObject.addProperty("photo",imageAsString);
+        return jsonObject;
     }
 
     private final ActivityResultLauncher<String> launcher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {

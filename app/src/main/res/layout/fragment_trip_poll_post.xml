@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/filter_btn">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/trip_post_rc"
+            android:id="@+id/trip_poll_post_rc"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

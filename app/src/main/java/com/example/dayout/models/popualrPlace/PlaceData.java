@@ -13,7 +13,7 @@ import static com.example.dayout.config.AppConstants.POPULAR_PLACE_DATA;
 import static com.example.dayout.config.AppConstants.POPULAR_PLACE_TABLE;
 
 @Entity(tableName = POPULAR_PLACE_DATA)
-public class PopularPlaceData implements Serializable {
+public class PlaceData implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -25,6 +25,8 @@ public class PopularPlaceData implements Serializable {
     @TypeConverters(PhotoConverter.class)
     public List<PopularPlacePhoto> photos;
     public int type_id;
+    public boolean status;
+
 
     public int favorites_count;
     public int place_trips_count;

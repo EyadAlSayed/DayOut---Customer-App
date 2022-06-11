@@ -1,14 +1,17 @@
 package com.example.dayout.models.trip;
 
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.List;
 
 public class TripPost implements Serializable {
 
     public class Data{
+        public int current_page;
+        public List<Data> data;
         public String first_page_url;
         public int from;
         public int last_page;
@@ -18,7 +21,8 @@ public class TripPost implements Serializable {
         public String path;
         public int per_page;
         public Object prev_page_url;
-        public int to;
+        @SerializedName("to")
+        public int myto;
         public int total;
         public int id;
         public String title;
@@ -29,9 +33,10 @@ public class TripPost implements Serializable {
         public String expire_date;
         public String end_booking;
         public int price;
-        public String status;
-        public List<PlaceTripData> place_trips = new ArrayList<>();
-        public List<PopularPlacePhoto> trip_photos = new ArrayList<>();
+        public int customer_trips_count;
+        public List<PlaceTrip> place_trips;
+        public List<Type> types;
+        public List<TripPhoto> trip_photos;
     }
 
     public class Link{
@@ -40,14 +45,42 @@ public class TripPost implements Serializable {
         public boolean active;
     }
 
-    public class Data1{
-        public int current_page;
-        public List<Data> data;
+    public class Pivot{
+        public int trip_id;
+        public int type_id;
+    }
+
+    public class Place{
+        public int id;
+        public String name;
+    }
+
+    public class PlaceTrip{
+        public int id;
+        public int place_id;
+        public int trip_id;
+        public int order;
+        public String description;
+        public Place place;
     }
 
     public boolean success;
     public String message;
-    public Data1 data;
+    public Data data;
+
+    public class TripPhoto{
+        public int id;
+        public int trip_id;
+        public String path;
+      
+    }
+
+    public class Type{
+        public int id;
+        public String name;
+        public Pivot pivot;
+    }
+
 
 
 

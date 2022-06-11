@@ -1,7 +1,6 @@
 package com.example.dayout.ui.fragments.profile;
 
 import android.annotation.SuppressLint;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -16,7 +15,6 @@ import androidx.lifecycle.Observer;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
-import com.example.dayout.models.popualrPlace.PopularPlaceData;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.room.profileRoom.databases.ProfileDatabase;
@@ -26,7 +24,6 @@ import com.example.dayout.viewModels.UserViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.CompletableObserver;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -37,7 +34,6 @@ import io.reactivex.schedulers.Schedulers;
 import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
-import static com.example.dayout.viewModels.UserViewModel.USER_PHOTO_URL;
 
 @SuppressLint("NonConstantResourceId")
 public class ProfileFragment extends Fragment {

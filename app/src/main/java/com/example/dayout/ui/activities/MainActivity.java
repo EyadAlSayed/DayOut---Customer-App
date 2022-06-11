@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bottom_bar)
     CardView bottomBar;
 
-    public boolean isDrawerOpen = false;
+
 
     public IPopularPlaces roomPopularPlaces;
 
@@ -92,8 +92,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_fr_c);
-        if (currentFragment instanceof HomeFragment) finish();
+        if (currentFragment instanceof HomeFragment) this.finish();
         else super.onBackPressed();
+    }
+
+    public void finishActivity(){
+        this.finish();
     }
 
     private void initRoomDB() {

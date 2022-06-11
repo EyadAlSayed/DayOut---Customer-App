@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.dayout.api.ApiClient;
 import com.example.dayout.models.NotificationModel;
-import com.example.dayout.models.profile.EditProfileModel;
+
 import com.example.dayout.models.profile.ProfileModel;
 import com.google.gson.JsonObject;
 
@@ -142,7 +142,7 @@ public class UserViewModel {
     }
 
 
-    public void editProfile(EditProfileModel model){
+    public void editProfile(JsonObject model){
         editProfileMutableLiveData = new MutableLiveData<>();
         apiClient.getAPI().editProfile(model).enqueue(new Callback<ProfileModel>() {
             @Override
