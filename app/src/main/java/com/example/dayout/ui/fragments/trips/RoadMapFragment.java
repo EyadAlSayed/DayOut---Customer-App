@@ -1,6 +1,5 @@
 package com.example.dayout.ui.fragments.trips;
 
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -17,7 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.RoadMapAdapter;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.trip.RoadMapModel;
+import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.viewModels.TripViewModel;
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.dayout.api.ApiClient;
 import com.example.dayout.models.popualrPlace.PopularPlaceModel;
-import com.example.dayout.models.trip.PlaceDetailsModel;
+import com.example.dayout.models.trip.place.PlaceDetailsModel;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;

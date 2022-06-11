@@ -15,10 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPollAdapter;
-import com.example.dayout.adapters.recyclers.TripPostAdapter;
-import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.poll.Polls;
-import com.example.dayout.models.trip.TripPost;
+import com.example.dayout.models.poll.PollsModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.viewModels.TripViewModel;
@@ -27,8 +24,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
 
 public class PollsFragment extends Fragment {
@@ -74,9 +69,9 @@ public class PollsFragment extends Fragment {
         TripViewModel.getINSTANCE().pollMutableLiveData.observe(requireActivity(),pollsObserver);
     }
 
-    private final Observer<Pair<Polls,String>> pollsObserver  = new Observer<Pair<Polls, String>>() {
+    private final Observer<Pair<PollsModel,String>> pollsObserver  = new Observer<Pair<PollsModel, String>>() {
         @Override
-        public void onChanged(Pair<Polls, String> pollStringPair) {
+        public void onChanged(Pair<PollsModel, String> pollStringPair) {
             if (pollStringPair != null){
                 if (pollStringPair.first != null){
                     tripPollAdapter.refresh(pollStringPair.first.data);

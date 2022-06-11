@@ -36,7 +36,7 @@ public class TripPostFragment extends Fragment {
 
     @BindView(R.id.filter_btn)
     ImageButton filterBtn;
-    @BindView(R.id.trip_post_rc)
+    @BindView(R.id.trip_poll_post_rc)
     RecyclerView tripPostRc;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -76,7 +76,7 @@ public class TripPostFragment extends Fragment {
         public void onChanged(Pair<TripPost, String> tripPostStringPair) {
             if (tripPostStringPair != null){
                 if (tripPostStringPair.first != null){
-                    tripPostAdapter.refresh(tripPostStringPair.first.data.data);
+                    tripPostAdapter.refresh(tripPostStringPair.first.data);
                 }
                 else {
                     new ErrorDialog(requireContext(),tripPostStringPair.second).show();

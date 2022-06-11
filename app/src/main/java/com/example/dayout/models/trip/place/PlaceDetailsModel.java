@@ -1,4 +1,4 @@
-package com.example.dayout.models.trip;
+package com.example.dayout.models.trip.place;
 
 import com.example.dayout.models.popualrPlace.PlaceData;
 

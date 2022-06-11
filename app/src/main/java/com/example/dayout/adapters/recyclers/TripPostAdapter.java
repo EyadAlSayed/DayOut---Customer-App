@@ -15,6 +15,8 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
+import com.example.dayout.models.trip.TripData;
+import com.example.dayout.models.trip.TripPhotoData;
 import com.example.dayout.models.trip.TripPost;
 
 import java.util.ArrayList;
@@ -28,16 +30,16 @@ import static com.example.dayout.viewModels.PlaceViewModel.PLACE_PHOTO_URL;
 
 public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHolder> {
 
-    List<TripPost.Data> list;
+    List<TripData> list;
     Context context;
 
-    public TripPostAdapter(List<TripPost.Data> list, Context context) {
+    public TripPostAdapter(List<TripData> list, Context context) {
         this.list = list;
         this.context = context;
     }
 
 
-    public void refresh(List<TripPost.Data> list) {
+    public void refresh(List<TripData> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -88,10 +90,10 @@ public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHo
             itemView.setOnClickListener(this);
         }
 
-        private void bindImageSlider(List<TripPost.TripPhoto> photos) {
+        private void bindImageSlider(List<TripPhotoData> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
             String baseUrl = BASE_URL.substring(0,BASE_URL.length()-1);
-            for (TripPost.TripPhoto ph : photos) {
+            for (TripPhotoData ph : photos) {
                 slideModels.add(new SlideModel(baseUrl+ph.path
                         , ScaleTypes.FIT));
             }

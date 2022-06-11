@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.poll.Polls;
+import com.example.dayout.models.poll.PollsData;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.fragments.drawer.Posts.PollsChoicesFragment;
 
@@ -24,16 +24,16 @@ import butterknife.ButterKnife;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
 public class TripPollAdapter extends RecyclerView.Adapter<TripPollAdapter.ViewHolder> {
-    List<Polls.Data> list;
+    List<PollsData> list;
     Context context;
 
 
-    public TripPollAdapter(List<Polls.Data> list, Context context) {
+    public TripPollAdapter(List<PollsData> list, Context context) {
         this.list = list;
         this.context = context;
     }
 
-    public void refresh(List<Polls.Data> list) {
+    public void refresh(List<PollsData> list) {
         this.list = list;
         notifyDataSetChanged();
     }

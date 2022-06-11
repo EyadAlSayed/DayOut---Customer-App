@@ -1,5 +1,8 @@
 package com.example.dayout.models.trip;
 
+import com.example.dayout.models.trip.place.PlaceTripData;
+import com.example.dayout.models.trip.tripType.TripType;
+
 import java.util.ArrayList;
 
 public class TripData {
@@ -12,8 +15,6 @@ public class TripData {
     public String expire_date;
     public String end_booking;
     public int price;
-    public String created_at;
-    public String updated_at;
     public int customer_trips_count;
     public ArrayList<TripType> types = new ArrayList<>();
     public ArrayList<PlaceTripData> place_trips = new ArrayList<>();
