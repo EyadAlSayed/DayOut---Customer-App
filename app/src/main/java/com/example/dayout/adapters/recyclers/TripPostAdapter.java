@@ -30,8 +30,6 @@ public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHo
     List<TripPost.Data> list;
     Context context;
 
-
-
     public TripPostAdapter(List<TripPost.Data> list, Context context) {
         this.list = list;
         this.context = context;
