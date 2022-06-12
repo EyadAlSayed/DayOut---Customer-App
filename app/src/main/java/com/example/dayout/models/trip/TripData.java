@@ -20,7 +20,6 @@ public class TripData {
     public ArrayList<PlaceTripData> place_trips = new ArrayList<>();
     public ArrayList<TripPhotoData> trip_photos = new ArrayList<>();
     public ArrayList<CustomerTrip> customer_trips = new ArrayList<>();
-
     public boolean  isActive = false;
     public String stopsToDetails;
 }
