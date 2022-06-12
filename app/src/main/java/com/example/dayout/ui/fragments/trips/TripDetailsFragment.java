@@ -6,6 +6,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.tripType.TripType;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
+import com.example.dayout.ui.dialogs.MessageDialog;
 import com.example.dayout.ui.dialogs.WarningDialog;
 import com.example.dayout.viewModels.TripViewModel;
 
@@ -70,6 +72,11 @@ public class TripDetailsFragment extends Fragment {
     @BindView(R.id.trip_details_passengers_count)
     TextView tripDetailsPassengersCount;
 
+    @BindView(R.id.book_trip_button)
+    Button bookTripButton;
+
+    boolean isPost;
+
     TripData data;
 
     LoadingDialog loadingDialog;
@@ -83,19 +90,22 @@ public class TripDetailsFragment extends Fragment {
         return view;
     }
 
-    public TripDetailsFragment(TripData data){
+    public TripDetailsFragment(TripData data, boolean isPost){
         this.data = data;
+        this.isPost = isPost;
     }
 
 
-    private void initViews(){
+    private void initViews() {
         loadingDialog = new LoadingDialog(requireContext());
         tripDetailsBackArrow.setOnClickListener(onBackClicked);
         tripDetailsDeleteIcon.setOnClickListener(onDeleteClicked);
         tripDetailsRoadMap.setOnClickListener(onRoadMapClicked);
         tripDetailsRoadMapFrontArrow.setOnClickListener(onRoadMapClicked);
-
-
+        if (isPost) {
+            bookTripButton.setVisibility(View.VISIBLE);
+            bookTripButton.setOnClickListener(onBookClicked);
+        }
     }
 
     private String getTypes(ArrayList<TripType> types){
@@ -165,6 +175,14 @@ public class TripDetailsFragment extends Fragment {
         @Override
         public void onClick(View v) {
             FN.addFixedNameFadeFragment(MAIN_FRC,requireActivity(),new RoadMapFragment(data.id));
+        }
+    };
+
+    private final View.OnClickListener onBookClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            new MessageDialog(requireContext(), "Enter names of passengers you are booking for. Please consider including your name if you are booking for yourself as well.").show();
+            FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new BookTripFragment(data.id));
         }
     };
 }

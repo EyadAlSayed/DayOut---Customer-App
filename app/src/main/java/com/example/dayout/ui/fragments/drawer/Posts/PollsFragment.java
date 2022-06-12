@@ -41,8 +41,7 @@ public class PollsFragment extends Fragment {
     TripPollAdapter tripPollAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_trip_poll_post, container, false);
         ButterKnife.bind(this, view);
