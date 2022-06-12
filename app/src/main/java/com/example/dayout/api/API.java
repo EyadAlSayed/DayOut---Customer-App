@@ -1,14 +1,14 @@
 package com.example.dayout.api;
 
-import com.example.dayout.models.NotificationModel;
-
 import com.example.dayout.models.authModels.LoginModel;
 
+import com.example.dayout.models.notification.NotificationModel;
 import com.example.dayout.models.poll.PollsModel;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.popualrPlace.PopularPlaceModel;
 
+import com.example.dayout.models.trip.BookTripModel;
 import com.example.dayout.models.trip.place.PlaceDetailsModel;
 import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
@@ -93,6 +93,8 @@ public interface API {
     @POST("api/trip/rate")
     Call<ResponseBody> rateTrip(@Body JsonObject rate);
 
+    @POST("api/bookings/book")
+    Call<ResponseBody> bookTrip(@Body BookTripModel model);
 
 
     /**
@@ -107,6 +109,9 @@ public interface API {
 
     @PUT("api/polls/vote/{pollId}/{choiceId}")
     Call<ResponseBody> voteOnPoll(@Path("pollId")int pollId,@Path("choiceId") int choiceId);
+
+    @PUT("api/bookings/{trip_id}/user/cancel")
+    Call<ResponseBody> cancelBooking(@Path("trip_id") int tripId);
 
 
     /**

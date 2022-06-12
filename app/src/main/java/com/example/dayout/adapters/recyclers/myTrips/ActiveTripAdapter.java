@@ -1,5 +1,6 @@
 package com.example.dayout.adapters.recyclers.myTrips;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,6 @@ public class ActiveTripAdapter extends RecyclerView.Adapter<ActiveTripAdapter.Vi
         holder.date.setText(list.get(position).begin_date);
         holder.passengersCount.setText(String.valueOf(list.get(position).customer_trips.size()));
         holder.bindImageSlider(list.get(position).trip_photos);
-        holder.deleteIcon.setVisibility(View.GONE);
 
         for (int i = 0; i < list.get(position).place_trips.size(); i++) {
             if (i != 0) {
@@ -82,13 +82,11 @@ public class ActiveTripAdapter extends RecyclerView.Adapter<ActiveTripAdapter.Vi
         return list.size();
     }
 
+    @SuppressLint("NonConstantResourceId")
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.upcoming_trip_title)
         TextView title;
-
-        @BindView(R.id.upcoming_trip_delete_icon)
-        ImageButton deleteIcon;
 
         @BindView(R.id.upcoming_trip_passengers_count)
         TextView passengersCount;
@@ -114,28 +112,14 @@ public class ActiveTripAdapter extends RecyclerView.Adapter<ActiveTripAdapter.Vi
             super(itemView);
             itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
-            init();
         }
-
-
-        private void init() {
-            deleteIcon.setOnClickListener(onDeleteClicked);
-            activeTV.setVisibility(View.GONE);
-        }
-
-        private final View.OnClickListener onDeleteClicked = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new WarningDialog(context, "Are you sure you want to delete this trip?").show();
-            }
-        };
 
         @Override
         public void onClick(View v) {
             if (!FilterFragment.isFilterOpen) {
                 TripData data = list.get(getAdapterPosition());
                 data.stopsToDetails = stops;
-                FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new TripDetailsFragment(data));
+                FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new TripDetailsFragment(data, false));
             }
         }
 

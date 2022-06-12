@@ -6,6 +6,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.tripType.TripType;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
+import com.example.dayout.ui.dialogs.MessageDialog;
 import com.example.dayout.ui.dialogs.WarningDialog;
 import com.example.dayout.viewModels.TripViewModel;
 
@@ -70,6 +72,11 @@ public class TripDetailsFragment extends Fragment {
     @BindView(R.id.trip_details_passengers_count)
     TextView tripDetailsPassengersCount;
 
+    @BindView(R.id.book_trip_button)
+    Button bookTripButton;
+
+    boolean isPost;
+
     TripData data;
 
     LoadingDialog loadingDialog;
@@ -83,19 +90,27 @@ public class TripDetailsFragment extends Fragment {
         return view;
     }
 
-    public TripDetailsFragment(TripData data){
+    public TripDetailsFragment(TripData data, boolean isPost){
         this.data = data;
+        this.isPost = isPost;
     }
 
 
-    private void initViews(){
+    private void initViews() {
         loadingDialog = new LoadingDialog(requireContext());
         tripDetailsBackArrow.setOnClickListener(onBackClicked);
         tripDetailsDeleteIcon.setOnClickListener(onDeleteClicked);
         tripDetailsRoadMap.setOnClickListener(onRoadMapClicked);
         tripDetailsRoadMapFrontArrow.setOnClickListener(onRoadMapClicked);
-
-
+        if (isPost) {
+            tripDetailsDeleteIcon.setVisibility(View.GONE);
+            bookTripButton.setVisibility(View.VISIBLE);
+            bookTripButton.setOnClickListener(onBookClicked);
+        }
+        //passenger has booked this trip.
+        if(data.is_in_trip){
+            bookTripButton.setText(R.string.cancel_booking);
+        }
     }
 
     private String getTypes(ArrayList<TripType> types){
@@ -135,7 +150,6 @@ public class TripDetailsFragment extends Fragment {
             if(tripDetailsModelStringPair != null){
                 if(tripDetailsModelStringPair.first != null){
                     setData(tripDetailsModelStringPair.first);
-                    data =tripDetailsModelStringPair.first.data;
                     //trip is active
                     if(data.isActive)
                         tripDetailsDeleteIcon.setVisibility(View.GONE);
@@ -157,7 +171,7 @@ public class TripDetailsFragment extends Fragment {
     private final View.OnClickListener onDeleteClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            new WarningDialog(requireContext(), getResources().getString(R.string.canceling_reservation)).show();
+            new WarningDialog(requireContext(), getResources().getString(R.string.canceling_reservation), true, data.id).show();
         }
     };
 
@@ -165,6 +179,18 @@ public class TripDetailsFragment extends Fragment {
         @Override
         public void onClick(View v) {
             FN.addFixedNameFadeFragment(MAIN_FRC,requireActivity(),new RoadMapFragment(data.id));
+        }
+    };
+
+    private final View.OnClickListener onBookClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (bookTripButton.getText().toString().equals(getResources().getString(R.string.book_trip))) {
+                new MessageDialog(requireContext(), "Enter names of passengers you are booking for. Please consider including your name if you are booking for yourself as well.").show();
+                FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new BookTripFragment(data.id));
+            } else if (bookTripButton.getText().toString().equals(getResources().getString(R.string.cancel_booking))){
+                new WarningDialog(requireContext(), getResources().getString(R.string.canceling_reservation), true, data.id).show();
+            }
         }
     };
 }

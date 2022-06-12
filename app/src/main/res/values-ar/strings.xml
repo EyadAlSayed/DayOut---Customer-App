@@ -82,4 +82,8 @@
     <string name="no_notifications">لا يوجد إشعارات</string>
     <string name="change_settings">تغيير الاعدادات</string>
     <string name="book_trip">حجز في الرّحلة</string>
+    <string name="add">إضافة</string>
+    <string name="submit">تثبيت</string>
+    <string name="passenger_name">اسم المسافر</string>
+    <string name="cancel_booking">إلغاء الحجز</string>
 </resources>

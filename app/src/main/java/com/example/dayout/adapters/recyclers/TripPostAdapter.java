@@ -14,10 +14,13 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
+import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripPhotoData;
 import com.example.dayout.models.trip.TripPost;
+import com.example.dayout.ui.activities.MainActivity;
+import com.example.dayout.ui.fragments.trips.TripDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
+import static com.example.dayout.config.AppConstants.MAIN_FRC;
 import static com.example.dayout.viewModels.PlaceViewModel.PLACE_PHOTO_URL;
 
 public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHolder> {
@@ -105,7 +109,7 @@ public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-
+            FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new TripDetailsFragment(list.get(getAdapterPosition()), true));
         }
     }
 }
