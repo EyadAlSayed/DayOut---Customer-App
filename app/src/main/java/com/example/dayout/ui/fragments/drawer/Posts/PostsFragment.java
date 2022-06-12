@@ -52,12 +52,12 @@ public class PostsFragment extends Fragment {
     private void initTabLayout() {
         List<Fragment> list = new ArrayList<>();
         list.add(new TripPostFragment());
-        list.add(new TripPostFragment());
+        list.add(new PollsFragment());
 
         PostPagerAdapter pagerAdapter = new PostPagerAdapter(requireActivity(),list);
 
         postViewPager.setAdapter(pagerAdapter);
-        new TabLayoutMediator(postTabLayout, postViewPager, (TabLayoutMediator.TabConfigurationStrategy) (tab, position) -> {
+        new TabLayoutMediator(postTabLayout, postViewPager, (tab, position) -> {
             switch (position) {
                 case 0: {
                     tab.setText("Post");

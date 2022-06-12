@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPostAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.models.trip.TripPost;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
@@ -71,12 +72,12 @@ public class TripPostFragment extends Fragment {
         TripViewModel.getINSTANCE().tripPostMutableLiveData.observe(requireActivity(),tripPostObserver);
     }
 
-    private final Observer<Pair<TripPost,String>> tripPostObserver  = new Observer<Pair<TripPost, String>>() {
+    private final Observer<Pair<TripPaginationModel,String>> tripPostObserver  = new Observer<Pair<TripPaginationModel, String>>() {
         @Override
-        public void onChanged(Pair<TripPost, String> tripPostStringPair) {
+        public void onChanged(Pair<TripPaginationModel, String> tripPostStringPair) {
             if (tripPostStringPair != null){
                 if (tripPostStringPair.first != null){
-                    tripPostAdapter.refresh(tripPostStringPair.first.data);
+                    tripPostAdapter.refresh(tripPostStringPair.first.data.data);
                 }
                 else {
                     new ErrorDialog(requireContext(),tripPostStringPair.second).show();

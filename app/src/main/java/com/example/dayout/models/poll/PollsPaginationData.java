@@ -6,7 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class PollsModel implements Serializable {
+public class PollsPaginationData implements Serializable {
 
+    int current_page;
     public List<PollsData> data;
 }

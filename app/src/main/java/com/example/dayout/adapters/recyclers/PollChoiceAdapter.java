@@ -17,7 +17,6 @@ import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
 import com.example.dayout.models.poll.PollChoice;
-import com.example.dayout.models.poll.PollsModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.ui.dialogs.LoadingDialog;
@@ -33,12 +32,13 @@ public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.Vi
     List<PollChoice> list;
     Context context;
     LoadingDialog loadingDialog;
+    int totalVotes;
 
-
-    public PollChoiceAdapter(List<PollChoice> list, Context context) {
+    public PollChoiceAdapter(List<PollChoice> list, Context context,int totalVotes) {
         this.list = list;
         this.context = context;
         loadingDialog = new LoadingDialog(context);
+        this.totalVotes = totalVotes;
     }
 
     public void refresh(List<PollChoice> list) {
@@ -56,8 +56,14 @@ public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.voteTitle.setText(list.get(position).value);
+        int percentage = calculatePercentage(list.get(position).users.size());
+        holder.progressBar.setProgress(percentage,true);
     }
 
+
+    private int calculatePercentage(int votes){
+        return (votes * 100)/ totalVotes ;
+    }
     @Override
     public int getItemCount() {
         return list.size();
@@ -93,7 +99,7 @@ public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.Vi
                 loadingDialog.dismiss();
 
                 if (booleanStringPair != null){
-                    if (booleanStringPair.first){
+                    if (booleanStringPair.first != null && booleanStringPair.first){
                         NoteMessage.showSnackBar((MainActivity)context,"Thanks for your vote ");
                         FN.popTopStack((MainActivity)context);
                     }

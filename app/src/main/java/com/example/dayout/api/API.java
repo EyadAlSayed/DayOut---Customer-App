@@ -3,12 +3,14 @@ package com.example.dayout.api;
 import com.example.dayout.models.authModels.LoginModel;
 
 import com.example.dayout.models.notification.NotificationModel;
-import com.example.dayout.models.poll.PollsModel;
+import com.example.dayout.models.poll.PollsPaginationData;
+import com.example.dayout.models.poll.PollsPaginationModel;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.popualrPlace.PopularPlaceModel;
 
 import com.example.dayout.models.trip.BookTripModel;
+import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.models.trip.place.PlaceDetailsModel;
 import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
@@ -52,7 +54,7 @@ public interface API {
     Call<TripTypeModel> getTripType();
 
     @GET("api/trip")
-    Call<TripPost> getTripPost();
+    Call<TripPaginationModel> getTripPost();
 
     @GET("api/trip/{id}/details")
     Call<TripDetailsModel> getTripDetails(@Path("id") int id);
@@ -70,7 +72,7 @@ public interface API {
     Call<PlaceDetailsModel> getPlaceDetails(@Path("id") int id);
 
     @GET("api/polls")
-    Call<PollsModel> getPolls();
+    Call<PollsPaginationModel> getPolls();
 
 
     /**
@@ -88,7 +90,7 @@ public interface API {
     Call<ResponseBody> addToFavorite(@Body JsonObject favoritePlace);
 
     @POST("api/search/trip")
-    Call<TripPost> searchForTrip(@Body JsonObject searchObject);
+    Call<TripPaginationModel> searchForTrip(@Body JsonObject searchObject);
 
     @POST("api/trip/rate")
     Call<ResponseBody> rateTrip(@Body JsonObject rate);

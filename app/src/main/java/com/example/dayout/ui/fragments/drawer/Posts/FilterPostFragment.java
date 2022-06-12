@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPostAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.models.trip.TripPost;
 import com.example.dayout.models.trip.tripType.TripType;
 import com.example.dayout.models.trip.tripType.TripTypeModel;
@@ -113,12 +114,12 @@ public class FilterPostFragment extends Fragment {
         TripViewModel.getINSTANCE().tripPostMutableLiveData.observe(requireActivity(),tripFilterObserver);
     }
 
-    private final Observer<Pair<TripPost,String>> tripFilterObserver = new Observer<Pair<TripPost, String>>() {
+    private final Observer<Pair<TripPaginationModel,String>> tripFilterObserver = new Observer<Pair<TripPaginationModel, String>>() {
         @Override
-        public void onChanged(Pair<TripPost, String> tripPostStringPair) {
+        public void onChanged(Pair<TripPaginationModel, String> tripPostStringPair) {
             if (tripPostStringPair != null){
                 if (tripPostStringPair.first != null){
-                    tripPostAdapter.refresh(tripPostStringPair.first.data);
+                    tripPostAdapter.refresh(tripPostStringPair.first.data.data);
                     FN.popTopStack(requireActivity());
                 }
             }
