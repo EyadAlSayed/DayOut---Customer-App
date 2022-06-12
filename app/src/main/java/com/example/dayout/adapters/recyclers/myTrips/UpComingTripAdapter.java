@@ -1,5 +1,6 @@
 package com.example.dayout.adapters.recyclers.myTrips;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,13 +83,11 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
         return list.size();
     }
 
+    @SuppressLint("NonConstantResourceId")
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.upcoming_trip_title)
         TextView title;
-
-        @BindView(R.id.upcoming_trip_delete_icon)
-        ImageButton deleteIcon;
 
         @BindView(R.id.upcoming_trip_passengers_count)
         TextView passengersCount;
@@ -119,16 +118,8 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
 
 
         private void init() {
-            deleteIcon.setOnClickListener(onDeleteClicked);
             activeTV.setVisibility(View.GONE);
         }
-
-        private final View.OnClickListener onDeleteClicked = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new WarningDialog(context, "Are you sure you want to delete this trip?").show();
-            }
-        };
 
         @Override
         public void onClick(View v) {

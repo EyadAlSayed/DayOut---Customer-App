@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
+import com.example.dayout.helpers.view.FN;
+import com.example.dayout.helpers.view.NoteMessage;
+import com.example.dayout.ui.activities.MainActivity;
+import com.example.dayout.viewModels.TripViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,9 +41,15 @@ public class WarningDialog extends Dialog {
     @BindView(R.id.warning_dialog_no)
     Button warningDialogNo;
 
-    public WarningDialog(@NonNull Context context, String message) {
+    //for canceling booking
+    boolean isCancelingBooking;
+    int tripId;
+
+    public WarningDialog(@NonNull Context context, String message, boolean isCancelingBooking, int tripId) {
         super(context);
         this.context = context;
+        this.isCancelingBooking = isCancelingBooking;
+        this.tripId = tripId;
         setContentView(R.layout.warning_dialog);
         setCancelable(false);
         ButterKnife.bind(this);
@@ -48,12 +60,37 @@ public class WarningDialog extends Dialog {
         loadingDialog = new LoadingDialog(getContext());
         warningDialogMessage.setText(message);
         warningDialogNo.setOnClickListener(onNoButtonClicked);
+        warningDialogYes.setOnClickListener(onYesButtonClicked);
     }
+
+    private void cancelBooking(int tripId){
+        loadingDialog.show();
+        TripViewModel.getINSTANCE().cancelBooking(tripId);
+        TripViewModel.getINSTANCE().cancelBookingMutableLiveData.observe((MainActivity) context, cancelBookingObserver);
+    }
+
+    private final Observer<Pair<Boolean, String>> cancelBookingObserver = new Observer<Pair<Boolean, String>>() {
+        @Override
+        public void onChanged(Pair<Boolean, String> booleanStringPair) {
+            loadingDialog.dismiss();
+            if(booleanStringPair != null){
+                if(booleanStringPair.first != null){
+                    NoteMessage.message(context, "Booking Canceled");
+                    FN.popStack((MainActivity) context);
+                } else
+                    new ErrorDialog(context, booleanStringPair.second).show();
+            } else
+                new ErrorDialog(context, "Error Connection").show();
+        }
+    };
 
     private final View.OnClickListener onYesButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            if(isCancelingBooking){
+                cancelBooking(tripId);
+                dismiss();
+            }
         }
     };
 

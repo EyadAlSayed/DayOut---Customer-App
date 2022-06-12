@@ -72,6 +72,7 @@ public class OldTripDetailsFragment extends Fragment {
     RatingBar oldTripDetailsRatingBar;
 
     float tripRating = 0;
+    boolean firstAccess = true;
 
     TripData data;
 
@@ -98,7 +99,7 @@ public class OldTripDetailsFragment extends Fragment {
         oldTripDetailsRatingBar.setOnRatingBarChangeListener(onRatingBarChanged);
     }
 
-    private void setData(TripDetailsModel model){
+    private void setData(TripDetailsModel model) {
         oldTripDetailsType.setText(getTypes(model.data.types));
         oldTripDetailsTitle.setText(model.data.title);
         oldTripDetailsDate.setText(model.data.begin_date);
@@ -107,22 +108,23 @@ public class OldTripDetailsFragment extends Fragment {
         oldTripDetailsPrice.setText(String.valueOf(model.data.price));
         oldTripsEndBookingDate.setText(model.data.end_booking);
         oldTripDetailsPassengersCount.setText(String.valueOf(model.data.customer_trips_count));
+        oldTripDetailsRatingBar.setRating(model.data.customer_trips.get(0).rate);
     }
 
-    private String getTypes(ArrayList<TripType> types){
+    private String getTypes(ArrayList<TripType> types) {
         String tripTypes = "";
 
-        for(int i = 0; i < types.size(); i++){
+        for (int i = 0; i < types.size(); i++) {
             if (i != 0) {
                 tripTypes += ", " + types.get(i).name;
-            } else if(i == 0)
+            } else if (i == 0)
                 tripTypes += types.get(i).name;
         }
 
         return tripTypes;
     }
 
-    private void getDataFromApi(){
+    private void getDataFromApi() {
         loadingDialog.show();
         TripViewModel.getINSTANCE().getTripDetails(data.id);
         TripViewModel.getINSTANCE().tripDetailsMutableLiveData.observe(requireActivity(), tripDetailsObserver);
@@ -132,8 +134,8 @@ public class OldTripDetailsFragment extends Fragment {
         @Override
         public void onChanged(Pair<TripDetailsModel, String> tripDetailsModelStringPair) {
             loadingDialog.dismiss();
-            if(tripDetailsModelStringPair != null){
-                if(tripDetailsModelStringPair.first != null){
+            if (tripDetailsModelStringPair != null) {
+                if (tripDetailsModelStringPair.first != null) {
                     setData(tripDetailsModelStringPair.first);
                     data = tripDetailsModelStringPair.first.data;
                 } else
@@ -143,7 +145,7 @@ public class OldTripDetailsFragment extends Fragment {
         }
     };
 
-    private JsonObject getRateData(){
+    private JsonObject getRateData() {
         JsonObject object = new JsonObject();
         object.addProperty("trip_id", data.id);
         object.addProperty("rate", tripRating);
@@ -151,7 +153,7 @@ public class OldTripDetailsFragment extends Fragment {
         return object;
     }
 
-    private void rateTrip(){
+    private void rateTrip() {
         loadingDialog.show();
         TripViewModel.getINSTANCE().rateTrip(getRateData());
         TripViewModel.getINSTANCE().rateTripMutableLiveData.observe(requireActivity(), rateTripObserver);
@@ -161,8 +163,8 @@ public class OldTripDetailsFragment extends Fragment {
         @Override
         public void onChanged(Pair<ResponseBody, String> responseBodyStringPair) {
             loadingDialog.dismiss();
-            if(responseBodyStringPair != null){
-                if(responseBodyStringPair.first != null){
+            if (responseBodyStringPair != null) {
+                if (responseBodyStringPair.first != null) {
                     new MessageDialog(requireContext(), getResources().getString(R.string.trip_rated)).show();
                 } else
                     new ErrorDialog(requireContext(), responseBodyStringPair.second).show();
@@ -188,8 +190,11 @@ public class OldTripDetailsFragment extends Fragment {
     private final RatingBar.OnRatingBarChangeListener onRatingBarChanged = new RatingBar.OnRatingBarChangeListener() {
         @Override
         public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-            tripRating = rating;
-            rateTrip();
+            if(!firstAccess) {
+                tripRating = rating;
+                rateTrip();
+            } else
+                firstAccess = false;
         }
     };
 }
