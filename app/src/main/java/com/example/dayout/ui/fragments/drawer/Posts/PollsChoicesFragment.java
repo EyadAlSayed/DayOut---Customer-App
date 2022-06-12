@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.PollChoiceAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.poll.PollChoice;
 import com.example.dayout.models.poll.PollsData;
 
 import butterknife.BindView;
@@ -59,7 +60,15 @@ public class PollsChoicesFragment extends Fragment {
     private void initRc() {
         pollChoiceRc.setHasFixedSize(true);
         pollChoiceRc.setLayoutManager(new LinearLayoutManager(requireContext()));
-        pollChoiceAdapter = new PollChoiceAdapter(data.poll_choices, requireContext());
+        pollChoiceAdapter = new PollChoiceAdapter(data.poll_choices, requireContext(),getVotesAvg());
         pollChoiceRc.setAdapter(pollChoiceAdapter);
+    }
+
+    private int getVotesAvg(){
+        int avg = 0;
+        for (PollChoice pc : data.poll_choices){
+            avg += pc.users.size();
+        }
+        return avg;
     }
 }

@@ -5,8 +5,9 @@ import android.util.Pair;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.dayout.api.ApiClient;
-import com.example.dayout.models.poll.PollsModel;
+import com.example.dayout.models.poll.PollsPaginationModel;
 import com.example.dayout.models.trip.BookTripModel;
+import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripListModel;
@@ -34,12 +35,12 @@ public class TripViewModel {
     public MutableLiveData<Pair<TripListModel, String>> upcomingTripsMutableLiveData;
     public MutableLiveData<Pair<TripListModel, String>> activeTripsMutableLiveData;
     public MutableLiveData<Pair<TripListModel, String>> historyTripsMutableLiveData;
-    public MutableLiveData<Pair<TripPost, String>> tripPostMutableLiveData;
+    public MutableLiveData<Pair<TripPaginationModel, String>> tripPostMutableLiveData;
     public MutableLiveData<Pair<TripTypeModel, String>> tripTypeTripMutableLiveData;
     public MutableLiveData<Pair<ResponseBody, String>> rateTripMutableLiveData;
     public MutableLiveData<Pair<TripDetailsModel, String>> tripDetailsMutableLiveData;
     public MutableLiveData<Pair<RoadMapModel, String>> roadMapMutableLiveData;
-    public MutableLiveData<Pair<PollsModel, String>> pollMutableLiveData;
+    public MutableLiveData<Pair<PollsPaginationModel, String>> pollMutableLiveData;
     public MutableLiveData<Pair<Boolean, String>> successfulMutableLiveData;
     public MutableLiveData<Pair<ResponseBody, String>> bookTripMutableLiveData;
     public MutableLiveData<Pair<Boolean, String>> cancelBookingMutableLiveData;
@@ -122,9 +123,9 @@ public class TripViewModel {
 
     public void getTripPost() {
         tripPostMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getTripPost().enqueue(new Callback<TripPost>() {
+        apiClient.getAPI().getTripPost().enqueue(new Callback<TripPaginationModel>() {
             @Override
-            public void onResponse(Call<TripPost> call, Response<TripPost> response) {
+            public void onResponse(Call<TripPaginationModel> call, Response<TripPaginationModel> response) {
                 if (response.isSuccessful()) {
                     tripPostMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
@@ -137,7 +138,7 @@ public class TripViewModel {
             }
 
             @Override
-            public void onFailure(Call<TripPost> call, Throwable t) {
+            public void onFailure(Call<TripPaginationModel> call, Throwable t) {
                 tripPostMutableLiveData.setValue(null);
             }
         });
@@ -214,9 +215,9 @@ public class TripViewModel {
 
     public void getPolls() {
         pollMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getPolls().enqueue(new Callback<PollsModel>() {
+        apiClient.getAPI().getPolls().enqueue(new Callback<PollsPaginationModel>() {
             @Override
-            public void onResponse(Call<PollsModel> call, Response<PollsModel> response) {
+            public void onResponse(Call<PollsPaginationModel> call, Response<PollsPaginationModel> response) {
                 if (response.isSuccessful()) {
                     pollMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
@@ -229,7 +230,7 @@ public class TripViewModel {
             }
 
             @Override
-            public void onFailure(Call<PollsModel> call, Throwable t) {
+            public void onFailure(Call<PollsPaginationModel> call, Throwable t) {
                 pollMutableLiveData.setValue(null);
             }
         });
@@ -237,9 +238,9 @@ public class TripViewModel {
 
     public void searchForTrip(JsonObject searchTrip) {
         tripPostMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().searchForTrip(searchTrip).enqueue(new Callback<TripPost>() {
+        apiClient.getAPI().searchForTrip(searchTrip).enqueue(new Callback<TripPaginationModel>() {
             @Override
-            public void onResponse(Call<TripPost> call, Response<TripPost> response) {
+            public void onResponse(Call<TripPaginationModel> call, Response<TripPaginationModel> response) {
                 if (response.isSuccessful()) {
                     tripPostMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
@@ -252,7 +253,7 @@ public class TripViewModel {
             }
 
             @Override
-            public void onFailure(Call<TripPost> call, Throwable t) {
+            public void onFailure(Call<TripPaginationModel> call, Throwable t) {
                 tripPostMutableLiveData.setValue(null);
             }
         });

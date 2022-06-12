@@ -15,7 +15,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPollAdapter;
-import com.example.dayout.models.poll.PollsModel;
+import com.example.dayout.models.poll.PollsPaginationModel;
+import com.example.dayout.models.poll.PollsPaginationModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.ErrorDialog;
 import com.example.dayout.viewModels.TripViewModel;
@@ -68,12 +69,12 @@ public class PollsFragment extends Fragment {
         TripViewModel.getINSTANCE().pollMutableLiveData.observe(requireActivity(),pollsObserver);
     }
 
-    private final Observer<Pair<PollsModel,String>> pollsObserver  = new Observer<Pair<PollsModel, String>>() {
+    private final Observer<Pair<PollsPaginationModel,String>> pollsObserver  = new Observer<Pair<PollsPaginationModel, String>>() {
         @Override
-        public void onChanged(Pair<PollsModel, String> pollStringPair) {
+        public void onChanged(Pair<PollsPaginationModel, String> pollStringPair) {
             if (pollStringPair != null){
                 if (pollStringPair.first != null){
-                    tripPollAdapter.refresh(pollStringPair.first.data);
+                    tripPollAdapter.refresh(pollStringPair.first.data.data);
                 }
                 else {
                     new ErrorDialog(requireContext(),pollStringPair.second).show();
