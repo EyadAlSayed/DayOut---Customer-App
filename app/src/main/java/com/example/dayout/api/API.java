@@ -8,6 +8,7 @@ import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.popualrPlace.PopularPlaceModel;
 
+import com.example.dayout.models.trip.BookTripModel;
 import com.example.dayout.models.trip.place.PlaceDetailsModel;
 import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
@@ -92,6 +93,8 @@ public interface API {
     @POST("api/trip/rate")
     Call<ResponseBody> rateTrip(@Body JsonObject rate);
 
+    @POST("api/bookings/book")
+    Call<ResponseBody> bookTrip(@Body BookTripModel model);
 
 
     /**

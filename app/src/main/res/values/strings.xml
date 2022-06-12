@@ -91,5 +91,8 @@
     <string name="no_notifications">No Notifications</string>
     <string name="change_settings">Change Setting</string>
     <string name="book_trip">Book Trip</string>
+    <string name="add">Add</string>
+    <string name="submit">Submit</string>
+    <string name="passenger_name">Passenger Name</string>
 
 </resources>
