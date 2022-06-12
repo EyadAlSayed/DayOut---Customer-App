@@ -110,6 +110,9 @@ public interface API {
     @PUT("api/polls/vote/{pollId}/{choiceId}")
     Call<ResponseBody> voteOnPoll(@Path("pollId")int pollId,@Path("choiceId") int choiceId);
 
+    @PUT("api/bookings/{trip_id}/user/cancel")
+    Call<ResponseBody> cancelBooking(@Path("trip_id") int tripId);
+
 
     /**
      * Delete Request

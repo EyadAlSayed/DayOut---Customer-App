@@ -42,6 +42,7 @@ public class TripViewModel {
     public MutableLiveData<Pair<PollsModel, String>> pollMutableLiveData;
     public MutableLiveData<Pair<Boolean, String>> successfulMutableLiveData;
     public MutableLiveData<Pair<ResponseBody, String>> bookTripMutableLiveData;
+    public MutableLiveData<Pair<Boolean, String>> cancelBookingMutableLiveData;
 
     public static TripViewModel getINSTANCE() {
         if (instance == null) {
@@ -323,6 +324,29 @@ public class TripViewModel {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 bookTripMutableLiveData.setValue(null);
+            }
+        });
+    }
+
+    public void cancelBooking(int tripId){
+        cancelBookingMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().cancelBooking(tripId).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    cancelBookingMutableLiveData.setValue(new Pair<>(true, null));
+                } else {
+                    try {
+                        cancelBookingMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                cancelBookingMutableLiveData.setValue(null);
             }
         });
     }
