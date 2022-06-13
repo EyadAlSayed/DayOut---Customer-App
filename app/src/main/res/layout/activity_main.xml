@@ -61,8 +61,8 @@
 
     <ImageButton
         android:id="@+id/drawer_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_20sdp"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="34dp"
         android:background="@drawable/ic_drawer_icon"
@@ -75,14 +75,14 @@
         android:id="@+id/profile_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_20sdp"
         android:background="@drawable/ic_user_profile"
         android:layoutDirection="ltr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:clickable="false"
-        android:focusable="false"/>
+        android:clickable="true"
+        android:focusable="true"/>
 
 
     <androidx.fragment.app.FragmentContainerView

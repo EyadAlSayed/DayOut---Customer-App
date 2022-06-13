@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.ExplorePlaceAdapter;
+import com.example.dayout.ui.activities.MainActivity;
 
 import java.util.ArrayList;
 
@@ -41,6 +42,20 @@ public class ExploreFragment extends Fragment {
         ButterKnife.bind(this, view);
         initView();
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        ((MainActivity) requireActivity()).hideDrawerButton();
+        ((MainActivity) requireActivity()).hideBottomBar();
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        ((MainActivity) requireActivity()).showDrawerButton();
+        ((MainActivity) requireActivity()).showBottomBar();
+        super.onStop();
     }
 
     private void initView(){
