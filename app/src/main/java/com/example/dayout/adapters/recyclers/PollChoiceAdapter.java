@@ -1,5 +1,6 @@
 package com.example.dayout.adapters.recyclers;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.Vi
     LoadingDialog loadingDialog;
     int totalVotes;
 
-    public PollChoiceAdapter(List<PollChoice> list, Context context,int totalVotes) {
+    public PollChoiceAdapter(List<PollChoice> list, Context context, int totalVotes) {
         this.list = list;
         this.context = context;
         loadingDialog = new LoadingDialog(context);
@@ -53,17 +54,22 @@ public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.Vi
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.voteTitle.setText(list.get(position).value);
         int percentage = calculatePercentage(list.get(position).users.size());
-        holder.progressBar.setProgress(percentage,true);
+        holder.votePercentage.setText(percentage + "%");
+        holder.progressBar.setProgress(percentage, true);
     }
 
 
-    private int calculatePercentage(int votes){
-        return (votes * 100)/ totalVotes ;
+    private int calculatePercentage(int votes) {
+        if (totalVotes != 0)
+            return (votes * 100) / totalVotes;
+        return 0;
     }
+
     @Override
     public int getItemCount() {
         return list.size();
@@ -85,30 +91,29 @@ public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.Vi
             ButterKnife.bind(this, itemView);
             voteButton.setOnClickListener(v -> sendVoteRequest());
         }
-        private void sendVoteRequest(){
+
+        private void sendVoteRequest() {
             loadingDialog.show();
             int pollId = list.get(getAdapterPosition()).poll_id;
             int choiceId = list.get(getAdapterPosition()).id;
-            TripViewModel.getINSTANCE().voteOnPoll(pollId,choiceId);
-            TripViewModel.getINSTANCE().successfulMutableLiveData.observe((MainActivity)context,successfulObserver);
+            TripViewModel.getINSTANCE().voteOnPoll(pollId, choiceId);
+            TripViewModel.getINSTANCE().successfulMutableLiveData.observe((MainActivity) context, successfulObserver);
         }
 
-        private final Observer<Pair<Boolean,String>> successfulObserver = new Observer<Pair<Boolean, String>>() {
+        private final Observer<Pair<Boolean, String>> successfulObserver = new Observer<Pair<Boolean, String>>() {
             @Override
             public void onChanged(Pair<Boolean, String> booleanStringPair) {
                 loadingDialog.dismiss();
 
-                if (booleanStringPair != null){
-                    if (booleanStringPair.first != null && booleanStringPair.first){
-                        NoteMessage.showSnackBar((MainActivity)context,"Thanks for your vote ");
-                        FN.popTopStack((MainActivity)context);
+                if (booleanStringPair != null) {
+                    if (booleanStringPair.first != null && booleanStringPair.first) {
+                        NoteMessage.showSnackBar((MainActivity) context, "Thanks for your vote ");
+                        FN.popTopStack((MainActivity) context);
+                    } else {
+                        new ErrorDialog(context, booleanStringPair.second).show();
                     }
-                    else{
-                        new ErrorDialog(context,booleanStringPair.second).show();
-                    }
-                }
-                else {
-                    new ErrorDialog(context,"Connection Error").show();
+                } else {
+                    new ErrorDialog(context, "Connection Error").show();
 
                 }
             }

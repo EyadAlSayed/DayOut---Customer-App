@@ -137,7 +137,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void showDrawerButton() {
         drawerButton.setVisibility(View.VISIBLE);
+        profileButton.setVisibility(View.VISIBLE);
         drawerButton.animate().setDuration(400).alpha(1);
+        profileButton.animate().setDuration(400).alpha(1);
     }
 
     public void hideDrawerButton() {

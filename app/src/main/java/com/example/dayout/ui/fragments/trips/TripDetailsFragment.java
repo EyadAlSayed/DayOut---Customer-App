@@ -107,10 +107,6 @@ public class TripDetailsFragment extends Fragment {
             bookTripButton.setVisibility(View.VISIBLE);
             bookTripButton.setOnClickListener(onBookClicked);
         }
-        //passenger has booked this trip.
-        if(data.is_in_trip){
-            bookTripButton.setText(R.string.cancel_booking);
-        }
     }
 
     private String getTypes(ArrayList<TripType> types){
@@ -135,6 +131,12 @@ public class TripDetailsFragment extends Fragment {
         tripDetailsPrice.setText(String.valueOf(model.data.price));
         tripsEndBookingDate.setText(model.data.end_booking);
         tripDetailsPassengersCount.setText(String.valueOf(model.data.customer_trips_count));
+
+        //passenger has booked this trip.
+        System.out.println(model.data.is_in_trip);
+        if(model.data.is_in_trip){
+            bookTripButton.setText(R.string.cancel_booking);
+        }
     }
 
     private void getDataFromApi(){

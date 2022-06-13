@@ -263,6 +263,7 @@
                 android:layout_marginStart="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:background="@drawable/rounded_shape"
                 android:backgroundTint="@color/orange_700"
                 android:fontFamily="@font/acme"
