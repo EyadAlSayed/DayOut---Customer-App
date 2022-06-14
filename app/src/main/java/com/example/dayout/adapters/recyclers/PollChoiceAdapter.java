@@ -39,7 +39,7 @@ public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.Vi
         this.list = list;
         this.context = context;
         loadingDialog = new LoadingDialog(context);
-        this.totalVotes = totalVotes;
+        this.totalVotes = totalVotes == 0 ? 1 : totalVotes;
     }
 
     public void refresh(List<PollChoice> list) {
@@ -65,9 +65,7 @@ public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.Vi
 
 
     private int calculatePercentage(int votes) {
-        if (totalVotes != 0)
-            return (votes * 100) / totalVotes;
-        return 0;
+        return (votes * 100) / totalVotes;
     }
 
     @Override
