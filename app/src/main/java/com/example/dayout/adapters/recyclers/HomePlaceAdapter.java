@@ -83,7 +83,8 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_place, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_place, parent, false);
+        view.findViewById(R.id.delete_favorite_btn).setVisibility(View.GONE);
         return new ViewHolder(view);
     }
 

@@ -5,6 +5,7 @@ import com.example.dayout.models.authModels.LoginModel;
 import com.example.dayout.models.notification.NotificationModel;
 import com.example.dayout.models.poll.PollsPaginationData;
 import com.example.dayout.models.poll.PollsPaginationModel;
+import com.example.dayout.models.popualrPlace.PlaceData;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.popualrPlace.PopularPlaceModel;
@@ -73,6 +74,9 @@ public interface API {
 
     @GET("api/polls")
     Call<PollsPaginationModel> getPolls();
+
+    @GET("")
+    Call<PlaceData> getFavoritePlace();
 
 
     /**

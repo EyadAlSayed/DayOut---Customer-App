@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dayout.api.ApiClient;
+import com.example.dayout.models.popualrPlace.PlaceData;
 import com.example.dayout.models.popualrPlace.PopularPlaceModel;
 import com.example.dayout.models.trip.place.PlaceDetailsModel;
 import com.google.gson.JsonObject;
@@ -62,6 +63,30 @@ public class PlaceViewModel extends ViewModel {
             @Override
             public void onFailure(Call<PopularPlaceModel> call, Throwable t) {
                 popularMutableLiveData.setValue(null);
+            }
+        });
+    }
+
+    public void getFavoritePlaces(){
+
+        apiClient.getAPI().getFavoritePlace().enqueue(new Callback<PlaceData>() {
+            @Override
+            public void onResponse(Call<PlaceData> call, Response<PlaceData> response) {
+                if (response.isSuccessful()){
+
+                }
+                else {
+                 /*   try {
+                        popularMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }*/
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PlaceData> call, Throwable t) {
+
             }
         });
     }

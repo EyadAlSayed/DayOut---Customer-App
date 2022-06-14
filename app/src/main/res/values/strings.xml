@@ -106,5 +106,6 @@
     <string name="cancel">Cancel</string>
     <string name="reporting">Reporting</string>
     <string name="purpose_of_reporting">Purpose Of Reporting?</string>
+    <string name="favorite_place">Favorite Place</string>
 
 </resources>
