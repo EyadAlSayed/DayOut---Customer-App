@@ -62,6 +62,12 @@ public class SettingsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        ((MainActivity)requireActivity()).hideBottomBar();
+        super.onStart();
+    }
+
     private void initView() {
         baseUrl.setText(BASE_URL);
         confirmButton.setOnClickListener(onConfirmClicked);

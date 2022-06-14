@@ -86,4 +86,14 @@
     <string name="submit">تثبيت</string>
     <string name="passenger_name">اسم المسافر</string>
     <string name="cancel_booking">إلغاء الحجز</string>
+    <string name="find_organizer">بحث على منظّم</string>
+    <string name="rate">التقييم</string>
+    <string name="rate_">التقييم:</string>
+    <string name="biography">السيرة الذاتية</string>
+    <string name="follow">متابعة</string>
+    <string name="unfollow">إلغاء المتابعة</string>
+    <string name="report">تبليغ</string>
+    <string name="cancel">إلغاء</string>
+    <string name="reporting">إبلاغ عن</string>
+    <string name="purpose_of_reporting">ما هو سبب التبليغ؟</string>
 </resources>
