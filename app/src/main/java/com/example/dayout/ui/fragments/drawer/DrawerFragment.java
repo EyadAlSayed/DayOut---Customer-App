@@ -117,6 +117,7 @@ public class DrawerFragment extends Fragment {
         postTxt.setOnClickListener(onPostClicked);
         logoutTxt.setOnClickListener(onLogOutClicked);
         settingTxt.setOnClickListener(onSettingClicked);
+        orgTxt.setOnClickListener(onOrganizersClicked);
     }
 
     private void getDataFromAPI() {
@@ -201,5 +202,6 @@ public class DrawerFragment extends Fragment {
         logOutDialog.show();
     };
 
+    private final View.OnClickListener onOrganizersClicked = v -> FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new OrganizersListFragment(false));
 
 }
