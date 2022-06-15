@@ -15,10 +15,10 @@ import androidx.fragment.app.Fragment;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
+import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
-import com.example.dayout.models.profile.organizer.OrganizerProfileData;
-import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.dialogs.ReportDialog;
+import com.example.dayout.ui.dialogs.notify.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

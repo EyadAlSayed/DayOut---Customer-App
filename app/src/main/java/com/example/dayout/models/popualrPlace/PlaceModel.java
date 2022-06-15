@@ -15,7 +15,7 @@ import java.util.List;
 import static com.example.dayout.config.AppConstants.POPULAR_PLACE_TABLE;
 
 @Entity(tableName = POPULAR_PLACE_TABLE)
-public class PopularPlaceModel implements Serializable {
+public class PlaceModel implements Serializable {
 
     @Ignore
     public boolean success;

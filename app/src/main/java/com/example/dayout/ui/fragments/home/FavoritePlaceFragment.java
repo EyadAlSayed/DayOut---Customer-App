@@ -1,19 +1,23 @@
 package com.example.dayout.ui.fragments.home;
 
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.FavoritePlaceAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.popualrPlace.PlaceModel;
 import com.example.dayout.ui.activities.MainActivity;
+import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.viewModels.PlaceViewModel;
 
 import butterknife.BindView;
@@ -63,7 +67,25 @@ public class FavoritePlaceFragment extends Fragment {
 
     private void getDataFromApi() {
         PlaceViewModel.getINSTANCE().getFavoritePlaces();
+        PlaceViewModel.getINSTANCE().placeMutableLiveData.observe(requireActivity(),favoritePlaceObserver);
     }
+
+    private final Observer<Pair<PlaceModel,String>> favoritePlaceObserver = new Observer<Pair<PlaceModel, String>>() {
+        @Override
+        public void onChanged(Pair<PlaceModel, String> placeModelStringPair) {
+            if (placeModelStringPair != null){
+                if (placeModelStringPair.first != null){
+                    favoritePlaceAdapter.refresh(placeModelStringPair.first.data);
+                }
+                else {
+                    new ErrorDialog(requireContext(),placeModelStringPair.second).show();
+                }
+            }
+            else {
+                new ErrorDialog(requireContext(),"Connection Error").show();
+            }
+        }
+    };
 
     private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override

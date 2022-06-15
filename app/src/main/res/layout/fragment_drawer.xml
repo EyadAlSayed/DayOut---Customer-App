@@ -73,11 +73,9 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:gravity="start"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/drawer_username"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintTop_toBottomOf="@+id/drawer_username">
 
-                    <TextView
+                <TextView
                     android:id="@+id/my_trip_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -143,6 +141,25 @@
                     android:fontFamily="@font/acme"
                     android:gravity="center"
                     android:text="@string/notifications"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15ssp"
+                    app:layout_constraintEnd_toEndOf="@+id/drawer_userphoto"
+                    app:layout_constraintStart_toStartOf="@+id/drawer_userphoto"
+                    app:layout_constraintTop_toBottomOf="@+id/drawer_userphoto" />
+
+
+                <TextView
+                    android:id="@+id/suggest_place_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:drawableStart="@drawable/ic_suggestion"
+                    android:drawablePadding="@dimen/_15sdp"
+                    android:drawableTint="@color/white"
+                    android:fontFamily="@font/acme"
+                    android:gravity="center"
+                    android:text="@string/suggestion"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15ssp"
                     app:layout_constraintEnd_toEndOf="@+id/drawer_userphoto"

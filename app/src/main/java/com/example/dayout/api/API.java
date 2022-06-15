@@ -3,12 +3,11 @@ package com.example.dayout.api;
 import com.example.dayout.models.authModels.LoginModel;
 
 import com.example.dayout.models.notification.NotificationModel;
-import com.example.dayout.models.poll.PollsPaginationData;
 import com.example.dayout.models.poll.PollsPaginationModel;
 import com.example.dayout.models.popualrPlace.PlaceData;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
-import com.example.dayout.models.popualrPlace.PopularPlaceModel;
+import com.example.dayout.models.popualrPlace.PlaceModel;
 
 import com.example.dayout.models.profile.organizer.OrganizersModel;
 import com.example.dayout.models.trip.BookTripModel;
@@ -17,7 +16,6 @@ import com.example.dayout.models.trip.place.PlaceDetailsModel;
 import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripListModel;
-import com.example.dayout.models.trip.TripPost;
 import com.example.dayout.models.trip.tripType.TripTypeModel;
 import com.google.gson.JsonObject;
 
@@ -38,7 +36,7 @@ public interface API {
      */
 
     @GET("api/place/popular/{id}")
-    Call<PopularPlaceModel> getPopularPlaces(@Path("id") int id);
+    Call<PlaceModel> getPopularPlaces(@Path("id") int id);
 
     @GET("api/user/profile/customer/{id}")
     Call<ProfileModel> getPassengerProfile(@Path("id") int id);
@@ -76,11 +74,14 @@ public interface API {
     @GET("api/polls")
     Call<PollsPaginationModel> getPolls();
 
-    @GET("")
-    Call<PlaceData> getFavoritePlace();
+    @GET("api/favorites/places")
+    Call<PlaceModel> getFavoritePlace();
 
     @GET("api/organizer/index")
     Call<OrganizersModel> getAllOrganizers();
+
+    @GET("api/followers")
+    Call<OrganizersModel> getAllFollowedOrganizers();
 
 
     /**
@@ -105,6 +106,8 @@ public interface API {
 
     @POST("api/bookings/book")
     Call<ResponseBody> bookTrip(@Body BookTripModel model);
+
+
 
 
     /**

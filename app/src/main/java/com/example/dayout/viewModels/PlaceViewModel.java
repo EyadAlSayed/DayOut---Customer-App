@@ -6,8 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dayout.api.ApiClient;
-import com.example.dayout.models.popualrPlace.PlaceData;
-import com.example.dayout.models.popualrPlace.PopularPlaceModel;
+import com.example.dayout.models.popualrPlace.PlaceModel;
 import com.example.dayout.models.trip.place.PlaceDetailsModel;
 import com.google.gson.JsonObject;
 
@@ -37,23 +36,23 @@ public class PlaceViewModel extends ViewModel {
         return instance;
     }
 
-    public static final String  PLACE_PHOTO_URL = BASE_URL + "storage/places/";
+    public static final String PLACE_PHOTO_URL = BASE_URL + "storage/places/";
 
-    public MutableLiveData<Pair<PopularPlaceModel, String>> popularMutableLiveData;
+    public MutableLiveData<Pair<PlaceModel, String>> placeMutableLiveData;
     public MutableLiveData<Pair<PlaceDetailsModel, String>> placeDetailsMutableLiveData;
 
     public MutableLiveData<Pair<Boolean, String>> successfulMutableLiveData;
 
     public void getPopularPlaces() {
-        popularMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getPopularPlaces(GET_USER_ID()).enqueue(new Callback<PopularPlaceModel>() {
+        placeMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().getPopularPlaces(GET_USER_ID()).enqueue(new Callback<PlaceModel>() {
             @Override
-            public void onResponse(Call<PopularPlaceModel> call, Response<PopularPlaceModel> response) {
+            public void onResponse(Call<PlaceModel> call, Response<PlaceModel> response) {
                 if (response.isSuccessful()) {
-                    popularMutableLiveData.setValue(new Pair<>(response.body(), null));
+                    placeMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
                     try {
-                        popularMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                        placeMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -61,32 +60,54 @@ public class PlaceViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<PopularPlaceModel> call, Throwable t) {
-                popularMutableLiveData.setValue(null);
+            public void onFailure(Call<PlaceModel> call, Throwable t) {
+                placeMutableLiveData.setValue(null);
             }
         });
     }
 
-    public void getFavoritePlaces(){
+    public void getFavoritePlaces() {
 
-        apiClient.getAPI().getFavoritePlace().enqueue(new Callback<PlaceData>() {
+        apiClient.getAPI().getFavoritePlace().enqueue(new Callback<PlaceModel>() {
             @Override
-            public void onResponse(Call<PlaceData> call, Response<PlaceData> response) {
-                if (response.isSuccessful()){
-
-                }
-                else {
-                 /*   try {
-                        popularMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+            public void onResponse(Call<PlaceModel> call, Response<PlaceModel> response) {
+                if (response.isSuccessful()) {
+                    placeMutableLiveData.setValue(new Pair<>(response.body(), null));
+                } else {
+                    try {
+                        placeMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }*/
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<PlaceData> call, Throwable t) {
+            public void onFailure(Call<PlaceModel> call, Throwable t) {
+                placeMutableLiveData.setValue(null);
+            }
+        });
+    }
 
+    public void getPlaceDetails(int placeId) {
+        placeDetailsMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().getPlaceDetails(placeId).enqueue(new Callback<PlaceDetailsModel>() {
+            @Override
+            public void onResponse(Call<PlaceDetailsModel> call, Response<PlaceDetailsModel> response) {
+                if (response.isSuccessful()) {
+                    placeDetailsMutableLiveData.setValue(new Pair<>(response.body(), null));
+                } else {
+                    try {
+                        placeDetailsMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PlaceDetailsModel> call, Throwable t) {
+                placeDetailsMutableLiveData.setValue(null);
             }
         });
     }
@@ -114,27 +135,5 @@ public class PlaceViewModel extends ViewModel {
         });
     }
 
-    public void getPlaceDetails(int placeId){
-        placeDetailsMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getPlaceDetails(placeId).enqueue(new Callback<PlaceDetailsModel>() {
-            @Override
-            public void onResponse(Call<PlaceDetailsModel> call, Response<PlaceDetailsModel> response) {
-                if (response.isSuccessful()){
-                    placeDetailsMutableLiveData.setValue(new Pair<>(response.body(),null));
-                }
-                else {
-                    try {
-                        placeDetailsMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<PlaceDetailsModel> call, Throwable t) {
-                placeDetailsMutableLiveData.setValue(null);
-            }
-        });
-    }
 }
