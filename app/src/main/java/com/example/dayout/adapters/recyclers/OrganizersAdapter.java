@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.ImageViewer;
-import com.example.dayout.models.profile.organizer.OrganizerProfileData;
+import com.example.dayout.models.profile.ProfileData;
 
 import java.util.List;
 
@@ -25,15 +25,15 @@ import static com.example.dayout.api.ApiClient.BASE_URL;
 
 public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.ViewHolder> {
 
-    List<OrganizerProfileData> organizers;
+    List<ProfileData> organizers;
     Context context;
 
-    public OrganizersAdapter(List<OrganizerProfileData> organizers, Context context){
+    public OrganizersAdapter(List<ProfileData> organizers, Context context){
         this.organizers = organizers;
         this.context = context;
     }
 
-    public void refreshList(List<OrganizerProfileData> organizers){
+    public void refreshList(List<ProfileData> organizers){
         this.organizers = organizers;
         notifyDataSetChanged();
     }
@@ -51,7 +51,7 @@ public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.Vi
 
         downloadUserImage(organizers.get(position).photo, holder.photo);
         holder.name.setText(name);
-        holder.rate.setText(String.valueOf(organizers.get(position).rate));
+        //holder.rate.setText(String.valueOf(organizers.get(position).rate));
     }
 
     @Override

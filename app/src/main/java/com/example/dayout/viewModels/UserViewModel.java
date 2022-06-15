@@ -9,6 +9,7 @@ import com.example.dayout.api.ApiClient;
 import com.example.dayout.models.notification.NotificationModel;
 
 import com.example.dayout.models.profile.ProfileModel;
+import com.example.dayout.models.profile.organizer.OrganizersModel;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -34,7 +35,9 @@ public class UserViewModel {
     public MutableLiveData<Pair<ProfileModel, String>> profileMutableLiveData;
     public MutableLiveData<Pair<ProfileModel, String>> editProfileMutableLiveData;
     public MutableLiveData<Pair<NotificationModel, String>> notificationMutableLiveData;
+    public MutableLiveData<Pair<OrganizersModel, String>> organizersMutableLiveData;
     public MutableLiveData<Pair<Boolean,String>> successfulMutableLiveData;
+
     public static UserViewModel getINSTANCE(){
         if(instance == null){
             instance = new UserViewModel();
@@ -162,6 +165,29 @@ public class UserViewModel {
             @Override
             public void onFailure(Call<ProfileModel> call, Throwable t) {
                 editProfileMutableLiveData.setValue(null);
+            }
+        });
+    }
+
+    public void getAllOrganizers(){
+        organizersMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().getAllOrganizers().enqueue(new Callback<OrganizersModel>() {
+            @Override
+            public void onResponse(Call<OrganizersModel> call, Response<OrganizersModel> response) {
+                if(response.isSuccessful()){
+                    organizersMutableLiveData.setValue(new Pair<>(response.body(), null));
+                } else {
+                    try {
+                        organizersMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrganizersModel> call, Throwable t) {
+                organizersMutableLiveData.setValue(null);
             }
         });
     }
