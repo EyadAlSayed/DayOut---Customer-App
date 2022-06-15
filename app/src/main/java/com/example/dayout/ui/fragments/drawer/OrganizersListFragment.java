@@ -22,8 +22,8 @@ import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.organizer.OrganizersModel;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.dialogs.ErrorDialog;
-import com.example.dayout.ui.dialogs.LoadingDialog;
+import com.example.dayout.ui.dialogs.notify.ErrorDialog;
+import com.example.dayout.ui.dialogs.notify.LoadingDialog;
 import com.example.dayout.viewModels.UserViewModel;
 
 import java.util.ArrayList;

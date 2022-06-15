@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clickable="false"
     android:focusable="false"
-    tools:context=".ui.fragments.drawer.Posts.TripPostFragment">
+    tools:context=".ui.fragments.drawer.Posts.tab.TripPostFragment">
 
 
     <ImageButton

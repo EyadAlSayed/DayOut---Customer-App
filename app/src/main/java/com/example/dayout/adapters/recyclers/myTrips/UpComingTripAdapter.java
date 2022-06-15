@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,9 +18,8 @@ import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripPhotoData;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.dialogs.WarningDialog;
-import com.example.dayout.ui.fragments.trips.FilterFragment;
-import com.example.dayout.ui.fragments.trips.TripDetailsFragment;
+import com.example.dayout.ui.fragments.trips.myTrip.FilterFragment;
+import com.example.dayout.ui.fragments.trips.details.TripDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -22,7 +22,7 @@ import com.example.dayout.helpers.view.NoteMessage;
 import com.example.dayout.models.popualrPlace.PlaceData;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.fragments.home.PlaceInfoFragment;
 import com.example.dayout.viewModels.PlaceViewModel;
 import com.google.gson.JsonObject;

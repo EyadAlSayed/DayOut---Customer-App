@@ -22,7 +22,7 @@ import com.example.dayout.helpers.view.ImageViewer;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.dialogs.LogOutDialog;
+import com.example.dayout.ui.dialogs.notify.LogOutDialog;
 import com.example.dayout.ui.fragments.drawer.Posts.PostsFragment;
 import com.example.dayout.ui.fragments.trips.myTrip.MyTripsFragment;
 import com.example.dayout.viewModels.UserViewModel;

@@ -14,7 +14,6 @@ import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.fragments.drawer.SettingsFragment;
 
 import butterknife.BindView;

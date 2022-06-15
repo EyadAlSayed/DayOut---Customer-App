@@ -1,5 +1,6 @@
-package com.example.dayout.ui.fragments.drawer.Posts;
+package com.example.dayout.ui.fragments.drawer.Posts.tab;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +22,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
+@SuppressLint("NonConstantResourceId")
 public class PollsChoicesFragment extends Fragment {
 
 
     View view;
 
     PollsData data;
+
     @BindView(R.id.votes_back_button)
     ImageButton arrowBack;
     @BindView(R.id.poll_title)

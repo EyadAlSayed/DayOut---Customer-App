@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.NoteMessage;
+import com.example.dayout.ui.dialogs.notify.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

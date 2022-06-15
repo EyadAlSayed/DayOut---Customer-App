@@ -19,7 +19,7 @@ import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.room.profileRoom.databases.ProfileDatabase;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.fragments.trips.myTrip.MyTripsFragment;
 import com.example.dayout.viewModels.UserViewModel;
 import com.example.dayout.ui.fragments.drawer.*;
