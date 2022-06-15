@@ -15,8 +15,8 @@ import androidx.fragment.app.Fragment;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
+import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
-import com.example.dayout.models.profile.organizer.OrganizerProfileData;
 import com.example.dayout.ui.dialogs.LoadingDialog;
 import com.example.dayout.ui.dialogs.ReportDialog;
 
@@ -142,7 +142,7 @@ public class OrganizerProfileFragment extends Fragment {
 //        }
 //    };
 
-    private void setData(OrganizerProfileData data) {
+    private void setData(ProfileData data) {
 //        setName(data.user.first_name, data.user.last_name);
 //        if (data.bio != null)
 //            setBio(data.bio);

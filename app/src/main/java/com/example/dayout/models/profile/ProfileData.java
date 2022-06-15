@@ -24,4 +24,11 @@ public class ProfileData implements Serializable {
     public String password;
     public int customer_trip_count;
     public int organizer_follow_count;
+
+    //organizer profile
+    public int user_id;
+    public String bio;
+    public float rating;
+    public int followers_count;
+    public int trips_count;
 }
