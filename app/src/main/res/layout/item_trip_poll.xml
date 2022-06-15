@@ -43,7 +43,7 @@
                 android:id="@+id/textView37"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:fontFamily="@font/acme"
                 android:text="description"
                 android:textColor="@color/off_white"
