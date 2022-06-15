@@ -20,8 +20,8 @@ import com.example.dayout.models.popualrPlace.PopularPlaceModel;
 
 import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.dialogs.ErrorDialog;
-import com.example.dayout.ui.dialogs.LoadingDialog;
+import com.example.dayout.ui.dialogs.notify.ErrorDialog;
+import com.example.dayout.ui.dialogs.notify.LoadingDialog;
 import com.example.dayout.viewModels.PlaceViewModel;
 
 import java.util.ArrayList;

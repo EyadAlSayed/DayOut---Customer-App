@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.pager.PostPagerAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.ui.fragments.drawer.Posts.tab.PollsFragment;
+import com.example.dayout.ui.fragments.drawer.Posts.tab.TripPostFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

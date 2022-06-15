@@ -1,4 +1,4 @@
-package com.example.dayout.ui.dialogs;
+package com.example.dayout.ui.dialogs.notify;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;

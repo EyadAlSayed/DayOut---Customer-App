@@ -2,7 +2,6 @@ package com.example.dayout.ui.fragments.trips.myTrip;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.example.dayout.adapters.recyclers.myTrips.OldTripAdapter;
 import com.example.dayout.adapters.recyclers.myTrips.UpComingTripAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.fragments.trips.FilterFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;

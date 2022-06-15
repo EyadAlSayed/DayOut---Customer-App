@@ -1,4 +1,4 @@
-package com.example.dayout.ui.dialogs;
+package com.example.dayout.ui.dialogs.notify;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -19,35 +19,37 @@ import com.example.dayout.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 @SuppressLint("NonConstantResourceId")
-public class MessageDialog extends Dialog {
+public class ErrorDialog extends Dialog {
 
-    Context context;
 
-    @BindView(R.id.message_dialog_message)
-    TextView messageDialogMessage;
+    String errorMessage;
+    @BindView(R.id.error_txt)
+    TextView errorTxt;
 
-    @BindView(R.id.message_dialog_ok_button)
-    Button messageDialogOkButton;
+    @BindView(R.id.done_btn)
+    Button doneButton;
 
-    public MessageDialog(@NonNull Context context, String message) {
+    public ErrorDialog(@NonNull Context context, String errorMessage) {
         super(context);
-        this.context = context;
-        setContentView(R.layout.message_dialog);
+        setContentView(R.layout.error_dialog);
+        ButterKnife.bind(this);
         setCancelable(false);
         ButterKnife.bind(this);
-        initViews(message);
+        initView(errorMessage);
     }
 
-    private void initViews(String message) {
-        messageDialogMessage.setText(message);
-        messageDialogOkButton.setOnClickListener(onOkButtonClicked);
+    private void initView(String errorMessage){
+        this.errorMessage = errorMessage;
+        doneButton.setOnClickListener(v -> cancel());
     }
-
-    private final View.OnClickListener onOkButtonClicked = view -> dismiss();
 
     @Override
     public void show() {
+
+        errorTxt.setText(errorMessage);
+
         WindowManager.LayoutParams wlp = getWindow().getAttributes();
         wlp.gravity = Gravity.CENTER;
         getWindow().setAttributes(wlp);
@@ -57,5 +59,6 @@ public class MessageDialog extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         super.show();
     }
+
 
 }

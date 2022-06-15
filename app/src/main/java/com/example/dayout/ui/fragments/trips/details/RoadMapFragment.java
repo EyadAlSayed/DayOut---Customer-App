@@ -1,4 +1,4 @@
-package com.example.dayout.ui.fragments.trips;
+package com.example.dayout.ui.fragments.trips.details;
 
 import android.os.Bundle;
 import android.util.Pair;
@@ -18,7 +18,7 @@ import com.example.dayout.adapters.recyclers.RoadMapAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.viewModels.TripViewModel;
 
 import java.util.ArrayList;
