@@ -14,7 +14,7 @@ import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.poll.PollsData;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.fragments.drawer.Posts.PollsChoicesFragment;
+import com.example.dayout.ui.fragments.drawer.Posts.tab.PollsChoicesFragment;
 
 import java.util.List;
 

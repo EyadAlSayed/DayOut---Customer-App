@@ -1,4 +1,4 @@
-package com.example.dayout.ui.fragments.drawer.Posts;
+package com.example.dayout.ui.fragments.drawer.Posts.tab;
 
 import android.os.Bundle;
 import android.util.Pair;
@@ -16,9 +16,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPollAdapter;
 import com.example.dayout.models.poll.PollsPaginationModel;
-import com.example.dayout.models.poll.PollsPaginationModel;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.dialogs.ErrorDialog;
+import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.viewModels.TripViewModel;
 
 import java.util.ArrayList;

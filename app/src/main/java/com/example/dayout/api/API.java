@@ -10,6 +10,7 @@ import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.popualrPlace.PopularPlaceModel;
 
+import com.example.dayout.models.profile.organizer.OrganizersModel;
 import com.example.dayout.models.trip.BookTripModel;
 import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.models.trip.place.PlaceDetailsModel;
@@ -77,6 +78,9 @@ public interface API {
 
     @GET("")
     Call<PlaceData> getFavoritePlace();
+
+    @GET("api/organizer/index")
+    Call<OrganizersModel> getAllOrganizers();
 
 
     /**

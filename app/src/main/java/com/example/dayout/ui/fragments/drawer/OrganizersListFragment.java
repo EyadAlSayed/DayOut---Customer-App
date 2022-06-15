@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,19 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.OrganizersAdapter;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.profile.organizer.OrganizerProfileData;
+import com.example.dayout.models.profile.ProfileData;
+import com.example.dayout.models.profile.organizer.OrganizersModel;
 import com.example.dayout.ui.activities.MainActivity;
+import com.example.dayout.ui.dialogs.notify.ErrorDialog;
+import com.example.dayout.ui.dialogs.notify.LoadingDialog;
+import com.example.dayout.viewModels.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +46,12 @@ public class OrganizersListFragment extends Fragment {
     @BindView(R.id.organizers_recycler)
     RecyclerView organizersRecycler;
 
+    LoadingDialog loadingDialog;
+
     OrganizersAdapter adapter;
 
-    List<OrganizerProfileData> mainList;
-    List<OrganizerProfileData> filteredList;
+    List<ProfileData> mainList;
+    List<ProfileData> filteredList;
 
     boolean followingOnly;
 
@@ -68,6 +76,7 @@ public class OrganizersListFragment extends Fragment {
     }
 
     private void initView() {
+        loadingDialog = new LoadingDialog(requireContext());
         mainList = new ArrayList<>();
         filteredList = new ArrayList<>();
         initRecycler();
@@ -83,22 +92,28 @@ public class OrganizersListFragment extends Fragment {
     }
 
     private void getDataFromAPI(){
-        List<OrganizerProfileData> organizers = new ArrayList<>();
-        OrganizerProfileData o1 = new OrganizerProfileData(3.2f, "Salem", "Al Ashour");
-        OrganizerProfileData o2 = new OrganizerProfileData(4.1f, "Eyad", "Al Sayed");
-        OrganizerProfileData o3 = new OrganizerProfileData(5.0f, "Abd Al Rahim", "Khoulani");
-        OrganizerProfileData o4 = new OrganizerProfileData(0.1f, "Caesar", "Farah");
-        organizers.add(o1);
-        organizers.add(o2);
-        organizers.add(o3);
-        organizers.add(o4);
-        mainList = organizers;
-        adapter.refreshList(mainList);
-
+        loadingDialog.show();
         //if following only:
 
         //if all organizers:
+        UserViewModel.getINSTANCE().getAllOrganizers();
+        UserViewModel.getINSTANCE().organizersMutableLiveData.observe(requireActivity(), organizersObserver);
     }
+
+    private final Observer<Pair<OrganizersModel, String>> organizersObserver = new Observer<Pair<OrganizersModel, String>>() {
+        @Override
+        public void onChanged(Pair<OrganizersModel, String> organizersModelStringPair) {
+            loadingDialog.dismiss();
+            if(organizersModelStringPair != null){
+                if(organizersModelStringPair.first != null){
+                    mainList = organizersModelStringPair.first.data;
+                    adapter.refreshList(organizersModelStringPair.first.data);
+                } else
+                    new ErrorDialog(requireContext(), organizersModelStringPair.second).show();
+            } else
+                new ErrorDialog(requireContext(), "Error Connection").show();
+        }
+    };
 
     private void filter(String organizerName){
         filteredList.clear();
@@ -108,7 +123,7 @@ public class OrganizersListFragment extends Fragment {
             return;
         }
 
-        for(OrganizerProfileData organizer: mainList){
+        for(ProfileData organizer: mainList){
             String name = organizer.first_name + " " + organizer.last_name;
             if(name.toLowerCase().contains(organizerName)){
                 filteredList.add(organizer);

@@ -17,8 +17,8 @@ import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripPhotoData;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.fragments.trips.FilterFragment;
-import com.example.dayout.ui.fragments.trips.OldTripDetailsFragment;
+import com.example.dayout.ui.fragments.trips.myTrip.FilterFragment;
+import com.example.dayout.ui.fragments.trips.details.OldTripDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,6 @@ import butterknife.ButterKnife;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
-import static com.example.dayout.viewModels.TripViewModel.TRIP_PHOTOS_URL;
 
 public class OldTripAdapter extends RecyclerView.Adapter<OldTripAdapter.ViewHolder> {
 

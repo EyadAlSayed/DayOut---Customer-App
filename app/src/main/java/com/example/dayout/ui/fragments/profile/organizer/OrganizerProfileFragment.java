@@ -142,7 +142,7 @@ public class OrganizerProfileFragment extends Fragment {
 //        }
 //    };
 
-    private void setData(OrganizerProfileData data) {
+    private void setData(ProfileData data) {
 //        setName(data.user.first_name, data.user.last_name);
 //        if (data.bio != null)
 //            setBio(data.bio);

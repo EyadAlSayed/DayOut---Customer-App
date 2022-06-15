@@ -17,8 +17,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.myTrips.OldTripAdapter;
 import com.example.dayout.models.trip.TripListModel;
-import com.example.dayout.ui.dialogs.ErrorDialog;
-import com.example.dayout.ui.dialogs.LoadingDialog;
+import com.example.dayout.ui.dialogs.notify.ErrorDialog;
+import com.example.dayout.ui.dialogs.notify.LoadingDialog;
 import com.example.dayout.viewModels.TripViewModel;
 
 import butterknife.BindView;

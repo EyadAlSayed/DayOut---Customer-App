@@ -1,4 +1,4 @@
-package com.example.dayout.ui.dialogs;
+package com.example.dayout.ui.dialogs.notify;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -23,7 +23,6 @@ import com.example.dayout.viewModels.UserViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.http.Path;
 
 public class LogOutDialog extends Dialog {
 

@@ -19,8 +19,8 @@ import com.example.dayout.adapters.recyclers.NotificationsAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.notification.NotificationModel;
 import com.example.dayout.ui.activities.MainActivity;
-import com.example.dayout.ui.dialogs.ErrorDialog;
-import com.example.dayout.ui.dialogs.LoadingDialog;
+import com.example.dayout.ui.dialogs.notify.ErrorDialog;
+import com.example.dayout.ui.dialogs.notify.LoadingDialog;
 import com.example.dayout.viewModels.UserViewModel;
 
 import java.util.ArrayList;
