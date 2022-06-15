@@ -30,6 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 
+import static com.example.dayout.config.AppConstants.MAIN_FRC;
+
 @SuppressLint("NonConstantResourceId")
 public class OldTripDetailsFragment extends Fragment {
 
@@ -183,7 +185,7 @@ public class OldTripDetailsFragment extends Fragment {
     private final View.OnClickListener onRoadMapClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            FN.addFixedNameFadeFragment(MAIN_FRC,requireActivity(),new RoadMapFragment(data.id));
         }
     };
 

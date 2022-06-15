@@ -66,22 +66,42 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/add_favorite_btn"
+                app:layout_constraintEnd_toStartOf="@+id/linear_layout"
                 app:layout_constraintStart_toStartOf="@+id/place_name"
                 app:layout_constraintTop_toBottomOf="@+id/place_name" />
 
-            <ImageButton
-                android:id="@+id/add_favorite_btn"
+            <LinearLayout
+                android:id="@+id/linear_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:background="@drawable/ic_add_favorite"
-                android:backgroundTint="@color/white"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_slider"
-                app:layout_constraintVertical_bias="0.89" />
+                app:layout_constraintVertical_bias="0.89">
+
+                <ImageButton
+                    android:id="@+id/add_favorite_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/ic_add_favorite"
+                    android:backgroundTint="@color/white"
+                    />
+
+                <ImageButton
+                    android:id="@+id/delete_favorite_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/delete_icon"
+                    android:backgroundTint="@color/white"
+                    />
+            </LinearLayout>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
