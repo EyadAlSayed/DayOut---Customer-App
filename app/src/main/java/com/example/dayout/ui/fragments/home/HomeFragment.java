@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.HomePlaceAdapter;
 import com.example.dayout.models.popualrPlace.PlaceData;
-import com.example.dayout.models.popualrPlace.PopularPlaceModel;
+import com.example.dayout.models.popualrPlace.PlaceModel;
 
 
 import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
     private void getDataFromApi() {
         loadingDialog.show();
         PlaceViewModel.getINSTANCE().getPopularPlaces();
-        PlaceViewModel.getINSTANCE().popularMutableLiveData.observe(requireActivity(), popularPlaceObserver);
+        PlaceViewModel.getINSTANCE().placeMutableLiveData.observe(requireActivity(), popularPlaceObserver);
     }
 
     private void getDataFromRoom() {
@@ -105,9 +105,9 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-    private final Observer<Pair<PopularPlaceModel, String>> popularPlaceObserver = new Observer<Pair<PopularPlaceModel, String>>() {
+    private final Observer<Pair<PlaceModel, String>> popularPlaceObserver = new Observer<Pair<PlaceModel, String>>() {
         @Override
-        public void onChanged(Pair<PopularPlaceModel, String> popularPlaceStringPair) {
+        public void onChanged(Pair<PlaceModel, String> popularPlaceStringPair) {
             loadingDialog.dismiss();
             if (popularPlaceStringPair != null) {
                 if (popularPlaceStringPair.first != null) {

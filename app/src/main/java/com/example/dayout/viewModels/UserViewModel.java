@@ -71,8 +71,6 @@ public class UserViewModel {
             }
         });
     }
-
-
     public void getNotifications(){
         notificationMutableLiveData = new MutableLiveData<>();
         apiClient.getAPI().getNotifications().enqueue(new Callback<NotificationModel>() {
@@ -95,8 +93,51 @@ public class UserViewModel {
             }
         });
     }
+    public void getAllOrganizers(){
+        organizersMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().getAllOrganizers().enqueue(new Callback<OrganizersModel>() {
+            @Override
+            public void onResponse(Call<OrganizersModel> call, Response<OrganizersModel> response) {
+                if(response.isSuccessful()){
+                    organizersMutableLiveData.setValue(new Pair<>(response.body(), null));
+                } else {
+                    try {
+                        organizersMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<OrganizersModel> call, Throwable t) {
+                organizersMutableLiveData.setValue(null);
+            }
+        });
+    }
+    public void  getAllFollowedOrganizers(){
+        organizersMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().getAllFollowedOrganizers().enqueue(new Callback<OrganizersModel>() {
+            @Override
+            public void onResponse(Call<OrganizersModel> call, Response<OrganizersModel> response) {
+                if (response.isSuccessful()){
+                    organizersMutableLiveData.setValue(new Pair<>(response.body(),null));
+                }
+                else {
+                    try {
+                        organizersMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<OrganizersModel> call, Throwable t) {
+                organizersMutableLiveData.setValue(null);
+            }
+        });
+    }
     public void logOut( ){
         successfulMutableLiveData = new MutableLiveData<>();
         apiClient.getAPI().logOut().enqueue(new Callback<ResponseBody>() {
@@ -169,27 +210,6 @@ public class UserViewModel {
         });
     }
 
-    public void getAllOrganizers(){
-        organizersMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getAllOrganizers().enqueue(new Callback<OrganizersModel>() {
-            @Override
-            public void onResponse(Call<OrganizersModel> call, Response<OrganizersModel> response) {
-                if(response.isSuccessful()){
-                    organizersMutableLiveData.setValue(new Pair<>(response.body(), null));
-                } else {
-                    try {
-                        organizersMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<OrganizersModel> call, Throwable t) {
-                organizersMutableLiveData.setValue(null);
-            }
-        });
-    }
 
 }

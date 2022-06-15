@@ -57,6 +57,8 @@ public class DrawerFragment extends Fragment {
     @BindView(R.id.notification_txt)
     TextView notificationTxt;
 
+
+
     @BindView(R.id.connect_us_txt)
     TextView connectUsTxt;
 
@@ -118,6 +120,7 @@ public class DrawerFragment extends Fragment {
         logoutTxt.setOnClickListener(onLogOutClicked);
         settingTxt.setOnClickListener(onSettingClicked);
         orgTxt.setOnClickListener(onOrganizersClicked);
+
     }
 
     private void getDataFromAPI() {
@@ -201,6 +204,8 @@ public class DrawerFragment extends Fragment {
     private final View.OnClickListener onLogOutClicked = v -> {
         logOutDialog.show();
     };
+
+
 
     private final View.OnClickListener onOrganizersClicked = v -> FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new OrganizersListFragment(false));
 

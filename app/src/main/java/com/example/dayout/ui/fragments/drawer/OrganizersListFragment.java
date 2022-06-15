@@ -55,7 +55,7 @@ public class OrganizersListFragment extends Fragment {
 
     boolean followingOnly;
 
-    public OrganizersListFragment(boolean followingOnly){
+    public OrganizersListFragment(boolean followingOnly) {
         this.followingOnly = followingOnly;
     }
 
@@ -84,19 +84,20 @@ public class OrganizersListFragment extends Fragment {
         searchField.addTextChangedListener(textWatcher);
     }
 
-    private void initRecycler(){
+    private void initRecycler() {
         organizersRecycler.setHasFixedSize(true);
         organizersRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new OrganizersAdapter(new ArrayList<>(), requireContext());
         organizersRecycler.setAdapter(adapter);
     }
 
-    private void getDataFromAPI(){
+    private void getDataFromAPI() {
         loadingDialog.show();
-        //if following only:
-
-        //if all organizers:
-        UserViewModel.getINSTANCE().getAllOrganizers();
+        if (followingOnly) {
+            UserViewModel.getINSTANCE().getAllFollowedOrganizers();
+        } else {
+            UserViewModel.getINSTANCE().getAllOrganizers();
+        }
         UserViewModel.getINSTANCE().organizersMutableLiveData.observe(requireActivity(), organizersObserver);
     }
 
@@ -104,8 +105,8 @@ public class OrganizersListFragment extends Fragment {
         @Override
         public void onChanged(Pair<OrganizersModel, String> organizersModelStringPair) {
             loadingDialog.dismiss();
-            if(organizersModelStringPair != null){
-                if(organizersModelStringPair.first != null){
+            if (organizersModelStringPair != null) {
+                if (organizersModelStringPair.first != null) {
                     mainList = organizersModelStringPair.first.data;
                     adapter.refreshList(organizersModelStringPair.first.data);
                 } else
@@ -115,17 +116,17 @@ public class OrganizersListFragment extends Fragment {
         }
     };
 
-    private void filter(String organizerName){
+    private void filter(String organizerName) {
         filteredList.clear();
 
-        if(organizerName.isEmpty()){
+        if (organizerName.isEmpty()) {
             adapter.refreshList(mainList);
             return;
         }
 
-        for(ProfileData organizer: mainList){
+        for (ProfileData organizer : mainList) {
             String name = organizer.first_name + " " + organizer.last_name;
-            if(name.toLowerCase().contains(organizerName)){
+            if (name.toLowerCase().contains(organizerName)) {
                 filteredList.add(organizer);
             }
         }
