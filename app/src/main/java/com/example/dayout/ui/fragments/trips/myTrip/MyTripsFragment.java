@@ -36,9 +36,6 @@ public class MyTripsFragment extends Fragment {
     @BindView(R.id.my_trips_tab_layout)
     TabLayout myTripsTabLayout;
 
-    @BindView(R.id.my_trips_action_button)
-    FloatingActionButton myTripsActionButton;
-
     @BindView(R.id.my_trips_back_arrow)
     ImageButton myTripsBackArrow;
 
@@ -72,8 +69,6 @@ public class MyTripsFragment extends Fragment {
 
 
     private void initTabLayout() {
-
-       // myTripsTabLayout.setOnTabSelectedListener(onTabSelectedListener);
 
         ArrayList<Fragment> list = new ArrayList<>();
         list.add(new ActiveTripFragment(activeTripAdapter));
@@ -109,7 +104,6 @@ public class MyTripsFragment extends Fragment {
         initAdapter();
         initTabLayout();
 
-        myTripsActionButton.setOnClickListener(onCreateTripClicked);
         myTripsBackArrow.setOnClickListener(onBackClicked);
         myTripsFilter.setOnClickListener(onFilterClicked);
     }
@@ -120,13 +114,6 @@ public class MyTripsFragment extends Fragment {
         upComingTripAdapter = new UpComingTripAdapter(new ArrayList<>(),requireContext());
     }
 
-
-    private final View.OnClickListener onCreateTripClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
 
     private final View.OnClickListener onBackClicked = new View.OnClickListener() {
         @Override
@@ -152,22 +139,4 @@ public class MyTripsFragment extends Fragment {
         }
     };
 
-    private final TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
-        @Override
-        public void onTabSelected(TabLayout.Tab tab) {
-            if (tab.getPosition() == 0) type = 3;
-            else if (tab.getPosition() == 1) type = 2;
-            else if (tab.getPosition() == 2) type = 1;
-        }
-
-        @Override
-        public void onTabUnselected(TabLayout.Tab tab) {
-
-        }
-
-        @Override
-        public void onTabReselected(TabLayout.Tab tab) {
-
-        }
-    };
 }

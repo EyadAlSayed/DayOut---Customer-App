@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/rose_200"
     android:clickable="true"
-    android:focusable="true"
-    android:background="@color/rose_200">
+    android:focusable="true">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -57,7 +57,13 @@
         android:layout_marginEnd="@dimen/_20sdp"
         android:background="@drawable/rounded_shape"
         android:elevation="@dimen/_5sdp"
-        app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar"
+        app:tabIndicatorAnimationMode="elastic"
+        app:tabIndicatorColor="@color/orange_500"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/orange_500"
+        app:tabTextAppearance="@style/tab_text"
+        app:tabTextColor="@color/black" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/post_view_pager"

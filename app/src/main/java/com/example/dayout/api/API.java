@@ -54,7 +54,7 @@ public interface API {
     Call<TripTypeModel> getTripType();
 
     @GET("api/trip")
-    Call<TripPaginationModel> getTripPost();
+    Call<TripPaginationModel> getTripPost(@Query("page") int page);
 
     @GET("api/trip/{id}/details")
     Call<TripDetailsModel> getTripDetails(@Path("id") int id);

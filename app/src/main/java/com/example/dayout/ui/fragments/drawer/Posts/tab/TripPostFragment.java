@@ -1,12 +1,19 @@
 package com.example.dayout.ui.fragments.drawer.Posts.tab;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,7 +36,7 @@ import butterknife.ButterKnife;
 
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
-
+@SuppressLint("NonConstantResourceId")
 public class TripPostFragment extends Fragment {
 
 
@@ -41,8 +48,13 @@ public class TripPostFragment extends Fragment {
     RecyclerView tripPostRc;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.page_loading_pbar)
+    ProgressBar pageLoadingBar;
 
     TripPostAdapter tripPostAdapter;
+
+    int pageIndex;
+    boolean canPaginate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,44 +70,46 @@ public class TripPostFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        ((MainActivity)requireActivity()).hideBottomBar();
+        ((MainActivity) requireActivity()).hideBottomBar();
     }
 
-    private void initView(){
+    private void initView() {
+        pageIndex = 1;
         filterBtn.setOnClickListener(onFilterClicked);
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         initRc();
     }
 
-    private void getDataFromApi(){
-        TripViewModel.getINSTANCE().getTripPost();
-        TripViewModel.getINSTANCE().tripPostMutableLiveData.observe(requireActivity(),tripPostObserver);
+    private void getDataFromApi() {
+        TripViewModel.getINSTANCE().getTripPost(pageIndex);
+        TripViewModel.getINSTANCE().tripPostMutableLiveData.observe(requireActivity(), tripPostObserver);
     }
 
-    private final Observer<Pair<TripPaginationModel,String>> tripPostObserver  = new Observer<Pair<TripPaginationModel, String>>() {
+    private final Observer<Pair<TripPaginationModel, String>> tripPostObserver = new Observer<Pair<TripPaginationModel, String>>() {
         @Override
         public void onChanged(Pair<TripPaginationModel, String> tripPostStringPair) {
-            if (tripPostStringPair != null){
-                if (tripPostStringPair.first != null){
+            if (tripPostStringPair != null) {
+                if (tripPostStringPair.first != null) {
                     tripPostAdapter.refresh(tripPostStringPair.first.data.data);
+                    canPaginate = (tripPostStringPair.first.data.next_page_url != null);
+                } else {
+                    new ErrorDialog(requireContext(), tripPostStringPair.second).show();
                 }
-                else {
-                    new ErrorDialog(requireContext(),tripPostStringPair.second).show();
-                }
-            }
-            else {
-                new ErrorDialog(requireContext(),"Connection Error").show();
+            } else {
+                new ErrorDialog(requireContext(), "Connection Error").show();
             }
 
+            hideLoadingBar();
             swipeRefreshLayout.setRefreshing(false);
-            swipeRefreshLayout.setEnabled(true);
+           swipeRefreshLayout.setEnabled(true);
         }
     };
 
-    private void initRc(){
+    private void initRc() {
         tripPostRc.setHasFixedSize(true);
+        tripPostRc.addOnScrollListener(onRcScrolled);
         tripPostRc.setLayoutManager(new LinearLayoutManager(requireContext()));
-        tripPostAdapter = new TripPostAdapter(new ArrayList<>(),requireContext());
+        tripPostAdapter = new TripPostAdapter(new ArrayList<>(), requireContext());
         tripPostRc.setAdapter(tripPostAdapter);
     }
 
@@ -106,11 +120,51 @@ public class TripPostFragment extends Fragment {
         }
     };
 
-    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener =new SwipeRefreshLayout.OnRefreshListener() {
+    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
+            pageIndex = 1;
             swipeRefreshLayout.setEnabled(false);
             getDataFromApi();
         }
     };
+
+
+    // pagination method
+
+    private void  hideLoadingBar(){
+        if (pageLoadingBar.getVisibility() == View.GONE) return;
+
+        pageLoadingBar.animate().setDuration(400).alpha(0) ;
+        new Handler(Looper.getMainLooper()).postDelayed(() -> pageLoadingBar.setVisibility(View.GONE),450);
+    }
+    private void showLoadingBar(){
+        if (pageLoadingBar.getVisibility() == View.VISIBLE) return;
+
+        pageLoadingBar.setAlpha(1);
+        pageLoadingBar.setVisibility(View.VISIBLE);
+    }
+
+
+    private final RecyclerView.OnScrollListener onRcScrolled = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            if (newState == 1 && canPaginate){    // is scrolling
+                pageIndex++;
+                showLoadingBar();
+                getDataFromApi();
+                canPaginate = false;
+            }
+
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+
+            super.onScrolled(recyclerView, dx, dy);
+        }
+    };
+
+
 }

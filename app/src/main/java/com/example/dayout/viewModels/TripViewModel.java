@@ -121,9 +121,9 @@ public class TripViewModel {
         });
     }
 
-    public void getTripPost() {
+    public void getTripPost(int page) {
         tripPostMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getTripPost().enqueue(new Callback<TripPaginationModel>() {
+        apiClient.getAPI().getTripPost(page).enqueue(new Callback<TripPaginationModel>() {
             @Override
             public void onResponse(Call<TripPaginationModel> call, Response<TripPaginationModel> response) {
                 if (response.isSuccessful()) {
