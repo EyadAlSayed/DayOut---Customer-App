@@ -1,5 +1,6 @@
 package com.example.dayout.api;
 
+import com.example.dayout.models.SearchPlaceModel;
 import com.example.dayout.models.authModels.LoginModel;
 
 import com.example.dayout.models.notification.NotificationModel;
@@ -109,6 +110,9 @@ public interface API {
 
     @POST("api/user/report")
     Call<ResponseBody> reportUser(@Body JsonObject object);
+
+    @POST("api/search/place")
+    Call<SearchPlaceModel> searchForPlace(@Body JsonObject searchPlaceObj);
 
 
     /**

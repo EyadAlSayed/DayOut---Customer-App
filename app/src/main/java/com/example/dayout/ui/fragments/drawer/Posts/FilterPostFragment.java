@@ -35,6 +35,9 @@ public class FilterPostFragment extends Fragment {
 
     View view;
 
+    @BindView(R.id.filter_place_name)
+    EditText filterPlaceName;
+
     @BindView(R.id.filter_title)
     EditText filterTitle;
 
@@ -128,6 +131,10 @@ public class FilterPostFragment extends Fragment {
 
     private JsonObject getSearchObject() {
         JsonObject jsonObject = new JsonObject();
+
+        if (!filterPlaceName.getText().toString().isEmpty()){
+            jsonObject.addProperty("place", filterPlaceName.getText().toString());
+        }
 
         if (!filterTitle.getText().toString().isEmpty())
             jsonObject.addProperty("title", filterTitle.getText().toString());

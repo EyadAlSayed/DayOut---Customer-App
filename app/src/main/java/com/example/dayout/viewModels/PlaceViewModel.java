@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.dayout.api.ApiClient;
+import com.example.dayout.models.SearchPlaceModel;
 import com.example.dayout.models.popualrPlace.PlaceModel;
 import com.example.dayout.models.trip.place.PlaceDetailsModel;
 import com.google.gson.JsonObject;
@@ -40,6 +41,7 @@ public class PlaceViewModel extends ViewModel {
 
     public MutableLiveData<Pair<PlaceModel, String>> placeMutableLiveData;
     public MutableLiveData<Pair<PlaceDetailsModel, String>> placeDetailsMutableLiveData;
+    public MutableLiveData<Pair<SearchPlaceModel, String>> searchPlaceMutableLiveData;
 
     public MutableLiveData<Pair<Boolean, String>> successfulMutableLiveData;
 
@@ -131,6 +133,29 @@ public class PlaceViewModel extends ViewModel {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 successfulMutableLiveData.setValue(null);
+            }
+        });
+    }
+
+    public void searchForPlace(JsonObject searchPlaceObj) {
+        searchPlaceMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().searchForPlace(searchPlaceObj).enqueue(new Callback<SearchPlaceModel>() {
+            @Override
+            public void onResponse(Call<SearchPlaceModel> call, Response<SearchPlaceModel> response) {
+                if (response.isSuccessful()) {
+                    searchPlaceMutableLiveData.setValue(new Pair<>(response.body(), null));
+                } else {
+                    try {
+                        successfulMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchPlaceModel> call, Throwable t) {
+                searchPlaceMutableLiveData.setValue(null);
             }
         });
     }
