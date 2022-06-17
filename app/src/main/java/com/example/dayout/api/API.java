@@ -107,7 +107,8 @@ public interface API {
     @POST("api/bookings/book")
     Call<ResponseBody> bookTrip(@Body BookTripModel model);
 
-
+    @POST("api/user/report")
+    Call<ResponseBody> reportUser(@Body JsonObject object);
 
 
     /**
@@ -125,6 +126,9 @@ public interface API {
 
     @PUT("api/bookings/{trip_id}/user/cancel")
     Call<ResponseBody> cancelBooking(@Path("trip_id") int tripId);
+
+    @PUT("api/followers/follow/{organizer_user_id}")
+    Call<ResponseBody> followOrganizer(@Path("organizer_user_id") int organizerId);
 
 
     /**

@@ -13,8 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
+import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
 import com.example.dayout.models.profile.ProfileData;
+import com.example.dayout.ui.activities.MainActivity;
+import com.example.dayout.ui.fragments.profile.organizer.OrganizerProfileFragment;
 
 import java.util.List;
 
@@ -22,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
+import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
 public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.ViewHolder> {
 
@@ -47,11 +51,11 @@ public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull OrganizersAdapter.ViewHolder holder, int position) {
-        String name = organizers.get(position).first_name + " " + organizers.get(position).last_name;
+        String name = organizers.get(position).user.first_name + " " + organizers.get(position).user.last_name;
 
-        downloadUserImage(organizers.get(position).photo, holder.photo);
+        downloadUserImage(organizers.get(position).user.photo, holder.photo);
         holder.name.setText(name);
-        //holder.rate.setText(String.valueOf(organizers.get(position).rate));
+        holder.rate.setText(String.valueOf(roundRating(organizers.get(position).rating)));
     }
 
     @Override
@@ -62,6 +66,10 @@ public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.Vi
     private void downloadUserImage(String url, ImageView imageView) {
         String baseUrl = BASE_URL.substring(0, BASE_URL.length() - 1);
         ImageViewer.downloadCircleImage(context, imageView, R.drawable.profile_place_holder_orange, baseUrl + url);
+    }
+
+    private float roundRating(float rating){
+        return (float) (Math.round(rating * 10) / 10.0);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -87,7 +95,8 @@ public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.Vi
 
         @Override
         public void onClick(View v) {
-            // todo: go to profile.
+            ProfileData data = organizers.get(getAdapterPosition());
+            FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new OrganizerProfileFragment(data));
         }
     }
 }

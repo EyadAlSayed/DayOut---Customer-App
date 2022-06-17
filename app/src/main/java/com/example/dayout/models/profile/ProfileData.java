@@ -2,7 +2,12 @@ package com.example.dayout.models.profile;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+
+import com.example.dayout.models.profile.organizer.ProfileUser;
+import com.example.dayout.models.room.profileRoom.converter.ProfileDataConverter;
+import com.example.dayout.models.room.profileRoom.converter.ProfileUserConverter;
 
 import java.io.Serializable;
 
@@ -28,7 +33,10 @@ public class ProfileData implements Serializable {
     //organizer profile
     public int user_id;
     public String bio;
-    public float rating;
-    public int followers_count;
     public int trips_count;
+    public int followers_count;
+    public float rating;
+    public boolean iFollowHim;
+    @TypeConverters(ProfileUserConverter.class)
+    public ProfileUser user;
 }

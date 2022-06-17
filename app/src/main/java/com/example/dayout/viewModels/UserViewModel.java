@@ -37,6 +37,8 @@ public class UserViewModel {
     public MutableLiveData<Pair<NotificationModel, String>> notificationMutableLiveData;
     public MutableLiveData<Pair<OrganizersModel, String>> organizersMutableLiveData;
     public MutableLiveData<Pair<Boolean,String>> successfulMutableLiveData;
+    public MutableLiveData<Pair<Boolean, String>> reportMutableLiveData;
+    public MutableLiveData<Pair<Boolean, String>> followMutableLiveData;
 
     public static UserViewModel getINSTANCE(){
         if(instance == null){
@@ -210,6 +212,50 @@ public class UserViewModel {
         });
     }
 
+    public void reportUser(JsonObject object){
+        reportMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().reportUser(object).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    reportMutableLiveData.setValue(new Pair<>(true, null));
+                } else {
+                    try {
+                        reportMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                reportMutableLiveData.setValue(null);
+            }
+        });
+    }
+
+    public void followOrganizer(int organizerId){
+        followMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().followOrganizer(organizerId).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    followMutableLiveData.setValue(new Pair<>(true, null));
+                } else {
+                    try {
+                        followMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                followMutableLiveData.setValue(null);
+            }
+        });
+    }
 
 }
