@@ -2,6 +2,7 @@ package com.example.dayout.ui.fragments.profile.organizer;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
+import com.example.dayout.helpers.view.NoteMessage;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
+import com.example.dayout.models.profile.organizer.OrganizerProfileData;
 import com.example.dayout.ui.dialogs.ReportDialog;
+import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.dialogs.notify.LoadingDialog;
+import com.example.dayout.viewModels.UserViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,9 +78,11 @@ public class OrganizerProfileFragment extends Fragment {
     @BindView(R.id.organizer_profile_report_button)
     Button reportButton;
 
-    LoadingDialog loadingDialog;
+    ProfileData data;
 
-    ProfileModel profileModel;
+    public OrganizerProfileFragment(ProfileData data){
+        this.data = data;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,12 +90,11 @@ public class OrganizerProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_organizer_profile, container, false);
         ButterKnife.bind(this, view);
         initViews();
-        //getDataFromAPI();
+        setData();
         return view;
     }
 
     private void initViews() {
-        loadingDialog = new LoadingDialog(requireContext());
         backArrowButton.setOnClickListener(onBackArrowClicked);
         followButton.setOnClickListener(onFollowClicked);
         reportButton.setOnClickListener(onReportClicked);
@@ -142,17 +149,30 @@ public class OrganizerProfileFragment extends Fragment {
 //        }
 //    };
 
-    private void setData(ProfileData data) {
-//        setName(data.user.first_name, data.user.last_name);
-//        if (data.bio != null)
-//            setBio(data.bio);
-//        profileTripsCount.setText(String.valueOf(data.trips_count));
-//        profileFollowersCount.setText(String.valueOf(data.followers_count));
-//        profileGender.setText(data.user.gender);
-//        profilePhoneNumber.setText(data.user.phone_number);
-//        profileRate.setText(String.valueOf(data.rating));
-//        setEmail(data.user.email);
-//        downloadUserImage(data.user.photo);
+    private void setData() {
+        setName(data.user.first_name, data.user.last_name);
+        if (data.bio != null)
+            setBio(data.bio);
+        profileTripsCount.setText(String.valueOf(data.trips_count));
+        profileFollowersCount.setText(String.valueOf(data.followers_count));
+        profileGender.setText(data.user.gender);
+        profilePhoneNumber.setText(data.user.phone_number);
+        setFollowButtonText();
+        profileRate.setText(String.valueOf(roundRating()));
+        setEmail(data.user.email);
+        downloadUserImage(data.user.photo);
+    }
+
+    private float roundRating(){
+        return (float) (Math.round(data.rating * 10) / 10.0);
+    }
+
+    private void setFollowButtonText(){
+        if(data.iFollowHim){
+            followButton.setText(R.string.unfollow);
+        } else if(!data.iFollowHim){
+            followButton.setText(R.string.follow);
+        }
     }
 
     private void downloadUserImage(String url) {
@@ -182,19 +202,51 @@ public class OrganizerProfileFragment extends Fragment {
         }
     }
 
+    private int increaseFollowers(){
+        int followers = Integer.parseInt(profileFollowersCount.getText().toString());
+        return followers + 1;
+    }
+
+    private int decreaseFollowers(){
+        int followers = Integer.parseInt(profileFollowersCount.getText().toString());
+        return followers - 1;
+    }
+
+    private void followOrganizer(){
+        UserViewModel.getINSTANCE().followOrganizer(data.user.id);
+        UserViewModel.getINSTANCE().followMutableLiveData.observe(requireActivity(), followObserver);
+    }
+
+    private final Observer<Pair<Boolean, String>> followObserver = new Observer<Pair<Boolean, String>>() {
+        @Override
+        public void onChanged(Pair<Boolean, String> booleanStringPair) {
+            if (booleanStringPair != null){
+                if (booleanStringPair.first != null){
+                    if(followButton.getText().toString() == getResources().getString(R.string.follow)){
+                        NoteMessage.message(requireContext(), "Following " + data.user.first_name + " " + data.user.last_name);
+                        profileFollowersCount.setText(String.valueOf(increaseFollowers()));
+                        followButton.setText(R.string.unfollow);
+                    } else if(followButton.getText().toString() == getResources().getString(R.string.unfollow)){
+                        NoteMessage.message(requireContext(), "Unfollowed");
+                        profileFollowersCount.setText(String.valueOf(decreaseFollowers()));
+                        followButton.setText(R.string.follow);
+                    }
+                } else
+                    new ErrorDialog(requireContext(), booleanStringPair.second).show();
+            } else
+                new ErrorDialog(requireContext(), "Error Connection").show();
+        }
+    };
 
     private final View.OnClickListener onBackArrowClicked = view -> FN.popTopStack(requireActivity());
 
-    private final View.OnClickListener onReportClicked = v -> new ReportDialog(requireContext(), profileFullName.getText().toString()).show();
-
-    private final View.OnClickListener onFollowClicked = new View.OnClickListener() {
+    private final View.OnClickListener onReportClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //after following
-            followButton.setText(R.string.unfollow);
-
-            //after unfollowing
-            followButton.setText(R.string.follow);
+            String name = data.user.first_name + " " + data.user.last_name;
+            new ReportDialog(requireContext(), data.user.id, name).show();
         }
     };
+
+    private final View.OnClickListener onFollowClicked = v -> followOrganizer();
 }

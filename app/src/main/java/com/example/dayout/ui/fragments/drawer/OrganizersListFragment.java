@@ -107,8 +107,8 @@ public class OrganizersListFragment extends Fragment {
             loadingDialog.dismiss();
             if (organizersModelStringPair != null) {
                 if (organizersModelStringPair.first != null) {
-                    mainList = organizersModelStringPair.first.data;
-                    adapter.refreshList(organizersModelStringPair.first.data);
+                    mainList = organizersModelStringPair.first.data.data;
+                    adapter.refreshList(organizersModelStringPair.first.data.data);
                 } else
                     new ErrorDialog(requireContext(), organizersModelStringPair.second).show();
             } else
