@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="ltr"
+    android:background="@color/rose_200"
     android:clickable="true"
     android:focusable="true"
-    android:background="@color/rose_200">
+    android:layoutDirection="ltr">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bottom_bar"
@@ -59,6 +59,7 @@
     </androidx.cardview.widget.CardView>
 
 
+
     <ImageButton
         android:id="@+id/drawer_btn"
         android:layout_width="@dimen/_24sdp"
@@ -78,19 +79,18 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_20sdp"
         android:background="@drawable/ic_user_profile"
+        android:clickable="true"
+        android:focusable="true"
         android:layoutDirection="ltr"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:clickable="true"
-        android:focusable="true"/>
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_fr_c"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+
+        tools:layout_editor_absoluteX="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
