@@ -90,7 +90,7 @@ public class TripPostFragment extends Fragment {
         public void onChanged(Pair<TripPaginationModel, String> tripPostStringPair) {
             if (tripPostStringPair != null) {
                 if (tripPostStringPair.first != null) {
-                    tripPostAdapter.refresh(tripPostStringPair.first.data.data);
+                    tripPostAdapter.addAndRefresh(tripPostStringPair.first.data.data);
                     canPaginate = (tripPostStringPair.first.data.next_page_url != null);
                 } else {
                     new ErrorDialog(requireContext(), tripPostStringPair.second).show();

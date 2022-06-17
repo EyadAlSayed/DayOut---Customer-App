@@ -45,6 +45,11 @@ public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    public void  addAndRefresh(List<TripData> list){
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
