@@ -1,12 +1,17 @@
 package com.example.dayout.ui.fragments.drawer.Posts.tab;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +30,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+@SuppressLint("NonConstantResourceId")
 public class PollsFragment extends Fragment {
 
 
@@ -33,12 +38,20 @@ public class PollsFragment extends Fragment {
 
     @BindView(R.id.filter_btn)
     ImageButton filterButton;
+
     @BindView(R.id.trip_poll_post_rc)
     RecyclerView tripPollPostRc;
+
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @BindView(R.id.page_loading_pbar)
+    ProgressBar loadingBar;
+
     TripPollAdapter tripPollAdapter;
+
+    int pageNumber;
+    boolean canPaginate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,6 +70,7 @@ public class PollsFragment extends Fragment {
     }
 
     private void initView(){
+        pageNumber = 1;
         filterButton.setVisibility(View.GONE);
         filterButton.setOnClickListener(onFilterClicked);
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
@@ -73,7 +87,8 @@ public class PollsFragment extends Fragment {
         public void onChanged(Pair<PollsPaginationModel, String> pollStringPair) {
             if (pollStringPair != null){
                 if (pollStringPair.first != null){
-                    tripPollAdapter.refresh(pollStringPair.first.data.data);
+                    tripPollAdapter.addAndRefresh(pollStringPair.first.data.data);
+                    canPaginate = (pollStringPair.first.data.next_page_url != null);
                 }
                 else {
                     new ErrorDialog(requireContext(),pollStringPair.second).show();
@@ -82,6 +97,7 @@ public class PollsFragment extends Fragment {
             else {
                 new ErrorDialog(requireContext(),"Connection Error").show();
             }
+            hideLoadingBar();
 
             swipeRefreshLayout.setRefreshing(false);
             swipeRefreshLayout.setEnabled(true);
@@ -90,9 +106,23 @@ public class PollsFragment extends Fragment {
 
     private void initRc(){
         tripPollPostRc.setHasFixedSize(true);
+        tripPollPostRc.addOnScrollListener(onScroll);
         tripPollPostRc.setLayoutManager(new LinearLayoutManager(requireContext()));
         tripPollAdapter = new TripPollAdapter(new ArrayList<>(),requireContext());
         tripPollPostRc.setAdapter(tripPollAdapter);
+    }
+
+    private void  hideLoadingBar(){
+        if (loadingBar.getVisibility() == View.GONE) return;
+
+        loadingBar.animate().setDuration(400).alpha(0) ;
+        new Handler(Looper.getMainLooper()).postDelayed(() -> loadingBar.setVisibility(View.GONE),450);
+    }
+    private void showLoadingBar(){
+        if (loadingBar.getVisibility() == View.VISIBLE) return;
+
+        loadingBar.setAlpha(1);
+        loadingBar.setVisibility(View.VISIBLE);
     }
 
     private final View.OnClickListener onFilterClicked = new View.OnClickListener() {
@@ -107,6 +137,26 @@ public class PollsFragment extends Fragment {
         public void onRefresh() {
             swipeRefreshLayout.setEnabled(false);
             getDataFromApi();
+        }
+    };
+
+    private final RecyclerView.OnScrollListener onScroll = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            if (newState == 1 && canPaginate){    // is scrolling
+                pageNumber++;
+                showLoadingBar();
+                getDataFromApi();
+                canPaginate = false;
+            }
+
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+
+            super.onScrolled(recyclerView, dx, dy);
         }
     };
 }
