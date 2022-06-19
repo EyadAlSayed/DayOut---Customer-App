@@ -1,5 +1,6 @@
 package com.example.dayout.ui.fragments.drawer.Posts;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,15 +24,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+@SuppressLint("NonConstantResourceId")
 public class PostsFragment extends Fragment {
 
 
     View view;
+
     @BindView(R.id.back_arrow)
     ImageButton postBackArrow;
+
     @BindView(R.id.post_tab_layout)
     TabLayout postTabLayout;
+
     @BindView(R.id.post_view_pager)
     ViewPager2 postViewPager;
 

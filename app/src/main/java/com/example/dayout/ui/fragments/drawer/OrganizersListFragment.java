@@ -2,6 +2,8 @@ package com.example.dayout.ui.fragments.drawer;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Pair;
@@ -10,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,6 +50,9 @@ public class OrganizersListFragment extends Fragment {
     @BindView(R.id.organizers_recycler)
     RecyclerView organizersRecycler;
 
+    @BindView(R.id.organizers_loading_bar)
+    ProgressBar loadingBar;
+
     LoadingDialog loadingDialog;
 
     OrganizersAdapter adapter;
@@ -54,6 +61,10 @@ public class OrganizersListFragment extends Fragment {
     List<ProfileData> filteredList;
 
     boolean followingOnly;
+
+    //pagination
+    int pageNumber;
+    boolean canPaginate;
 
     public OrganizersListFragment(boolean followingOnly) {
         this.followingOnly = followingOnly;
@@ -76,6 +87,7 @@ public class OrganizersListFragment extends Fragment {
     }
 
     private void initView() {
+        pageNumber = 1;
         loadingDialog = new LoadingDialog(requireContext());
         mainList = new ArrayList<>();
         filteredList = new ArrayList<>();
@@ -86,6 +98,7 @@ public class OrganizersListFragment extends Fragment {
 
     private void initRecycler() {
         organizersRecycler.setHasFixedSize(true);
+        organizersRecycler.addOnScrollListener(onScroll);
         organizersRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new OrganizersAdapter(new ArrayList<>(), requireContext());
         organizersRecycler.setAdapter(adapter);
@@ -108,11 +121,14 @@ public class OrganizersListFragment extends Fragment {
             if (organizersModelStringPair != null) {
                 if (organizersModelStringPair.first != null) {
                     mainList = organizersModelStringPair.first.data.data;
-                    adapter.refreshList(organizersModelStringPair.first.data.data);
+                    adapter.addAndRefresh(organizersModelStringPair.first.data.data);
+                    canPaginate = (organizersModelStringPair.first.data.next_page_url != null);
                 } else
                     new ErrorDialog(requireContext(), organizersModelStringPair.second).show();
             } else
                 new ErrorDialog(requireContext(), "Error Connection").show();
+
+            hideLoadingBar();
         }
     };
 
@@ -125,13 +141,27 @@ public class OrganizersListFragment extends Fragment {
         }
 
         for (ProfileData organizer : mainList) {
-            String name = organizer.first_name + " " + organizer.last_name;
+            String name = organizer.user.first_name + " " + organizer.user.last_name;
             if (name.toLowerCase().contains(organizerName)) {
                 filteredList.add(organizer);
             }
         }
 
         adapter.refreshList(filteredList);
+    }
+
+    private void  hideLoadingBar(){
+        if (loadingBar.getVisibility() == View.GONE) return;
+
+        loadingBar.animate().setDuration(400).alpha(0) ;
+        new Handler(Looper.getMainLooper()).postDelayed(() -> loadingBar.setVisibility(View.GONE),450);
+    }
+
+    private void showLoadingBar(){
+        if (loadingBar.getVisibility() == View.VISIBLE) return;
+
+        loadingBar.setAlpha(1);
+        loadingBar.setVisibility(View.VISIBLE);
     }
 
     private final View.OnClickListener onBackClicked = v -> FN.popStack(requireActivity());
@@ -150,6 +180,26 @@ public class OrganizersListFragment extends Fragment {
         @Override
         public void afterTextChanged(Editable s) {
             filter(s.toString().toLowerCase());
+        }
+    };
+
+    private final RecyclerView.OnScrollListener onScroll = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            if (newState == 1 && canPaginate){    // is scrolling
+                pageNumber++;
+                showLoadingBar();
+                getDataFromAPI();
+                canPaginate = false;
+            }
+
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+
+            super.onScrolled(recyclerView, dx, dy);
         }
     };
 }

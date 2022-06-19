@@ -38,6 +38,11 @@ public class TripPollAdapter extends RecyclerView.Adapter<TripPollAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    public void addAndRefresh(List<PollsData> list){
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

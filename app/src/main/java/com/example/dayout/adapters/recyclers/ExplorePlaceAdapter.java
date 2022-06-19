@@ -46,6 +46,11 @@ public class ExplorePlaceAdapter extends RecyclerView.Adapter<ExplorePlaceAdapte
         notifyDataSetChanged();
     }
 
+    public void addAndRefresh(List<PlaceData> list) {
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ExplorePlaceAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

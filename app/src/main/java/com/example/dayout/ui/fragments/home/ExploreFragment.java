@@ -1,13 +1,18 @@
 package com.example.dayout.ui.fragments.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.util.Pair;
 
@@ -31,20 +36,30 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+@SuppressLint("NonConstantResourceId")
 public class ExploreFragment extends Fragment {
 
 
     View view;
+
     @BindView(R.id.searchView)
     SearchView searchView;
+
     @BindView(R.id.show_result_btn)
     Button showResultButton;
+
     @BindView(R.id.explore_rc)
     RecyclerView exploreRc;
 
+    @BindView(R.id.explore_loading_bar)
+    ProgressBar loadingBar;
+
     ExplorePlaceAdapter explorePlaceAdapter;
     LoadingDialog loadingDialog;
+
+    //pagination
+    int pageNumber;
+    boolean canPaginate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,6 +86,7 @@ public class ExploreFragment extends Fragment {
     }
 
     private void initView(){
+        pageNumber = 1;
         loadingDialog = new LoadingDialog(requireContext());
         showResultButton.setOnClickListener(onShowClicked);
         searchView.setOnQueryTextListener(onQueryTextListener);
@@ -80,6 +96,7 @@ public class ExploreFragment extends Fragment {
 
     private void initRc(){
         exploreRc.setHasFixedSize(true);
+        exploreRc.addOnScrollListener(onScroll);
         exploreRc.setLayoutManager(new LinearLayoutManager(requireContext()));
         explorePlaceAdapter = new ExplorePlaceAdapter(new ArrayList<>(),requireContext());
         exploreRc.setAdapter(explorePlaceAdapter);
@@ -123,15 +140,17 @@ public class ExploreFragment extends Fragment {
             searchView.setEnabled(true);
             if (searchPlaceModelStringPair != null){
                 if (searchPlaceModelStringPair.first != null){
-                    explorePlaceAdapter.refresh(searchPlaceModelStringPair.first.data.data);
+                    explorePlaceAdapter.addAndRefresh(searchPlaceModelStringPair.first.data.data);
+                    canPaginate = (searchPlaceModelStringPair.first.data.next_page_url != null);
                 }else {
                     new ErrorDialog(requireContext(),searchPlaceModelStringPair.second).show();
                 }
             }
             else {
                 new ErrorDialog(requireContext(),"Connection Error").show();
-
             }
+
+            hideLoadingBar();
         }
     };
 
@@ -139,6 +158,20 @@ public class ExploreFragment extends Fragment {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("name",searchView.getQuery().toString());
         return jsonObject;
+    }
+
+    private void  hideLoadingBar(){
+        if (loadingBar.getVisibility() == View.GONE) return;
+
+        loadingBar.animate().setDuration(400).alpha(0) ;
+        new Handler(Looper.getMainLooper()).postDelayed(() -> loadingBar.setVisibility(View.GONE),450);
+    }
+
+    private void showLoadingBar(){
+        if (loadingBar.getVisibility() == View.VISIBLE) return;
+
+        loadingBar.setAlpha(1);
+        loadingBar.setVisibility(View.VISIBLE);
     }
 
     private boolean checkInfo(){
@@ -156,5 +189,24 @@ public class ExploreFragment extends Fragment {
         return  ok;
     }
 
+    private final RecyclerView.OnScrollListener onScroll = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            if (newState == 1 && canPaginate){    // is scrolling
+                pageNumber++;
+                showLoadingBar();
+                //getDataFromAPI();
+                canPaginate = false;
+            }
+
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+
+            super.onScrolled(recyclerView, dx, dy);
+        }
+    };
 
 }

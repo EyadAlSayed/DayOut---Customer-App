@@ -42,6 +42,11 @@ public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.Vi
         notifyDataSetChanged();
     }
 
+    public void addAndRefresh(List<ProfileData> organizers){
+        this.organizers.addAll(organizers);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public OrganizersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

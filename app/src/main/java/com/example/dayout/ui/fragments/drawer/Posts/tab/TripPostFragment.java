@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,21 +42,23 @@ public class TripPostFragment extends Fragment {
 
     @BindView(R.id.filter_btn)
     ImageButton filterBtn;
+
     @BindView(R.id.trip_poll_post_rc)
     RecyclerView tripPostRc;
+
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+
     @BindView(R.id.page_loading_pbar)
     ProgressBar pageLoadingBar;
 
     TripPostAdapter tripPostAdapter;
 
-    int pageIndex;
+    int pageNumber;
     boolean canPaginate;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_trip_poll_post, container, false);
         ButterKnife.bind(this, view);
@@ -74,14 +74,14 @@ public class TripPostFragment extends Fragment {
     }
 
     private void initView() {
-        pageIndex = 1;
+        pageNumber = 1;
         filterBtn.setOnClickListener(onFilterClicked);
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         initRc();
     }
 
     private void getDataFromApi() {
-        TripViewModel.getINSTANCE().getTripPost(pageIndex);
+        TripViewModel.getINSTANCE().getTripPost(pageNumber);
         TripViewModel.getINSTANCE().tripPostMutableLiveData.observe(requireActivity(), tripPostObserver);
     }
 
@@ -123,7 +123,7 @@ public class TripPostFragment extends Fragment {
     private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            pageIndex = 1;
+            pageNumber = 1;
             swipeRefreshLayout.setEnabled(false);
             getDataFromApi();
         }
@@ -150,7 +150,7 @@ public class TripPostFragment extends Fragment {
         @Override
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
             if (newState == 1 && canPaginate){    // is scrolling
-                pageIndex++;
+                pageNumber++;
                 showLoadingBar();
                 getDataFromApi();
                 canPaginate = false;
