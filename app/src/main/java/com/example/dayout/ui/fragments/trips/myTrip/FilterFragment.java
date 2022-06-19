@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -53,6 +54,12 @@ public class FilterFragment extends Fragment {
     @BindView(R.id.filter_button)
     Button filterButton;
 
+    @BindView(R.id.textView2)
+    TextView placeTV;
+
+    @BindView(R.id.filter_place_name)
+    EditText placeName;
+
     LoadingDialog loadingDialog;
 
     public static boolean isFilterOpen = false;
@@ -89,6 +96,8 @@ public class FilterFragment extends Fragment {
 
     private void initViews() {
         loadingDialog = new LoadingDialog(requireContext());
+        placeTV.setVisibility(View.GONE);
+        placeName.setVisibility(View.GONE);
         filterButton.setOnClickListener(onFilterClicked);
     }
 
