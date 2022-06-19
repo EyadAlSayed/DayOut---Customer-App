@@ -72,6 +72,7 @@ public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHo
         return list.size();
     }
 
+    @SuppressLint("NonConstantResourceId")
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.trip_title)
