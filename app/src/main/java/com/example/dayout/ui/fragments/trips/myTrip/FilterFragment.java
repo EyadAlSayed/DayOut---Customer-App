@@ -97,8 +97,6 @@ public class FilterFragment extends Fragment {
 
     private void initViews() {
         loadingDialog = new LoadingDialog(requireContext());
-        placeTV.setVisibility(View.GONE);
-        placeName.setVisibility(View.GONE);
         filterButton.setOnClickListener(onFilterClicked);
     }
 
