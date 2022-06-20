@@ -60,10 +60,10 @@ public class ExploreFragment extends Fragment {
     //pagination
     int pageNumber;
     boolean canPaginate;
+    JsonObject tmpObject;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_explore, container, false);
         ButterKnife.bind(this, view);
@@ -88,6 +88,7 @@ public class ExploreFragment extends Fragment {
     private void initView(){
         pageNumber = 1;
         loadingDialog = new LoadingDialog(requireContext());
+        tmpObject = new JsonObject();
         showResultButton.setOnClickListener(onShowClicked);
         searchView.setOnQueryTextListener(onQueryTextListener);
 
@@ -100,6 +101,11 @@ public class ExploreFragment extends Fragment {
         exploreRc.setLayoutManager(new LinearLayoutManager(requireContext()));
         explorePlaceAdapter = new ExplorePlaceAdapter(new ArrayList<>(),requireContext());
         exploreRc.setAdapter(explorePlaceAdapter);
+    }
+
+    private void getDataFromAPI(){
+        PlaceViewModel.getINSTANCE().searchForPlace(tmpObject);
+        PlaceViewModel.getINSTANCE().searchPlaceMutableLiveData.observe(requireActivity(),searchObserver);
     }
 
 
@@ -155,6 +161,8 @@ public class ExploreFragment extends Fragment {
     };
 
     private JsonObject getSearchObj(){
+        tmpObject.addProperty("name",searchView.getQuery().toString());
+
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("name",searchView.getQuery().toString());
         return jsonObject;
@@ -195,7 +203,7 @@ public class ExploreFragment extends Fragment {
             if (newState == 1 && canPaginate){    // is scrolling
                 pageNumber++;
                 showLoadingBar();
-                //getDataFromAPI();
+                getDataFromAPI();
                 canPaginate = false;
             }
 

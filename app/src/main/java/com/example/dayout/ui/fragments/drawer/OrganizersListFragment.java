@@ -142,7 +142,7 @@ public class OrganizersListFragment extends Fragment {
 
         for (ProfileData organizer : mainList) {
             String name = organizer.user.first_name + " " + organizer.user.last_name;
-            if (name.toLowerCase().contains(organizerName)) {
+            if (name.toLowerCase().contains(organizerName.toLowerCase())) {
                 filteredList.add(organizer);
             }
         }

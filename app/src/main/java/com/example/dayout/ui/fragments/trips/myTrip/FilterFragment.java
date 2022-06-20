@@ -22,6 +22,7 @@ import com.example.dayout.adapters.recyclers.myTrips.UpComingTripAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripListModel;
+import com.example.dayout.models.trip.place.PlaceTripData;
 import com.example.dayout.models.trip.tripType.TripType;
 import com.example.dayout.models.trip.tripType.TripTypeModel;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
@@ -96,8 +97,6 @@ public class FilterFragment extends Fragment {
 
     private void initViews() {
         loadingDialog = new LoadingDialog(requireContext());
-        placeTV.setVisibility(View.GONE);
-        placeName.setVisibility(View.GONE);
         filterButton.setOnClickListener(onFilterClicked);
     }
 
@@ -194,6 +193,7 @@ public class FilterFragment extends Fragment {
 
     private ArrayList<TripData> filterList(ArrayList<TripData> list) {
 
+        list = filterListOnPlace(list);
         list = filterListOnTitle(list);
         list = filterListOnMinPrice(list);
         list = filterListOnMaxPrice(list);
@@ -202,13 +202,29 @@ public class FilterFragment extends Fragment {
         return list;
     }
 
+    private ArrayList<TripData> filterListOnPlace(ArrayList<TripData> list){
+        if(!placeName.getText().toString().equals("")){
+            ArrayList<TripData> filteredTrips = new ArrayList<>();
+
+            for(TripData trip : list){
+                for(PlaceTripData place : trip.place_trips){
+                    if(place.place.name.contains(placeName.getText().toString())){
+                        filteredTrips.add(trip);
+                    }
+                }
+            }
+            return filteredTrips;
+        } else
+            return list;
+    }
+
     private ArrayList<TripData> filterListOnTitle(ArrayList<TripData> list) {
         if (!filterTitle.getText().toString().equals("")) {
 
             ArrayList<TripData> filteredTrips = new ArrayList<>();
 
             for (TripData trip : list) {
-                if (trip.title.contains(filterTitle.getText().toString())) {
+                if (trip.title.toLowerCase().contains(filterTitle.getText().toString().toLowerCase())) {
                     filteredTrips.add(trip);
                 }
             }
