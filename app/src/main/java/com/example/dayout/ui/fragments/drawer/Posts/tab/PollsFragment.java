@@ -116,7 +116,7 @@ public class PollsFragment extends Fragment {
     }
 
     private void getDataFromApi(){
-        TripViewModel.getINSTANCE().getPolls();
+        TripViewModel.getINSTANCE().getPolls(pageNumber);
         TripViewModel.getINSTANCE().pollMutableLiveData.observe(requireActivity(),pollsObserver);
     }
 

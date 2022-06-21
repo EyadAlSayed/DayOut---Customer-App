@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPostAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.poll.PollsData;
+import com.example.dayout.models.room.pollsRoom.databases.PollsDatabase;
+import com.example.dayout.models.room.tripsRoom.database.TripsDatabase;
+import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
@@ -28,9 +33,14 @@ import com.example.dayout.ui.fragments.drawer.Posts.FilterPostFragment;
 import com.example.dayout.viewModels.TripViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
@@ -80,6 +90,30 @@ public class TripPostFragment extends Fragment {
         initRc();
     }
 
+    private void getDataFromRoom() {
+        TripsDatabase.getINSTANCE(requireContext())
+                .iTrip()
+                .getTrips()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<TripData>>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@io.reactivex.annotations.NonNull List<TripData> data) {
+                        tripPostAdapter.refresh(data);
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        Log.e("getter polls roomDB", "onError: " + e.toString());
+                    }
+                });
+    }
+
     private void getDataFromApi() {
         TripViewModel.getINSTANCE().getTripPost(pageNumber);
         TripViewModel.getINSTANCE().tripPostMutableLiveData.observe(requireActivity(), tripPostObserver);
@@ -93,15 +127,17 @@ public class TripPostFragment extends Fragment {
                     tripPostAdapter.addAndRefresh(tripPostStringPair.first.data.data);
                     canPaginate = (tripPostStringPair.first.data.next_page_url != null);
                 } else {
+                    getDataFromRoom();
                     new ErrorDialog(requireContext(), tripPostStringPair.second).show();
                 }
             } else {
-                new ErrorDialog(requireContext(), "Connection Error").show();
+                getDataFromRoom();
+                new ErrorDialog (requireContext(), "Connection Error").show();
             }
 
             hideLoadingBar();
             swipeRefreshLayout.setRefreshing(false);
-           swipeRefreshLayout.setEnabled(true);
+            swipeRefreshLayout.setEnabled(true);
         }
     };
 
@@ -132,13 +168,14 @@ public class TripPostFragment extends Fragment {
 
     // pagination method
 
-    private void  hideLoadingBar(){
+    private void hideLoadingBar() {
         if (pageLoadingBar.getVisibility() == View.GONE) return;
 
-        pageLoadingBar.animate().setDuration(400).alpha(0) ;
-        new Handler(Looper.getMainLooper()).postDelayed(() -> pageLoadingBar.setVisibility(View.GONE),450);
+        pageLoadingBar.animate().setDuration(400).alpha(0);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> pageLoadingBar.setVisibility(View.GONE), 450);
     }
-    private void showLoadingBar(){
+
+    private void showLoadingBar() {
         if (pageLoadingBar.getVisibility() == View.VISIBLE) return;
 
         pageLoadingBar.setAlpha(1);
@@ -149,7 +186,7 @@ public class TripPostFragment extends Fragment {
     private final RecyclerView.OnScrollListener onRcScrolled = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-            if (newState == 1 && canPaginate){    // is scrolling
+            if (newState == 1 && canPaginate) {    // is scrolling
                 pageNumber++;
                 showLoadingBar();
                 getDataFromApi();

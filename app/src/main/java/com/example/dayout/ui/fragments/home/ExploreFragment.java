@@ -104,10 +104,9 @@ public class ExploreFragment extends Fragment {
     }
 
     private void getDataFromAPI(){
-        PlaceViewModel.getINSTANCE().searchForPlace(tmpObject);
+        PlaceViewModel.getINSTANCE().searchForPlace(tmpObject, pageNumber);
         PlaceViewModel.getINSTANCE().searchPlaceMutableLiveData.observe(requireActivity(),searchObserver);
     }
-
 
     private final SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
         @Override
@@ -115,7 +114,7 @@ public class ExploreFragment extends Fragment {
             if (checkInfo()){
                 searchView.setEnabled(false);
                 loadingDialog.show();
-                PlaceViewModel.getINSTANCE().searchForPlace(getSearchObj());
+                PlaceViewModel.getINSTANCE().searchForPlace(getSearchObj(), 1);
                 PlaceViewModel.getINSTANCE().searchPlaceMutableLiveData.observe(requireActivity(),searchObserver);
             }
             return true;
@@ -133,7 +132,7 @@ public class ExploreFragment extends Fragment {
             if (checkInfo()){
                 searchView.setEnabled(false);
                 loadingDialog.show();
-                PlaceViewModel.getINSTANCE().searchForPlace(getSearchObj());
+                PlaceViewModel.getINSTANCE().searchForPlace(getSearchObj(), 1);
                 PlaceViewModel.getINSTANCE().searchPlaceMutableLiveData.observe(requireActivity(),searchObserver);
             }
         }

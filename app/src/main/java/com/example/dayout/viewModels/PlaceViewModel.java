@@ -137,9 +137,9 @@ public class PlaceViewModel extends ViewModel {
         });
     }
 
-    public void searchForPlace(JsonObject searchPlaceObj) {
+    public void searchForPlace(JsonObject searchPlaceObj, int page) {
         searchPlaceMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().searchForPlace(searchPlaceObj).enqueue(new Callback<SearchPlaceModel>() {
+        apiClient.getAPI().searchForPlace(searchPlaceObj, page).enqueue(new Callback<SearchPlaceModel>() {
             @Override
             public void onResponse(Call<SearchPlaceModel> call, Response<SearchPlaceModel> response) {
                 if (response.isSuccessful()) {

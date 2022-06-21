@@ -73,16 +73,16 @@ public interface API {
     Call<PlaceDetailsModel> getPlaceDetails(@Path("id") int id);
 
     @GET("api/polls")
-    Call<PollsPaginationModel> getPolls();
+    Call<PollsPaginationModel> getPolls(@Query("page") int page);
 
     @GET("api/favorites/places")
     Call<PlaceModel> getFavoritePlace();
 
     @GET("api/organizer/index")
-    Call<OrganizersModel> getAllOrganizers();
+    Call<OrganizersModel> getAllOrganizers(@Query("page") int page);
 
     @GET("api/followers")
-    Call<OrganizersModel> getAllFollowedOrganizers();
+    Call<OrganizersModel> getAllFollowedOrganizers(@Query("page") int page);
 
 
     /**
@@ -112,7 +112,7 @@ public interface API {
     Call<ResponseBody> reportUser(@Body JsonObject object);
 
     @POST("api/search/place")
-    Call<SearchPlaceModel> searchForPlace(@Body JsonObject searchPlaceObj);
+    Call<SearchPlaceModel> searchForPlace(@Body JsonObject searchPlaceObj, @Query("page") int page);
 
 
     /**

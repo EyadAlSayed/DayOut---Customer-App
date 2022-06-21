@@ -61,4 +61,13 @@ public class AppConstants {
     public static final String POLL_DATA = "poll_data";
     public static final String POLL_CHOICE = "poll_choice";
 
+    //trip keys
+    public static final String TRIP_DB = "trip_database";
+    public static final String TRIP_TABLE = "trip_table";
+    public static final String TRIP_PAGINATION_DATA = "trip_pagination_data";
+    public static final String TRIP_DATA = "trip_data";
+    public static final String TRIP_TYPE = "trip_type";
+    public static final String PLACE_TRIP_DATA = "place_trip_data";
+    public static final String TRIP_PHOTO_DATA = "trip_photo_data";
+    public static final String CUSTOMER_TRIP = "customer_trip";
 }

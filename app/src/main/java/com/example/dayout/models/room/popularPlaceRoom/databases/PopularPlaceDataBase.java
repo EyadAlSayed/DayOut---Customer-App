@@ -25,7 +25,7 @@ abstract public class PopularPlaceDataBase extends RoomDatabase {
     public abstract IPopularPlaces iPopularPlaces();
 
 
-    public static  synchronized PopularPlaceDataBase getINSTANCE(Context context){
+    public static synchronized PopularPlaceDataBase getINSTANCE(Context context){
         if (instance == null){
             instance = Room.
                     databaseBuilder(context.getApplicationContext()

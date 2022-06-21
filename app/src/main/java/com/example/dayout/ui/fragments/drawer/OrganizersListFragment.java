@@ -107,9 +107,9 @@ public class OrganizersListFragment extends Fragment {
     private void getDataFromAPI() {
         loadingDialog.show();
         if (followingOnly) {
-            UserViewModel.getINSTANCE().getAllFollowedOrganizers();
+            UserViewModel.getINSTANCE().getAllFollowedOrganizers(pageNumber);
         } else {
-            UserViewModel.getINSTANCE().getAllOrganizers();
+            UserViewModel.getINSTANCE().getAllOrganizers(pageNumber);
         }
         UserViewModel.getINSTANCE().organizersMutableLiveData.observe(requireActivity(), organizersObserver);
     }

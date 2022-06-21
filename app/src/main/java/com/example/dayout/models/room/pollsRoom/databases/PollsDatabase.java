@@ -10,7 +10,7 @@ import com.example.dayout.models.poll.PollChoice;
 import com.example.dayout.models.poll.PollsData;
 import com.example.dayout.models.poll.PollsPaginationData;
 import com.example.dayout.models.poll.PollsPaginationModel;
-import com.example.dayout.models.room.pollsRoom.Interface.IPolls;
+import com.example.dayout.models.room.pollsRoom.Interfaces.IPolls;
 
 import static com.example.dayout.config.AppConstants.POLL_DB;
 
