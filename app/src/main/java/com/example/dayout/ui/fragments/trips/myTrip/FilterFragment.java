@@ -208,7 +208,7 @@ public class FilterFragment extends Fragment {
 
             for(TripData trip : list){
                 for(PlaceTripData place : trip.place_trips){
-                    if(place.place.name.contains(placeName.getText().toString())){
+                    if(place.place.name.toLowerCase().contains(placeName.getText().toString().toLowerCase())){
                         filteredTrips.add(trip);
                     }
                 }

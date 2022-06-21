@@ -18,6 +18,6 @@ public interface IProfileModel {
     @Insert
     Completable insertProfile(ProfileData profileData);
 
-    @Query("select * from " + PROFILE_DATA+" where id = :userId")
+    @Query("select * from " + PROFILE_DATA + " where id = :userId")
     Single<ProfileData> getProfile(int userId);
 }

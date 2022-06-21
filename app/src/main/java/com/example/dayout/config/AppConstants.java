@@ -54,4 +54,11 @@ public class AppConstants {
     public static final String PROFILE_TABLE = "profile_table";
     public static final String PROFILE_DATA = "profile_data";
 
+    //polls keys
+    public static final String POLL_DB = "poll_database";
+    public static final String POLL_TABLE = "poll_table";
+    public static final String POLL_PAGINATION_DATA = "poll_pagination_data";
+    public static final String POLL_DATA = "poll_data";
+    public static final String POLL_CHOICE = "poll_choice";
+
 }
