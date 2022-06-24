@@ -60,7 +60,7 @@ public class ExploreFragment extends Fragment {
     //pagination
     int pageNumber;
     boolean canPaginate;
-    JsonObject tmpObject;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class ExploreFragment extends Fragment {
     private void initView(){
         pageNumber = 1;
         loadingDialog = new LoadingDialog(requireContext());
-        tmpObject = new JsonObject();
+
         showResultButton.setOnClickListener(onShowClicked);
         searchView.setOnQueryTextListener(onQueryTextListener);
 
@@ -104,7 +104,7 @@ public class ExploreFragment extends Fragment {
     }
 
     private void getDataFromAPI(){
-        PlaceViewModel.getINSTANCE().searchForPlace(tmpObject);
+        PlaceViewModel.getINSTANCE().searchForPlace(getSearchObj());
         PlaceViewModel.getINSTANCE().searchPlaceMutableLiveData.observe(requireActivity(),searchObserver);
     }
 
@@ -161,7 +161,6 @@ public class ExploreFragment extends Fragment {
     };
 
     private JsonObject getSearchObj(){
-        tmpObject.addProperty("name",searchView.getQuery().toString());
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("name",searchView.getQuery().toString());
