@@ -20,6 +20,8 @@ import com.example.dayout.R;
 import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
 
+import com.example.dayout.models.room.organizersRoom.database.OrganizersDatabase;
+import com.example.dayout.models.room.organizersRoom.interfaces.IOrganizers;
 import com.example.dayout.models.room.popularPlaceRoom.Interfaces.IPopularPlaces;
 import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
 import com.example.dayout.models.room.roadMapRoom.database.RoadMapDatabase;
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     CardView bottomBar;
 
 
+    public IOrganizers iOrganizers;
     public IRoadMap iRoadMap;
     public IPopularPlaces roomPopularPlaces;
 
@@ -105,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
     private void initRoomDB() {
         roomPopularPlaces = PopularPlaceDataBase.getINSTANCE(this).iPopularPlaces();
         iRoadMap = RoadMapDatabase.getINSTANCE(this).iRoadMap();
+        iOrganizers = OrganizersDatabase.getINSTANCE(this).iOrganizers();
     }
 
     private void initView() {

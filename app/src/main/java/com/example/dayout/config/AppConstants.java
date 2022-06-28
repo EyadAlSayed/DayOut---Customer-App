@@ -80,4 +80,10 @@ public class AppConstants {
     public static final String ROAD_MAP_DB = "road_map_database";
     public static final String ROAD_MAP_TABLE = "road_map_table";
     public static final String ROAD_MAP_DATA = "road_map_data";
+
+    //organizers keys
+    public static final String ORGANIZERS_DB = "organizers_database";
+    public static final String ORGANIZERS_TABLE = "organizers_table";
+    public static final String ORGANIZERS_DATA = "organizers_data";
+    public static final String PROFILE_USER = "profile_user";
 }

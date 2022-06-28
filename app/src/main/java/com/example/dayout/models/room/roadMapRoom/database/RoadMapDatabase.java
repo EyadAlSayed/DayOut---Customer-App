@@ -7,12 +7,13 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.dayout.models.room.roadMapRoom.interfaces.IRoadMap;
+import com.example.dayout.models.trip.place.PlaceTripData;
 import com.example.dayout.models.trip.roadMap.RoadMapData;
 import com.example.dayout.models.trip.roadMap.RoadMapModel;
 
 import static com.example.dayout.config.AppConstants.ROAD_MAP_DB;
 
-@Database(entities = {RoadMapModel.class, RoadMapData.class}, exportSchema = false, version = 1)
+@Database(entities = {RoadMapModel.class, RoadMapData.class, PlaceTripData.class}, exportSchema = false, version = 1)
 abstract public class RoadMapDatabase extends RoomDatabase {
 
     private static RoadMapDatabase instance;

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.OrganizersAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.notification.NotificationData;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.organizer.OrganizersModel;
+import com.example.dayout.models.room.notificationsRoom.database.NotificationsDatabase;
+import com.example.dayout.models.room.organizersRoom.database.OrganizersDatabase;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.dialogs.notify.LoadingDialog;
@@ -35,6 +39,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 @SuppressLint("NonConstantResourceId")
 public class OrganizersListFragment extends Fragment {
@@ -104,6 +112,54 @@ public class OrganizersListFragment extends Fragment {
         organizersRecycler.setAdapter(adapter);
     }
 
+    private void getOrganizersFromRoom(){
+        OrganizersDatabase.getINSTANCE(requireContext())
+                .iOrganizers()
+                .getOrganizers()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<ProfileData>>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@io.reactivex.annotations.NonNull List<ProfileData> data) {
+                        adapter.refreshList(data);
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        Log.e("getter notifications roomDB", "onError: " + e.toString());
+                    }
+                });
+    }
+
+    private void getFollowedOrganizersFromRoom(){
+        OrganizersDatabase.getINSTANCE(requireContext())
+                .iOrganizers()
+                .getFollowedOrganizers()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<ProfileData>>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@io.reactivex.annotations.NonNull List<ProfileData> data) {
+                        adapter.refreshList(data);
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        Log.e("getter notifications roomDB", "onError: " + e.toString());
+                    }
+                });
+    }
+
     private void getDataFromAPI() {
         loadingDialog.show();
         if (followingOnly) {
@@ -123,11 +179,20 @@ public class OrganizersListFragment extends Fragment {
                     mainList = organizersModelStringPair.first.data.data;
                     adapter.addAndRefresh(organizersModelStringPair.first.data.data);
                     canPaginate = (organizersModelStringPair.first.data.next_page_url != null);
-                } else
+                } else {
+                    if(followingOnly)
+                        getFollowedOrganizersFromRoom();
+                    else
+                        getOrganizersFromRoom();
                     new ErrorDialog(requireContext(), organizersModelStringPair.second).show();
-            } else
+                }
+            }else {
+                if(followingOnly)
+                    getFollowedOrganizersFromRoom();
+                else
+                    getOrganizersFromRoom();
                 new ErrorDialog(requireContext(), "Error Connection").show();
-
+            }
             hideLoadingBar();
         }
     };
