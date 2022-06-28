@@ -70,4 +70,9 @@ public class AppConstants {
     public static final String PLACE_TRIP_DATA = "place_trip_data";
     public static final String TRIP_PHOTO_DATA = "trip_photo_data";
     public static final String CUSTOMER_TRIP = "customer_trip";
+
+    //notifications keys
+    public static final String NOTIFICATIONS_DB = "notifications_database";
+    public static final String NOTIFICATIONS_TABLE = "notifications_table";
+    public static final String NOTIFICATIONS_DATA = "notifications_data";
 }
