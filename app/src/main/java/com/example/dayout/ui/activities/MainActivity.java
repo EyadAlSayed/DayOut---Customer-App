@@ -22,6 +22,8 @@ import com.example.dayout.helpers.view.FN;
 
 import com.example.dayout.models.room.popularPlaceRoom.Interfaces.IPopularPlaces;
 import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
+import com.example.dayout.models.room.roadMapRoom.database.RoadMapDatabase;
+import com.example.dayout.models.room.roadMapRoom.interfaces.IRoadMap;
 import com.example.dayout.ui.fragments.drawer.DrawerFragment;
 import com.example.dayout.ui.fragments.home.ExploreFragment;
 import com.example.dayout.ui.fragments.home.FavoritePlaceFragment;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     CardView bottomBar;
 
 
-
+    public IRoadMap iRoadMap;
     public IPopularPlaces roomPopularPlaces;
 
 
@@ -102,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRoomDB() {
         roomPopularPlaces = PopularPlaceDataBase.getINSTANCE(this).iPopularPlaces();
+        iRoadMap = RoadMapDatabase.getINSTANCE(this).iRoadMap();
     }
 
     private void initView() {

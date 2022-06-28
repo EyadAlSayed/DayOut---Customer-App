@@ -75,4 +75,9 @@ public class AppConstants {
     public static final String NOTIFICATIONS_DB = "notifications_database";
     public static final String NOTIFICATIONS_TABLE = "notifications_table";
     public static final String NOTIFICATIONS_DATA = "notifications_data";
+
+    //road map keys
+    public static final String ROAD_MAP_DB = "road_map_database";
+    public static final String ROAD_MAP_TABLE = "road_map_table";
+    public static final String ROAD_MAP_DATA = "road_map_data";
 }

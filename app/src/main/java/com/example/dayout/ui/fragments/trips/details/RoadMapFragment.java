@@ -1,5 +1,6 @@
 package com.example.dayout.ui.fragments.trips.details;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.RoadMapAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.room.roadMapRoom.database.RoadMapDatabase;
+import com.example.dayout.models.trip.roadMap.RoadMapData;
 import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
@@ -25,28 +28,39 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.CompletableObserver;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
+@SuppressLint("NonConstantResourceId")
 public class RoadMapFragment extends Fragment {
 
 
     View view;
+
     @BindView(R.id.back_arrow)
     ImageButton backArrow;
+
     @BindView(R.id.road_map_rc)
     RecyclerView roadMapRc;
+
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
     RoadMapAdapter roadMapAdapter;
     int tripId;
+
+
     RoadMapFragment(int tripId){
         this.tripId = tripId;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_road_map, container, false);
         ButterKnife.bind(this, view);
@@ -75,6 +89,53 @@ public class RoadMapFragment extends Fragment {
         roadMapRc.setAdapter(roadMapAdapter);
     }
 
+    private void getDataFromRoom(){
+        RoadMapDatabase.getINSTANCE(requireContext())
+                .iRoadMap()
+                .getRoadMap()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<RoadMapData>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull RoadMapData roadMapData) {
+                        roadMapAdapter.refresh(roadMapData.place_trips);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
+
+    public void insertRoomObject(RoadMapData roadMapData) {
+
+        // insert object in room database
+        ((MainActivity) requireActivity()).iRoadMap
+                .insertRoadMap(roadMapData)
+                .subscribeOn(Schedulers.computation()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@androidx.annotation.NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onError(@androidx.annotation.NonNull Throwable e) {
+
+            }
+        });
+    }
+
     private void getDataFromApi() {
         TripViewModel.getINSTANCE().getRoadMap(tripId);
         TripViewModel.getINSTANCE().roadMapMutableLiveData.observe(requireActivity(),roadMapObserver);
@@ -85,11 +146,14 @@ public class RoadMapFragment extends Fragment {
             if (roadMapModelStringPair != null){
                 if (roadMapModelStringPair.first != null){
                     roadMapAdapter.refresh(roadMapModelStringPair.first.data.place_trips);
+                    insertRoomObject(roadMapModelStringPair.first.data);
                 }
                 else {
+                    getDataFromRoom();
                     new ErrorDialog(requireContext(),roadMapModelStringPair.second).show();
                 }
             }else {
+                getDataFromRoom();
                 new ErrorDialog(requireContext(),"Error Connection").show();
             }
             swipeRefreshLayout.setEnabled(true);
