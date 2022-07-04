@@ -2,6 +2,7 @@ package com.example.dayout.models.room.tripsRoom.interfaces;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.dayout.models.popualrPlace.PlaceData;
@@ -17,7 +18,7 @@ import static com.example.dayout.config.AppConstants.TRIP_DATA;
 @Dao
 public interface ITrip {
 
-    @Insert
+    @Insert(onConflict =  OnConflictStrategy.REPLACE)
     Completable insertTrip(TripData tripData);
 
 

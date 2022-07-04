@@ -86,4 +86,8 @@ public class AppConstants {
     public static final String ORGANIZERS_TABLE = "organizers_table";
     public static final String ORGANIZERS_DATA = "organizers_data";
     public static final String PROFILE_USER = "profile_user";
+
+    //place keys
+    public static final String PLACES_DB = "places_database";
+    public static final String PLACES_TABLE = "places_table";
 }

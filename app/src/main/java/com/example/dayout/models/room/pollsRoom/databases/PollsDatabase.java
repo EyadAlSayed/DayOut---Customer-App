@@ -14,7 +14,7 @@ import com.example.dayout.models.room.pollsRoom.Interfaces.IPolls;
 
 import static com.example.dayout.config.AppConstants.POLL_DB;
 
-@Database(entities = {PollsPaginationModel.class, PollsPaginationData.class, PollsData.class, PollChoice.class}, version = 1)
+@Database(entities = {PollsPaginationModel.class, PollsPaginationData.class, PollsData.class, PollChoice.class}, exportSchema = false, version = 1)
 abstract public class PollsDatabase extends RoomDatabase {
 
     private static PollsDatabase instance;

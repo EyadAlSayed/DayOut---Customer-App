@@ -15,7 +15,7 @@ import static com.example.dayout.config.AppConstants.POPULAR_PLACE_DB;
 
 
 @Database(
-        entities = {PlaceModel.class, PlaceData.class, PopularPlacePhoto.class}
+        entities = {PlaceModel.class, PlaceData.class, PopularPlacePhoto.class}, exportSchema = false
         ,version = 1)
 abstract public class PopularPlaceDataBase extends RoomDatabase {
 

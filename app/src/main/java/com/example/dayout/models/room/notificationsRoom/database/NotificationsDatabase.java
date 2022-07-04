@@ -12,7 +12,7 @@ import com.example.dayout.models.room.notificationsRoom.interfaces.INotification
 
 import static com.example.dayout.config.AppConstants.NOTIFICATIONS_DB;
 
-@Database(entities = {NotificationModel.class, NotificationData.class}, version = 1)
+@Database(entities = {NotificationModel.class, NotificationData.class}, exportSchema = false, version = 1)
 abstract public class NotificationsDatabase extends RoomDatabase {
 
     private static NotificationsDatabase instance;

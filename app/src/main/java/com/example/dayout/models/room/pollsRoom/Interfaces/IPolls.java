@@ -3,6 +3,7 @@ package com.example.dayout.models.room.pollsRoom.Interfaces;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.dayout.models.poll.PollsData;
@@ -19,7 +20,7 @@ import static com.example.dayout.config.AppConstants.POLL_DATA;
 public interface IPolls {
 
 
-    @Insert
+    @Insert(onConflict =  OnConflictStrategy.REPLACE)
     Completable insertPoll(PollsData pollDB);
 
 

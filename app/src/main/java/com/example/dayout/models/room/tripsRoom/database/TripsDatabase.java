@@ -18,7 +18,7 @@ import com.example.dayout.models.trip.tripType.TripType;
 import static com.example.dayout.config.AppConstants.TRIP_DB;
 
 @Database(entities = {TripPaginationModel.class, TripPaginationData.class, TripData.class, TripType.class,
-        PlaceTripData.class, CustomerTrip.class, TripPhotoData.class}, version = 1)
+        PlaceTripData.class, CustomerTrip.class, TripPhotoData.class}, exportSchema = false, version = 1)
 abstract public class TripsDatabase extends RoomDatabase {
 
     private static TripsDatabase instance;

@@ -1,5 +1,6 @@
 package com.example.dayout.ui.fragments.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -23,16 +24,19 @@ import com.example.dayout.viewModels.PlaceViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+@SuppressLint("NonConstantResourceId")
 public class FavoritePlaceFragment extends Fragment {
 
 
     View view;
     FavoritePlaceAdapter favoritePlaceAdapter;
+
     @BindView(R.id.arrow_back)
     ImageButton arrowBack;
+
     @BindView(R.id.favorite_place_rc)
     RecyclerView favoritePlaceRc;
+
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
