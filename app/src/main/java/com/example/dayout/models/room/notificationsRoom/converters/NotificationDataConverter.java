@@ -14,13 +14,12 @@ import java.util.List;
 public class NotificationDataConverter implements Serializable {
 
     @TypeConverter
-    public String fromNotification(NotificationData notificationData) {
+    public String fromNotificationToJson(List<NotificationData> notificationData) {
 
         if (notificationData == null)
             return null;
 
-        Type type = new TypeToken<NotificationData>() {
-        }.getType();
+        Type type = new TypeToken<List<NotificationData>>() {}.getType();
         Gson gson = new Gson();
 
         return gson.toJson(notificationData, type);
@@ -28,17 +27,17 @@ public class NotificationDataConverter implements Serializable {
 
 
     @TypeConverter
-    public NotificationData toNotification(String data) {
+    public List<NotificationData> fromJsonToNotification(String notificationObject) {
 
 
-        if (data == null)
+        if (notificationObject == null)
             return null;
 
         Type type = new TypeToken<List<NotificationData>>() {
         }.getType();
         Gson gson = new Gson();
 
-        return gson.fromJson(data, type);
+        return gson.fromJson(notificationObject, type);
 
     }
 }

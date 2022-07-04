@@ -5,9 +5,11 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.example.dayout.models.room.tripsRoom.converters.PlaceTripDataConverter;
+import com.example.dayout.models.room.tripsRoom.converters.PlaceTripDataListConverter;
 import com.example.dayout.models.trip.place.PlaceTripData;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.dayout.config.AppConstants.ROAD_MAP_DATA;
@@ -26,6 +28,6 @@ public class RoadMapData implements Serializable {
     public String end_booking;
     public int price;
 
-    @TypeConverters(PlaceTripDataConverter.class)
-    public List<PlaceTripData> place_trips;
+    @TypeConverters(PlaceTripDataListConverter.class)
+    public ArrayList<PlaceTripData> place_trips;
 }

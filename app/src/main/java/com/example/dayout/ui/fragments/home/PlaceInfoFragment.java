@@ -18,7 +18,6 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
 import com.example.dayout.models.popualrPlace.PlaceData;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
-import com.example.dayout.models.room.placeRoom.database.PlaceDatabase;
 import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
 import com.example.dayout.models.trip.place.PlaceDetailsModel;
 import com.example.dayout.ui.activities.MainActivity;
@@ -121,8 +120,8 @@ public class PlaceInfoFragment extends Fragment {
     };
 
     private void getDataFromRoom(){
-        PlaceDatabase.getINSTANCE(requireContext())
-                .iPlace()
+        PopularPlaceDataBase.getINSTANCE(requireContext())
+                .iPopularPlaces()
                 .getPlace(placeId)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())

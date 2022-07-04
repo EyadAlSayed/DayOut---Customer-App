@@ -6,6 +6,7 @@ import androidx.room.TypeConverters;
 
 import com.example.dayout.models.room.tripsRoom.converters.CustomerTripConverter;
 import com.example.dayout.models.room.tripsRoom.converters.PlaceTripDataConverter;
+import com.example.dayout.models.room.tripsRoom.converters.PlaceTripDataListConverter;
 import com.example.dayout.models.room.tripsRoom.converters.TripPhotoDataConverter;
 import com.example.dayout.models.room.tripsRoom.converters.TripTypeConverter;
 import com.example.dayout.models.trip.place.PlaceTripData;
@@ -31,7 +32,7 @@ public class TripData {
     public boolean is_in_trip;
     @TypeConverters(TripTypeConverter.class)
     public ArrayList<TripType> types = new ArrayList<>();
-    @TypeConverters(PlaceTripDataConverter.class)
+    @TypeConverters(PlaceTripDataListConverter.class)
     public ArrayList<PlaceTripData> place_trips = new ArrayList<>();
     @TypeConverters(TripPhotoDataConverter.class)
     public ArrayList<TripPhotoData> trip_photos = new ArrayList<>();

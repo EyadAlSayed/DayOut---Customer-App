@@ -28,13 +28,13 @@ public class OrganizerProfileDataConverter implements Serializable {
 
 
     @TypeConverter
-    public NotificationData toOrganizer(String data) {
+    public OrganizerProfileData toOrganizer(String data) {
 
 
         if (data == null)
             return null;
 
-        Type type = new TypeToken<List<OrganizerProfileData>>() {
+        Type type = new TypeToken<OrganizerProfileData>() {
         }.getType();
         Gson gson = new Gson();
 

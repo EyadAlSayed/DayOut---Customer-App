@@ -13,12 +13,12 @@ import java.util.List;
 public class PollsDataConverter implements Serializable {
 
     @TypeConverter
-    public String fromPoll(PollsData pollData) {
+    public String fromPoll(List<PollsData> pollData) {
 
         if (pollData == null)
             return null;
 
-        Type type = new TypeToken<PollsData>() {
+        Type type = new TypeToken<List<PollsData>>() {
         }.getType();
         Gson gson = new Gson();
 
@@ -27,7 +27,7 @@ public class PollsDataConverter implements Serializable {
 
 
     @TypeConverter
-    public PollsData toPoll(String data) {
+    public List<PollsData> toPoll(String data) {
 
 
         if (data == null)

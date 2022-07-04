@@ -14,12 +14,12 @@ import java.util.List;
 public class TripDataConverter implements Serializable {
 
     @TypeConverter
-    public String fromTrip(TripData tripData) {
+    public String fromTrip(List<TripData> tripData) {
 
         if (tripData == null)
             return null;
 
-        Type type = new TypeToken<PollsData>() {
+        Type type = new TypeToken<List<TripData>>() {
         }.getType();
         Gson gson = new Gson();
 
@@ -28,13 +28,13 @@ public class TripDataConverter implements Serializable {
 
 
     @TypeConverter
-    public TripData toTrip(String data) {
+    public List<TripData> toTrip(String data) {
 
 
         if (data == null)
             return null;
 
-        Type type = new TypeToken<List<TripData>>() {
+        Type type = new TypeToken<List<List<TripData>>>() {
         }.getType();
         Gson gson = new Gson();
 

@@ -3,6 +3,7 @@ package com.example.dayout.models.room.pollsRoom.converters;
 import androidx.room.TypeConverter;
 
 import com.example.dayout.models.poll.PollChoice;
+import com.example.dayout.models.poll.PollsData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -13,12 +14,12 @@ import java.util.List;
 public class PollsChoiceConverter implements Serializable {
 
     @TypeConverter
-    public String fromChoice(PollChoice pollChoice) {
+    public String fromChoice(List<PollChoice> pollChoice) {
 
         if (pollChoice == null)
             return null;
 
-        Type type = new TypeToken<PollChoice>() {
+        Type type = new TypeToken<List<PollChoice>>() {
         }.getType();
         Gson gson = new Gson();
 
@@ -27,7 +28,7 @@ public class PollsChoiceConverter implements Serializable {
 
 
     @TypeConverter
-    public PollChoice toChoice(String data) {
+    public List<PollChoice> toChoice(String data) {
 
 
         if (data == null)

@@ -2,8 +2,10 @@ package com.example.dayout.models.trip.place;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import com.example.dayout.models.popualrPlace.PlaceData;
+import com.example.dayout.models.room.tripsRoom.converters.PlaceTripDataConverter;
 
 import java.io.Serializable;
 
@@ -19,5 +21,6 @@ public class PlaceTripData implements Serializable {
     public int order;
     public String description;
     public int status;
+    @TypeConverters(PlaceTripDataConverter.class)
     public PlaceData place = new PlaceData();
 }

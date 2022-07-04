@@ -6,6 +6,7 @@ import androidx.room.TypeConverters;
 
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.room.profileRoom.converter.ProfileDataConverter;
+import com.example.dayout.models.room.profileRoom.converter.ProfileDataListConverter;
 
 import java.util.List;
 
@@ -17,6 +18,6 @@ public class PollChoice {
     public int id;
     public String value;
     public int poll_id;
-    @TypeConverters(ProfileDataConverter.class)
+    @TypeConverters(ProfileDataListConverter.class)
     public List<ProfileData> users;
 }

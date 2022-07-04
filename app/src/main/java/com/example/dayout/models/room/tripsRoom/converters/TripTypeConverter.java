@@ -8,17 +8,18 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TripTypeConverter implements Serializable {
 
     @TypeConverter
-    public String fromType(TripType tripType) {
+    public String fromType(ArrayList<TripType> tripType) {
 
         if (tripType == null)
             return null;
 
-        Type type = new TypeToken<TripType>() {
+        Type type = new TypeToken<ArrayList<TripType>>() {
         }.getType();
         Gson gson = new Gson();
 
@@ -27,13 +28,13 @@ public class TripTypeConverter implements Serializable {
 
 
     @TypeConverter
-    public TripType toType(String data) {
+    public ArrayList<TripType> toType(String data) {
 
 
         if (data == null)
             return null;
 
-        Type type = new TypeToken<List<TripType>>() {
+        Type type = new TypeToken<ArrayList<TripType>>() {
         }.getType();
         Gson gson = new Gson();
 

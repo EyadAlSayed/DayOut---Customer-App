@@ -1,9 +1,8 @@
-package com.example.dayout.models.room.roadMapRoom.converters;
+package com.example.dayout.models.room.profileRoom.converter;
 
 import androidx.room.TypeConverter;
 
 import com.example.dayout.models.profile.ProfileData;
-import com.example.dayout.models.trip.roadMap.RoadMapData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -11,30 +10,30 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class RoadMapDataConverter implements Serializable {
+public class ProfileDataListConverter implements Serializable {
 
     @TypeConverter
-    public String fromRoadMap(RoadMapData roadMap) {
+    public String fromProfile(List<ProfileData> profileData) {
 
-        if (roadMap == null)
+        if (profileData == null)
             return null;
 
-        Type type = new TypeToken<RoadMapData>() {
+        Type type = new TypeToken<List<ProfileData>>() {
         }.getType();
         Gson gson = new Gson();
 
-        return gson.toJson(roadMap, type);
+        return gson.toJson(profileData, type);
     }
 
 
     @TypeConverter
-    public RoadMapData toRoadMap(String data) {
+    public List<ProfileData> toProfile(String data) {
 
 
         if (data == null)
             return null;
 
-        Type type = new TypeToken<RoadMapData>() {
+        Type type = new TypeToken<ProfileData>() {
         }.getType();
         Gson gson = new Gson();
 

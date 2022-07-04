@@ -28,4 +28,7 @@ public interface IPopularPlaces {
 
         @Query("select * from " + POPULAR_PLACE_DATA)
         Single<List<PlaceData>> getPopularPlace();
+
+        @Query("select * from " + POPULAR_PLACE_DATA + " where id = :placeId")
+        Single<PlaceData> getPlace(int placeId);
 }

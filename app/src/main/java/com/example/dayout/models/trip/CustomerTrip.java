@@ -2,8 +2,10 @@ package com.example.dayout.models.trip;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import com.example.dayout.models.profile.ProfileData;
+import com.example.dayout.models.room.profileRoom.converter.ProfileDataConverter;
 
 import java.io.Serializable;
 
@@ -18,5 +20,6 @@ public class CustomerTrip implements Serializable {
     public int trip_id;
     public int checkout;
     public float rate;
+    @TypeConverters(ProfileDataConverter.class)
     public ProfileData user = new ProfileData();
 }
