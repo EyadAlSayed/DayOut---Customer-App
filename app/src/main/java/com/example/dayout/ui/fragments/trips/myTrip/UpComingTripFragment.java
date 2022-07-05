@@ -2,10 +2,13 @@ package com.example.dayout.ui.fragments.trips.myTrip;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -18,10 +21,11 @@ import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.myTrips.UpComingTripAdapter;
 import com.example.dayout.models.room.tripsRoom.database.TripsDatabase;
 import com.example.dayout.models.trip.TripData;
-import com.example.dayout.models.trip.TripListModel;
+import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.dialogs.notify.LoadingDialog;
 import com.example.dayout.viewModels.TripViewModel;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -50,11 +54,16 @@ public class UpComingTripFragment extends Fragment {
     @BindView(R.id.upcoming_trips_refresh_layout)
     SwipeRefreshLayout upcomingTripsRefreshLayout;
 
+    @BindView(R.id.upcoming_trips_loading_bar)
+    ProgressBar pageLoadingBar;
+
     LoadingDialog loadingDialog;
 
+    int pageNumber;
+    boolean canPaginate;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_up_coming_trip, container, false);
         ButterKnife.bind(this, view);
         initView();
@@ -66,6 +75,7 @@ public class UpComingTripFragment extends Fragment {
     }
 
     private void initView(){
+        pageNumber = 1;
         loadingDialog = new LoadingDialog(requireContext());
         initRc();
         getDataFromApi();
@@ -73,8 +83,23 @@ public class UpComingTripFragment extends Fragment {
 
     private void initRc(){
         upComingTripRc.setHasFixedSize(true);
+        upComingTripRc.addOnScrollListener(onScroll);
         upComingTripRc.setLayoutManager(new LinearLayoutManager(requireContext()));
         upComingTripRc.setAdapter(adapter);
+    }
+
+    private void hideLoadingBar() {
+        if (pageLoadingBar.getVisibility() == View.GONE) return;
+
+        pageLoadingBar.animate().setDuration(400).alpha(0);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> pageLoadingBar.setVisibility(View.GONE), 450);
+    }
+
+    private void showLoadingBar() {
+        if (pageLoadingBar.getVisibility() == View.VISIBLE) return;
+
+        pageLoadingBar.setAlpha(1);
+        pageLoadingBar.setVisibility(View.VISIBLE);
     }
 
     private void getDataFromRoom() {
@@ -116,25 +141,27 @@ public class UpComingTripFragment extends Fragment {
 
     private void getDataFromApi(){
         loadingDialog.show();
-        TripViewModel.getINSTANCE().getUpcomingTrips();
+        TripViewModel.getINSTANCE().getUpcomingTrips(new JsonObject(), pageNumber);
         TripViewModel.getINSTANCE().upcomingTripsMutableLiveData.observe(requireActivity(), upcomingTripObserver);
     }
 
-    private final Observer<Pair<TripListModel, String>> upcomingTripObserver = new Observer<Pair<TripListModel, String>>() {
+    private final Observer<Pair<TripPaginationModel, String>> upcomingTripObserver = new Observer<Pair<TripPaginationModel, String>>() {
         @Override
-        public void onChanged(Pair<TripListModel, String> listStringPair) {
+        public void onChanged(Pair<TripPaginationModel, String> listStringPair) {
             loadingDialog.dismiss();
+            hideLoadingBar();
             if (listStringPair != null) {
                 if (listStringPair.first != null) {
-                    if (listStringPair.first.data.isEmpty()) {
+                    if (listStringPair.first.data.data.isEmpty()) {
                         upcomingTripsRefreshLayout.setVisibility(View.GONE);
                         upcomingTripsNoTrips.setVisibility(View.VISIBLE);
                     } else {
                         upcomingTripsRefreshLayout.setVisibility(View.VISIBLE);
                         upcomingTripsNoTrips.setVisibility(View.GONE);
-                        adapter.refresh(listStringPair.first.data);
-                        setAsUpcoming(listStringPair.first.data);
+                        adapter.refresh(listStringPair.first.data.data);
+                        setAsUpcoming(listStringPair.first.data.data);
                     }
+                    canPaginate = (listStringPair.first.data.next_page_url != null);
                 } else {
                     getDataFromRoom();
                     new ErrorDialog(requireContext(), listStringPair.second).show();
@@ -143,6 +170,26 @@ public class UpComingTripFragment extends Fragment {
                 getDataFromRoom();
                 new ErrorDialog(requireContext(), "Error Connection").show();
             }
+        }
+    };
+
+    private final RecyclerView.OnScrollListener onScroll = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(@androidx.annotation.NonNull RecyclerView recyclerView, int newState) {
+            if (newState == 1 && canPaginate) {    // is scrolling
+                pageNumber++;
+                showLoadingBar();
+                getDataFromApi();
+                canPaginate = false;
+            }
+
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(@androidx.annotation.NonNull RecyclerView recyclerView, int dx, int dy) {
+
+            super.onScrolled(recyclerView, dx, dy);
         }
     };
 }
