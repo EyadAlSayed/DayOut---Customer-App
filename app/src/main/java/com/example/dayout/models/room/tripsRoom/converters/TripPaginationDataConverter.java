@@ -19,7 +19,7 @@ public class TripPaginationDataConverter implements Serializable {
         if (tripData == null)
             return null;
 
-        Type type = new TypeToken<PollsData>() {
+        Type type = new TypeToken<TripPaginationData>() {
         }.getType();
         Gson gson = new Gson();
 
