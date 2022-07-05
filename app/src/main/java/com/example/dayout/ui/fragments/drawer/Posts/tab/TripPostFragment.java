@@ -22,8 +22,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPostAdapter;
 import com.example.dayout.helpers.view.FN;
-import com.example.dayout.models.poll.PollsData;
-import com.example.dayout.models.room.pollsRoom.databases.PollsDatabase;
 import com.example.dayout.models.room.tripsRoom.database.TripsDatabase;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripPaginationModel;

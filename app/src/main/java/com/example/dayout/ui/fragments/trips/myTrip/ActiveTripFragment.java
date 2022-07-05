@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.myTrips.ActiveTripAdapter;
+import com.example.dayout.models.room.tripsRoom.database.TripsDatabase;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripListModel;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
@@ -23,9 +24,15 @@ import com.example.dayout.ui.dialogs.notify.LoadingDialog;
 import com.example.dayout.viewModels.TripViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 @SuppressLint("NonConstantResourceId")
 public class ActiveTripFragment extends Fragment {
@@ -70,6 +77,37 @@ public class ActiveTripFragment extends Fragment {
         activeTripRc.setAdapter(adapter);
     }
 
+    private void getDataFromRoom() {
+        TripsDatabase.getINSTANCE(requireContext())
+                .iTrip()
+                .getActiveTrips()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<TripData>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull List<TripData> tripData) {
+                        if (tripData.isEmpty()) {
+                            activeTripsRefreshLayout.setVisibility(View.GONE);
+                            activeTripsNoActiveTrips.setVisibility(View.VISIBLE);
+                        } else {
+                            activeTripsRefreshLayout.setVisibility(View.VISIBLE);
+                            activeTripsNoActiveTrips.setVisibility(View.GONE);
+                            adapter.refresh(tripData);
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
+
     private void getDataFromApi(){
         loadingDialog.show();
         TripViewModel.getINSTANCE().getActiveTrips();
@@ -86,7 +124,7 @@ public class ActiveTripFragment extends Fragment {
         @Override
         public void onChanged(Pair<TripListModel, String> tripModelStringPair) {
             loadingDialog.dismiss();
-            if(tripModelStringPair != null){
+            if (tripModelStringPair != null) {
                 if (tripModelStringPair.first != null) {
                     if (tripModelStringPair.first.data.isEmpty()) {
                         activeTripsRefreshLayout.setVisibility(View.GONE);
@@ -97,10 +135,14 @@ public class ActiveTripFragment extends Fragment {
                         setAsActive(tripModelStringPair.first.data);
                         adapter.refresh(tripModelStringPair.first.data);
                     }
-                } else
+                } else {
+                    getDataFromRoom();
                     new ErrorDialog(requireContext(), tripModelStringPair.second).show();
-            } else
+                }
+            } else {
+                getDataFromRoom();
                 new ErrorDialog(requireContext(), "Error Connection").show();
+            }
         }
     };
 }

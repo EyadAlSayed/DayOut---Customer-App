@@ -25,6 +25,15 @@ public interface ITrip {
     @Query("select * from " + TRIP_DATA)
     Single<List<TripData>> getTrips();
 
+    @Query("select * from " + TRIP_DATA +" where isUpcoming = 1")
+    Single<List<TripData>> getUpComingTrips();
+
+    @Query("select * from " + TRIP_DATA +" where isActive = 1")
+    Single<List<TripData>> getActiveTrips();
+
+    @Query("select * from " + TRIP_DATA +" where isUpcoming = 0 AND isActive = 0")
+    Single<List<TripData>> getHistoryTrips();
+
     @Query("select * from " + TRIP_DATA + " where id = :tripId")
     Single<TripData> getTripById(int tripId);
 }

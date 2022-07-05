@@ -40,5 +40,6 @@ public class TripData {
     public ArrayList<CustomerTrip> customer_trips = new ArrayList<>();
 
     public boolean  isActive = false;
+    public boolean isUpcoming = false;
     public String stopsToDetails;
 }
