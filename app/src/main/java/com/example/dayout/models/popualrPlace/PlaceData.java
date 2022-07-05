@@ -30,4 +30,6 @@ public class PlaceData implements Serializable {
 
     public int favorites_count;
     public int place_trips_count;
+
+    public boolean isFavorite = false;
 }

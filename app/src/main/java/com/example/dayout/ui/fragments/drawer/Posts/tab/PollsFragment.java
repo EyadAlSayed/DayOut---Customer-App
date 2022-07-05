@@ -23,11 +23,7 @@ import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPollAdapter;
 import com.example.dayout.models.poll.PollsData;
 import com.example.dayout.models.poll.PollsPaginationModel;
-import com.example.dayout.models.popualrPlace.PlaceData;
-import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.room.pollsRoom.databases.PollsDatabase;
-import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
-import com.example.dayout.models.room.profileRoom.databases.ProfileDatabase;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.viewModels.TripViewModel;
@@ -37,13 +33,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.CompletableObserver;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
 
 @SuppressLint("NonConstantResourceId")
 public class PollsFragment extends Fragment {

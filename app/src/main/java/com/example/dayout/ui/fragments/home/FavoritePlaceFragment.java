@@ -2,6 +2,7 @@ package com.example.dayout.ui.fragments.home;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +17,23 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.FavoritePlaceAdapter;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.popualrPlace.PlaceData;
 import com.example.dayout.models.popualrPlace.PlaceModel;
+import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.viewModels.PlaceViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 @SuppressLint("NonConstantResourceId")
 public class FavoritePlaceFragment extends Fragment {
@@ -41,8 +52,7 @@ public class FavoritePlaceFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_favorite_place, container, false);
         ButterKnife.bind(this, view);
@@ -69,6 +79,36 @@ public class FavoritePlaceFragment extends Fragment {
         arrowBack.setOnClickListener(v -> FN.popTopStack(requireActivity()));
     }
 
+    private void setAsFavorite(List<PlaceData> places){
+        for (PlaceData place : places){
+            place.isFavorite = true;
+        }
+    }
+
+    private void getDataFromRoom() {
+        PopularPlaceDataBase.getINSTANCE(requireContext())
+                .iPopularPlaces()
+                .getFavoritePlaces()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<PlaceData>>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@io.reactivex.annotations.NonNull List<PlaceData> data) {
+                        favoritePlaceAdapter.refresh(data);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("getter favorite places roomDB", "onError: " + e.toString());
+                    }
+                });
+    }
+
     private void getDataFromApi() {
         PlaceViewModel.getINSTANCE().getFavoritePlaces();
         PlaceViewModel.getINSTANCE().placeMutableLiveData.observe(requireActivity(),favoritePlaceObserver);
@@ -80,12 +120,15 @@ public class FavoritePlaceFragment extends Fragment {
             if (placeModelStringPair != null){
                 if (placeModelStringPair.first != null){
                     favoritePlaceAdapter.refresh(placeModelStringPair.first.data);
+                    setAsFavorite(placeModelStringPair.first.data);
                 }
                 else {
+                    getDataFromRoom();
                     new ErrorDialog(requireContext(),placeModelStringPair.second).show();
                 }
             }
             else {
+                getDataFromRoom();
                 new ErrorDialog(requireContext(),"Connection Error").show();
             }
         }

@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_10sdp"
             android:fontFamily="@font/acme"
-            android:text="@string/favorite_place"
+            android:text="@string/favorite_places"
             android:textColor="@color/orange_500"
             android:textSize="@dimen/_26ssp"
             app:layout_constraintBottom_toBottomOf="parent"

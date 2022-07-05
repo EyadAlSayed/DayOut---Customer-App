@@ -25,10 +25,12 @@ public interface IPopularPlaces {
         @Insert(onConflict =  OnConflictStrategy.REPLACE)
         Completable insertPopularPlace(PlaceData popularPlaceDB);
 
-
         @Query("select * from " + POPULAR_PLACE_DATA)
         Single<List<PlaceData>> getPopularPlace();
 
         @Query("select * from " + POPULAR_PLACE_DATA + " where id = :placeId")
         Single<PlaceData> getPlace(int placeId);
+
+        @Query("select * from " + POPULAR_PLACE_DATA + " where isFavorite = 1")
+        Single<List<PlaceData>> getFavoritePlaces();
 }

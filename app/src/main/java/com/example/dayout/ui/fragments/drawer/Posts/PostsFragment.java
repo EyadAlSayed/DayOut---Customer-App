@@ -40,8 +40,7 @@ public class PostsFragment extends Fragment {
     ViewPager2 postViewPager;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_posts, container, false);
         ButterKnife.bind(this, view);
