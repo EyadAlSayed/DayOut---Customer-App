@@ -24,4 +24,7 @@ public interface ITrip {
 
     @Query("select * from " + TRIP_DATA)
     Single<List<TripData>> getTrips();
+
+    @Query("select * from " + TRIP_DATA + " where id = :tripId")
+    Single<TripData> getTripById(int tripId);
 }
