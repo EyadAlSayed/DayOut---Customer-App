@@ -2,6 +2,7 @@ package com.example.dayout.adapters.recyclers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.poll.PollsData;
+import com.example.dayout.models.room.pollsRoom.databases.PollsDatabase;
+import com.example.dayout.models.room.tripsRoom.database.TripsDatabase;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripPhotoData;
 import com.example.dayout.ui.activities.MainActivity;
@@ -25,6 +29,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.CompletableObserver;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
@@ -60,6 +67,8 @@ public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHo
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        insertRoomObject(list.get(position));
+
         holder.tripTitle.setText(list.get(position).title);
         holder.tripDate.setText(list.get(position).begin_date + "  -  " + list.get(position).expire_date);
         holder.endTripBookinDate.setText(list.get(position).end_booking);
@@ -70,6 +79,29 @@ public class TripPostAdapter extends RecyclerView.Adapter<TripPostAdapter.ViewHo
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public void insertRoomObject(TripData trip) {
+
+        // insert object in room database
+        TripsDatabase.getINSTANCE(context).iTrip()
+                .insertTrip(trip)
+                .subscribeOn(Schedulers.computation()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.e("Trip Poll Adapter", "onError: " + e.toString());
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")

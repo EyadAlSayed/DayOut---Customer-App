@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
@@ -21,6 +22,7 @@ import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
+import com.example.dayout.models.room.profileRoom.databases.ProfileDatabase;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.notify.LogOutDialog;
 import com.example.dayout.ui.fragments.drawer.Posts.PostsFragment;
@@ -31,6 +33,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import eightbitlab.com.blurview.BlurView;
 import eightbitlab.com.blurview.RenderScriptBlur;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
@@ -57,8 +63,6 @@ public class DrawerFragment extends Fragment {
     @BindView(R.id.notification_txt)
     TextView notificationTxt;
 
-
-
     @BindView(R.id.connect_us_txt)
     TextView connectUsTxt;
 
@@ -80,11 +84,8 @@ public class DrawerFragment extends Fragment {
     LogOutDialog logOutDialog;
 
 
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_drawer, container, false);
         ButterKnife.bind(this, view);
@@ -123,6 +124,30 @@ public class DrawerFragment extends Fragment {
 
     }
 
+    private void getDataFromRoom() {
+        ProfileDatabase.getINSTANCE(requireContext())
+                .iProfileModel()
+                .getProfile(GET_USER_ID())
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<ProfileData>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull ProfileData data) {
+                        setData(data);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
+
     private void getDataFromAPI() {
         UserViewModel.getINSTANCE().getPassengerProfile(GET_USER_ID());
         UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), profileObserver);
@@ -135,10 +160,10 @@ public class DrawerFragment extends Fragment {
                 if (profileModelStringPair.first != null) {
                     setData(profileModelStringPair.first.data);
                 } else {
-                    //getDataFromRoom();
+                    getDataFromRoom();
                 }
             } else {
-                //getDataFromRoom();
+                getDataFromRoom();
             }
         }
     };
@@ -204,7 +229,6 @@ public class DrawerFragment extends Fragment {
     private final View.OnClickListener onLogOutClicked = v -> {
         logOutDialog.show();
     };
-
 
 
     private final View.OnClickListener onOrganizersClicked = v -> FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new OrganizersListFragment(false));

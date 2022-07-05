@@ -95,9 +95,9 @@ public class UserViewModel {
             }
         });
     }
-    public void getAllOrganizers(){
+    public void getAllOrganizers(int page){
         organizersMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getAllOrganizers().enqueue(new Callback<OrganizersModel>() {
+        apiClient.getAPI().getAllOrganizers(page).enqueue(new Callback<OrganizersModel>() {
             @Override
             public void onResponse(Call<OrganizersModel> call, Response<OrganizersModel> response) {
                 if(response.isSuccessful()){
@@ -117,9 +117,9 @@ public class UserViewModel {
             }
         });
     }
-    public void  getAllFollowedOrganizers(){
+    public void  getAllFollowedOrganizers(int page){
         organizersMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getAllFollowedOrganizers().enqueue(new Callback<OrganizersModel>() {
+        apiClient.getAPI().getAllFollowedOrganizers(page).enqueue(new Callback<OrganizersModel>() {
             @Override
             public void onResponse(Call<OrganizersModel> call, Response<OrganizersModel> response) {
                 if (response.isSuccessful()){

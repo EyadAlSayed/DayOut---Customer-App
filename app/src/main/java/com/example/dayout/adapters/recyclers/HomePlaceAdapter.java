@@ -1,5 +1,6 @@
 package com.example.dayout.adapters.recyclers;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.util.Pair;
@@ -108,14 +109,18 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
         return list.size();
     }
 
+    @SuppressLint("NonConstantResourceId")
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.place_name)
         TextView placeName;
+
         @BindView(R.id.short_descrption)
         TextView shortDescrption;
+
         @BindView(R.id.image_slider)
         ImageSlider imageSlider;
+
         @BindView(R.id.add_favorite_btn)
         ImageButton addFavoriteButton;
 

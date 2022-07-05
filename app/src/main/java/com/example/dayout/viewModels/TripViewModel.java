@@ -11,7 +11,6 @@ import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.TripListModel;
-import com.example.dayout.models.trip.TripPost;
 import com.example.dayout.models.trip.tripType.TripTypeModel;
 import com.google.gson.JsonObject;
 
@@ -213,9 +212,9 @@ public class TripViewModel {
         });
     }
 
-    public void getPolls() {
+    public void getPolls(int page) {
         pollMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getPolls().enqueue(new Callback<PollsPaginationModel>() {
+        apiClient.getAPI().getPolls(page).enqueue(new Callback<PollsPaginationModel>() {
             @Override
             public void onResponse(Call<PollsPaginationModel> call, Response<PollsPaginationModel> response) {
                 if (response.isSuccessful()) {

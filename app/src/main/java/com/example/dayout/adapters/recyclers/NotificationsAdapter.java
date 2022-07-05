@@ -2,6 +2,7 @@ package com.example.dayout.adapters.recyclers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayout.R;
 import com.example.dayout.models.notification.NotificationData;
+import com.example.dayout.models.poll.PollsData;
+import com.example.dayout.models.room.notificationsRoom.database.NotificationsDatabase;
+import com.example.dayout.models.room.pollsRoom.databases.PollsDatabase;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.CompletableObserver;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.ViewHolder> {
 
@@ -42,6 +49,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        insertRoomObject(notifications.get(position));
+
         holder.notificationTitle.setText(notifications.get(position).title);
         holder.notificationDescription.setText(notifications.get(position).body);
     }
@@ -49,6 +58,29 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     @Override
     public int getItemCount() {
         return notifications.size();
+    }
+
+    public void insertRoomObject(NotificationData notification) {
+
+        // insert object in room database
+        NotificationsDatabase.getINSTANCE(context).iNotifications()
+                .insertNotification(notification)
+                .subscribeOn(Schedulers.computation()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.e("Notifications Adapter", "onError: " + e.toString());
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
