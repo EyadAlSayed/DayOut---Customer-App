@@ -112,5 +112,6 @@
     <string name="place_address">Place Address</string>
     <string name="place_description">Place Description</string>
     <string name="place_name_">Place Name:</string>
+    <string name="any">Any</string>
 
 </resources>

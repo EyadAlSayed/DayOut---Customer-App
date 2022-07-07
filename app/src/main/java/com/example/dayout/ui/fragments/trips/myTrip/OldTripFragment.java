@@ -24,6 +24,7 @@ import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.dialogs.notify.LoadingDialog;
+import com.example.dayout.ui.fragments.trips.myTrip.interfaces.IMyTrip;
 import com.example.dayout.viewModels.TripViewModel;
 import com.google.gson.JsonObject;
 
@@ -38,7 +39,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 @SuppressLint("NonConstantResourceId")
-public class OldTripFragment extends Fragment {
+public class OldTripFragment extends Fragment implements IMyTrip {
 
 
     OldTripAdapter adapter;
@@ -67,18 +68,24 @@ public class OldTripFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_old_trip, container, false);
         ButterKnife.bind(this, view);
         initView();
+        getDataFromApi(new JsonObject());
         return view;
     }
+
     public OldTripFragment(OldTripAdapter adapter) {
         this.adapter = adapter;
     }
 
-    
+    @Override
+    public void onResume() {
+        FilterFragment.iMyTrip = this;
+        super.onResume();
+    }
+
     private void initView(){
         pageNumber = 1;
         loadingDialog = new LoadingDialog(requireContext());
         initRc();
-        getDataFromApi();
     }
 
     private void initRc(){
@@ -133,10 +140,25 @@ public class OldTripFragment extends Fragment {
         pageLoadingBar.setVisibility(View.VISIBLE);
     }
 
-    private void getDataFromApi(){
+    private void getDataFromApi(JsonObject requestBody){
         loadingDialog.show();
-        TripViewModel.getINSTANCE().getHistoryTrips(new JsonObject(), pageNumber);
+        TripViewModel.getINSTANCE().getHistoryTrips(requestBody, pageNumber);
         TripViewModel.getINSTANCE().historyTripsMutableLiveData.observe(requireActivity(), historyTripsObserver);
+    }
+
+    private JsonObject getRequestBody(String place,String title,String type,String minPrice,String maxPrice){
+        JsonObject object = new JsonObject();
+        if (!place.equals(""))
+            object.addProperty("place", place);
+        if (!title.equals(""))
+            object.addProperty("title", title);
+        if (!type.equals(getString(R.string.any)))
+            object.addProperty("type", type);
+        if (!minPrice.equals(""))
+            object.addProperty("min_price", Integer.parseInt(minPrice));
+        if (!maxPrice.equals(""))
+            object.addProperty("max_price", Integer.parseInt(maxPrice));
+        return object;
     }
 
     private final Observer<Pair<TripPaginationModel, String>> historyTripsObserver = new Observer<Pair<TripPaginationModel, String>>() {
@@ -152,7 +174,7 @@ public class OldTripFragment extends Fragment {
                     } else {
                         oldTripsRefreshLayout.setVisibility(View.VISIBLE);
                         oldTripsNoHistory.setVisibility(View.GONE);
-                        adapter.refresh(tripModelStringPair.first.data.data);
+                        adapter.addAndRefresh(tripModelStringPair.first.data.data);
                     }
                     canPaginate = (tripModelStringPair.first.data.next_page_url != null);
                 } else {
@@ -172,7 +194,7 @@ public class OldTripFragment extends Fragment {
             if (newState == 1 && canPaginate) {    // is scrolling
                 pageNumber++;
                 showLoadingBar();
-                getDataFromApi();
+                getDataFromApi(new JsonObject());
                 canPaginate = false;
             }
 
@@ -185,4 +207,9 @@ public class OldTripFragment extends Fragment {
             super.onScrolled(recyclerView, dx, dy);
         }
     };
+
+    @Override
+    public void getTripInfo(String place, String title, String minPrice, String maxPrice, String tripType) {
+        getDataFromApi(getRequestBody(place,title,tripType,minPrice,maxPrice));
+    }
 }

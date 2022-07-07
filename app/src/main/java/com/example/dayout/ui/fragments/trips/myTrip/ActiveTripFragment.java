@@ -24,6 +24,7 @@ import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.dialogs.notify.LoadingDialog;
+import com.example.dayout.ui.fragments.trips.myTrip.interfaces.IMyTrip;
 import com.example.dayout.viewModels.TripViewModel;
 import com.google.gson.JsonObject;
 
@@ -38,7 +39,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 @SuppressLint("NonConstantResourceId")
-public class ActiveTripFragment extends Fragment {
+public class ActiveTripFragment extends Fragment implements IMyTrip {
 
     View view;
 
@@ -66,7 +67,14 @@ public class ActiveTripFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_active_trips, container, false);
         ButterKnife.bind(this, view);
         initView();
+        getDataFromApi(new JsonObject());
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        FilterFragment.iMyTrip = this;
+        super.onResume();
     }
 
     public ActiveTripFragment(ActiveTripAdapter adapter) {
@@ -77,7 +85,6 @@ public class ActiveTripFragment extends Fragment {
         pageNumber = 1;
         loadingDialog = new LoadingDialog(requireContext());
         initRc();
-        getDataFromApi();
     }
 
     private void initRc() {
@@ -118,9 +125,9 @@ public class ActiveTripFragment extends Fragment {
                 });
     }
 
-    private void getDataFromApi(){
+    private void getDataFromApi(JsonObject requestBody) {
         loadingDialog.show();
-        TripViewModel.getINSTANCE().getActiveTrips(new JsonObject(), pageNumber);
+        TripViewModel.getINSTANCE().getActiveTrips(requestBody, pageNumber);
         TripViewModel.getINSTANCE().activeTripsMutableLiveData.observe(requireActivity(), activeTripsObserver);
     }
 
@@ -144,6 +151,21 @@ public class ActiveTripFragment extends Fragment {
         pageLoadingBar.setVisibility(View.VISIBLE);
     }
 
+    private JsonObject getRequestBody(String place,String title,String type,String minPrice,String maxPrice){
+        JsonObject object = new JsonObject();
+        if (!place.equals(""))
+            object.addProperty("place", place);
+        if (!title.equals(""))
+            object.addProperty("title", title);
+        if (!type.equals(getString(R.string.any)))
+            object.addProperty("type", type);
+        if (!minPrice.equals(""))
+            object.addProperty("min_price", Integer.parseInt(minPrice));
+        if (!maxPrice.equals(""))
+            object.addProperty("max_price", Integer.parseInt(maxPrice));
+        return object;
+    }
+
     private final Observer<Pair<TripPaginationModel, String>> activeTripsObserver = new Observer<Pair<TripPaginationModel, String>>() {
         @Override
         public void onChanged(Pair<TripPaginationModel, String> tripModelStringPair) {
@@ -158,7 +180,7 @@ public class ActiveTripFragment extends Fragment {
                         activeTripsRefreshLayout.setVisibility(View.VISIBLE);
                         activeTripsNoActiveTrips.setVisibility(View.GONE);
                         setAsActive(tripModelStringPair.first.data.data);
-                        adapter.refresh(tripModelStringPair.first.data.data);
+                        adapter.addAndRefresh(tripModelStringPair.first.data.data);
                     }
                     canPaginate = (tripModelStringPair.first.data.next_page_url != null);
                 } else {
@@ -178,7 +200,7 @@ public class ActiveTripFragment extends Fragment {
             if (newState == 1 && canPaginate) {    // is scrolling
                 pageNumber++;
                 showLoadingBar();
-                getDataFromApi();
+                getDataFromApi(new JsonObject());
                 canPaginate = false;
             }
 
@@ -191,4 +213,9 @@ public class ActiveTripFragment extends Fragment {
             super.onScrolled(recyclerView, dx, dy);
         }
     };
+
+    @Override
+    public void getTripInfo(String place, String title, String minPrice, String maxPrice, String tripType) {
+        getDataFromApi(getRequestBody(place,title,tripType,minPrice,maxPrice));
+    }
 }

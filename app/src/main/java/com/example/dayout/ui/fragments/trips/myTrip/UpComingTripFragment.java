@@ -24,6 +24,7 @@ import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.dialogs.notify.LoadingDialog;
+import com.example.dayout.ui.fragments.trips.myTrip.interfaces.IMyTrip;
 import com.example.dayout.viewModels.TripViewModel;
 import com.google.gson.JsonObject;
 
@@ -38,7 +39,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 @SuppressLint("NonConstantResourceId")
-public class UpComingTripFragment extends Fragment {
+public class UpComingTripFragment extends Fragment implements IMyTrip {
 
 
     UpComingTripAdapter adapter;
@@ -67,6 +68,7 @@ public class UpComingTripFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_up_coming_trip, container, false);
         ButterKnife.bind(this, view);
         initView();
+        getDataFromApi(new JsonObject());
         return view;
     }
 
@@ -74,11 +76,16 @@ public class UpComingTripFragment extends Fragment {
         this.adapter = adapter;
     }
 
+    @Override
+    public void onResume() {
+        FilterFragment.iMyTrip = this;
+        super.onResume();
+    }
+
     private void initView(){
         pageNumber = 1;
         loadingDialog = new LoadingDialog(requireContext());
         initRc();
-        getDataFromApi();
     }
 
     private void initRc(){
@@ -139,9 +146,24 @@ public class UpComingTripFragment extends Fragment {
         }
     }
 
-    private void getDataFromApi(){
+    private JsonObject getRequestBody(String place,String title,String type,String minPrice,String maxPrice){
+        JsonObject object = new JsonObject();
+        if (!place.equals(""))
+            object.addProperty("place", place);
+        if (!title.equals(""))
+            object.addProperty("title", title);
+        if (!type.equals(getString(R.string.any)))
+            object.addProperty("type", type);
+        if (!minPrice.equals(""))
+            object.addProperty("min_price", Integer.parseInt(minPrice));
+        if (!maxPrice.equals(""))
+            object.addProperty("max_price", Integer.parseInt(maxPrice));
+        return object;
+    }
+
+    private void getDataFromApi(JsonObject requestBody){
         loadingDialog.show();
-        TripViewModel.getINSTANCE().getUpcomingTrips(new JsonObject(), pageNumber);
+        TripViewModel.getINSTANCE().getUpcomingTrips(requestBody, pageNumber);
         TripViewModel.getINSTANCE().upcomingTripsMutableLiveData.observe(requireActivity(), upcomingTripObserver);
     }
 
@@ -158,7 +180,7 @@ public class UpComingTripFragment extends Fragment {
                     } else {
                         upcomingTripsRefreshLayout.setVisibility(View.VISIBLE);
                         upcomingTripsNoTrips.setVisibility(View.GONE);
-                        adapter.refresh(listStringPair.first.data.data);
+                        adapter.addAndRefresh(listStringPair.first.data.data);
                         setAsUpcoming(listStringPair.first.data.data);
                     }
                     canPaginate = (listStringPair.first.data.next_page_url != null);
@@ -179,7 +201,7 @@ public class UpComingTripFragment extends Fragment {
             if (newState == 1 && canPaginate) {    // is scrolling
                 pageNumber++;
                 showLoadingBar();
-                getDataFromApi();
+                getDataFromApi(new JsonObject());
                 canPaginate = false;
             }
 
@@ -192,4 +214,9 @@ public class UpComingTripFragment extends Fragment {
             super.onScrolled(recyclerView, dx, dy);
         }
     };
+
+    @Override
+    public void getTripInfo(String place, String title, String minPrice, String maxPrice, String tripType) {
+        getDataFromApi(getRequestBody(place,title,tripType,minPrice,maxPrice));
+    }
 }
