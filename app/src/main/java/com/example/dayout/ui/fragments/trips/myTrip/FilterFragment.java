@@ -27,6 +27,7 @@ import com.example.dayout.models.trip.tripType.TripType;
 import com.example.dayout.models.trip.tripType.TripTypeModel;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.dialogs.notify.LoadingDialog;
+import com.example.dayout.ui.fragments.trips.myTrip.interfaces.IMyTrip;
 import com.example.dayout.viewModels.TripViewModel;
 import com.google.gson.JsonObject;
 
@@ -71,6 +72,8 @@ public class FilterFragment extends Fragment {
     OldTripAdapter oldTripAdapter;
 
     int filterType;
+
+    public static IMyTrip iMyTrip;
 
     public FilterFragment(ActiveTripAdapter activeTripAdapter, int type) {
         this.activeTripAdapter = activeTripAdapter;
@@ -135,11 +138,13 @@ public class FilterFragment extends Fragment {
     private final View.OnClickListener onFilterClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            loadingDialog.show();
-
-            showFilteredTrips();
-            FN.popStack(requireActivity());
             isFilterOpen = false;
+            iMyTrip.getTripInfo(placeName.getText().toString()
+                    , filterTitle.getText().toString()
+                    , filterMinPrice.getText().toString()
+                    , filterMaxPrice.getText().toString(),
+                    filterSpinner.getSelectedItem().toString());
+            FN.popStack(requireActivity());
         }
     };
 

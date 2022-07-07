@@ -46,6 +46,11 @@ public class ActiveTripAdapter extends RecyclerView.Adapter<ActiveTripAdapter.Vi
         notifyDataSetChanged();
     }
 
+    public void addAndRefresh(List<TripData> list){
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
