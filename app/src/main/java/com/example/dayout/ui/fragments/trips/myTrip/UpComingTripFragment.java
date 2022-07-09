@@ -190,7 +190,7 @@ public class UpComingTripFragment extends Fragment implements IMyTrip {
                 }
             } else {
                 getDataFromRoom();
-                new ErrorDialog(requireContext(), "Error Connection").show();
+                new ErrorDialog(requireContext(), getResources().getString(R.string.error_connection)).show();
             }
         }
     };

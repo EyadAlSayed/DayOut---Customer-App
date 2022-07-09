@@ -191,7 +191,7 @@ public class OrganizersListFragment extends Fragment {
                     getFollowedOrganizersFromRoom();
                 else
                     getOrganizersFromRoom();
-                new ErrorDialog(requireContext(), "Error Connection").show();
+                new ErrorDialog(requireContext(), getResources().getString(R.string.error_connection)).show();
             }
             hideLoadingBar();
         }

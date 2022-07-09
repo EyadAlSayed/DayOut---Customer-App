@@ -128,7 +128,7 @@ public class PollsFragment extends Fragment {
             }
             else {
                 getDataFromRoom();
-                new ErrorDialog(requireContext(),"Connection Error").show();
+                new ErrorDialog(requireContext(),getResources().getString(R.string.error_connection)).show();
             }
             hideLoadingBar();
 
