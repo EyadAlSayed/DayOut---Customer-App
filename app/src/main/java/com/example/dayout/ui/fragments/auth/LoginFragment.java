@@ -93,7 +93,7 @@ public class LoginFragment extends Fragment {
                     cacheData(loginModelStringPair.first.data.id,loginModelStringPair.first.data.token);
                     openMainActivity();
                 } else new ErrorDialog(requireContext(), loginModelStringPair.second).show();
-            } else new ErrorDialog(requireContext(), "Error connection").show();
+            } else new ErrorDialog(requireContext(), getResources().getString(R.string.error_connection)).show();
         }
     };
 

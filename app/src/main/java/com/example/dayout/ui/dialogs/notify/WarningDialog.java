@@ -80,7 +80,7 @@ public class WarningDialog extends Dialog {
                 } else
                     new ErrorDialog(context, booleanStringPair.second).show();
             } else
-                new ErrorDialog(context, "Error Connection").show();
+                new ErrorDialog(context, context.getResources().getString(R.string.error_connection)).show();
         }
     };
 

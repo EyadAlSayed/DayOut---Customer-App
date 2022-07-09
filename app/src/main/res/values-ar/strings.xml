@@ -103,4 +103,5 @@
     <string name="place_description">وصف المكان</string>
     <string name="place_name_">اسم المكان:</string>
     <string name="any">الكل</string>
+    <string name="error_connection">خظأ اتّصال</string>
 </resources>

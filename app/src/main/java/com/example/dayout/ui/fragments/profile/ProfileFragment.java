@@ -131,7 +131,7 @@ public class ProfileFragment extends Fragment {
                 }
             } else {
                 getDataFromRoom();
-                new ErrorDialog(requireContext(), "Error Connection").show();
+                new ErrorDialog(requireContext(), getResources().getString(R.string.error_connection)).show();
             }
         }
     };
