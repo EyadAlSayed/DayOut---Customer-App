@@ -65,7 +65,7 @@ public class AuthFragment extends Fragment {
 
     private final View.OnClickListener onSignUpClicked = v -> FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new SignUpFragment());
 
-    private final View.OnClickListener onPrivacyPolicyClicked = v -> NoteMessage.showSnackBar(requireActivity(), "There is no privacy policy");
+    private final View.OnClickListener onPrivacyPolicyClicked = v -> NoteMessage.showSnackBar(requireActivity(), getResources().getString(R.string.no_policy));
 
     private void openMainActivity() {
         requireActivity().startActivity(new Intent(requireActivity(), MainActivity.class));

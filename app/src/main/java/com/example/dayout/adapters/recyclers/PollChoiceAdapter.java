@@ -105,7 +105,7 @@ public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.Vi
 
                 if (booleanStringPair != null) {
                     if (booleanStringPair.first != null && booleanStringPair.first) {
-                        NoteMessage.showSnackBar((MainActivity) context, "Thanks for your vote ");
+                        NoteMessage.showSnackBar((MainActivity) context, context.getResources().getString(R.string.voted));
                         FN.popTopStack((MainActivity) context);
                     } else {
                         new ErrorDialog(context, booleanStringPair.second).show();
