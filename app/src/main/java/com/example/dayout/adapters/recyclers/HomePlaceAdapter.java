@@ -147,7 +147,7 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
                 if (booleanStringPair != null) {
                     if (booleanStringPair.first != null && booleanStringPair.first) {
                         addFavoriteButton.setVisibility(View.GONE);
-                        NoteMessage.message(context, "successful added");
+                        NoteMessage.message(context, context.getResources().getString(R.string.added_successfully));
                     } else new ErrorDialog(context, booleanStringPair.second).show();
                 } else new ErrorDialog(context, context.getResources().getString(R.string.error_connection)).show();
             }

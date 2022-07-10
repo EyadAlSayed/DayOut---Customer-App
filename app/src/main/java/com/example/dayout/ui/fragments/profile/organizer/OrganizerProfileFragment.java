@@ -223,11 +223,11 @@ public class OrganizerProfileFragment extends Fragment {
             if (booleanStringPair != null){
                 if (booleanStringPair.first != null){
                     if(followButton.getText().toString() == getResources().getString(R.string.follow)){
-                        NoteMessage.message(requireContext(), "Following " + data.user.first_name + " " + data.user.last_name);
+                        NoteMessage.message(requireContext(), getResources().getString(R.string.you_are_following) + " " + data.user.first_name + " " + data.user.last_name);
                         profileFollowersCount.setText(String.valueOf(increaseFollowers()));
                         followButton.setText(R.string.unfollow);
                     } else if(followButton.getText().toString() == getResources().getString(R.string.unfollow)){
-                        NoteMessage.message(requireContext(), "Unfollowed");
+                        NoteMessage.message(requireContext(), getResources().getString(R.string.unfollowed));
                         profileFollowersCount.setText(String.valueOf(decreaseFollowers()));
                         followButton.setText(R.string.follow);
                     }

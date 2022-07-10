@@ -186,11 +186,11 @@ public class ExploreFragment extends Fragment {
         boolean ok = true;
         if (searchView.getQuery().toString().isEmpty()){
             ok = false;
-            NoteMessage.showSnackBar(requireActivity(),"Search Text can not be empty");
+            NoteMessage.showSnackBar(requireActivity(),getResources().getString(R.string.empty_search_field));
         }
-        if (searchView.getQuery().toString().length() <= 3){
+        if (searchView.getQuery().toString().length() < 3){
             ok = false;
-            NoteMessage.showSnackBar(requireActivity(),"Search text can not be less than three letter");
+            NoteMessage.showSnackBar(requireActivity(),getResources().getString(R.string.at_least_three));
         }
 
         return  ok;

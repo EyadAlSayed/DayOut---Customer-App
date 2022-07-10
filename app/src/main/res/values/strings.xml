@@ -114,5 +114,21 @@
     <string name="place_name_">Place Name:</string>
     <string name="any">Any</string>
     <string name="error_connection">Error Connection</string>
+    <string name="unfollowed">Unfollowed</string>
+    <string name="added_successfully">Added Successfully</string>
+    <string name="voted">Voted</string>
+    <string name="reported">Reported</string>
+    <string name="booking_canceled">Booking Canceled</string>
+    <string name="no_policy">No Privacy Policy</string>
+    <string name="empty_search_field">Search field is empty</string>
+    <string name="at_least_three">3 letters at least</string>
+    <string name="you_are_following">Following</string>
+    <string name="at_least_one_passenger">At least one passenger allowed</string>
+    <string name="trip_booked">Trip Booked Successfully!</string>
+    <string name="active_cap">ACTIVE</string>
+    <string name="upcoming_cap">UPCOMING</string>
+    <string name="history_cap">HISTORY</string>
+    <string name="required">Required</string>
+    <string name="polls">Polls</string>
 
 </resources>

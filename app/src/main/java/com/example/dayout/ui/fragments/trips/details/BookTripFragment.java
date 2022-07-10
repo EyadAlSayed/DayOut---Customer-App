@@ -75,7 +75,7 @@ public class BookTripFragment extends Fragment {
 
     private boolean validBooking(){
         if (bookTripPassengersLayout.getChildCount() < 1){
-            NoteMessage.showSnackBar(requireActivity(), "At least one passenger allowed.");
+            NoteMessage.showSnackBar(requireActivity(), getResources().getString(R.string.at_least_one_passenger));
             return false;
         }
         return true;
@@ -100,7 +100,7 @@ public class BookTripFragment extends Fragment {
         public void onChanged(Pair<ResponseBody, String> booleanStringPair) {
             if(booleanStringPair != null){
                 if(booleanStringPair.first != null){
-                    new SuccessDialog(requireContext(), "Trip Booked Successfully!").show();
+                    new SuccessDialog(requireContext(), getResources().getString(R.string.trip_booked)).show();
                     FN.popStack(requireActivity());
                 } else
                     new ErrorDialog(requireContext(), booleanStringPair.second).show();

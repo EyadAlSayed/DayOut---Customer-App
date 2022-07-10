@@ -104,4 +104,21 @@
     <string name="place_name_">اسم المكان:</string>
     <string name="any">الكل</string>
     <string name="error_connection">خظأ اتّصال</string>
+    <string name="unfollowed">تم إلغاء المتابعة</string>
+    <string name="added_successfully">تمّت الإضافة</string>
+    <string name="voted">تم التصويت</string>
+    <string name="reported">تم التبليغ عن</string>
+    <string name="booking_canceled">تم إلغاء الحجز</string>
+    <string name="no_policy">لا يوجد سياسة خصوصية</string>
+    <string name="empty_search_field">حقل البحث فارغ</string>
+    <string name="at_least_three">3 حروف على الأقل</string>
+    <string name="you_are_following">تمّت متابعة</string>
+    <string name="at_least_one_passenger">يسمح بمسافر واحد على الأقل</string>
+    <string name="trip_booked">تم الحجز في الرّحلة</string>
+    <string name="active_cap">حاليّة</string>
+    <string name="upcoming_cap">فادمة</string>
+    <string name="history_cap">قديمة</string>
+    <string name="required">الحقل مطلوب</string>
+    <string name="polls">الاستبيانات</string>
+
 </resources>

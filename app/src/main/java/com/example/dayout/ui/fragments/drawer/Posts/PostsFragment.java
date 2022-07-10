@@ -64,12 +64,12 @@ public class PostsFragment extends Fragment {
         new TabLayoutMediator(postTabLayout, postViewPager, (tab, position) -> {
             switch (position) {
                 case 0: {
-                    tab.setText("Post");
+                    tab.setText(R.string.posts);
 
                     break;
                 }
                 case 1: {
-                    tab.setText("Poll");
+                    tab.setText(R.string.polls);
 
                     break;
                 }
