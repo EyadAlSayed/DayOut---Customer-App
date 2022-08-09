@@ -130,5 +130,8 @@
     <string name="history_cap">HISTORY</string>
     <string name="required">Required</string>
     <string name="polls">Polls</string>
+    <string name="votes">Votes</string>
+    <string name="vote">Vote</string>
+    <string name="description">Description</string>
 
 </resources>

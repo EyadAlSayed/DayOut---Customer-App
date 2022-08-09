@@ -86,7 +86,7 @@
     <string name="submit">تثبيت</string>
     <string name="passenger_name">اسم المسافر</string>
     <string name="cancel_booking">إلغاء الحجز</string>
-    <string name="find_organizer">بحث على منظّم</string>
+    <string name="find_organizer">بحث عن منظّم</string>
     <string name="rate">التقييم</string>
     <string name="rate_">التقييم:</string>
     <string name="biography">السيرة الذاتية</string>
@@ -120,5 +120,8 @@
     <string name="history_cap">قديمة</string>
     <string name="required">الحقل مطلوب</string>
     <string name="polls">الاستبيانات</string>
+    <string name="votes">التصويتات</string>
+    <string name="vote">صوّت</string>
+    <string name="description">التوصيف</string>
 
 </resources>

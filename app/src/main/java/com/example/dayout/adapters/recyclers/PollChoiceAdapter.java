@@ -73,14 +73,18 @@ public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.Vi
         return list.size();
     }
 
+    @SuppressLint("NonConstantResourceId")
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.vote_title)
         TextView voteTitle;
+
         @BindView(R.id.progressBar)
         ProgressBar progressBar;
+
         @BindView(R.id.vote_percentage)
         TextView votePercentage;
+
         @BindView(R.id.vote_btn)
         Button voteButton;
 
