@@ -16,9 +16,6 @@ import butterknife.BindView;
 
 public class LoadingDialog extends Dialog {
 
-    String successMessage;
-
-
     public LoadingDialog(@NonNull Context context) {
         super(context);
         setContentView(R.layout.loading_dialog);
