@@ -201,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/transparent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/rate_icon" />
 
@@ -210,9 +210,29 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="@+id/organizer_profile_rate_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/organizer_profile_rate_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/organizer_profile_rate_icon"
                     app:layout_constraintTop_toTopOf="@id/organizer_profile_rate_icon">
+
+                    <TextView
+                        android:id="@+id/tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/acme"
+                        android:paddingStart="@dimen/_20sdp"
+                        android:text="@string/out_of_5"
+                        android:textSize="@dimen/_20ssp" />
+
+                    <TextView
+                        android:id="@+id/organizer_profile_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/acme"
+                        android:gravity="start|center_vertical"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:textColor="@color/orange_700"
+                        android:textSize="@dimen/_20ssp" />
 
                     <TextView
                         android:id="@+id/textView70"
@@ -223,26 +243,6 @@
                         android:text="@string/rate"
                         android:textSize="@dimen/_17ssp" />
 
-                    <TextView
-                        android:id="@+id/organizer_profile_rate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/acme"
-                        android:gravity="end|center_vertical"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:textColor="@color/orange_700"
-                        android:textSize="@dimen/_20ssp" />
-
-                    <TextView
-                        android:id="@+id/tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/acme"
-                        android:paddingEnd="@dimen/_20sdp"
-                        android:text="@string/out_of_5"
-                        android:textSize="@dimen/_20ssp" />
-
                 </LinearLayout>
 
                 <ImageButton
@@ -252,7 +252,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/transparent"
-                    app:layout_constraintStart_toStartOf="@id/organizer_profile_rate_icon"
+                    app:layout_constraintEnd_toEndOf="@id/organizer_profile_rate_icon"
                     app:layout_constraintTop_toBottomOf="@id/organizer_profile_rate_icon"
                     app:srcCompat="@drawable/gender_icon_2" />
 
@@ -261,9 +261,20 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="@+id/organizer_profile_gender_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/organizer_profile_gender_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/organizer_profile_gender_icon"
                     app:layout_constraintTop_toTopOf="@id/organizer_profile_gender_icon">
+
+                    <TextView
+                        android:id="@+id/organizer_profile_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/acme"
+                        android:gravity="start|center_vertical"
+                        android:paddingStart="@dimen/_20sdp"
+                        android:textColor="@color/orange_700"
+                        android:textSize="@dimen/_20ssp" />
 
                     <TextView
                         android:id="@+id/textView7"
@@ -274,17 +285,6 @@
                         android:text="@string/gender"
                         android:textSize="@dimen/_17ssp" />
 
-                    <TextView
-                        android:id="@+id/organizer_profile_gender"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/acme"
-                        android:gravity="end|center_vertical"
-                        android:paddingEnd="@dimen/_20sdp"
-                        android:textColor="@color/orange_700"
-                        android:textSize="@dimen/_20ssp" />
-
                 </LinearLayout>
 
                 <ImageButton
@@ -294,7 +294,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/transparent"
-                    app:layout_constraintStart_toStartOf="@+id/organizer_profile_gender_icon"
+                    app:layout_constraintEnd_toEndOf="@+id/organizer_profile_gender_icon"
                     app:layout_constraintTop_toBottomOf="@id/organizer_profile_gender_icon"
                     app:srcCompat="@drawable/phone_icon" />
 
@@ -304,9 +304,20 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="@+id/organizer_profile_phone_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/organizer_profile_phone_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/organizer_profile_phone_icon"
                     app:layout_constraintTop_toTopOf="@+id/organizer_profile_phone_icon">
+
+                    <TextView
+                        android:id="@+id/organizer_profile_phone_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/acme"
+                        android:gravity="start"
+                        android:paddingStart="@dimen/_20sdp"
+                        android:textColor="@color/orange_700"
+                        android:textSize="@dimen/_20ssp" />
 
                     <TextView
                         android:id="@+id/textView12"
@@ -317,16 +328,6 @@
                         android:text="@string/phone_number"
                         android:textSize="@dimen/_17ssp" />
 
-                    <TextView
-                        android:id="@+id/organizer_profile_phone_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/acme"
-                        android:gravity="end"
-                        android:paddingEnd="@dimen/_20sdp"
-                        android:textColor="@color/orange_700"
-                        android:textSize="@dimen/_20ssp" />
                 </LinearLayout>
 
                 <ImageButton
@@ -335,7 +336,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:backgroundTint="@color/transparent"
-                    app:layout_constraintStart_toStartOf="@+id/organizer_profile_phone_icon"
+                    app:layout_constraintEnd_toEndOf="@+id/organizer_profile_phone_icon"
                     app:layout_constraintTop_toBottomOf="@+id/organizer_profile_phone_icon"
                     app:srcCompat="@drawable/email_icon" />
 
@@ -348,8 +349,8 @@
                     android:text="@string/email"
                     android:textSize="@dimen/_17ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/organizer_profile_email_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/organizer_profile_email_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/organizer_profile_email_icon"
                     app:layout_constraintTop_toTopOf="@+id/organizer_profile_email_icon" />
 
                 <TextView
@@ -359,13 +360,13 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/acme"
                     android:gravity="top|start"
-                    android:paddingEnd="@dimen/_20sdp"
+                    android:paddingStart="@dimen/_20sdp"
                     android:paddingBottom="@dimen/_5sdp"
                     android:textColor="@color/orange_700"
                     android:textSize="@dimen/_20ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/organizer_profile_email_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/organizer_profile_email_icon"
                     app:layout_constraintTop_toBottomOf="@+id/organizer_profile_email_icon" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

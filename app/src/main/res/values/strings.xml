@@ -98,7 +98,7 @@
     <string name="find_organizer">Find an organizer</string>
     <string name="rate">Rate</string>
     <string name="rate_">Rate:</string>
-    <string name="out_of_5" translatable="false">/5</string>
+    <string name="out_of_5" translatable="false">5/</string>
     <string name="biography">Biography</string>
     <string name="follow">Follow</string>
     <string name="unfollow">Un Follow</string>
