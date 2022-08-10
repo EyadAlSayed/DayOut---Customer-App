@@ -122,7 +122,7 @@ public class FavoritePlaceAdapter extends RecyclerView.Adapter<FavoritePlaceAdap
                     if (booleanStringPair.first != null && booleanStringPair.first) {
                         notifyItemRemoved(getAdapterPosition());
                     } else new ErrorDialog(context, booleanStringPair.second).show();
-                } else new ErrorDialog(context, "connection error").show();
+                } else new ErrorDialog(context, context.getResources().getString(R.string.error_connection)).show();
             }
         };
 

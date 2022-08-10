@@ -1,6 +1,8 @@
 package com.example.dayout.ui.fragments.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.dayout.R;
 import com.example.dayout.models.popualrPlace.PlaceData;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
+import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
 import com.example.dayout.models.trip.place.PlaceDetailsModel;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
@@ -26,13 +29,19 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
 
+@SuppressLint("NonConstantResourceId")
 public class PlaceInfoFragment extends Fragment {
 
-
     View view;
+
     @BindView(R.id.image_slider)
     ImageSlider imageSlider;
     @BindView(R.id.place_full_info_txt)
@@ -48,12 +57,13 @@ public class PlaceInfoFragment extends Fragment {
 //    }
 
     int placeId;
+
     public PlaceInfoFragment(int placeId){
         this.placeId = placeId;
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_place_info, container, false);
         ButterKnife.bind(this, view);
@@ -98,14 +108,39 @@ public class PlaceInfoFragment extends Fragment {
                  initInfo(placeDetailsModelStringPair.first.data);
                 }
                 else {
-                    new ErrorDialog(requireContext(),"Error Connection").show();
+                    getDataFromRoom();
+                    new ErrorDialog(requireContext(),placeDetailsModelStringPair.second).show();
                 }
             }
             else {
-                new ErrorDialog(requireContext(),"Error Connection").show();
+                getDataFromRoom();
+                new ErrorDialog(requireContext(),getResources().getString(R.string.error_connection)).show();
             }
         }
     };
 
+    private void getDataFromRoom(){
+        PopularPlaceDataBase.getINSTANCE(requireContext())
+                .iPopularPlaces()
+                .getPlace(placeId)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<PlaceData>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull PlaceData data) {
+                        initInfo(data);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e("getter place roomDB", "onError: " + e.toString());
+                    }
+                });
+    }
 
 }

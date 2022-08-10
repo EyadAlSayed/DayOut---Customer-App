@@ -18,7 +18,6 @@ import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPostAdapter;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.models.trip.TripPaginationModel;
-import com.example.dayout.models.trip.TripPost;
 import com.example.dayout.models.trip.tripType.TripType;
 import com.example.dayout.models.trip.tripType.TripTypeModel;
 import com.example.dayout.viewModels.TripViewModel;

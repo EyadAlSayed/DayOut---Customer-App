@@ -97,12 +97,12 @@ public class ReportDialog extends Dialog {
             loadingDialog.dismiss();
             if (booleanStringPair != null) {
                 if (booleanStringPair.first != null) {
-                    NoteMessage.message(getContext(), customerName + " was reported.");
+                    NoteMessage.message(getContext(), getContext().getResources().getString(R.string.reported) + " " + customerName);
                     dismiss();
                 } else
                     new ErrorDialog(getContext(), booleanStringPair.second).show();
             } else
-                new ErrorDialog(getContext(), "Error Connection").show();
+                new ErrorDialog(getContext(), getContext().getResources().getString(R.string.error_connection)).show();
         }
     };
 

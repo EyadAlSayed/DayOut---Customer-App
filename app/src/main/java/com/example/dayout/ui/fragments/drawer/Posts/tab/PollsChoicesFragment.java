@@ -32,8 +32,10 @@ public class PollsChoicesFragment extends Fragment {
 
     @BindView(R.id.votes_back_button)
     ImageButton arrowBack;
+
     @BindView(R.id.poll_title)
     TextView pollTitle;
+
     @BindView(R.id.poll_choice_rc)
     RecyclerView pollChoiceRc;
 
@@ -45,8 +47,7 @@ public class PollsChoicesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_polls_choices, container, false);
         ButterKnife.bind(this, view);

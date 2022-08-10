@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,19 +21,25 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dayout.R;
 import com.example.dayout.adapters.recyclers.TripPollAdapter;
+import com.example.dayout.models.poll.PollsData;
 import com.example.dayout.models.poll.PollsPaginationModel;
+import com.example.dayout.models.room.pollsRoom.databases.PollsDatabase;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.viewModels.TripViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 @SuppressLint("NonConstantResourceId")
 public class PollsFragment extends Fragment {
-
 
     View view;
 
@@ -77,8 +84,32 @@ public class PollsFragment extends Fragment {
         initRc();
     }
 
+    private void getDataFromRoom() {
+        PollsDatabase.getINSTANCE(requireContext())
+                .iPolls()
+                .getPolls()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<PollsData>>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@io.reactivex.annotations.NonNull List<PollsData> data) {
+                        tripPollAdapter.refresh(data);
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        Log.e("getter polls roomDB", "onError: " + e.toString());
+                    }
+                });
+    }
+
     private void getDataFromApi(){
-        TripViewModel.getINSTANCE().getPolls();
+        TripViewModel.getINSTANCE().getPolls(pageNumber);
         TripViewModel.getINSTANCE().pollMutableLiveData.observe(requireActivity(),pollsObserver);
     }
 
@@ -91,11 +122,13 @@ public class PollsFragment extends Fragment {
                     canPaginate = (pollStringPair.first.data.next_page_url != null);
                 }
                 else {
+                    getDataFromRoom();
                     new ErrorDialog(requireContext(),pollStringPair.second).show();
                 }
             }
             else {
-                new ErrorDialog(requireContext(),"Connection Error").show();
+                getDataFromRoom();
+                new ErrorDialog(requireContext(),getResources().getString(R.string.error_connection)).show();
             }
             hideLoadingBar();
 

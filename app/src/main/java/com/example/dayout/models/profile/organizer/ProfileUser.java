@@ -3,6 +3,9 @@ package com.example.dayout.models.profile.organizer;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import static com.example.dayout.config.AppConstants.PROFILE_USER;
+
+@Entity(tableName = PROFILE_USER)
 public class ProfileUser {
 
     @PrimaryKey(autoGenerate = true)

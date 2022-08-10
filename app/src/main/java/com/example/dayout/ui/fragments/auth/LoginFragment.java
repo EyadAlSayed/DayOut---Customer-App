@@ -1,5 +1,6 @@
 package com.example.dayout.ui.fragments.auth;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -33,31 +34,37 @@ import butterknife.ButterKnife;
 
 import static com.example.dayout.config.AppConstants.AUTH_FRC;
 
-
+@SuppressLint("NonConstantResourceId")
 public class LoginFragment extends Fragment {
 
 
     View view;
+
     @BindView(R.id.create_account_txt)
     TextView createAccountTxt;
+
     @BindView(R.id.user_name)
     TextInputEditText userName;
+
     @BindView(R.id.user_name_textlayout)
     TextInputLayout userNameTextlayout;
+
     @BindView(R.id.password)
     TextInputEditText password;
+
     @BindView(R.id.password_textlayout)
     TextInputLayout passwordTextlayout;
+
     @BindView(R.id.remember_me_switch)
     Switch rememberMeSwitch;
+
     @BindView(R.id.login_btn)
     Button loginButton;
 
     LoadingDialog loadingDialog;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
@@ -93,7 +100,7 @@ public class LoginFragment extends Fragment {
                     cacheData(loginModelStringPair.first.data.id,loginModelStringPair.first.data.token);
                     openMainActivity();
                 } else new ErrorDialog(requireContext(), loginModelStringPair.second).show();
-            } else new ErrorDialog(requireContext(), "Error connection").show();
+            } else new ErrorDialog(requireContext(), getResources().getString(R.string.error_connection)).show();
         }
     };
 
@@ -142,18 +149,18 @@ public class LoginFragment extends Fragment {
         if (userName.getText().toString().isEmpty()) {
             ok = false;
             userNameTextlayout.setErrorEnabled(true);
-            userNameTextlayout.setError("This filed is required");
+            userNameTextlayout.setError(getResources().getString(R.string.required));
         } else if (!checkSyrianNumber()) {
             ok = false;
             userNameTextlayout.setErrorEnabled(true);
-            userNameTextlayout.setError("Phone number is not correct");
+            userNameTextlayout.setError(getResources().getString(R.string.not_a_phone_number));
         }
 
 
         if (password.getText().toString().isEmpty()) {
             ok = false;
             passwordTextlayout.setErrorEnabled(true);
-            passwordTextlayout.setError("This filed is required");
+            passwordTextlayout.setError(getResources().getString(R.string.required));
         } else passwordTextlayout.setErrorEnabled(false);
 
         return ok;

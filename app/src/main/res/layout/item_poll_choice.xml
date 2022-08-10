@@ -8,7 +8,8 @@
     android:background="@drawable/rounded_shape"
     android:backgroundTint="@color/rose_200"
     android:elevation="@dimen/_3sdp"
-    android:padding="@dimen/_10sdp">
+    android:padding="@dimen/_10sdp"
+    android:layout_margin="@dimen/_5sdp">
 
     <TextView
         android:id="@+id/vote_title"
@@ -49,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_20sdp"
         android:background="@drawable/rounded_shape"
-        android:text="Vote"
+        android:text="@string/vote"
         android:textColor="@color/white"
         android:textSize="@dimen/_12ssp"
         app:backgroundTint="@color/orange_500"

@@ -23,6 +23,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.CompletableObserver;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
@@ -56,11 +59,15 @@ public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull OrganizersAdapter.ViewHolder holder, int position) {
+        insertRoomObject(organizers.get(position));
+
         String name = organizers.get(position).user.first_name + " " + organizers.get(position).user.last_name;
 
         downloadUserImage(organizers.get(position).user.photo, holder.photo);
         holder.name.setText(name);
         holder.rate.setText(String.valueOf(roundRating(organizers.get(position).rating)));
+
+        organizers.get(position).isOrganizer = true;
     }
 
     @Override
@@ -75,6 +82,29 @@ public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.Vi
 
     private float roundRating(float rating){
         return (float) (Math.round(rating * 10) / 10.0);
+    }
+
+    public void insertRoomObject(ProfileData organizer) {
+
+        // insert object in room database
+        ((MainActivity) context).iOrganizers
+                .insertOrganizer(organizer)
+                .subscribeOn(Schedulers.computation()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")

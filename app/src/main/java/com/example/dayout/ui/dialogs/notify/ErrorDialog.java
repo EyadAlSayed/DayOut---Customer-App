@@ -36,7 +36,6 @@ public class ErrorDialog extends Dialog {
         setContentView(R.layout.error_dialog);
         ButterKnife.bind(this);
         setCancelable(false);
-        ButterKnife.bind(this);
         initView(errorMessage);
     }
 

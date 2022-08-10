@@ -5,7 +5,6 @@ import com.example.dayout.models.authModels.LoginModel;
 
 import com.example.dayout.models.notification.NotificationModel;
 import com.example.dayout.models.poll.PollsPaginationModel;
-import com.example.dayout.models.popualrPlace.PlaceData;
 import com.example.dayout.models.profile.ProfileData;
 import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.popualrPlace.PlaceModel;
@@ -16,7 +15,6 @@ import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.models.trip.place.PlaceDetailsModel;
 import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
-import com.example.dayout.models.trip.TripListModel;
 import com.example.dayout.models.trip.tripType.TripTypeModel;
 import com.google.gson.JsonObject;
 
@@ -42,15 +40,6 @@ public interface API {
     @GET("api/user/profile/customer/{id}")
     Call<ProfileModel> getPassengerProfile(@Path("id") int id);
 
-    @GET("api/trip/upcoming/customer")
-    Call<TripListModel> getUpcomingTrips(@Query("type") String type);
-
-    @GET("api/trip/active/customer")
-    Call<TripListModel> getActiveTrips(@Query("type") String type);
-
-    @GET("api/trip/history/customer")
-    Call<TripListModel> getHistoryTrips(@Query("type") String type);
-
     @GET("api/trip/types")
     Call<TripTypeModel> getTripType();
 
@@ -73,16 +62,16 @@ public interface API {
     Call<PlaceDetailsModel> getPlaceDetails(@Path("id") int id);
 
     @GET("api/polls")
-    Call<PollsPaginationModel> getPolls();
+    Call<PollsPaginationModel> getPolls(@Query("page") int page);
 
     @GET("api/favorites/places")
     Call<PlaceModel> getFavoritePlace();
 
     @GET("api/organizer/index")
-    Call<OrganizersModel> getAllOrganizers();
+    Call<OrganizersModel> getAllOrganizers(@Query("page") int page);
 
     @GET("api/followers")
-    Call<OrganizersModel> getAllFollowedOrganizers();
+    Call<OrganizersModel> getAllFollowedOrganizers(@Query("page") int page);
 
 
     /**
@@ -112,8 +101,16 @@ public interface API {
     Call<ResponseBody> reportUser(@Body JsonObject object);
 
     @POST("api/search/place")
-    Call<SearchPlaceModel> searchForPlace(@Body JsonObject searchPlaceObj);
+    Call<SearchPlaceModel> searchForPlace(@Body JsonObject searchPlaceObj, @Query("page") int page);
 
+    @POST("api/trip/upcoming/customer")
+    Call<TripPaginationModel> getUpcomingTrips(@Body JsonObject filterModel, @Query("page") int page, @Query("type") String type);
+
+    @POST("api/trip/active/customer")
+    Call<TripPaginationModel> getActiveTrips(@Body JsonObject filterModel, @Query("page") int page, @Query("type") String type);
+
+    @POST("api/trip/history/customer")
+    Call<TripPaginationModel> getHistoryTrips(@Body JsonObject filterModel, @Query("page") int page, @Query("type") String type);
 
     /**
      * Put Request

@@ -1,5 +1,6 @@
 package com.example.dayout.ui.fragments.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -35,11 +36,12 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-
+@SuppressLint("NonConstantResourceId")
 public class HomeFragment extends Fragment {
 
 
     View view;
+
     @BindView(R.id.home_place_rc)
     RecyclerView homePlaceRc;
 
@@ -118,7 +120,7 @@ public class HomeFragment extends Fragment {
                 }
             } else {
                getDataFromRoom();
-                new ErrorDialog(requireContext(), "connection error").show();
+                new ErrorDialog(requireContext(), getResources().getString(R.string.error_connection)).show();
             }
         }
     };

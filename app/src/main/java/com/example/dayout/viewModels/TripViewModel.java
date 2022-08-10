@@ -10,8 +10,6 @@ import com.example.dayout.models.trip.BookTripModel;
 import com.example.dayout.models.trip.TripPaginationModel;
 import com.example.dayout.models.trip.roadMap.RoadMapModel;
 import com.example.dayout.models.trip.TripDetailsModel;
-import com.example.dayout.models.trip.TripListModel;
-import com.example.dayout.models.trip.TripPost;
 import com.example.dayout.models.trip.tripType.TripTypeModel;
 import com.google.gson.JsonObject;
 
@@ -32,9 +30,9 @@ public class TripViewModel {
 
     public static final String TRIP_PHOTOS_URL = BASE_URL + "api/trip/photo/";
 
-    public MutableLiveData<Pair<TripListModel, String>> upcomingTripsMutableLiveData;
-    public MutableLiveData<Pair<TripListModel, String>> activeTripsMutableLiveData;
-    public MutableLiveData<Pair<TripListModel, String>> historyTripsMutableLiveData;
+    public MutableLiveData<Pair<TripPaginationModel, String>> upcomingTripsMutableLiveData;
+    public MutableLiveData<Pair<TripPaginationModel, String>> activeTripsMutableLiveData;
+    public MutableLiveData<Pair<TripPaginationModel, String>> historyTripsMutableLiveData;
     public MutableLiveData<Pair<TripPaginationModel, String>> tripPostMutableLiveData;
     public MutableLiveData<Pair<TripTypeModel, String>> tripTypeTripMutableLiveData;
     public MutableLiveData<Pair<ResponseBody, String>> rateTripMutableLiveData;
@@ -52,11 +50,11 @@ public class TripViewModel {
         return instance;
     }
 
-    public void getUpcomingTrips() {
+    public void getUpcomingTrips(JsonObject filterModel, int page) {
         upcomingTripsMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getUpcomingTrips("customer").enqueue(new Callback<TripListModel>() {
+        apiClient.getAPI().getUpcomingTrips(filterModel, page, "customer").enqueue(new Callback<TripPaginationModel>() {
             @Override
-            public void onResponse(Call<TripListModel> call, Response<TripListModel> response) {
+            public void onResponse(Call<TripPaginationModel> call, Response<TripPaginationModel> response) {
                 if (response.isSuccessful()) {
                     upcomingTripsMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
@@ -69,17 +67,17 @@ public class TripViewModel {
             }
 
             @Override
-            public void onFailure(Call<TripListModel> call, Throwable t) {
+            public void onFailure(Call<TripPaginationModel> call, Throwable t) {
                 upcomingTripsMutableLiveData.setValue(null);
             }
         });
     }
 
-    public void getActiveTrips() {
+    public void getActiveTrips(JsonObject filterModel, int page) {
         activeTripsMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getActiveTrips("customer").enqueue(new Callback<TripListModel>() {
+        apiClient.getAPI().getActiveTrips(filterModel, page,"customer").enqueue(new Callback<TripPaginationModel>() {
             @Override
-            public void onResponse(Call<TripListModel> call, Response<TripListModel> response) {
+            public void onResponse(Call<TripPaginationModel> call, Response<TripPaginationModel> response) {
                 if (response.isSuccessful()) {
                     activeTripsMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
@@ -92,17 +90,17 @@ public class TripViewModel {
             }
 
             @Override
-            public void onFailure(Call<TripListModel> call, Throwable t) {
+            public void onFailure(Call<TripPaginationModel> call, Throwable t) {
                 activeTripsMutableLiveData.setValue(null);
             }
         });
     }
 
-    public void getHistoryTrips() {
+    public void getHistoryTrips(JsonObject filterModel, int page) {
         historyTripsMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getHistoryTrips("customer").enqueue(new Callback<TripListModel>() {
+        apiClient.getAPI().getHistoryTrips(filterModel, page, "customer").enqueue(new Callback<TripPaginationModel>() {
             @Override
-            public void onResponse(Call<TripListModel> call, Response<TripListModel> response) {
+            public void onResponse(Call<TripPaginationModel> call, Response<TripPaginationModel> response) {
                 if (response.isSuccessful()) {
                     historyTripsMutableLiveData.setValue(new Pair<>(response.body(), null));
                 } else {
@@ -115,7 +113,7 @@ public class TripViewModel {
             }
 
             @Override
-            public void onFailure(Call<TripListModel> call, Throwable t) {
+            public void onFailure(Call<TripPaginationModel> call, Throwable t) {
                 historyTripsMutableLiveData.setValue(null);
             }
         });
@@ -213,9 +211,9 @@ public class TripViewModel {
         });
     }
 
-    public void getPolls() {
+    public void getPolls(int page) {
         pollMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().getPolls().enqueue(new Callback<PollsPaginationModel>() {
+        apiClient.getAPI().getPolls(page).enqueue(new Callback<PollsPaginationModel>() {
             @Override
             public void onResponse(Call<PollsPaginationModel> call, Response<PollsPaginationModel> response) {
                 if (response.isSuccessful()) {

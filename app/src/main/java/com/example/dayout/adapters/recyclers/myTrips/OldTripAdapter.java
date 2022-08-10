@@ -44,6 +44,11 @@ public class OldTripAdapter extends RecyclerView.Adapter<OldTripAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    public void addAndRefresh(List<TripData> list){
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

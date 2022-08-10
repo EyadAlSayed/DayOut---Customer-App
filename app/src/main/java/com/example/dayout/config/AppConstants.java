@@ -54,4 +54,36 @@ public class AppConstants {
     public static final String PROFILE_TABLE = "profile_table";
     public static final String PROFILE_DATA = "profile_data";
 
+    //polls keys
+    public static final String POLL_DB = "poll_database";
+    public static final String POLL_TABLE = "poll_table";
+    public static final String POLL_PAGINATION_DATA = "poll_pagination_data";
+    public static final String POLL_DATA = "poll_data";
+    public static final String POLL_CHOICE = "poll_choice";
+
+    //trip keys
+    public static final String TRIP_DB = "trip_database";
+    public static final String TRIP_TABLE = "trip_table";
+    public static final String TRIP_PAGINATION_DATA = "trip_pagination_data";
+    public static final String TRIP_DATA = "trip_data";
+    public static final String TRIP_TYPE = "trip_type";
+    public static final String PLACE_TRIP_DATA = "place_trip_data";
+    public static final String TRIP_PHOTO_DATA = "trip_photo_data";
+    public static final String CUSTOMER_TRIP = "customer_trip";
+
+    //notifications keys
+    public static final String NOTIFICATIONS_DB = "notifications_database";
+    public static final String NOTIFICATIONS_TABLE = "notifications_table";
+    public static final String NOTIFICATIONS_DATA = "notifications_data";
+
+    //road map keys
+    public static final String ROAD_MAP_DB = "road_map_database";
+    public static final String ROAD_MAP_TABLE = "road_map_table";
+    public static final String ROAD_MAP_DATA = "road_map_data";
+
+    //organizers keys
+    public static final String ORGANIZERS_DB = "organizers_database";
+    public static final String ORGANIZERS_TABLE = "organizers_table";
+    public static final String ORGANIZERS_DATA = "organizers_data";
+    public static final String PROFILE_USER = "profile_user";
 }

@@ -13,7 +13,7 @@ import com.example.dayout.models.room.profileRoom.interfaces.IProfileModel;
 
 import static com.example.dayout.config.AppConstants.PROFILE_DB;
 
-@Database(entities = {ProfileModel.class, ProfileData.class}, version = 1)
+@Database(entities = {ProfileModel.class, ProfileData.class}, exportSchema = false, version = 1)
 abstract public class ProfileDatabase extends RoomDatabase {
 
     private static ProfileDatabase instance;

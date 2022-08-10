@@ -73,14 +73,18 @@ public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.Vi
         return list.size();
     }
 
+    @SuppressLint("NonConstantResourceId")
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.vote_title)
         TextView voteTitle;
+
         @BindView(R.id.progressBar)
         ProgressBar progressBar;
+
         @BindView(R.id.vote_percentage)
         TextView votePercentage;
+
         @BindView(R.id.vote_btn)
         Button voteButton;
 
@@ -105,13 +109,13 @@ public class PollChoiceAdapter extends RecyclerView.Adapter<PollChoiceAdapter.Vi
 
                 if (booleanStringPair != null) {
                     if (booleanStringPair.first != null && booleanStringPair.first) {
-                        NoteMessage.showSnackBar((MainActivity) context, "Thanks for your vote ");
+                        NoteMessage.showSnackBar((MainActivity) context, context.getResources().getString(R.string.voted));
                         FN.popTopStack((MainActivity) context);
                     } else {
                         new ErrorDialog(context, booleanStringPair.second).show();
                     }
                 } else {
-                    new ErrorDialog(context, "Connection Error").show();
+                    new ErrorDialog(context, context.getResources().getString(R.string.error_connection)).show();
 
                 }
             }

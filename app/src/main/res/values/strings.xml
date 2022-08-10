@@ -98,7 +98,7 @@
     <string name="find_organizer">Find an organizer</string>
     <string name="rate">Rate</string>
     <string name="rate_">Rate:</string>
-    <string name="out_of_5" translatable="false">/5</string>
+    <string name="out_of_5" translatable="false">5/</string>
     <string name="biography">Biography</string>
     <string name="follow">Follow</string>
     <string name="unfollow">Un Follow</string>
@@ -106,11 +106,32 @@
     <string name="cancel">Cancel</string>
     <string name="reporting">Reporting</string>
     <string name="purpose_of_reporting">Purpose Of Reporting?</string>
-    <string name="favorite_place">Favorite Place</string>
+    <string name="favorite_places">Favorite Places</string>
     <string name="suggestion">Suggestion</string>
     <string name="send">Send</string>
     <string name="place_address">Place Address</string>
     <string name="place_description">Place Description</string>
     <string name="place_name_">Place Name:</string>
+    <string name="any">Any</string>
+    <string name="error_connection">Error Connection</string>
+    <string name="unfollowed">Unfollowed</string>
+    <string name="added_successfully">Added Successfully</string>
+    <string name="voted">Voted</string>
+    <string name="reported">Reported</string>
+    <string name="booking_canceled">Booking Canceled</string>
+    <string name="no_policy">No Privacy Policy</string>
+    <string name="empty_search_field">Search field is empty</string>
+    <string name="at_least_three">3 letters at least</string>
+    <string name="you_are_following">Following</string>
+    <string name="at_least_one_passenger">At least one passenger allowed</string>
+    <string name="trip_booked">Trip Booked Successfully!</string>
+    <string name="active_cap">ACTIVE</string>
+    <string name="upcoming_cap">UPCOMING</string>
+    <string name="history_cap">HISTORY</string>
+    <string name="required">Required</string>
+    <string name="polls">Polls</string>
+    <string name="votes">Votes</string>
+    <string name="vote">Vote</string>
+    <string name="description">Description</string>
 
 </resources>

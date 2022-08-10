@@ -15,8 +15,11 @@ import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.room.roadMapRoom.database.RoadMapDatabase;
+import com.example.dayout.models.room.tripsRoom.database.TripsDatabase;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripDetailsModel;
+import com.example.dayout.models.trip.roadMap.RoadMapData;
 import com.example.dayout.models.trip.tripType.TripType;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.dialogs.notify.LoadingDialog;
@@ -28,6 +31,11 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
@@ -113,6 +121,19 @@ public class OldTripDetailsFragment extends Fragment {
         oldTripDetailsRatingBar.setRating(model.data.customer_trips.get(0).rate);
     }
 
+    //test this.
+    private void setRoomData(TripData data) {
+        oldTripDetailsType.setText(getTypes(data.types));
+        oldTripDetailsTitle.setText(data.title);
+        oldTripDetailsDate.setText(data.begin_date);
+        oldTripDetailsStops.setText(data.stopsToDetails);
+        oldTripDetailsExpireDate.setText(data.expire_date);
+        oldTripDetailsPrice.setText(String.valueOf(data.price));
+        oldTripsEndBookingDate.setText(data.end_booking);
+        oldTripDetailsPassengersCount.setText(String.valueOf(data.customer_trips_count));
+        oldTripDetailsRatingBar.setRating(data.customer_trips.get(0).rate);
+    }
+
     private String getTypes(ArrayList<TripType> types) {
         String tripTypes = "";
 
@@ -124,6 +145,30 @@ public class OldTripDetailsFragment extends Fragment {
         }
 
         return tripTypes;
+    }
+
+    private void getDataFromRoom(){
+        TripsDatabase.getINSTANCE(requireContext())
+                .iTrip()
+                .getTripById(data.id)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<TripData>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull TripData data) {
+                        setRoomData(data);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
     }
 
     private void getDataFromApi() {
@@ -140,10 +185,14 @@ public class OldTripDetailsFragment extends Fragment {
                 if (tripDetailsModelStringPair.first != null) {
                     setData(tripDetailsModelStringPair.first);
                     data = tripDetailsModelStringPair.first.data;
-                } else
+                } else {
+                    getDataFromRoom();
                     new ErrorDialog(requireContext(), tripDetailsModelStringPair.second).show();
-            } else
-                new ErrorDialog(requireContext(), "Error Connection").show();
+                }
+            } else {
+                getDataFromRoom();
+                new ErrorDialog(requireContext(), getResources().getString(R.string.error_connection)).show();
+            }
         }
     };
 
@@ -171,7 +220,7 @@ public class OldTripDetailsFragment extends Fragment {
                 } else
                     new ErrorDialog(requireContext(), responseBodyStringPair.second).show();
             } else
-                new ErrorDialog(requireContext(), "Error Connection").show();
+                new ErrorDialog(requireContext(), getResources().getString(R.string.error_connection)).show();
         }
     };
 

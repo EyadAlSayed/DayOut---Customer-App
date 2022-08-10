@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.helpers.view.FN;
+import com.example.dayout.models.room.tripsRoom.database.TripsDatabase;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.tripType.TripType;
@@ -28,6 +29,11 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 
@@ -139,6 +145,47 @@ public class TripDetailsFragment extends Fragment {
         }
     }
 
+    private void setRoomData(TripData data) {
+        tripDetailsType.setText(getTypes(data.types));
+        tripDetailsTitle.setText(data.title);
+        tripDetailsDate.setText(data.begin_date);
+        tripDetailsStops.setText(data.stopsToDetails);
+        tripDetailsExpireDate.setText(data.expire_date);
+        tripDetailsPrice.setText(String.valueOf(data.price));
+        tripsEndBookingDate.setText(data.end_booking);
+        tripDetailsPassengersCount.setText(String.valueOf(data.customer_trips_count));
+
+        //passenger has booked this trip.
+        System.out.println(data.is_in_trip);
+        if(data.is_in_trip){
+            bookTripButton.setText(R.string.cancel_booking);
+        }
+    }
+
+    private void getDataFromRoom(){
+        TripsDatabase.getINSTANCE(requireContext())
+                .iTrip()
+                .getTripById(data.id)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<TripData>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull TripData data) {
+                        setRoomData(data);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
+
     private void getDataFromApi(){
         loadingDialog.show();
         TripViewModel.getINSTANCE().getTripDetails(data.id);
@@ -149,16 +196,20 @@ public class TripDetailsFragment extends Fragment {
         @Override
         public void onChanged(Pair<TripDetailsModel, String> tripDetailsModelStringPair) {
             loadingDialog.dismiss();
-            if(tripDetailsModelStringPair != null){
-                if(tripDetailsModelStringPair.first != null){
+            if (tripDetailsModelStringPair != null) {
+                if (tripDetailsModelStringPair.first != null) {
                     setData(tripDetailsModelStringPair.first);
                     //trip is active
-                    if(data.isActive)
+                    if (data.isActive)
                         tripDetailsDeleteIcon.setVisibility(View.GONE);
-                } else
+                } else {
+                    getDataFromRoom();
                     new ErrorDialog(requireContext(), tripDetailsModelStringPair.second).show();
-            } else
-                new ErrorDialog(requireContext(), "Error Connection").show();
+                }
+            } else {
+                getDataFromRoom();
+                new ErrorDialog(requireContext(), getResources().getString(R.string.error_connection)).show();
+            }
         }
     };
 

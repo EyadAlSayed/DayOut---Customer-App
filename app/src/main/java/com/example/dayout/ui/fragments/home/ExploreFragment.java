@@ -60,7 +60,7 @@ public class ExploreFragment extends Fragment {
     //pagination
     int pageNumber;
     boolean canPaginate;
-
+    JsonObject tmpObject;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class ExploreFragment extends Fragment {
     private void initView(){
         pageNumber = 1;
         loadingDialog = new LoadingDialog(requireContext());
-
+        tmpObject = new JsonObject();
         showResultButton.setOnClickListener(onShowClicked);
         searchView.setOnQueryTextListener(onQueryTextListener);
 
@@ -104,10 +104,9 @@ public class ExploreFragment extends Fragment {
     }
 
     private void getDataFromAPI(){
-        PlaceViewModel.getINSTANCE().searchForPlace(getSearchObj());
+        PlaceViewModel.getINSTANCE().searchForPlace(tmpObject, pageNumber);
         PlaceViewModel.getINSTANCE().searchPlaceMutableLiveData.observe(requireActivity(),searchObserver);
     }
-
 
     private final SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
         @Override
@@ -115,7 +114,7 @@ public class ExploreFragment extends Fragment {
             if (checkInfo()){
                 searchView.setEnabled(false);
                 loadingDialog.show();
-                PlaceViewModel.getINSTANCE().searchForPlace(getSearchObj());
+                PlaceViewModel.getINSTANCE().searchForPlace(getSearchObj(), 1);
                 PlaceViewModel.getINSTANCE().searchPlaceMutableLiveData.observe(requireActivity(),searchObserver);
             }
             return true;
@@ -133,7 +132,7 @@ public class ExploreFragment extends Fragment {
             if (checkInfo()){
                 searchView.setEnabled(false);
                 loadingDialog.show();
-                PlaceViewModel.getINSTANCE().searchForPlace(getSearchObj());
+                PlaceViewModel.getINSTANCE().searchForPlace(getSearchObj(), 1);
                 PlaceViewModel.getINSTANCE().searchPlaceMutableLiveData.observe(requireActivity(),searchObserver);
             }
         }
@@ -153,7 +152,7 @@ public class ExploreFragment extends Fragment {
                 }
             }
             else {
-                new ErrorDialog(requireContext(),"Connection Error").show();
+                new ErrorDialog(requireContext(),getResources().getString(R.string.error_connection)).show();
             }
 
             hideLoadingBar();
@@ -161,6 +160,7 @@ public class ExploreFragment extends Fragment {
     };
 
     private JsonObject getSearchObj(){
+        tmpObject.addProperty("name",searchView.getQuery().toString());
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("name",searchView.getQuery().toString());
@@ -186,11 +186,11 @@ public class ExploreFragment extends Fragment {
         boolean ok = true;
         if (searchView.getQuery().toString().isEmpty()){
             ok = false;
-            NoteMessage.showSnackBar(requireActivity(),"Search Text can not be empty");
+            NoteMessage.showSnackBar(requireActivity(),getResources().getString(R.string.empty_search_field));
         }
-        if (searchView.getQuery().toString().length() <= 3){
+        if (searchView.getQuery().toString().length() < 3){
             ok = false;
-            NoteMessage.showSnackBar(requireActivity(),"Search text can not be less than three letter");
+            NoteMessage.showSnackBar(requireActivity(),getResources().getString(R.string.at_least_three));
         }
 
         return  ok;

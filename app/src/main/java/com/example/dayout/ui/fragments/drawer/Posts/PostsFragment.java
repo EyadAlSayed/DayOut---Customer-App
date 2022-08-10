@@ -40,8 +40,7 @@ public class PostsFragment extends Fragment {
     ViewPager2 postViewPager;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_posts, container, false);
         ButterKnife.bind(this, view);
@@ -65,12 +64,12 @@ public class PostsFragment extends Fragment {
         new TabLayoutMediator(postTabLayout, postViewPager, (tab, position) -> {
             switch (position) {
                 case 0: {
-                    tab.setText("Post");
+                    tab.setText(R.string.posts);
 
                     break;
                 }
                 case 1: {
-                    tab.setText("Poll");
+                    tab.setText(R.string.polls);
 
                     break;
                 }

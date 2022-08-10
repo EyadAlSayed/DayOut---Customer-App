@@ -33,7 +33,7 @@ public class ProfileDataConverter implements Serializable {
         if (data == null)
             return null;
 
-        Type type = new TypeToken<List<ProfileData>>() {
+        Type type = new TypeToken<ProfileData>() {
         }.getType();
         Gson gson = new Gson();
 

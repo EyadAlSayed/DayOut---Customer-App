@@ -75,12 +75,12 @@ public class WarningDialog extends Dialog {
             loadingDialog.dismiss();
             if(booleanStringPair != null){
                 if(booleanStringPair.first != null){
-                    NoteMessage.message(context, "Booking Canceled");
+                    NoteMessage.message(context, context.getResources().getString(R.string.booking_canceled));
                     FN.popStack((MainActivity) context);
                 } else
                     new ErrorDialog(context, booleanStringPair.second).show();
             } else
-                new ErrorDialog(context, "Error Connection").show();
+                new ErrorDialog(context, context.getResources().getString(R.string.error_connection)).show();
         }
     };
 
