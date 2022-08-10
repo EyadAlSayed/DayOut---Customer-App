@@ -9,6 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
+        android:layoutDirection="ltr"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_35sdp"
         android:layout_marginHorizontal="@dimen/_5sdp"
-        android:background="@drawable/rounded_shape"
+        android:background="@drawable/outline_rounded_shape"
         android:drawableStart="@drawable/search_icon"
         android:drawablePadding="@dimen/_10sdp"
         android:fontFamily="@font/acme"

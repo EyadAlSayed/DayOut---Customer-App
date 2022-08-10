@@ -52,6 +52,8 @@
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:focusableInTouchMode="true"
                     android:hint="@string/first_name"
+                    app:hintTextColor="@color/orange_500"
+
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -76,6 +78,8 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:focusableInTouchMode="true"
+                    app:hintTextColor="@color/orange_500"
+
                     android:hint="@string/last_name">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -99,6 +103,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
+                    app:hintTextColor="@color/orange_500"
+
                     app:passwordToggleEnabled="true">
 
 
@@ -146,6 +152,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
+                    app:hintTextColor="@color/orange_500"
+
                     android:focusableInTouchMode="true"
                     android:hint="@string/email_optional">
 
@@ -290,6 +298,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
         android:text="@string/already_have_an_account"
         android:textColor="@color/orange_700"
         android:textSize="@dimen/_12ssp" />

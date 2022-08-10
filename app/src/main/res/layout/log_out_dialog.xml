@@ -48,7 +48,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/acme"
-                android:text="yes"
+                android:text="@string/logout"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:backgroundTint="@color/orange_500"
