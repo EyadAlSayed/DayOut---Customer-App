@@ -44,7 +44,7 @@
                 android:gravity="right|center_vertical"
                 android:text="@string/done"
                 android:textColor="@color/orange_700"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_14ssp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -134,12 +134,12 @@
                     android:id="@+id/edit_profile_first_name"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:background="@drawable/rounded_shape"
+                    android:background="@drawable/outline_rounded_shape"
                     android:ems="10"
                     android:fontFamily="@font/acme"
                     android:inputType="textPersonName"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingRight="@dimen/_5sdp" />
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_5sdp" />
             </LinearLayout>
 
             <View
@@ -167,12 +167,14 @@
                     android:id="@+id/edit_profile_last_name"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:background="@drawable/rounded_shape"
+                    android:background="@drawable/outline_rounded_shape"
                     android:ems="10"
+                    android:elevation="@dimen/_2sdp"
+
                     android:fontFamily="@font/acme"
                     android:inputType="textPersonName"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingRight="@dimen/_5sdp" />
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_5sdp" />
             </LinearLayout>
 
             <View
@@ -206,12 +208,13 @@
                     android:id="@+id/edit_profile_email"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:background="@drawable/rounded_shape"
+                    android:elevation="@dimen/_2sdp"
+                    android:background="@drawable/outline_rounded_shape"
                     android:ems="10"
                     android:fontFamily="@font/acme"
                     android:inputType="textEmailAddress"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingRight="@dimen/_5sdp" />
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_5sdp" />
             </LinearLayout>
 
         </LinearLayout>

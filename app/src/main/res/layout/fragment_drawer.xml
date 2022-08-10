@@ -156,6 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_20sdp"
+                    android:visibility="gone"
                     android:drawableStart="@drawable/ic_suggestion"
                     android:drawablePadding="@dimen/_15sdp"
                     android:drawableTint="@color/white"
