@@ -41,11 +41,10 @@ import io.reactivex.schedulers.Schedulers;
 import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
+import static com.example.dayout.helpers.view.ImageViewer.IMAGE_BASE_URL;
 
 @SuppressLint("NonConstantResourceId")
 public class DrawerFragment extends Fragment {
-
-
     View view;
 
     @BindView(R.id.drawer_close_btn)
@@ -76,17 +75,20 @@ public class DrawerFragment extends Fragment {
     BlurView blurView;
 
     @BindView(R.id.drawer_userphoto)
-    ImageView drawerUserphoto;
+    ImageView drawerUserPhoto;
 
     @BindView(R.id.drawer_username)
     TextView drawerUsername;
+
+    @BindView(R.id.privacy_policy_txt)
+    TextView privacyPolicyTxt;
+
 
     LogOutDialog logOutDialog;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         view = inflater.inflate(R.layout.fragment_drawer, container, false);
         ButterKnife.bind(this, view);
         initView();
@@ -98,7 +100,6 @@ public class DrawerFragment extends Fragment {
     public void onStart() {
         ((MainActivity) requireActivity()).hideDrawerButton();
         ((MainActivity) requireActivity()).hideBottomBar();
-
         new Handler(Looper.getMainLooper()).postDelayed(this::initBlur, 1000);
         super.onStart();
     }
@@ -107,12 +108,10 @@ public class DrawerFragment extends Fragment {
     public void onStop() {
         ((MainActivity) requireActivity()).showDrawerButton();
         ((MainActivity) requireActivity()).showBottomBar();
-
         super.onStop();
     }
 
     private void initView() {
-
         logOutDialog = new LogOutDialog(requireContext());
         drawerCloseButton.setOnClickListener(onCloseClicked);
         notificationTxt.setOnClickListener(onNotificationClicked);
@@ -121,7 +120,8 @@ public class DrawerFragment extends Fragment {
         logoutTxt.setOnClickListener(onLogOutClicked);
         settingTxt.setOnClickListener(onSettingClicked);
         orgTxt.setOnClickListener(onOrganizersClicked);
-
+        connectUsTxt.setOnClickListener(onContactClicked);
+        privacyPolicyTxt.setOnClickListener(onPrivacyPolicyClicked);
     }
 
     private void getDataFromRoom() {
@@ -153,18 +153,15 @@ public class DrawerFragment extends Fragment {
         UserViewModel.getINSTANCE().profileMutableLiveData.observe(requireActivity(), profileObserver);
     }
 
-    private final Observer<Pair<ProfileModel, String>> profileObserver = new Observer<Pair<ProfileModel, String>>() {
-        @Override
-        public void onChanged(Pair<ProfileModel, String> profileModelStringPair) {
-            if (profileModelStringPair != null) {
-                if (profileModelStringPair.first != null) {
-                    setData(profileModelStringPair.first.data);
-                } else {
-                    getDataFromRoom();
-                }
+    private final Observer<Pair<ProfileModel, String>> profileObserver = profileModelStringPair -> {
+        if (profileModelStringPair != null) {
+            if (profileModelStringPair.first != null) {
+                setData(profileModelStringPair.first.data);
             } else {
                 getDataFromRoom();
             }
+        } else {
+            getDataFromRoom();
         }
     };
 
@@ -174,8 +171,7 @@ public class DrawerFragment extends Fragment {
     }
 
     private void downloadUserImage(String url) {
-        String baseUrl = BASE_URL.substring(0, BASE_URL.length() - 1);
-        ImageViewer.downloadCircleImage(requireContext(), drawerUserphoto, R.drawable.profile_place_holder, baseUrl + url);
+        ImageViewer.downloadCircleImage(requireContext(), drawerUserPhoto, R.drawable.profile_place_holder, IMAGE_BASE_URL + url);
     }
 
     private void initBlur() {
@@ -193,7 +189,6 @@ public class DrawerFragment extends Fragment {
 
     }
 
-
     private final View.OnClickListener onCloseClicked = v -> {
         blurView.setupWith(new ViewGroup(requireContext()) {
             @Override
@@ -203,19 +198,23 @@ public class DrawerFragment extends Fragment {
         });
         new Handler(Looper.getMainLooper()).postDelayed(() -> FN.popTopStack(requireActivity()), 200);
     };
+    private final View.OnClickListener onPrivacyPolicyClicked = v -> {
+        FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new PrivacyPolicyFragment());
+    };
+    private final View.OnClickListener onContactClicked = v -> {
+        FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new ContactUsFragment());
+    };
 
-
-    private final View.OnClickListener onNotificationClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new NotificationFragment());
-        }
+    private final View.OnClickListener onNotificationClicked = v -> {
+        FN.popTopStack(requireActivity());
+        FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new NotificationFragment());
     };
 
     private final View.OnClickListener onPostClicked = v -> {
         FN.popTopStack(requireActivity());
         FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new PostsFragment());
     };
+
     private final View.OnClickListener onMyTripsClicked = view -> {
         FN.popTopStack(requireActivity());
         FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new MyTripsFragment());
@@ -226,10 +225,7 @@ public class DrawerFragment extends Fragment {
         FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new SettingsFragment(0));
     };
 
-    private final View.OnClickListener onLogOutClicked = v -> {
-        logOutDialog.show();
-    };
-
+    private final View.OnClickListener onLogOutClicked = v -> logOutDialog.show();
 
     private final View.OnClickListener onOrganizersClicked = v -> FN.addFixedNameFadeFragment(MAIN_FRC, requireActivity(), new OrganizersListFragment(false));
 

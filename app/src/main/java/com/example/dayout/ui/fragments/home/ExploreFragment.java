@@ -73,7 +73,6 @@ public class ExploreFragment extends Fragment {
 
     @Override
     public void onStart() {
-        ((MainActivity) requireActivity()).hideDrawerButton();
         ((MainActivity) requireActivity()).hideBottomBar();
         super.onStart();
     }
@@ -142,10 +141,11 @@ public class ExploreFragment extends Fragment {
         @Override
         public void onChanged(Pair<SearchPlaceModel, String> searchPlaceModelStringPair) {
             loadingDialog.dismiss();
+            hideLoadingBar();
             searchView.setEnabled(true);
             if (searchPlaceModelStringPair != null){
                 if (searchPlaceModelStringPair.first != null){
-                    explorePlaceAdapter.addAndRefresh(searchPlaceModelStringPair.first.data.data);
+                    explorePlaceAdapter.refresh(searchPlaceModelStringPair.first.data.data);
                     canPaginate = (searchPlaceModelStringPair.first.data.next_page_url != null);
                 }else {
                     new ErrorDialog(requireContext(),searchPlaceModelStringPair.second).show();
@@ -155,13 +155,12 @@ public class ExploreFragment extends Fragment {
                 new ErrorDialog(requireContext(),getResources().getString(R.string.error_connection)).show();
             }
 
-            hideLoadingBar();
+
         }
     };
 
     private JsonObject getSearchObj(){
         tmpObject.addProperty("name",searchView.getQuery().toString());
-
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("name",searchView.getQuery().toString());
         return jsonObject;

@@ -177,7 +177,7 @@ public class OrganizersListFragment extends Fragment {
             if (organizersModelStringPair != null) {
                 if (organizersModelStringPair.first != null) {
                     mainList = organizersModelStringPair.first.data.data;
-                    adapter.addAndRefresh(organizersModelStringPair.first.data.data);
+                    adapter.refreshList(organizersModelStringPair.first.data.data);
                     canPaginate = (organizersModelStringPair.first.data.next_page_url != null);
                 } else {
                     if(followingOnly)

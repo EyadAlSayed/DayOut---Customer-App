@@ -180,7 +180,7 @@ public class ActiveTripFragment extends Fragment implements IMyTrip {
                         activeTripsRefreshLayout.setVisibility(View.VISIBLE);
                         activeTripsNoActiveTrips.setVisibility(View.GONE);
                         setAsActive(tripModelStringPair.first.data.data);
-                        adapter.addAndRefresh(tripModelStringPair.first.data.data);
+                        adapter.refresh(tripModelStringPair.first.data.data);
                     }
                     canPaginate = (tripModelStringPair.first.data.next_page_url != null);
                 } else {

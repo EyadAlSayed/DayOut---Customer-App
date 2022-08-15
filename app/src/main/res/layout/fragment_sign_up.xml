@@ -128,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_password"
-
+                    app:hintTextColor="@color/orange_500"
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -155,7 +155,7 @@
                     app:hintTextColor="@color/orange_500"
 
                     android:focusableInTouchMode="true"
-                    android:hint="@string/email_optional">
+                    android:hint="@string/email">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/sign_up_email"
@@ -289,7 +289,7 @@
         android:gravity="center"
         android:text="@string/sign_up"
         android:textColor="@color/off_white"
-        android:textSize="@dimen/_17sdp"
+        android:textSize="@dimen/_14sdp"
         android:textStyle="bold" />
 
     <TextView

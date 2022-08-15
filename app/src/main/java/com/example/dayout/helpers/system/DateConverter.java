@@ -17,6 +17,10 @@ public class DateConverter {
 
     }
 
+    public static String getTimeStampAs(String pattern){
+        return   new SimpleDateFormat(pattern, Locale.ENGLISH).format(new Date());
+    }
+
     public static Date stringToDate(String sDate) {
         Date date = new Date();
         try {

@@ -14,6 +14,8 @@ import com.google.gson.JsonObject;
 
 import java.io.IOException;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -189,16 +191,16 @@ public class UserViewModel {
     }
 
 
-    public void editProfile(JsonObject model){
-        editProfileMutableLiveData = new MutableLiveData<>();
-        apiClient.getAPI().editProfile(model).enqueue(new Callback<ProfileModel>() {
+    public void editProfile(RequestBody methodName, RequestBody firstName, RequestBody lastName, RequestBody email, MultipartBody.Part photo){
+        successfulMutableLiveData = new MutableLiveData<>();
+        apiClient.getAPI().editProfile(methodName,firstName,lastName,email,photo).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ProfileModel> call, Response<ProfileModel> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
-                    editProfileMutableLiveData.setValue(new Pair<>(response.body(), null));
+                    successfulMutableLiveData.setValue(new Pair<>(true, null));
                 } else {
                     try {
-                        editProfileMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
+                        successfulMutableLiveData.setValue(new Pair<>(null, getErrorMessage(response.errorBody().string())));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -206,8 +208,8 @@ public class UserViewModel {
             }
 
             @Override
-            public void onFailure(Call<ProfileModel> call, Throwable t) {
-                editProfileMutableLiveData.setValue(null);
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                successfulMutableLiveData.setValue(null);
             }
         });
     }

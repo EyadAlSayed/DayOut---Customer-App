@@ -34,6 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_16sdp"
+                    android:layoutDirection="ltr"
                     android:background="@drawable/back_icon"
                     android:backgroundTint="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
@@ -56,13 +57,14 @@
                     android:id="@+id/profile_edit_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="5dp"
-                    android:backgroundTint="@color/transparent"
+                    android:layoutDirection="ltr"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/off_white"
                     app:layout_constraintBottom_toBottomOf="@+id/back_arrow_btn"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/edit_icon_off_white" />
+                    android:background="@drawable/edit_icon"/>
 
                 <View
                     android:id="@+id/divider"

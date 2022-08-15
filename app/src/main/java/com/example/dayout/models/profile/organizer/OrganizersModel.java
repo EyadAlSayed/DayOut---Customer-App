@@ -13,8 +13,6 @@ import static com.example.dayout.config.AppConstants.ORGANIZERS_TABLE;
 
 @Entity(tableName = ORGANIZERS_TABLE)
 public class OrganizersModel {
-    //public ArrayList<ProfileData> data;
-
     @TypeConverters(OrganizerProfileDataConverter.class)
     public OrganizerProfileData data;
 

@@ -36,6 +36,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
+import static com.example.dayout.helpers.view.ImageViewer.IMAGE_BASE_URL;
 
 @SuppressLint("NonConstantResourceId")
 public class PlaceInfoFragment extends Fragment {
@@ -87,9 +88,9 @@ public class PlaceInfoFragment extends Fragment {
 
     private void initImageSlider(PlaceData placeData) {
         List<SlideModel> slideModels = new ArrayList<>();
-        String baseUrl = BASE_URL.substring(0, BASE_URL.length() - 1);
+
         for (PopularPlacePhoto ph : placeData.photos) {
-            slideModels.add(new SlideModel(baseUrl + ph.path
+            slideModels.add(new SlideModel(IMAGE_BASE_URL + ph.path
                     , ScaleTypes.FIT));
         }
         imageSlider.setImageList(slideModels);

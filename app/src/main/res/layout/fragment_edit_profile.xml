@@ -24,6 +24,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:paddingStart="@dimen/_10sdp"
+            android:layoutDirection="ltr"
             android:paddingTop="@dimen/_5sdp"
             android:paddingEnd="@dimen/_20sdp">
 
@@ -88,8 +89,8 @@
                     android:id="@+id/edit_profile_image"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_80sdp"
-                    android:layout_marginVertical="@dimen/_10sdp"
-                    android:outlineAmbientShadowColor="#CFCFCF"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/profile_place_holder_orange"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

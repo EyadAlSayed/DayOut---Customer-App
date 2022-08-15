@@ -26,6 +26,7 @@ import com.example.dayout.ui.dialogs.notify.SuccessDialog;
 import com.example.dayout.viewModels.AuthViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.JsonObject;
 
 import java.util.regex.Matcher;
 
@@ -210,13 +211,17 @@ public class SignUpFragment extends Fragment {
 
         boolean ok = true;
 
-        if (!signUpEmail.getText().toString().isEmpty()) {
-            if (!emailMatcher.matches()) {
-                signUpEmailTextlayout.setErrorEnabled(true);
-                signUpEmailTextlayout.setError(getResources().getString(R.string.not_an_email_address));
+        if (signUpEmail.getText().toString().isEmpty()) {
+           ok = false;
+            signUpEmailTextlayout.setErrorEnabled(true);
+            signUpEmailTextlayout.setError("This Field is required");
+        }
 
-                ok = false;
-            }
+        if (!emailMatcher.matches()) {
+            signUpEmailTextlayout.setErrorEnabled(true);
+            signUpEmailTextlayout.setError(getResources().getString(R.string.not_an_email_address));
+
+            ok = false;
         }
 
         return ok;
@@ -231,47 +236,26 @@ public class SignUpFragment extends Fragment {
         if (!phoneNumberMatcher.matches()) {
             phoneNumberTextlayout.setErrorEnabled(true);
             phoneNumberTextlayout.setError(getResources().getString(R.string.not_a_phone_number));
-
             ok = false;
         }
 
         return ok;
     }
 
-    private ProfileData getInfo() {
-//        JsonObject jsonObject = new JsonObject();
-//        jsonObject.addProperty("first_name", firstName.getText().toString());
-//        jsonObject.addProperty("last_name", lastName.getText().toString());
-//        jsonObject.addProperty("password", password.getText().toString());
-//        jsonObject.addProperty("email", signUpEmail.getText().toString());
-//        jsonObject.addProperty("photo", (String) null);
-//        if (radioGroup.getCheckedRadioButtonId() == maleRadioButton.getId()) {
-//            jsonObject.addProperty("gender", "MALE");
-//        } else if (radioGroup.getCheckedRadioButtonId() == femaleRadioButton.getId()) {
-//            jsonObject.addProperty("gender", "FEMALE");
-//        }
-//        jsonObject.addProperty("phone_number", phoneNumber.getText().toString());
-//        jsonObject.addProperty("customer_trip_count", 0);
-//        jsonObject.addProperty("organizer_follow_count", 0);
-//
-//        return jsonObject;
-
-        ProfileData model = new ProfileData();
-        model.first_name = firstName.getText().toString();
-        model.last_name = lastName.getText().toString();
-        model.password = password.getText().toString();
-        model.email = signUpEmail.getText().toString();
-        model.photo = null;
+    private JsonObject getInfo() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("first_name",firstName.getText().toString());
+        jsonObject.addProperty("last_name",lastName.getText().toString());
+        jsonObject.addProperty("password",password.getText().toString());
+        jsonObject.addProperty("email",signUpEmail.getText().toString());
         if (radioGroup.getCheckedRadioButtonId() == maleRadioButton.getId()) {
-            model.gender = "Male";
+            jsonObject.addProperty("gender","Male");
         } else if (radioGroup.getCheckedRadioButtonId() == femaleRadioButton.getId()) {
-            model.gender = "Female";
+            jsonObject.addProperty("gender","Female");
         }
-        model.phone_number = phoneNumber.getText().toString();
-//        model.customer_trip_count = 0;
-//        model.organizer_follow_count = 0;
+        jsonObject.addProperty("phone_number", phoneNumber.getText().toString());
 
-        return model;
+        return jsonObject;
     }
 
     private final View.OnClickListener onSignUpBtnClicked = new View.OnClickListener() {

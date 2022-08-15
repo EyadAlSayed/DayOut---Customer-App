@@ -18,12 +18,16 @@ import com.example.dayout.models.trip.TripDetailsModel;
 import com.example.dayout.models.trip.tripType.TripTypeModel;
 import com.google.gson.JsonObject;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -83,7 +87,7 @@ public interface API {
 
 
     @POST("api/user/register")
-    Call<ProfileData> registerPassenger(@Body ProfileData profile);
+    Call<ProfileData> registerPassenger(@Body JsonObject profile);
 
     @POST("api/place/favorite")
     Call<ResponseBody> addToFavorite(@Body JsonObject favoritePlace);
@@ -112,12 +116,23 @@ public interface API {
     @POST("api/trip/history/customer")
     Call<TripPaginationModel> getHistoryTrips(@Body JsonObject filterModel, @Query("page") int page, @Query("type") String type);
 
+    @POST("api/user/password/request")
+    Call<ResponseBody> checkPhoneNumberExist(@Body JsonObject phoneNumber);
+
+    @POST("api/user/password/reset")
+    Call<ResponseBody> resetPassword(@Body JsonObject resetPassword);
+
     /**
      * Put Request
      */
 
+    @Multipart
     @POST("api/user/profile/customer/edit")
-    Call<ProfileModel> editProfile(@Body JsonObject model);
+    Call<ResponseBody> editProfile(@Part("_method") RequestBody methodName,
+                                   @Part("first_name") RequestBody firstName,
+                                   @Part("last_name") RequestBody lastName,
+                                   @Part("email") RequestBody email,
+                                   @Part MultipartBody.Part photo);
 
     @PUT("api/user/mobile-token")
     Call<ResponseBody> sendFirebaseToken(@Body JsonObject firebaseObj);

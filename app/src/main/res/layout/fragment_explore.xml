@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:clickable="true"
     android:focusable="true"
-    android:background="@color/white"
     tools:context=".ui.fragments.home.ExploreFragment">
-
 
 
     <SearchView
@@ -26,13 +25,15 @@
 
     <Button
         android:id="@+id/show_result_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
         android:background="@drawable/rounded_shape"
+        android:backgroundTint="@color/orange_700"
         android:fontFamily="@font/acme"
         android:text="@string/show_result"
-        android:backgroundTint="@color/orange_700"
         android:textColor="@color/white"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="parent"
