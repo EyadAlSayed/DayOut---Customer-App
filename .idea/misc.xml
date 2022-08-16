@@ -10,12 +10,15 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/drawable/rounded_shape.xml" value="0.1795" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/error_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/filter_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_drawer.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_old_trip_details.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_organizer_profile.xml" value="0.264" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_organizers_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_polls_choices.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_posts.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_trip_details.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_trip_poll_post.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/item_place.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/item_poll_choice.xml" value="0.25416666666666665" />
@@ -70,7 +73,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
