@@ -23,6 +23,7 @@ import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
 import com.example.dayout.models.popualrPlace.PlaceData;
 import com.example.dayout.models.popualrPlace.PopularPlacePhoto;
+import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.fragments.home.PlaceInfoFragment;
@@ -58,7 +59,8 @@ public class HomePlaceAdapter extends RecyclerView.Adapter<HomePlaceAdapter.View
     public void insertRoomObject(PlaceData popularPlace) {
 
         // insert object in room database
-        ((MainActivity) context).roomPopularPlaces
+        PopularPlaceDataBase.getINSTANCE((MainActivity)context)
+                .iPopularPlaces()
                 .insertPopularPlace(popularPlace)
                 .subscribeOn(Schedulers.computation()).subscribe(new CompletableObserver() {
             @Override

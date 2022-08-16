@@ -36,7 +36,8 @@ public class PrivacyPolicyFragment extends Fragment {
     BufferedReader reader;
 
     int type;
-    public PrivacyPolicyFragment(int type){
+
+    public PrivacyPolicyFragment(int type) {
         this.type = type;
     }
 
@@ -54,13 +55,13 @@ public class PrivacyPolicyFragment extends Fragment {
 
     @Override
     public void onStart() {
-if (type == 2)
-        ((MainActivity)requireActivity()).hideBottomBar();
+        if (type == 2)
+            ((MainActivity) requireActivity()).hideBottomBar();
         super.onStart();
     }
 
     private void intiView() {
-        backArrow.setOnClickListener(v-> FN.popTopStack(requireActivity()));
+        backArrow.setOnClickListener(v -> FN.popTopStack(requireActivity()));
         privacyPolicyTxt.setText(readAndGetPrivacyPolicy().toString());
     }
 

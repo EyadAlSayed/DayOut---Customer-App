@@ -116,7 +116,8 @@ public class RoadMapFragment extends Fragment {
     public void insertRoomObject(RoadMapData roadMapData) {
 
         // insert object in room database
-        ((MainActivity) requireActivity()).iRoadMap
+        RoadMapDatabase.getINSTANCE(requireActivity())
+                .iRoadMap()
                 .insertRoadMap(roadMapData)
                 .subscribeOn(Schedulers.computation()).subscribe(new CompletableObserver() {
             @Override

@@ -26,4 +26,7 @@ public interface IPolls {
 
     @Query("select * from " + POLL_DATA)
     Single<List<PollsData>> getPolls();
+
+    @Query("delete from "+POLL_DATA)
+    Single<Void> deleteAll();
 }

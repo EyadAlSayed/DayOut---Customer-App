@@ -198,6 +198,7 @@
                         android:layout_weight=".5"
                         android:fontFamily="@font/acme"
                         android:text="@string/male"
+                        android:checked="true"
                         android:textColor="@color/orange_700"
                         android:textSize="@dimen/_13ssp" />
 

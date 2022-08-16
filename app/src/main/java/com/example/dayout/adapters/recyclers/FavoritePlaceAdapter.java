@@ -93,14 +93,10 @@ public class FavoritePlaceAdapter extends RecyclerView.Adapter<FavoritePlaceAdap
 
         private void bindImageSlider(List<PopularPlacePhoto> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
-
-
-
             for (PopularPlacePhoto ph : photos) {
                 slideModels.add(new SlideModel(IMAGE_BASE_URL + ph.path
                         , ScaleTypes.FIT));
             }
-
             imageSlider.setImageList(slideModels);
 
             imageSlider.setScrollBarFadeDuration(10000);

@@ -10,6 +10,7 @@ import com.example.dayout.models.trip.roadMap.RoadMapData;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 
+import static com.example.dayout.config.AppConstants.PROFILE_DATA;
 import static com.example.dayout.config.AppConstants.ROAD_MAP_DATA;
 
 @Dao
@@ -20,4 +21,7 @@ public interface IRoadMap {
 
     @Query("select * from " + ROAD_MAP_DATA)
     Single<RoadMapData> getRoadMap();
+
+    @Query("delete from "+ROAD_MAP_DATA)
+    Single<Void> deleteAll();
 }

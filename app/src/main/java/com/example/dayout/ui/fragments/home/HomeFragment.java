@@ -113,6 +113,7 @@ public class HomeFragment extends Fragment {
             loadingDialog.dismiss();
             if (popularPlaceStringPair != null) {
                 if (popularPlaceStringPair.first != null) {
+                    ((MainActivity)requireActivity()).deleteAllRoomDB();
                     homePlaceAdapter.refreshList(popularPlaceStringPair.first.data);
                 } else {
                     getDataFromRoom();

@@ -12,6 +12,7 @@ import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 
+import static com.example.dayout.config.AppConstants.NOTIFICATIONS_DATA;
 import static com.example.dayout.config.AppConstants.PROFILE_DATA;
 
 @Dao
@@ -25,4 +26,7 @@ public interface IOrganizers {
 
     @Query("select * from " + PROFILE_DATA + " where isOrganizer = 1 AND iFollowHim = 1")
     Single<List<ProfileData>> getFollowedOrganizers();
+
+    @Query("delete from "+PROFILE_DATA)
+    Single<Void> deleteAll();
 }

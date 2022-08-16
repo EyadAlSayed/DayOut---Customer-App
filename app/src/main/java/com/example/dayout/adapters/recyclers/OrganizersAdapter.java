@@ -18,6 +18,7 @@ import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
 import com.example.dayout.helpers.view.NoteMessage;
 import com.example.dayout.models.profile.ProfileData;
+import com.example.dayout.models.room.organizersRoom.database.OrganizersDatabase;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.fragments.profile.organizer.OrganizerProfileFragment;
 
@@ -38,16 +39,15 @@ public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.Vi
     List<ProfileData> organizers;
     Context context;
 
-    public OrganizersAdapter(List<ProfileData> organizers, Context context){
+    public OrganizersAdapter(List<ProfileData> organizers, Context context) {
         this.organizers = organizers;
         this.context = context;
     }
 
-    public void refreshList(List<ProfileData> organizers){
+    public void refreshList(List<ProfileData> organizers) {
         this.organizers = organizers;
         notifyDataSetChanged();
     }
-
 
 
     @NonNull
@@ -80,14 +80,14 @@ public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.Vi
         ImageViewer.downloadCircleImage(context, imageView, R.drawable.profile_place_holder_orange, IMAGE_BASE_URL + url);
     }
 
-    private float roundRating(float rating){
+    private float roundRating(float rating) {
         return (float) (Math.round(rating * 10) / 10.0);
     }
 
     public void insertRoomObject(ProfileData organizer) {
 
         // insert object in room database
-        ((MainActivity) context).iOrganizers
+        OrganizersDatabase.getINSTANCE((MainActivity) context).iOrganizers()
                 .insertOrganizer(organizer)
                 .subscribeOn(Schedulers.computation()).subscribe(new CompletableObserver() {
             @Override
@@ -130,8 +130,9 @@ public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.Vi
 
         @Override
         public void onClick(View v) {
-            if(AppSharedPreferences.GET_ACC_TOKEN().isEmpty()) NoteMessage.showSnackBar((MainActivity)context,context.getString(R.string.presmission_deny));
-            else{
+            if (AppSharedPreferences.GET_ACC_TOKEN().isEmpty())
+                NoteMessage.showSnackBar((MainActivity) context, context.getString(R.string.presmission_deny));
+            else {
                 ProfileData data = organizers.get(getAdapterPosition());
                 FN.addFixedNameFadeFragment(MAIN_FRC, (MainActivity) context, new OrganizerProfileFragment(data));
             }

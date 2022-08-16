@@ -33,4 +33,7 @@ public interface IPopularPlaces {
 
         @Query("select * from " + POPULAR_PLACE_DATA + " where isFavorite = 1")
         Single<List<PlaceData>> getFavoritePlaces();
+
+        @Query("delete from "+POPULAR_PLACE_DATA)
+        Single<Void> deleteAll();
 }

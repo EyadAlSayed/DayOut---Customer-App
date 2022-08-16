@@ -1,6 +1,7 @@
 package com.example.dayout.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -26,12 +27,16 @@ import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
 
 import com.example.dayout.helpers.view.NoteMessage;
+import com.example.dayout.models.room.notificationsRoom.database.NotificationsDatabase;
 import com.example.dayout.models.room.organizersRoom.database.OrganizersDatabase;
 import com.example.dayout.models.room.organizersRoom.interfaces.IOrganizers;
+import com.example.dayout.models.room.pollsRoom.databases.PollsDatabase;
 import com.example.dayout.models.room.popularPlaceRoom.Interfaces.IPopularPlaces;
 import com.example.dayout.models.room.popularPlaceRoom.databases.PopularPlaceDataBase;
+import com.example.dayout.models.room.profileRoom.databases.ProfileDatabase;
 import com.example.dayout.models.room.roadMapRoom.database.RoadMapDatabase;
 import com.example.dayout.models.room.roadMapRoom.interfaces.IRoadMap;
+import com.example.dayout.models.room.tripsRoom.database.TripsDatabase;
 import com.example.dayout.ui.fragments.drawer.DrawerFragment;
 import com.example.dayout.ui.fragments.home.ExploreFragment;
 import com.example.dayout.ui.fragments.home.FavoritePlaceFragment;
@@ -73,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
     CardView bottomBar;
 
 
-    public IOrganizers iOrganizers;
-    public IRoadMap iRoadMap;
-    public IPopularPlaces roomPopularPlaces;
+//    public IOrganizers iOrganizers;
+//    public IRoadMap iRoadMap;
+//    public IPopularPlaces roomPopularPlaces;
 
 
     @Override
@@ -85,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         InitSharedPreferences(this);
         initView();
-        initRoomDB();
         sendFireBaseToken();
 
 
@@ -107,11 +111,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void initRoomDB() {
-        roomPopularPlaces = PopularPlaceDataBase.getINSTANCE(this).iPopularPlaces();
-        iRoadMap = RoadMapDatabase.getINSTANCE(this).iRoadMap();
-        iOrganizers = OrganizersDatabase.getINSTANCE(this).iOrganizers();
+    public void deleteAllRoomDB(){
+        NotificationsDatabase.getINSTANCE(this).iNotifications().deleteAll();
+        RoadMapDatabase.getINSTANCE(this).iRoadMap().deleteAll();
+        PopularPlaceDataBase.getINSTANCE(this).iPopularPlaces().deleteAll();
+        TripsDatabase.getINSTANCE(this).iTrip().deleteAll();
+        ProfileDatabase.getINSTANCE(this).iProfileModel().deleteAll();
+        PollsDatabase.getINSTANCE(this).iPolls().deleteAll();
+        OrganizersDatabase.getINSTANCE(this).iOrganizers().deleteAll();
     }
+
 
     private void initView() {
         exploreButton.setOnClickListener(onExploreClicked);
