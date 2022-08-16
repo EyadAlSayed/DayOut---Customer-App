@@ -33,7 +33,7 @@
                 android:paddingRight="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_18ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
