@@ -131,7 +131,7 @@ public class SignUpFragment extends Fragment {
 
     private boolean isFirstNameValid() {
 
-        Matcher firstNameMatcher = AppConstants.NAME_REGEX.matcher(firstName.getText().toString());
+//        Matcher firstNameMatcher = AppConstants.NAME_REGEX.matcher(firstName.getText().toString());
 
         boolean ok = true;
 
@@ -147,19 +147,20 @@ public class SignUpFragment extends Fragment {
 
             ok = false;
 
-        } else if (!firstNameMatcher.matches()) {
-            firstNameTextlayout.setErrorEnabled(true);
-            firstNameTextlayout.setError(getResources().getString(R.string.name_does_not_match));
-
-            ok = false;
         }
+//        else if (!firstNameMatcher.matches()) {
+//            firstNameTextlayout.setErrorEnabled(true);
+//            firstNameTextlayout.setError(getResources().getString(R.string.name_does_not_match));
+//
+//            ok = false;
+//        }
 
         return ok;
     }
 
     private boolean isLastNameValid() {
 
-        Matcher lastNameMatcher = AppConstants.NAME_REGEX.matcher(lastName.getText().toString());
+//        Matcher lastNameMatcher = AppConstants.NAME_REGEX.matcher(lastName.getText().toString());
 
         boolean ok = true;
 
@@ -174,13 +175,14 @@ public class SignUpFragment extends Fragment {
             lastNameTextlayout.setError(getResources().getString(R.string.no_space));
 
             ok = false;
-
-        } else if (!lastNameMatcher.matches()) {
-            lastNameTextlayout.setErrorEnabled(true);
-            lastNameTextlayout.setError(getResources().getString(R.string.name_does_not_match));
-
-            ok = false;
         }
+
+//        } else if (!lastNameMatcher.matches()) {
+//            lastNameTextlayout.setErrorEnabled(true);
+//            lastNameTextlayout.setError(getResources().getString(R.string.name_does_not_match));
+//
+//            ok = false;
+//        }
 
         return ok;
     }
