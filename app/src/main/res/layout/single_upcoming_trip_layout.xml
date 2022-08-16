@@ -72,7 +72,7 @@
                 android:padding="@dimen/_5sdp"
                 android:text="@string/trip_item_stops"
                 android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/upcoming_trip_description" />
 
             <TextView
@@ -82,8 +82,8 @@
                 android:fontFamily="@font/acme"
                 android:padding="@dimen/_5sdp"
                 android:textColor="@color/off_white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView18"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView18"
                 app:layout_constraintTop_toTopOf="@+id/textView18" />
 
             <TextView
@@ -94,8 +94,8 @@
                 android:padding="@dimen/_5sdp"
                 android:text="@string/trip_item_date"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="@+id/textView18"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView18"
                 app:layout_constraintTop_toBottomOf="@+id/upcoming_trip_stops" />
 
             <TextView
@@ -105,8 +105,8 @@
                 android:fontFamily="@font/acme"
                 android:padding="@dimen/_5sdp"
                 android:textColor="@color/off_white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView20"
                 app:layout_constraintTop_toTopOf="@+id/textView20" />
 
             <TextView
@@ -117,7 +117,7 @@
                 android:padding="@dimen/_5sdp"
                 android:text="@string/trip_item_passengers"
                 android:textColor="@color/off_white"
-                app:layout_constraintStart_toStartOf="@+id/textView20"
+                app:layout_constraintEnd_toEndOf="@+id/textView20"
                 app:layout_constraintTop_toBottomOf="@+id/upcoming_trip_date" />
 
             <TextView
@@ -127,8 +127,8 @@
                 android:fontFamily="@font/acme"
                 android:padding="@dimen/_5sdp"
                 android:textColor="@color/off_white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView5"
                 app:layout_constraintTop_toTopOf="@+id/textView5" />
 
             <TextView
