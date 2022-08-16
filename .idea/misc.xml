@@ -9,24 +9,55 @@
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/drawable/edittext_background.xml" value="0.1795" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/drawable/rounded_shape.xml" value="0.1795" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/auth_activity.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/book_trip_single_passenger.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/error_dialog.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/filter_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_active_trips.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_auth.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_book_trip.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_change_password.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_contact_us.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_drawer.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_edit_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_explore.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_favorite_place.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_forget_password.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_my_trips.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_notification.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_old_trip.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_old_trip_details.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_organizer_profile.xml" value="0.264" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_organizers_list.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_place_info.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_polls_choices.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_posts.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_privacy_policy.xml" value="0.264" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_road_map.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_settings.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_sign_up.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_trip_details.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_trip_poll_post.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/fragment_up_coming_trip.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/item_place.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/item_poll_choice.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/item_road_map.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/item_trip_poll.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/item_trip_post.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/loading_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/log_out_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/message_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/notification_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/report_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/single_notification.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/single_old_trip_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/single_organizer_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/single_upcoming_trip_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/success_dialog_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Lenovo/AndroidStudioProjects/DayOut/app/src/main/res/layout/warning_dialog.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
