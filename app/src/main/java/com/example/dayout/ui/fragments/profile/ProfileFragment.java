@@ -36,6 +36,7 @@ import io.reactivex.schedulers.Schedulers;
 import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
+import static com.example.dayout.helpers.view.ImageViewer.IMAGE_BASE_URL;
 
 @SuppressLint("NonConstantResourceId")
 public class ProfileFragment extends Fragment {
@@ -194,8 +195,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void downloadUserImage(String url){
-        String baseUrl = BASE_URL.substring(0,BASE_URL.length()-1);
-        ImageViewer.downloadCircleImage(requireContext(),profileImage,R.drawable.profile_place_holder,baseUrl+url);
+
+        ImageViewer.downloadCircleImage(requireContext(),profileImage,R.drawable.profile_place_holder,IMAGE_BASE_URL+url);
     }
 
 

@@ -21,20 +21,20 @@ import androidx.lifecycle.Observer;
 
 import com.example.dayout.R;
 import com.example.dayout.config.AppConstants;
+import com.example.dayout.helpers.system.HttpRequestConverter;
 import com.example.dayout.helpers.system.PermissionsHelper;
 import com.example.dayout.helpers.view.ConverterImage;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.ImageViewer;
 
 import com.example.dayout.models.profile.ProfileData;
-import com.example.dayout.models.profile.ProfileModel;
 import com.example.dayout.models.room.profileRoom.databases.ProfileDatabase;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.dialogs.notify.LoadingDialog;
 import com.example.dayout.viewModels.UserViewModel;
-import com.google.gson.JsonObject;
 
+import java.io.File;
 import java.util.regex.Matcher;
 
 import butterknife.BindView;
@@ -44,16 +44,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppSharedPreferences.GET_USER_ID;
+import static com.example.dayout.helpers.view.ImageViewer.IMAGE_BASE_URL;
 
 @SuppressLint("NonConstantResourceId")
 public class EditProfileFragment extends Fragment {
 
     View view;
 
-    String imageAsString;
+    Uri userImage;
 
     @BindView(R.id.edit_profile_back_button)
     ImageButton editProfileBackButton;
@@ -97,7 +100,6 @@ public class EditProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         ButterKnife.bind(this, view);
         initViews();
-
         return view;
     }
 
@@ -156,22 +158,16 @@ public class EditProfileFragment extends Fragment {
         editProfileFirstName.setText(data.first_name);
         editProfileLastName.setText(data.last_name);
         editProfileEmail.setText(data.email);
-
         downloadUserImage(data.photo);
     }
 
     private void downloadUserImage(String url) {
-        String baseUrl = BASE_URL.substring(0, BASE_URL.length() - 1);
-        ImageViewer.downloadCircleImage(requireContext(), editProfileImage, R.drawable.profile_place_holder_orange, baseUrl + url);
+
+        ImageViewer.downloadCircleImage(requireContext(), editProfileImage, R.drawable.profile_place_holder_orange, IMAGE_BASE_URL + url);
     }
 
     private boolean checkInfo() {
-
-        boolean firstNameValidation = isFirstNameValid();
-        boolean lastNameValidation = isLastNameValid();
-        boolean emailValidation = isEmailValid();
-
-        return firstNameValidation && lastNameValidation && emailValidation;
+        return isFirstNameValid() && isLastNameValid() && isEmailValid();
     }
 
     private boolean isFirstNameValid() {
@@ -234,7 +230,6 @@ public class EditProfileFragment extends Fragment {
         if (!editProfileEmail.getText().toString().isEmpty()) {
             if (!emailMatcher.matches()) {
                 editProfileEmail.setError(getResources().getString(R.string.not_an_email_address));
-
                 ok = false;
             }
         }
@@ -247,68 +242,60 @@ public class EditProfileFragment extends Fragment {
             launcher.launch("image/*");
     }
 
-    private JsonObject getEditedData() {
-//        EditProfileModel model = new EditProfileModel();
-//
-//        model.photo = imageAsString;
-//        model.first_name = editProfileFirstName.getText().toString();
-//        model.last_name = editProfileLastName.getText().toString();
-//        model.email = editProfileEmail.getText().toString();
-
-        JsonObject jsonObject = new JsonObject();
-
-        jsonObject.addProperty("first_name",editProfileFirstName.getText().toString());
-        jsonObject.addProperty("last_name",editProfileLastName.getText().toString());
-        jsonObject.addProperty("email",editProfileEmail.getText().toString());
-        if (imageAsString != null) jsonObject.addProperty("photo",imageAsString);
-        return jsonObject;
-    }
 
     private final ActivityResultLauncher<String> launcher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
         @Override
         public void onActivityResult(Uri result) {
             editProfileImage.setImageURI(result);
-            imageAsString = ConverterImage.convertUriToBase64(requireContext(), result);
+            userImage = result;
         }
     });
 
 
-    private final View.OnClickListener onUploadImageClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            selectImage();
-        }
-    };
+    private final View.OnClickListener onUploadImageClicked = view -> selectImage();
 
     private final View.OnClickListener onDeleteImageClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             editProfileImage.setImageURI(Uri.EMPTY);
-            imageAsString = "";
+            userImage = Uri.EMPTY;
         }
     };
 
-    private final View.OnClickListener onBackClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            FN.popTopStack(requireActivity());
-        }
-    };
+    private final View.OnClickListener onBackClicked = view -> FN.popTopStack(requireActivity());
 
     private final View.OnClickListener onDoneClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (checkInfo()) {
                 loadingDialog.show();
-                UserViewModel.getINSTANCE().editProfile(getEditedData());
-                UserViewModel.getINSTANCE().editProfileMutableLiveData.observe(requireActivity(), editProfileObserver);
+                UserViewModel.getINSTANCE().editProfile(getRequestBody("PUT"),
+                        getRequestBody(editProfileFirstName.getText().toString()),
+                        getRequestBody(editProfileLastName.getText().toString()),
+                        getRequestBody(editProfileEmail.getText().toString()),
+                        getPhotoAsRequestBody());
+                UserViewModel.getINSTANCE().successfulMutableLiveData.observe(requireActivity(), editProfileObserver);
             }
         }
     };
 
-    private final Observer<Pair<ProfileModel, String>> editProfileObserver = new Observer<Pair<ProfileModel, String>>() {
+    private RequestBody getRequestBody(String body) {
+        return HttpRequestConverter.createStringAsRequestBody("multipart/form-data", body);
+    }
+
+    private MultipartBody.Part getPhotoAsRequestBody() {
+
+        if (userImage == null) return null;
+
+        String path = ConverterImage.createImageFilePath(requireActivity(), userImage);
+        File file = new File(path);
+        RequestBody photoBody = HttpRequestConverter.createFileAsRequestBody("multipart/form-data", file);
+        return HttpRequestConverter.createFormDataFile("photo", file.getName(), photoBody);
+    }
+
+    private final Observer<Pair<Boolean, String>> editProfileObserver = new Observer<Pair<Boolean, String>>() {
         @Override
-        public void onChanged(Pair<ProfileModel, String> editProfileModelStringPair) {
+        public void onChanged(Pair<Boolean, String> editProfileModelStringPair) {
             loadingDialog.dismiss();
             if (editProfileModelStringPair != null) {
                 if (editProfileModelStringPair.first != null) {

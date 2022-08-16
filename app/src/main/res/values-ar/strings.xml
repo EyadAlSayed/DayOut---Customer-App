@@ -8,7 +8,7 @@
     <string name="username">اسم المستخدم</string>
     <string name="password">كلمة المرور</string>
     <string name="confirm_password">تأكيد كلمة المرور</string>
-    <string name="phone_number">رقم الجوال</string>
+    <string name="phone_number">رقم الموبايل</string>
     <string name="sign_up">إنشاء حساب</string>
     <string name="welcome">مرحباً!</string>
     <string name="upload_profile_image">تحميل صورة شخصية</string>
@@ -123,5 +123,15 @@
     <string name="votes">التصويتات</string>
     <string name="vote">صوّت</string>
     <string name="description">التوصيف</string>
+    <string name="no_privacy_policy">لا يوجد سياسة خصوصية</string>
+    <string name="contact_us_text">اهلا بك
+نحن مجموعة من الاشخاص الذين يجيدون التعامل مع الرحل وتنظيمها
+اذا كنت تريد ان تعرف اكثر عن عملنا وعملية تسسير الرحل , لا تتردد في الاتصال بنا
+    </string>
+    <string name="email_contact_inof">البريد الالكتروني :</string>
+    <string name="forget_password"><u>نسيت كلمة السر</u></string>
+    <string name="please_enter_your_verification_code_and_new_password">ادخل رمز التأكيد وكلمة السر الجديدة</string>
+    <string name="confirmation_code">رمز التأكيد</string>
+    <string name="expired_date_not_selected">تاريخ الانتهاء لم يتم تحديده</string>
 
 </resources>

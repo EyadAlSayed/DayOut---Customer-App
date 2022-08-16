@@ -1,7 +1,9 @@
-package com.example.dayout.ui.fragments.trips.myTrip;
+    package com.example.dayout.ui.fragments.trips.myTrip;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,9 +44,7 @@ public class MyTripsFragment extends Fragment {
     @BindView(R.id.my_trips_filter)
     ImageButton myTripsFilter;
 
-    @BindView(R.id.my_trips_view_pager)
-    ViewPager2 myTripsViewPager;
-
+    int TRIP_FCR;
 
     ActiveTripAdapter activeTripAdapter;
     UpComingTripAdapter upComingTripAdapter;
@@ -57,6 +57,7 @@ public class MyTripsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my_trips, container, false);
         ButterKnife.bind(this, view);
+        TRIP_FCR = R.id.trip_fcr;
         initViews();
         return view;
     }
@@ -69,35 +70,8 @@ public class MyTripsFragment extends Fragment {
 
 
     private void initTabLayout() {
-
-        ArrayList<Fragment> list = new ArrayList<>();
-        list.add(new ActiveTripFragment(activeTripAdapter));
-        list.add(new UpComingTripFragment(upComingTripAdapter));
-        list.add(new OldTripFragment(oldTripAdapter));
-
-
-        MyTripPagerAdapter pagerAdapter = new MyTripPagerAdapter(requireActivity(),list);
-
-        myTripsViewPager.setAdapter(pagerAdapter);
-        new TabLayoutMediator(myTripsTabLayout, myTripsViewPager, (TabLayoutMediator.TabConfigurationStrategy) (tab, position) -> {
-            switch (position) {
-                case 0: {
-                    tab.setText(R.string.active_cap);
-                    type = 3;
-                    break;
-                }
-                case 1: {
-                    tab.setText(R.string.upcoming_cap);
-                    type = 2;
-                    break;
-                }
-                case 2: {
-                    tab.setText(R.string.history_cap);
-                    type = 1;
-                    break;
-                }
-            }
-        }).attach();
+        FN.addFixedNameFadeFragment(TRIP_FCR, requireActivity(), new ActiveTripFragment(activeTripAdapter));
+        myTripsTabLayout.addOnTabSelectedListener(onTabSelectedListener);
     }
 
     private void initViews() {
@@ -115,17 +89,12 @@ public class MyTripsFragment extends Fragment {
     }
 
 
-    private final View.OnClickListener onBackClicked = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            FN.popStack(requireActivity());
-        }
-    };
+    private final View.OnClickListener onBackClicked = v -> FN.popStack(requireActivity());
 
     private final View.OnClickListener onFilterClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            FilterFragment.isFilterOpen = true;
+
             if (type == 1){
                 FN.addToStackSlideUDFragment(MAIN_FRC, requireActivity(), new FilterFragment(oldTripAdapter, type), "filter");
             }
@@ -135,6 +104,37 @@ public class MyTripsFragment extends Fragment {
             else if (type == 3){
                 FN.addToStackSlideUDFragment(MAIN_FRC, requireActivity(), new FilterFragment(activeTripAdapter, type), "filter");
             }
+
+        }
+    };
+
+    private final TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            myTripsTabLayout.setEnabled(false);
+            if (tab.getPosition() == 0) {
+                FN.replaceSlideFragmentLTR(TRIP_FCR, requireActivity(), new ActiveTripFragment(activeTripAdapter));
+                type = 3;
+            } else if (tab.getPosition() == 1) {
+                FN.replaceSlideFragmentLTR(TRIP_FCR, requireActivity(), new UpComingTripFragment(upComingTripAdapter));
+                type = 2;
+            } else if (tab.getPosition() == 2) {
+                FN.replaceSlideFragmentLTR(TRIP_FCR, requireActivity(), new OldTripFragment(oldTripAdapter));
+                type = 1;
+            }
+
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                myTripsTabLayout.setEnabled(true);
+            }, 40);
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
 
         }
     };

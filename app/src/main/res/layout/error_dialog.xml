@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/imageView33"
-        android:layout_width="91dp"
-        android:layout_height="82dp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_70sdp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="145dp"
@@ -30,6 +30,7 @@
         android:fontFamily="@font/acme"
         android:gravity="center"
         android:textSize="@dimen/_16ssp"
+
         android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@+id/imageView33"
         app:layout_constraintStart_toStartOf="@+id/imageView33"
@@ -37,7 +38,7 @@
 
     <Button
         android:id="@+id/done_btn"
-        android:layout_width="@dimen/_150sdp"
+        android:layout_width="@dimen/_180sdp"
         android:layout_height="@dimen/_33sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_10sdp"

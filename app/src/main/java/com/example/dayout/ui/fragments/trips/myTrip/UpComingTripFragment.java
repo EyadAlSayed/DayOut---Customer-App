@@ -180,7 +180,7 @@ public class UpComingTripFragment extends Fragment implements IMyTrip {
                     } else {
                         upcomingTripsRefreshLayout.setVisibility(View.VISIBLE);
                         upcomingTripsNoTrips.setVisibility(View.GONE);
-                        adapter.addAndRefresh(listStringPair.first.data.data);
+                        adapter.refresh(listStringPair.first.data.data);
                         setAsUpcoming(listStringPair.first.data.data);
                     }
                     canPaginate = (listStringPair.first.data.next_page_url != null);

@@ -122,7 +122,7 @@ public class TripPostFragment extends Fragment {
         public void onChanged(Pair<TripPaginationModel, String> tripPostStringPair) {
             if (tripPostStringPair != null) {
                 if (tripPostStringPair.first != null) {
-                    tripPostAdapter.addAndRefresh(tripPostStringPair.first.data.data);
+                    tripPostAdapter.refresh(tripPostStringPair.first.data.data);
                     canPaginate = (tripPostStringPair.first.data.next_page_url != null);
                 } else {
                     getDataFromRoom();

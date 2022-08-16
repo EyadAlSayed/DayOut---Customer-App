@@ -23,4 +23,7 @@ public interface INotifications {
 
     @Query("select * from " + NOTIFICATIONS_DATA)
     Single<List<NotificationData>> getNotifications();
+
+    @Query("delete from "+NOTIFICATIONS_DATA)
+    Single<Void> deleteAll();
 }

@@ -118,7 +118,7 @@ public class PollsFragment extends Fragment {
         public void onChanged(Pair<PollsPaginationModel, String> pollStringPair) {
             if (pollStringPair != null){
                 if (pollStringPair.first != null){
-                    tripPollAdapter.addAndRefresh(pollStringPair.first.data.data);
+                    tripPollAdapter.refresh(pollStringPair.first.data.data);
                     canPaginate = (pollStringPair.first.data.next_page_url != null);
                 }
                 else {

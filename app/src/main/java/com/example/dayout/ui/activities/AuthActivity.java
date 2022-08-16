@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
+import com.example.dayout.api.ApiClient;
 import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.ui.fragments.auth.AuthFragment;
@@ -22,6 +23,7 @@ public class AuthActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth_activity);
+
         ButterKnife.bind(this);
         InitSharedPreferences(this);
         FN.addFixedNameFadeFragment(AUTH_FRC, this, new AuthFragment());

@@ -133,5 +133,12 @@
     <string name="votes">Votes</string>
     <string name="vote">Vote</string>
     <string name="description">Description</string>
+    <string name="no_privacy_policy">There is no privacy police</string>
+    <string name="contact_us_text">Hi We are a group of Young man who know to manage and organize trips if you would like to know more about our work or process feel free to get in touch</string>
+    <string name="email_contact_inof">Email :</string>
+    <string name="forget_password"><u>Forget Password</u></string>
+    <string name="please_enter_your_verification_code_and_new_password">Please enter your verification code and new password</string>
+    <string name="confirmation_code">Confirmation code</string>
+    <string name="expired_date_not_selected">Expired Date not selected</string>
 
 </resources>

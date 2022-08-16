@@ -87,7 +87,7 @@ public class SettingsFragment extends Fragment {
     private final View.OnClickListener onConfirmClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            BASE_URL = baseUrl.getText().toString();
+            AppSharedPreferences.CACHE_BASE_URL(baseUrl.getText().toString());
             NoteMessage.showSnackBar(requireActivity(), BASE_URL);
             FN.popTopStack(requireActivity());
         }

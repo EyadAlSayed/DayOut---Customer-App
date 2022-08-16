@@ -35,24 +35,28 @@
 
     <Button
         android:id="@+id/warning_dialog_yes"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_30sdp"
         android:background="@drawable/rounded_shape"
         android:backgroundTint="@color/orange_700"
         android:text="@string/yes"
         android:textColor="@color/off_white"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/warning_dialog_no" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/warning_dialog_no"
+        app:layout_constraintTop_toBottomOf="@+id/warning_dialog_message"
+        app:layout_constraintVertical_bias="0.81" />
 
     <Button
         android:id="@+id/warning_dialog_no"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_15sdp"
         android:background="@drawable/rounded_shape"
         android:backgroundTint="@color/orange_700"
         android:text="@string/no"
         android:textColor="@color/off_white"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/warning_dialog_message" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/warning_dialog_message"
+        app:layout_constraintHorizontal_bias="0.89"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

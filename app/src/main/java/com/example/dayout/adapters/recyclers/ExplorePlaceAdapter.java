@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
+import static com.example.dayout.helpers.view.ImageViewer.IMAGE_BASE_URL;
 
 public class ExplorePlaceAdapter extends RecyclerView.Adapter<ExplorePlaceAdapter.ViewHolder> {
 
@@ -46,10 +47,7 @@ public class ExplorePlaceAdapter extends RecyclerView.Adapter<ExplorePlaceAdapte
         notifyDataSetChanged();
     }
 
-    public void addAndRefresh(List<PlaceData> list) {
-        this.list.addAll(list);
-        notifyDataSetChanged();
-    }
+
 
     @NonNull
     @Override
@@ -100,10 +98,10 @@ public class ExplorePlaceAdapter extends RecyclerView.Adapter<ExplorePlaceAdapte
         private void bindImageSlider(List<PopularPlacePhoto> photos) {
             List<SlideModel> slideModels = new ArrayList<>();
 
-            String baseUrl = BASE_URL.substring(0,BASE_URL.length()-1);
+
 
             for (PopularPlacePhoto ph : photos) {
-                slideModels.add(new SlideModel(baseUrl + ph.path
+                slideModels.add(new SlideModel(IMAGE_BASE_URL + ph.path
                         , ScaleTypes.FIT));
             }
 

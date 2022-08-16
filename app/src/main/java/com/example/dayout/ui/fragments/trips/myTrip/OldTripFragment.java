@@ -174,7 +174,7 @@ public class OldTripFragment extends Fragment implements IMyTrip {
                     } else {
                         oldTripsRefreshLayout.setVisibility(View.VISIBLE);
                         oldTripsNoHistory.setVisibility(View.GONE);
-                        adapter.addAndRefresh(tripModelStringPair.first.data.data);
+                        adapter.refresh(tripModelStringPair.first.data.data);
                     }
                     canPaginate = (tripModelStringPair.first.data.next_page_url != null);
                 } else {

@@ -29,6 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
 import static com.example.dayout.config.AppConstants.MAIN_FRC;
+import static com.example.dayout.helpers.view.ImageViewer.IMAGE_BASE_URL;
 
 public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.ViewHolder> {
 
@@ -45,10 +46,7 @@ public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.Vi
         notifyDataSetChanged();
     }
 
-    public void addAndRefresh(List<ProfileData> organizers){
-        this.organizers.addAll(organizers);
-        notifyDataSetChanged();
-    }
+
 
     @NonNull
     @Override
@@ -76,8 +74,8 @@ public class OrganizersAdapter extends RecyclerView.Adapter<OrganizersAdapter.Vi
     }
 
     private void downloadUserImage(String url, ImageView imageView) {
-        String baseUrl = BASE_URL.substring(0, BASE_URL.length() - 1);
-        ImageViewer.downloadCircleImage(context, imageView, R.drawable.profile_place_holder_orange, baseUrl + url);
+
+        ImageViewer.downloadCircleImage(context, imageView, R.drawable.profile_place_holder_orange, IMAGE_BASE_URL + url);
     }
 
     private float roundRating(float rating){

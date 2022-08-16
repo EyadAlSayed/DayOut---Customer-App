@@ -24,6 +24,7 @@ import com.example.dayout.ui.activities.AuthActivity;
 import com.example.dayout.ui.activities.MainActivity;
 import com.example.dayout.ui.dialogs.notify.ErrorDialog;
 import com.example.dayout.ui.dialogs.notify.LoadingDialog;
+import com.example.dayout.ui.fragments.auth.forgetPassword.ForgetPasswordFragment;
 import com.example.dayout.viewModels.AuthViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -61,6 +62,10 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.login_btn)
     Button loginButton;
 
+    @BindView(R.id.forgetpassword)
+    TextView forgetpassword;
+
+
     LoadingDialog loadingDialog;
 
     @Override
@@ -77,6 +82,7 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(onLoginClicked);
         createAccountTxt.setOnClickListener(onCreateClicked);
         password.addTextChangedListener(onTextChanged);
+        forgetpassword.setOnClickListener(onForgetClicked);
     }
 
 
@@ -105,7 +111,7 @@ public class LoginFragment extends Fragment {
     };
 
     private final View.OnClickListener onCreateClicked = v -> FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new SignUpFragment());
-
+    private final View.OnClickListener onForgetClicked = v -> FN.addFixedNameFadeFragment(AUTH_FRC, requireActivity(), new ForgetPasswordFragment());
     private final TextWatcher onTextChanged = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {

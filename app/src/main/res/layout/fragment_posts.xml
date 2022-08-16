@@ -8,11 +8,11 @@
     android:clickable="true"
     android:focusable="true">
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/acme"
                 android:gravity="center"
-                android:text="DayOut"
+                android:text="@string/posts"
                 android:textColor="@color/orange_700"
                 android:textSize="@dimen/_30ssp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -54,20 +54,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_20sdp"
         android:background="@drawable/rounded_shape"
         android:elevation="@dimen/_5sdp"
+        android:layoutDirection="ltr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tool_bar"
+        app:tabGravity="fill"
         app:tabIndicatorAnimationMode="elastic"
         app:tabIndicatorColor="@color/orange_500"
+        app:tabIndicatorGravity="stretch"
+        app:tabIndicatorHeight="0dp"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/orange_500"
+        app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/tab_text"
-        app:tabTextColor="@color/black" />
+        app:tabTextColor="@color/black">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/post_view_pager"
-        android:layout_width="wrap_content"
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="true"
+            android:text="@string/posts" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="true"
+            android:text="@string/polls" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/trip_post_fcr"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

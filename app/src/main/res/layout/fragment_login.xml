@@ -188,6 +188,17 @@
                         android:theme="@style/SwitchTheme" />
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/forgetpassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/acme"
+                    android:text="@string/forget_password"
+                    android:textColor="@color/grey_font"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/linear_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/linear_layout" />
                 <Button
                     android:id="@+id/login_btn"
                     android:layout_width="match_parent"

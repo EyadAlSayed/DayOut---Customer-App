@@ -14,6 +14,7 @@
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/acme"
                 android:gravity="center"
-                android:text="DayOut"
+                android:text="@string/settings"
                 android:textColor="@color/orange_700"
                 android:textSize="@dimen/_30ssp"
                 app:layout_constraintEnd_toEndOf="parent"

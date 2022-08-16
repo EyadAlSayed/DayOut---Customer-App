@@ -62,7 +62,7 @@ public class FavoritePlaceFragment extends Fragment {
 
     @Override
     public void onStart() {
-        ((MainActivity) requireActivity()).hideDrawerButton();
+
         ((MainActivity) requireActivity()).hideBottomBar();
         super.onStart();
     }

@@ -29,6 +29,12 @@ public class FN {
         fragmentTransaction.commit();
     }
 
+    public static void replaceSlideFragmentLTR(int container, FragmentActivity fragmentActivity, Fragment fragment) {
+        fragmentManager = fragmentActivity.getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction().setCustomAnimations(R.anim.slide_left, R.anim.slide_right,R.anim.slide_left,R.anim.slide_right);
+        fragmentTransaction.replace(container, fragment);
+        fragmentTransaction.commit();
+    }
 
     // add to stack methods
 
@@ -91,9 +97,6 @@ public class FN {
     public static void addFixedNameFadeFragment(int container, FragmentActivity fragmentActivity, Fragment fragment) {
         addToStackFadeFragment(container, fragmentActivity, fragment, FIXED_NAME);
     }
-
-
-
 
     public static void popFragmentFromStack(FragmentActivity fragmentActivity, String fragmentName) {
         fragmentManager = fragmentActivity.getSupportFragmentManager();

@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.dayout.R;
+import com.example.dayout.api.ApiClient;
 import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
 
@@ -83,15 +84,14 @@ public class MainActivity extends AppCompatActivity {
         sendFireBaseToken();
 
 
-
-        if (AppSharedPreferences.GET_CACHE_LAN().equals("ar")) changeLanguage("ar",false);
-        else if (AppSharedPreferences.GET_CACHE_LAN().equals("en")) changeLanguage("en",false);
+        if (AppSharedPreferences.GET_CACHE_LAN().equals("ar")) changeLanguage("ar", false);
+        else if (AppSharedPreferences.GET_CACHE_LAN().equals("en")) changeLanguage("en", false);
 
 
         FN.addFixedNameFadeFragment(MAIN_FRC, this, new HomeFragment());
         Log.d("ACC_TOKEN", "onCreate: " + GET_ACC_TOKEN());
+        Log.d("USER_ID", "onCreate: " + GET_USER_ID());
     }
-
 
 
     @Override
@@ -101,9 +101,6 @@ public class MainActivity extends AppCompatActivity {
         else super.onBackPressed();
     }
 
-    public void finishActivity(){
-        this.finish();
-    }
 
     private void initRoomDB() {
         roomPopularPlaces = PopularPlaceDataBase.getINSTANCE(this).iPopularPlaces();
@@ -121,9 +118,7 @@ public class MainActivity extends AppCompatActivity {
     private final View.OnClickListener onExploreClicked = v -> FN.addFixedNameFadeFragment(MAIN_FRC, MainActivity.this, new ExploreFragment());
 
     private final View.OnClickListener onFavoriteClicked = v -> FN.addFixedNameFadeFragment(MAIN_FRC, MainActivity.this, new FavoritePlaceFragment());
-    private final View.OnClickListener onDrawerClicked = v -> {
-        FN.addSlideLRFragmentUpFragment(MAIN_FRC, MainActivity.this, new DrawerFragment(), "drawer");
-    };
+    private final View.OnClickListener onDrawerClicked = v -> FN.addSlideLRFragmentUpFragment(MAIN_FRC, MainActivity.this, new DrawerFragment(), "drawer");
     private final View.OnClickListener onProfileClicked = v -> FN.addFixedNameFadeFragment(MAIN_FRC, MainActivity.this, new ProfileFragment());
 
     public void showBottomBar() {
@@ -136,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         drawerButton.setEnabled(false);
         bottomBar.animate().setDuration(400).alpha(0);
         new Handler(getMainLooper()).postDelayed(() -> {
-
             bottomBar.setVisibility(View.GONE);
         }, 450);
 
@@ -165,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
-    public void changeLanguage(String lang,boolean refresh) {
+    public void changeLanguage(String lang, boolean refresh) {
         Resources resources = this.getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();
@@ -173,11 +167,11 @@ public class MainActivity extends AppCompatActivity {
         Locale.setDefault(locale);
         config.setLocale(locale);
         resources.updateConfiguration(config, displayMetrics);
-       if (refresh)refreshActivity();
+        if (refresh) refreshActivity();
         CACHE_LAN(lang);
     }
 
-    public void sendFireBaseToken(){
+    public void sendFireBaseToken() {
         try {
             FirebaseMessaging.getInstance().getToken().addOnCompleteListener(onFirebaseCompleteListener);
         } catch (Exception e) {
@@ -195,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             UserViewModel.getINSTANCE().sendFirebaseToken(jsonObject);
 
             //TODO make fire token observer and check if the process success or not
-           // UserViewModel.getINSTANCE().successfulMutableLiveData.observe(this, fireTokenObserver);
+            // UserViewModel.getINSTANCE().successfulMutableLiveData.observe(this, fireTokenObserver);
 
         } catch (Exception e) {
             e.printStackTrace();

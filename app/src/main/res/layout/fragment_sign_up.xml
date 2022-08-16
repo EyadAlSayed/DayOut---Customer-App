@@ -52,6 +52,8 @@
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:focusableInTouchMode="true"
                     android:hint="@string/first_name"
+                    app:hintTextColor="@color/orange_500"
+
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -76,6 +78,8 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:focusableInTouchMode="true"
+                    app:hintTextColor="@color/orange_500"
+
                     android:hint="@string/last_name">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -99,6 +103,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
+                    app:hintTextColor="@color/orange_500"
+
                     app:passwordToggleEnabled="true">
 
 
@@ -122,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_password"
-
+                    app:hintTextColor="@color/orange_500"
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -146,8 +152,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
+                    app:hintTextColor="@color/orange_500"
+
                     android:focusableInTouchMode="true"
-                    android:hint="@string/email_optional">
+                    android:hint="@string/email">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/sign_up_email"
@@ -281,7 +289,7 @@
         android:gravity="center"
         android:text="@string/sign_up"
         android:textColor="@color/off_white"
-        android:textSize="@dimen/_17sdp"
+        android:textSize="@dimen/_14sdp"
         android:textStyle="bold" />
 
     <TextView
@@ -290,6 +298,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
         android:text="@string/already_have_an_account"
         android:textColor="@color/orange_700"
         android:textSize="@dimen/_12ssp" />

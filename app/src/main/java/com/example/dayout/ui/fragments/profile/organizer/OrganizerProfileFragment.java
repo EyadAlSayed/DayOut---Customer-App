@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.example.dayout.api.ApiClient.BASE_URL;
+import static com.example.dayout.helpers.view.ImageViewer.IMAGE_BASE_URL;
 
 @SuppressLint("NonConstantResourceId")
 public class OrganizerProfileFragment extends Fragment {
@@ -176,8 +177,8 @@ public class OrganizerProfileFragment extends Fragment {
     }
 
     private void downloadUserImage(String url) {
-        String baseUrl = BASE_URL.substring(0, BASE_URL.length() - 1);
-        ImageViewer.downloadCircleImage(requireContext(), profileImage, R.drawable.profile_place_holder, baseUrl + url);
+
+        ImageViewer.downloadCircleImage(requireContext(), profileImage, R.drawable.profile_place_holder, IMAGE_BASE_URL + url);
     }
 
     @SuppressLint("SetTextI18n")
