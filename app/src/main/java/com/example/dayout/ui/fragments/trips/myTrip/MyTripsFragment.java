@@ -70,7 +70,7 @@ public class MyTripsFragment extends Fragment {
 
 
     private void initTabLayout() {
-        FN.addFixedNameFadeFragment(TRIP_FCR, requireActivity(), new ActiveTripFragment(activeTripAdapter));
+        FN.replaceFadeFragment(TRIP_FCR, requireActivity(), new ActiveTripFragment(activeTripAdapter));
         myTripsTabLayout.addOnTabSelectedListener(onTabSelectedListener);
     }
 
@@ -113,13 +113,13 @@ public class MyTripsFragment extends Fragment {
         public void onTabSelected(TabLayout.Tab tab) {
             myTripsTabLayout.setEnabled(false);
             if (tab.getPosition() == 0) {
-                FN.replaceSlideFragmentLTR(TRIP_FCR, requireActivity(), new ActiveTripFragment(activeTripAdapter));
+                FN.replaceFadeFragment(TRIP_FCR, requireActivity(), new ActiveTripFragment(activeTripAdapter));
                 type = 3;
             } else if (tab.getPosition() == 1) {
-                FN.replaceSlideFragmentLTR(TRIP_FCR, requireActivity(), new UpComingTripFragment(upComingTripAdapter));
+                FN.replaceFadeFragment(TRIP_FCR, requireActivity(), new UpComingTripFragment(upComingTripAdapter));
                 type = 2;
             } else if (tab.getPosition() == 2) {
-                FN.replaceSlideFragmentLTR(TRIP_FCR, requireActivity(), new OldTripFragment(oldTripAdapter));
+                FN.replaceFadeFragment(TRIP_FCR, requireActivity(), new OldTripFragment(oldTripAdapter));
                 type = 1;
             }
 

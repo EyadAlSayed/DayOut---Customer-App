@@ -9,15 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-
 import com.example.dayout.R;
 import com.example.dayout.config.AppSharedPreferences;
 import com.example.dayout.helpers.view.FN;
 import com.example.dayout.helpers.view.NoteMessage;
-import com.example.dayout.models.popualrPlace.PlaceData;
 import com.example.dayout.models.room.tripsRoom.database.TripsDatabase;
 import com.example.dayout.models.trip.TripData;
 import com.example.dayout.models.trip.TripDetailsModel;
@@ -28,9 +25,7 @@ import com.example.dayout.ui.dialogs.notify.LoadingDialog;
 import com.example.dayout.ui.dialogs.notify.MessageDialog;
 import com.example.dayout.ui.dialogs.notify.WarningDialog;
 import com.example.dayout.viewModels.TripViewModel;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.SingleObserver;

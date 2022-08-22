@@ -210,10 +210,13 @@ public class MainActivity extends AppCompatActivity {
             jsonObject.addProperty("mobile_token", token);
             UserViewModel.getINSTANCE().sendFirebaseToken(jsonObject);
             UserViewModel.getINSTANCE().successfulMutableLiveData.observe(this, booleanStringPair -> {
-                if (booleanStringPair == null || booleanStringPair.first == null)
+                if (booleanStringPair == null || booleanStringPair.first == null){
                     new Handler(getMainLooper()).postDelayed(() -> {
+                        Log.w("firebase", "resend mobile token : "+token);
                         UserViewModel.getINSTANCE().sendFirebaseToken(jsonObject);
                     }, 2500);
+                }
+
             });
 
         } catch (Exception e) {

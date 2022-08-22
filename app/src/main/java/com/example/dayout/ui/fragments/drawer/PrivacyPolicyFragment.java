@@ -55,8 +55,10 @@ public class PrivacyPolicyFragment extends Fragment {
 
     @Override
     public void onStart() {
-        if (type == 2)
+        if (type == 2){
+            ((MainActivity)requireActivity()).hideDrawerButton();
             ((MainActivity) requireActivity()).hideBottomBar();
+        }
         super.onStart();
     }
 

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/rose_200"
+    android:padding="@dimen/_5sdp"
     android:orientation="vertical">
 
     <TextView
@@ -10,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/acme"
+        android:layout_margin="@dimen/_5sdp"
         android:paddingStart="@dimen/_10sdp"
         android:paddingTop="@dimen/_5sdp"
         android:paddingEnd="@dimen/_5sdp"
@@ -22,6 +24,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/acme"
         android:paddingStart="@dimen/_10sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:paddingEnd="@dimen/_5sdp"
         android:paddingBottom="@dimen/_5sdp"
         android:textColor="#AAAAAA"

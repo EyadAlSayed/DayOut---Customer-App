@@ -127,27 +127,33 @@ public class DrawerFragment extends Fragment {
     }
 
     private void getDataFromRoom() {
-        ProfileDatabase.getINSTANCE(requireContext())
-                .iProfileModel()
-                .getProfile(GET_USER_ID())
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<ProfileData>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
+        try {
+            ProfileDatabase.getINSTANCE(requireContext())
+                    .iProfileModel()
+                    .getProfile(GET_USER_ID())
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SingleObserver<ProfileData>() {
+                        @Override
+                        public void onSubscribe(@NonNull Disposable d) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onSuccess(@NonNull ProfileData data) {
-                        setData(data);
-                    }
+                        @Override
+                        public void onSuccess(@NonNull ProfileData data) {
+                            setData(data);
+                        }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
+                        @Override
+                        public void onError(@NonNull Throwable e) {
 
-                    }
-                });
+                        }
+                    });
+        }
+        catch (Exception ignore){
+
+        }
+
     }
 
     private void getDataFromAPI() {
